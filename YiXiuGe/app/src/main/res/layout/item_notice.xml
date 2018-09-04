@@ -17,6 +17,8 @@
             android:id="@+id/title_tv"
             style="@style/text"
             android:layout_marginBottom="@dimen/d_5dp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:drawableLeft="@drawable/home_notice"
             android:drawablePadding="@dimen/d_5dp"
             android:text="美肤美白管理" />

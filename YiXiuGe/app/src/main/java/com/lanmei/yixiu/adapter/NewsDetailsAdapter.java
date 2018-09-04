@@ -55,7 +55,7 @@ public class NewsDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == TYPE_BANNER) {
-            onBindBannerViewHolder(holder, position); // banner
+            onBindBannerViewHolder(holder); // banner
             return;
         }
         NewsCommentBean bean = getItem(position - 1);
@@ -127,7 +127,7 @@ public class NewsDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
         return super.getCount() + 1;
     }
 
-    public void onBindBannerViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindBannerViewHolder(RecyclerView.ViewHolder holder) {
         if (newsBean == null) {
             return;
         }

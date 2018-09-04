@@ -23,8 +23,9 @@ public class FormatTime {
     public int day;
     public int hour;
     public int minute;
-
     public int week;
+    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private Date date = new Date();
 
     public FormatTime() {
         this.time = System.currentTimeMillis();
@@ -75,8 +76,7 @@ public class FormatTime {
      * 时间戳格式为“yyyy-MM-dd  HH:mm:ss     ”
      */
     public String formatterTime() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date(time);
+        date.setTime(time);
         return format.format(date);
     }
 

@@ -6,7 +6,7 @@ import android.support.v7.app.ActionBar;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.NoticeAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
-import com.lanmei.yixiu.bean.CourseClassifyBean;
+import com.lanmei.yixiu.bean.NoticeBean;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
@@ -25,7 +25,7 @@ public class NoticeActivity extends BaseActivity {
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     NoticeAdapter mAdapter;
-    private SwipeRefreshController<NoPageListBean<CourseClassifyBean>> controller;
+    private SwipeRefreshController<NoPageListBean<NoticeBean>> controller;
 
     @Override
     public int getContentViewId() {
@@ -47,7 +47,7 @@ public class NoticeActivity extends BaseActivity {
         mAdapter = new NoticeAdapter(this);
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<CourseClassifyBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
+        controller = new SwipeRefreshController<NoPageListBean<NoticeBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
         };
         controller.loadFirstPage();
     }
