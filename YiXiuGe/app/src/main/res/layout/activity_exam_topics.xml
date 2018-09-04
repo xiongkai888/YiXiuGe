@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent_no"
+    tools:context=".ui.teacher.activity.AddExaminationActivity">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            style="@style/text"
+            android:drawablePadding="@dimen/d_5dp"
+            android:drawableRight="@drawable/common_filter_arrow_down"
+            android:padding="@dimen/d_10dp"
+            android:text="请选择题库分类" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/fragment_single_listview"/>
+
+</LinearLayout>

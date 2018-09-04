@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/v_match_parent"
+    android:padding="@dimen/d_10dp">
+
+    <LinearLayout
+        style="@style/h_match_parent_no"
+        android:gravity="center_vertical">
+
+        <com.xson.common.widget.CircleImageView
+            android:id="@+id/member_pic_iv"
+            android:layout_width="@dimen/d_50dp"
+            android:layout_height="@dimen/d_50dp"
+            android:src="@drawable/temp_pic" />
+
+
+        <TextView
+            android:id="@+id/name_tv"
+            style="@style/text_weight"
+            android:padding="@dimen/d_5dp"
+            android:text="@string/name"
+            android:textSize="@dimen/txt_12sp" />
+
+
+        <ImageView
+            style="@style/text"
+            android:padding="@dimen/d_5dp"
+            android:src="@drawable/home_life" />
+
+        <ImageView
+            style="@style/text"
+            android:padding="@dimen/d_5dp"
+            android:src="@drawable/home_share" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/title_tv"
+        style="@style/text"
+        android:layout_marginBottom="@dimen/d_10dp"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:text="医学美肤管理" />
+
+    <LinearLayout
+        style="@style/h_match_parent_no"
+        android:layout_marginBottom="@dimen/d_10dp">
+
+        <TextView
+            android:id="@+id/view_tv"
+            style="@style/text12color666"
+            android:drawableLeft="@drawable/course_read"
+            android:drawablePadding="@dimen/d_5dp"
+            android:gravity="center_vertical"
+            android:text="@string/zero" />
+
+        <TextView
+            android:id="@+id/addtime_tv"
+            style="@style/text12color666"
+            android:layout_marginLeft="@dimen/d_20dp"
+            android:drawableLeft="@drawable/course_time"
+            android:drawablePadding="@dimen/d_5dp"
+            android:gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <TextView style="@style/line_H1dp_divider" />
+
+    <LinearLayout
+        style="@style/h_match_parent_no"
+        android:gravity="center">
+
+
+        <RelativeLayout
+            style="@style/text_weight"
+            android:gravity="center"
+            android:paddingTop="@dimen/d_10dp">
+
+            <TextView
+                android:id="@+id/reviews_tv"
+                style="@style/text"
+                android:drawableLeft="@drawable/news_leave_message"
+                android:drawablePadding="@dimen/d_5dp"
+                android:gravity="center"
+                android:text="@string/zero"
+                android:textColor="@color/color666"
+                android:textSize="@dimen/txt_12sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/text_weight"
+            android:gravity="center"
+            android:paddingTop="@dimen/d_10dp">
+
+            <TextView
+                android:id="@+id/like_tv"
+                style="@style/text"
+                android:drawableLeft="@drawable/dianzan"
+                android:drawablePadding="@dimen/d_5dp"
+                android:gravity="center"
+                android:text="@string/zero"
+                android:textColor="@color/color666"
+                android:textSize="@dimen/txt_12sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/text_weight"
+            android:gravity="center"
+            android:paddingTop="@dimen/d_10dp">
+
+            <TextView
+                android:id="@+id/subscribe_tv"
+                style="@style/text"
+                android:drawableLeft="@drawable/dingyue"
+                android:drawablePadding="@dimen/d_5dp"
+                android:gravity="center"
+                android:text="@string/zero"
+                android:textColor="@color/color666"
+                android:textSize="@dimen/txt_12sp" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

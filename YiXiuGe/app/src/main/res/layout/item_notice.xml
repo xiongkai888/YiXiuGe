@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/match_parent"
+    android:layout_marginBottom="@dimen/d_5dp"
+    android:layout_marginLeft="@dimen/d_10dp"
+    android:layout_marginRight="@dimen/d_10dp"
+    android:layout_marginTop="@dimen/d_5dp">
+
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        style="@style/v_match_parent_no"
+        android:background="@drawable/evaluate_bg"
+        android:padding="@dimen/d_10dp">
+
+        <TextView
+            android:id="@+id/title_tv"
+            style="@style/text"
+            android:layout_marginBottom="@dimen/d_5dp"
+            android:drawableLeft="@drawable/home_notice"
+            android:drawablePadding="@dimen/d_5dp"
+            android:text="美肤美白管理" />
+
+        <TextView
+            android:id="@+id/time_tv"
+            style="@style/text12color666"
+            android:layout_marginBottom="@dimen/d_5dp"
+            android:layout_marginLeft="@dimen/d_20dp"
+            android:text="@string/time" />
+
+        <TextView
+            android:id="@+id/content_tv"
+            style="@style/text14color666"
+            android:layout_marginLeft="@dimen/d_20dp"
+            android:text="皮肤美白因子皮肤美白因子皮肤美白因子皮肤美白因子皮肤美白因子皮肤美白因子皮肤美白因子皮肤美白因子" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/notice_details_tv"
+        style="@style/text14color666"
+        android:layout_below="@id/ll_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:background="@drawable/evaluate_bg"
+        android:paddingBottom="@dimen/d_5dp"
+        android:paddingLeft="@dimen/d_10dp"
+        android:paddingRight="@dimen/d_10dp"
+        android:paddingTop="@dimen/d_5dp"
+        android:layout_marginBottom="@dimen/d_10dp"
+        android:text="@string/check_details" />
+
+</RelativeLayout>

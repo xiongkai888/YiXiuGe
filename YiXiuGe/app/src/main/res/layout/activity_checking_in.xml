@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent"
+    tools:context=".ui.mine.activity.MyCheckingInActivity">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+
+    <LinearLayout
+        style="@style/ll_bottom_h"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:layout_marginRight="@dimen/d_10dp"
+        android:background="@drawable/border_left_right_bottom_divider"
+        android:paddingBottom="@dimen/d_6dp"
+        android:paddingTop="@dimen/d_6dp">
+
+        <ImageView
+            style="@style/text"
+            android:padding="@dimen/d_10dp"
+            android:src="@drawable/calendar_last" />
+
+        <TextView
+            style="@style/text_weight"
+            android:gravity="center"
+            android:text="8月" />
+
+        <ImageView
+            style="@style/text"
+            android:padding="@dimen/d_10dp"
+            android:src="@drawable/calendar_next" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/ll_bottom_h"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:layout_marginRight="@dimen/d_10dp"
+        android:background="@drawable/border_left_right_bottom_divider">
+
+        <TextView
+            style="@style/text_weight"
+            android:gravity="center"
+            android:paddingBottom="@dimen/d_6dp"
+            android:paddingTop="@dimen/d_6dp"
+            android:text="日期" />
+
+        <TextView style="@style/line_v1dp_divider" />
+
+        <TextView
+            style="@style/text_weight"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:paddingBottom="@dimen/d_10dp"
+            android:paddingTop="@dimen/d_10dp"
+            android:text="打卡时间" />
+
+        <TextView style="@style/line_v1dp_divider" />
+
+        <TextView
+            style="@style/text_weight"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:paddingBottom="@dimen/d_10dp"
+            android:paddingTop="@dimen/d_10dp"
+            android:text="备注" />
+
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:layout_marginRight="@dimen/d_10dp" />
+
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/match_parent"
+    android:layout_marginBottom="@dimen/d_5dp"
+    android:layout_marginLeft="@dimen/d_10dp"
+    android:layout_marginRight="@dimen/d_10dp"
+    android:layout_marginTop="@dimen/d_5dp">
+
+
+    <LinearLayout
+        style="@style/v_match_parent_no"
+        android:background="@drawable/evaluate_bg"
+        android:padding="@dimen/d_10dp">
+
+        <TextView
+            style="@style/text"
+            android:layout_marginBottom="@dimen/d_5dp"
+            android:drawableLeft="@drawable/examination_subject"
+            android:drawablePadding="@dimen/d_5dp"
+            android:text="2018美肤管理第一单元测试" />
+
+        <TextView
+            style="@style/text12color666"
+            android:layout_marginTop="@dimen/d_10dp"
+            android:drawableLeft="@drawable/examination_time"
+            android:drawablePadding="@dimen/d_5dp"
+            android:text="2018-8-29  08:30 -- 2018-8-29  12:00" />
+
+
+        <TextView
+            style="@style/text12color1593f0"
+            android:layout_gravity="right"
+            android:background="@drawable/examination_button_bg"
+            android:text="@string/enter_into_examination" />
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:background="@drawable/examination_ing"
+        android:text="进行中"
+        android:paddingBottom="@dimen/d_2dp"
+        android:gravity="center"
+        style="@style/text8colorWhite"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/d_10dp" />
+
+</RelativeLayout>

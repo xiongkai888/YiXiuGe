@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent_no"
+    tools:context=".ui.home.activity.TeacherActivity">
+
+    <include layout="@layout/include_examination_tablayout" />
+
+    <TextView
+        android:id="@+id/line_tv"
+        style="@style/line_H1dp_divider" />
+
+    <include layout="@layout/fragment_single_listview_no"/>
+
+</LinearLayout>

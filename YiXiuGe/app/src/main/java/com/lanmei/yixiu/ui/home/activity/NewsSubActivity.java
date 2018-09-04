@@ -1,0 +1,80 @@
+package com.lanmei.yixiu.ui.home.activity;
+
+import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+
+import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.adapter.NewsSubAdapter;
+import com.lanmei.yixiu.api.YiXiuGeApi;
+import com.lanmei.yixiu.bean.AdBean;
+import com.lanmei.yixiu.bean.NewsClassifyListBean;
+import com.xson.common.app.BaseActivity;
+import com.xson.common.bean.NoPageListBean;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
+import com.xson.common.helper.SwipeRefreshController;
+import com.xson.common.utils.StringUtils;
+import com.xson.common.widget.CenterTitleToolbar;
+import com.xson.common.widget.SmartSwipeRefreshLayout;
+
+import java.util.List;
+
+import butterknife.InjectView;
+
+/**
+ * 资讯
+ */
+public class NewsSubActivity extends BaseActivity {
+
+    @InjectView(R.id.toolbar)
+    CenterTitleToolbar mToolbar;
+    @InjectView(R.id.pull_refresh_rv)
+    SmartSwipeRefreshLayout smartSwipeRefreshLayout;
+    NewsSubAdapter mAdapter;
+    private SwipeRefreshController<NoPageListBean<NewsClassifyListBean>> controller;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_single_listview;
+    }
+
+    @Override
+    protected void initAllMembersView(Bundle savedInstanceState) {
+        setSupportActionBar(mToolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayShowTitleEnabled(true);
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setTitle(R.string.news);
+        actionbar.setHomeAsUpIndicator(R.drawable.back);
+
+        YiXiuGeApi api = new YiXiuGeApi("post/index");
+        api.addParams("cid", 1);
+
+        mAdapter = new NewsSubAdapter(this);
+
+        smartSwipeRefreshLayout.initWithLinearLayout();
+        smartSwipeRefreshLayout.setAdapter(mAdapter);
+        controller = new SwipeRefreshController<NoPageListBean<NewsClassifyListBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
+        };
+        controller.loadFirstPage();
+        loadAd();
+    }
+
+    private void loadAd() {
+        YiXiuGeApi api = new YiXiuGeApi("app/adpic");
+        api.addParams("classid", 2);
+        HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<AdBean>>() {
+            @Override
+            public void onResponse(NoPageListBean<AdBean> response) {
+                if (isFinishing()) {
+                    return;
+                }
+                List<AdBean> list = response.data;
+                if (StringUtils.isEmpty(list)) {
+                    return;
+                }
+                mAdapter.setList(list);
+            }
+        });
+    }
+}

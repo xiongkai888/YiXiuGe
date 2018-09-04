@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/h_match_parent_no"
+    android:layout_marginBottom="@dimen/d_5dp"
+    android:layout_marginLeft="@dimen/d_10dp"
+    android:layout_marginRight="@dimen/d_10dp"
+    android:layout_marginTop="@dimen/d_5dp">
+
+    <LinearLayout
+        style="@style/h_match_parent"
+        android:background="@drawable/evaluate_bg"
+        android:padding="@dimen/d_20dp">
+
+        <com.xson.common.widget.CircleImageView
+            android:id="@+id/pic_iv"
+            android:layout_width="@dimen/d_50dp"
+            android:layout_height="@dimen/d_50dp"
+            android:src="@drawable/temp_pic" />
+
+        <LinearLayout
+            style="@style/v_match_parent_no"
+            android:layout_marginLeft="@dimen/d_10dp">
+
+
+            <LinearLayout
+                style="@style/h_match_parent_no"
+                android:gravity="center_vertical">
+
+                <TextView
+                    style="@style/text"
+                    android:text="李菲菲" />
+
+                <TextView
+                    style="@style/text10color41E8B6"
+                    android:layout_marginLeft="@dimen/d_10dp"
+                    android:background="@drawable/teacher_button_bg"
+                    android:text="五年教龄" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/content_tv"
+                style="@style/text12color666"
+                android:layout_marginBottom="@dimen/d_5dp"
+                android:layout_marginTop="@dimen/d_5dp"
+                android:text="女 | 30岁 | 广州" />
+
+            <LinearLayout
+                style="@style/h_match_parent_no"
+                android:gravity="center_vertical">
+
+                <TextView
+                    style="@style/text12color666"
+                    android:text="用户评价：" />
+
+                <RatingBar
+                    android:id="@+id/rating_bar"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d_5dp"
+                    android:numStars="5"
+                    android:progressTint="@color/colorF9D14D"
+                    android:rating="3"
+                    android:stepSize="1" />
+
+                <TextView
+                    style="@style/text14colorF9D14D"
+                    android:layout_marginLeft="@dimen/d_10dp"
+                    android:text="3分" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

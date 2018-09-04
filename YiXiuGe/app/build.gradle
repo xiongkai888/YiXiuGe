@@ -1,0 +1,130 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
+    defaultConfig {
+        applicationId "com.lanmei.yixiu"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 2
+        versionName "1.0.2"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "API_URL", "\"http://47.107.59.111/api/\""
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+        multiDexEnabled true
+        ndk {
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    configurations.all {
+        resolutionStrategy.force 'com.android.support:support-annotations:27.1.1'
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.startsWith('app-release')) {
+                def fileName = outputFile.name.replace("app-release", "yixiuge_vc${defaultConfig.versionCode}_vn${defaultConfig.versionName}_${buildTime()}")
+                outputFileName = fileName
+            }
+        }
+    }
+
+    signingConfigs {
+        debug {
+            keyAlias 'yixiuge'
+            keyPassword 'lanmei888'
+            storeFile file('G:/YiXiuGe/YiXiuGe/app/yixiuge.jks')
+            storePassword 'lanmei888'
+        }
+        release {
+            keyAlias 'yixiuge'
+            keyPassword 'lanmei888'
+            storeFile file('G:/YiXiuGe/YiXiuGe/app/yixiuge.jks')
+            storePassword 'lanmei888'
+        }
+    }
+
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+}
+
+def buildTime() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMddHHmm')
+    return formattedDate
+}
+
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation project(path: ':common')
+    implementation project(':wheel-date-picker')
+    implementation project(':oss-android-sdk')
+    implementation project(':zxinglibrary')
+    implementation project(':easeui')//环信
+    implementation project(':jiaozivideoplayer')//视频
+//    compile project(':hmspush')//华为
+    //九宫格
+    implementation 'pub.devrel:easypermissions:0.2.1'
+    implementation 'cn.bingoogolapple:bga-photopicker:1.2.3@aar'
+    implementation 'cn.bingoogolapple:bga-adapter:1.1.8@aar'
+    //轮播图
+    implementation 'com.bigkoo:convenientbanner:2.0.5'
+    //WheelPicker包括DatePicker、TimePicker、OptionPicker、AddressPicker、NumberPicker等，
+    implementation('com.github.gzu-liyujiang.AndroidPicker:WheelPicker:1.5.6') {
+        exclude group: 'com.android.support'
+    }
+//    implementation('com.github.gzu-liyujiang.AndroidPicker:FilePicker:1.5.6') {
+//        exclude group: 'com.android.support'
+//    }
+//    文件选择
+    implementation 'com.leon:lfilepickerlibrary:1.7.0'
+    //LeakCanary
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    //日历
+    implementation project(':calendarview')
+    //浏览图片
+    implementation 'com.bm.photoview:library:1.4.1'
+    //环信
+    implementation 'com.parse:parse-android:1.13.1'
+    // Google firebase cloud messaging
+    implementation 'com.google.firebase:firebase-messaging:11.4.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    //lifecycle-viewmodel
+//    implementation 'androidx.lifecycle:lifecycle-viewmodel:latest.release'
+
+}

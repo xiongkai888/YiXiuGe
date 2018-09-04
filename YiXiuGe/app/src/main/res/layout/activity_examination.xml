@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent_no"
+    tools:context="com.lanmei.yixiu.ui.mine.activity.Examination1Activity">
+
+    <include layout="@layout/include_examination_tablayout" />
+
+    <TextView style="@style/line_H1dp_divider" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d_0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout style="@style/v_match_parent_no">
+
+            <LinearLayout
+                style="@style/v_match_parent_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/d_10dp"
+                android:background="@drawable/evaluate_bg"
+                android:padding="@dimen/d_10dp">
+
+                <TextView
+                    style="@style/text"
+                    android:text="1、药物作用的基本表现是机体器官组织" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView_topic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d_10dp" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/text12colorBlack"
+                android:layout_marginLeft="@dimen/d_20dp"
+                android:text="答题情况" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/d_10dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView style="@style/line_H1dp_divider" />
+
+    <LinearLayout style="@style/h_match_parent">
+
+        <Button
+            android:id="@+id/on_a_bt"
+            style="@style/button_style"
+            android:layout_weight="1"
+            android:text="上一题" />
+
+        <Button
+            android:id="@+id/next_bt"
+            style="@style/button_style"
+            android:layout_weight="1"
+            android:text="下一题" />
+
+    </LinearLayout>
+
+</LinearLayout>

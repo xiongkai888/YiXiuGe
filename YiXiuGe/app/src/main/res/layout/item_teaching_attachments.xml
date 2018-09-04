@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/h_match_parent_no"
+    android:layout_marginBottom="@dimen/d_5dp"
+    android:layout_marginLeft="@dimen/d_10dp"
+    android:layout_marginRight="@dimen/d_10dp"
+    android:layout_marginTop="@dimen/d_5dp">
+
+    <LinearLayout
+        style="@style/h_match_parent"
+        android:background="@drawable/evaluate_bg"
+        android:gravity="center_vertical"
+        android:padding="@dimen/d_10dp">
+
+        <com.xson.common.widget.CircleImageView
+            android:id="@+id/pic_iv"
+            android:layout_width="@dimen/d_50dp"
+            android:layout_height="@dimen/d_50dp"
+            android:src="@drawable/temp_teacher" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/d_10dp"
+            style="@style/text_weight"
+            android:text="教室1" />
+
+        <TextView
+            style="@style/text10color41E8B6"
+            android:layout_marginLeft="@dimen/d_10dp"
+            android:background="@drawable/teacher_button_bg"
+            android:text="使用中" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

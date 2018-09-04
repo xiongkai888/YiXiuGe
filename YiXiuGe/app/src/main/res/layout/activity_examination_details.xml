@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent_no"
+    tools:context=".ui.teacher.activity.ExaminationDetailsActivity">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <LinearLayout
+        style="@style/v_match_parent"
+        android:padding="@dimen/d_10dp"
+        android:paddingLeft="@dimen/d_10dp">
+
+        <TextView
+            style="@style/text12color666"
+            android:layout_marginLeft="@dimen/d_10dp"
+            android:drawableLeft="@drawable/class_name"
+            android:drawablePadding="@dimen/d_5dp"
+            android:text="美肤管理" />
+
+        <TextView
+            style="@style/text12color666"
+            android:layout_marginLeft="@dimen/d_10dp"
+            android:layout_marginTop="@dimen/d_5dp"
+            android:drawableLeft="@drawable/class_time"
+            android:drawablePadding="@dimen/d_5dp"
+            android:text="2018-8-23 (周一) 18:00" />
+
+        <TextView
+            style="@style/text12color666"
+            android:layout_marginLeft="@dimen/d_10dp"
+            android:layout_marginTop="@dimen/d_5dp"
+            android:drawableLeft="@drawable/teacher_underway"
+            android:drawablePadding="@dimen/d_5dp"
+            android:text="正在进行" />
+
+        <TextView
+            style="@style/text12color666"
+            android:layout_marginLeft="@dimen/d_10dp"
+            android:layout_marginTop="@dimen/d_5dp"
+            android:drawableLeft="@drawable/teacher_num"
+            android:drawablePadding="@dimen/d_5dp"
+            android:text="25人/30人" />
+
+        <TextView
+            style="@style/text12color666"
+            android:layout_marginBottom="@dimen/d_10dp"
+            android:layout_marginLeft="@dimen/d_10dp"
+            android:layout_marginTop="@dimen/d_5dp"
+            android:drawableLeft="@drawable/teacher_sui"
+            android:drawablePadding="@dimen/d_5dp"
+            android:text="随堂考试" />
+
+        <TextView style="@style/line_H1dp_divider" />
+
+        <TextView
+            style="@style/text12colorBlack"
+            android:layout_marginLeft="@dimen/d_10dp"
+            android:layout_marginTop="@dimen/d_10dp"
+            android:text="考试说明" />
+
+        <TextView
+            style="@style/text12colorBlack"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/d_10dp"
+            android:layout_marginTop="@dimen/d_10dp"
+            android:background="@drawable/class_details"
+            android:text="请同学们带好电脑！" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/v_match_parent_no"
+        android:layout_margin="@dimen/d_10dp"
+        android:background="@drawable/evaluate_bg"
+        android:padding="@dimen/d_10dp">
+
+
+        <TextView
+            style="@style/text12color666"
+            android:layout_marginBottom="@dimen/d_5dp"
+            android:drawableLeft="@drawable/examination_subject"
+            android:drawablePadding="@dimen/d_5dp"
+            android:text="考试结果" />
+
+        <TextView
+            style="@style/text12colorBlack"
+            android:layout_marginTop="@dimen/d_5dp"
+            android:layout_marginLeft="@dimen/d_20dp"
+            android:text="及格人数：20" />
+
+        <TextView
+            style="@style/text12colorBlack"
+            android:layout_marginTop="@dimen/d_10dp"
+            android:layout_marginLeft="@dimen/d_20dp"
+            android:text="不及格人数：2" />
+
+    </LinearLayout>
+
+</LinearLayout>
+
+

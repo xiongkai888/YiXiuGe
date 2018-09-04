@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/v_match_parent"
+    android:gravity="center_vertical"
+    android:padding="@dimen/d_10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/thumb_iv"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/temp_home" />
+
+        <ImageView
+            style="@style/text"
+            android:layout_centerInParent="true"
+            android:src="@drawable/video_btn" />
+
+        <TextView
+            android:id="@+id/title_tv"
+            style="@style/text"
+            android:padding="@dimen/d_5dp"
+            android:text="医学美肤管理" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        style="@style/h_match_parent_no"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:gravity="center_vertical">
+
+        <com.xson.common.widget.CircleImageView
+            android:id="@+id/pic_iv"
+            android:layout_width="@dimen/d_30dp"
+            android:layout_height="@dimen/d_30dp"
+            android:src="@drawable/temp_pic" />
+
+
+        <TextView
+            android:id="@+id/nickname_tv"
+            style="@style/text_weight"
+            android:padding="@dimen/d_5dp"
+            android:text="@string/name"
+            android:textSize="@dimen/txt_12sp" />
+
+
+        <ImageView
+            style="@style/text"
+            android:padding="@dimen/d_5dp"
+            android:src="@drawable/home_video" />
+
+        <ImageView
+            style="@style/text"
+            android:padding="@dimen/d_5dp"
+            android:src="@drawable/home_share" />
+
+        <ImageView
+            style="@style/text"
+            android:padding="@dimen/d_5dp"
+            android:src="@drawable/home_zan" />
+
+        <ImageView
+            style="@style/text"
+            android:src="@drawable/home_message" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

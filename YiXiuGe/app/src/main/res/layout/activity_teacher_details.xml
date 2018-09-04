@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent_no"
+    tools:context=".ui.home.activity.TeacherDetailsActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout style="@style/v_all_match_parent">
+
+            <LinearLayout
+                style="@style/v_match_parent"
+                android:background="@drawable/teacher_details_bg">
+
+                <ImageView
+                    android:id="@+id/back_iv"
+                    style="@style/text"
+                    android:layout_marginTop="@dimen/d_20dp"
+                    android:padding="@dimen/d_10dp"
+                    android:src="@drawable/back_w" />
+
+                <ImageView
+                    style="@style/text"
+                    android:layout_width="@dimen/d_50dp"
+                    android:layout_height="@dimen/d_50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/temp_pic" />
+
+                <LinearLayout
+                    style="@style/h_match_parent_no"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/d_5dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/text14colorWhite"
+                        android:text="李菲菲" />
+
+                    <TextView
+                        style="@style/text10colorWhite"
+                        android:layout_marginLeft="@dimen/d_10dp"
+                        android:background="@drawable/teacher_button_sub_bg"
+                        android:text="五年教龄" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d_5dp">
+
+                    <TextView
+                        android:id="@+id/content_tv"
+                        style="@style/text12colorWhite"
+                        android:layout_centerHorizontal="true"
+                        android:text="女 | 30岁 | 广州" />
+
+                    <ImageView
+                        android:id="@+id/message_iv"
+                        style="@style/text"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="@dimen/d_10dp"
+                        android:layout_marginRight="@dimen/d_10dp"
+                        android:src="@drawable/teacher_message" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/text"
+                android:padding="@dimen/d_10dp"
+                android:text="主教科目" />
+
+            <TextView
+                style="@style/text12color666"
+                android:layout_marginBottom="@dimen/d_10dp"
+                android:layout_marginLeft="@dimen/d_10dp"
+                android:text="美肤 | 空腔" />
+
+            <TextView style="@style/line_H10dp_on" />
+
+            <TextView
+                style="@style/text"
+                android:padding="@dimen/d_10dp"
+                android:text="个人简介" />
+
+            <TextView
+                style="@style/text12color666"
+                android:layout_marginBottom="@dimen/d_10dp"
+                android:layout_marginLeft="@dimen/d_10dp"
+                android:layout_marginRight="@dimen/d_10dp"
+                android:text="个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介个人简介" />
+
+            <TextView style="@style/line_H10dp_on" />
+
+            <TextView
+                style="@style/text"
+                android:padding="@dimen/d_10dp"
+                android:text="TA的发布 (18)" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/d_10dp"
+                android:layout_marginLeft="@dimen/d_10dp"
+                android:layout_marginRight="@dimen/d_10dp" />
+
+            <TextView style="@style/line_H10dp_on" />
+
+            <TextView style="@style/line_H1dp_divider" />
+
+            <LinearLayout
+                style="@style/h_match_parent_no"
+                android:background="@color/colorF4F4">
+
+                <TextView
+                    android:id="@+id/good_reputation_tv"
+                    style="@style/text"
+                    android:background="@color/white"
+                    android:paddingBottom="@dimen/d_10dp"
+                    android:paddingLeft="@dimen/d_30dp"
+                    android:paddingRight="@dimen/d_30dp"
+                    android:paddingTop="@dimen/d_10dp"
+                    android:text="好评"
+                    android:textColor="@color/color1593f0" />
+
+                <TextView
+                    android:id="@+id/middle_reputation_tv"
+                    style="@style/text"
+                    android:paddingBottom="@dimen/d_10dp"
+                    android:paddingLeft="@dimen/d_30dp"
+                    android:paddingRight="@dimen/d_30dp"
+                    android:paddingTop="@dimen/d_10dp"
+                    android:text="中评" />
+
+                <TextView
+                    android:id="@+id/bad_reputation_tv"
+                    style="@style/text"
+                    android:paddingBottom="@dimen/d_10dp"
+                    android:paddingLeft="@dimen/d_30dp"
+                    android:paddingRight="@dimen/d_30dp"
+                    android:paddingTop="@dimen/d_10dp"
+                    android:text="差评" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/h_match_parent"
+                android:padding="@dimen/d_10dp">
+
+                <com.xson.common.widget.CircleImageView
+                    android:id="@+id/pic_iv"
+                    android:layout_width="@dimen/d_50dp"
+                    android:layout_height="@dimen/d_50dp"
+                    android:src="@drawable/temp_pic" />
+
+                <LinearLayout
+                    style="@style/v_match_parent_no"
+                    android:layout_marginLeft="@dimen/d_10dp">
+
+
+                    <LinearLayout
+                        style="@style/h_match_parent_no"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            style="@style/text_weight"
+                            android:text="李菲菲"
+                            android:textColor="@color/color666"
+                            android:textSize="@dimen/txt_12sp" />
+
+                        <TextView
+                            style="@style/text12color666"
+                            android:text="评价：" />
+
+                        <RatingBar
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/d_5dp"
+                            android:numStars="5"
+                            android:progressTint="@color/colorF9D14D"
+                            android:rating="3"
+                            android:stepSize="1" />
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/text12color666"
+                        android:layout_marginBottom="@dimen/d_5dp"
+                        android:layout_marginTop="@dimen/d_5dp"
+                        android:text="服务态度非常好服务态度非常好服务态度非常好服务态度非常好服务态度非常好服务态度非常好服务态度非常好服务态度非常好服务态度非常好" />
+
+                    <LinearLayout
+                        style="@style/h_match_parent_no"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            style="@style/text_weight"
+                            android:text="@string/time"
+                            android:textColor="@color/color666"
+                            android:textSize="@dimen/txt_12sp" />
+
+                        <TextView
+                            style="@style/text12color666"
+                            android:drawableLeft="@drawable/home_zan"
+                            android:gravity="center_vertical"
+                            android:text="3" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+            <TextView style="@style/line_H10dp_on" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

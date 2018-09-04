@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/v_match_parent"
+    android:gravity="center_vertical"
+    android:padding="@dimen/d_10dp">
+
+    <TextView
+        android:id="@+id/title_tv"
+        style="@style/text"
+        android:layout_marginBottom="@dimen/d_10dp" />
+
+    <include
+        android:id="@+id/sudokuView"
+        layout="@layout/view_sudoku" />
+
+    <LinearLayout
+        style="@style/h_match_parent_no"
+        android:layout_width="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:gravity="center_vertical">
+
+
+        <TextView
+            android:id="@+id/like_tv"
+            style="@style/text12color666"
+            android:drawableLeft="@drawable/home_zan"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/d_6dp"
+            android:paddingRight="@dimen/d_6dp"
+            android:text="@string/zero" />
+
+
+        <TextView
+            android:id="@+id/reviews_tv"
+            style="@style/text12color666"
+            android:drawableLeft="@drawable/home_message"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/d_6dp"
+            android:paddingRight="@dimen/d_6dp"
+            android:text="@string/zero" />
+
+        <ImageView
+            android:id="@+id/share_iv"
+            style="@style/text"
+            android:paddingLeft="@dimen/d_6dp"
+            android:paddingRight="@dimen/d_6dp"
+            android:src="@drawable/home_share" />
+    </LinearLayout>
+
+</LinearLayout>

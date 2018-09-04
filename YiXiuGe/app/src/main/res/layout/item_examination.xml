@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/h_match_parent_no"
+    android:layout_marginBottom="@dimen/d_5dp"
+    android:layout_marginLeft="@dimen/d_10dp"
+    android:layout_marginRight="@dimen/d_10dp"
+    android:layout_marginTop="@dimen/d_5dp">
+
+    <LinearLayout
+        style="@style/h_match_parent"
+        android:background="@drawable/evaluate_bg"
+        android:padding="@dimen/d_10dp">
+
+        <com.xson.common.widget.CircleImageView
+            android:id="@+id/pic_iv"
+            android:layout_width="@dimen/d_20dp"
+            android:layout_height="@dimen/d_20dp"
+            android:src="@drawable/kskm" />
+
+        <LinearLayout
+            style="@style/v_match_parent_no"
+            android:layout_marginLeft="@dimen/d_10dp">
+
+
+            <TextView
+                style="@style/text12color666"
+                android:text="发布时间：2018.08.17  12:30" />
+
+            <TextView
+                android:layout_marginTop="@dimen/d_5dp"
+                android:layout_marginBottom="@dimen/d_5dp"
+                style="@style/text"
+                android:text="测试科目：美肤管理" />
+
+            <TextView
+                style="@style/text12color666"
+                android:text="测试时间：90分钟" />
+
+
+            <TextView
+                android:layout_gravity="right"
+                android:background="@drawable/examination_button_bg"
+                style="@style/text12color1593f0"
+                android:text="考试详情" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

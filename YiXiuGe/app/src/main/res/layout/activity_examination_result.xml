@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent_no"
+    tools:context="com.lanmei.yixiu.ui.mine.activity.ExaminationResultActivity">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout style="@style/v_all_match_parent">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/color1593f0">
+
+                <TextView
+                    style="@style/text14colorWhite"
+                    android:layout_margin="@dimen/d_10dp"
+                    android:text="得分" />
+
+                <TextView
+                    style="@style/text14colorWhite"
+                    android:layout_centerInParent="true"
+                    android:text="50"
+                    android:textSize="80sp" />
+
+
+                <TextView
+                    style="@style/text14colorWhite"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="@dimen/d_10dp"
+                    android:text="/100" />
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                style="@style/h_match_parent_no"
+                android:background="@color/color2E9EF2"
+                android:padding="@dimen/d_10dp">
+
+                <TextView
+                    style="@style/text_weight"
+                    android:gravity="center"
+                    android:text="试题量\n20道"
+
+                    android:textColor="@color/white" />
+
+                <TextView style="@style/line_v1dp_divider" />
+
+                <TextView
+                    style="@style/text_weight"
+                    android:gravity="center"
+                    android:text="答题数\n20道"
+                    android:textColor="@color/white" />
+
+                <TextView style="@style/line_v1dp_divider" />
+
+                <TextView
+                    style="@style/text_weight"
+                    android:gravity="center"
+                    android:text="正确率\n50%"
+                    android:textColor="@color/white" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/h_match_parent_no"
+                android:gravity="center_vertical"
+                android:padding="@dimen/d_10dp">
+
+                <TextView
+                    style="@style/text14color666"
+                    android:layout_weight="1"
+                    android:text="共20道   您答对10道" />
+
+                <TextView
+                    android:layout_width="@dimen/d_15dp"
+                    android:layout_height="@dimen/d_15dp"
+                    android:background="@color/colorFF4A4A" />
+
+                <TextView
+                    style="@style/text"
+                    android:layout_marginLeft="@dimen/d_5dp"
+                    android:text="错误"
+                    android:textColor="@color/colorFF4A4A" />
+
+                <TextView
+                    android:layout_width="@dimen/d_15dp"
+                    android:layout_height="@dimen/d_15dp"
+                    android:layout_marginLeft="@dimen/d_20dp"
+                    android:background="@color/color0cc215" />
+
+                <TextView
+                    style="@style/text"
+                    android:layout_marginLeft="@dimen/d_5dp"
+                    android:text="正确"
+                    android:textColor="@color/color0cc215" />
+
+            </LinearLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

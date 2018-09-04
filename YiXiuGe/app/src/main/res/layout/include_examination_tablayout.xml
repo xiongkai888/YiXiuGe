@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/toolbar_h"
+    android:background="@color/white"
+    >
+
+
+    <TextView
+        android:id="@+id/toolbar_name_tv"
+        android:layout_centerInParent="true"
+        android:drawablePadding="@dimen/d_5dp"
+        android:textSize="@dimen/txt_18sp"
+        style="@style/text" />
+
+    <ImageView
+        android:id="@+id/back_iv"
+        android:src="@drawable/back"
+        android:padding="@dimen/d_5dp"
+        android:layout_centerVertical="true"
+        style="@style/text" />
+
+    <TextView
+        android:id="@+id/menu_tv"
+        android:layout_alignParentRight="true"
+        android:textSize="@dimen/txt_16sp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/d_10dp"
+        style="@style/text" />
+
+</RelativeLayout>

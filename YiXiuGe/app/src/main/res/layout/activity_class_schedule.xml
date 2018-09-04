@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:calendarview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent_no"
+    tools:context=".ui.mine.activity.MyClassScheduleActivity">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/d_10dp">
+
+        <ImageView
+            android:id="@+id/last_month_iv"
+            style="@style/text"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/d_30dp"
+            android:padding="@dimen/d_10dp"
+            android:src="@drawable/calendar_last" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/next_month_iv"
+            style="@style/text"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/d_30dp"
+            android:padding="@dimen/d_10dp"
+            android:src="@drawable/calendar_next" />
+
+    </RelativeLayout>
+
+    <com.othershe.calendarview.weiget.WeekView
+        android:layout_width="match_parent"
+        android:layout_height="35dp" />
+
+    <com.othershe.calendarview.weiget.CalendarView
+        android:id="@+id/calendar"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        calendarview:choose_type="multi" />
+
+    <TextView style="@style/line_H1dp_divider" />
+
+    <LinearLayout
+        style="@style/ll_bottom_h_no"
+        android:layout_margin="@dimen/d_10dp"
+        android:background="@drawable/evaluate_bg"
+        android:padding="@dimen/d_10dp">
+
+
+        <ImageView
+            android:layout_width="@dimen/d_15dp"
+            android:layout_height="@dimen/d_15dp"
+            android:src="@drawable/day_bg_1b" />
+
+        <TextView
+            style="@style/text_weight"
+            android:text="上课" />
+
+
+        <ImageView
+            android:layout_width="@dimen/d_15dp"
+            android:layout_height="@dimen/d_15dp"
+            android:src="@drawable/day_bg_2b" />
+
+        <TextView
+            style="@style/text_weight"
+            android:text="评价" />
+
+
+        <ImageView
+            android:layout_width="@dimen/d_15dp"
+            android:layout_height="@dimen/d_15dp"
+            android:src="@drawable/day_bg_3b" />
+
+        <TextView
+            style="@style/text_weight"
+            android:text="已评价" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

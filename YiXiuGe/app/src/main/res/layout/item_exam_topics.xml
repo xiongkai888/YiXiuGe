@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/h_match_parent"
+    android:paddingBottom="@dimen/d_10dp"
+    android:paddingTop="@dimen/d_10dp">
+
+
+    <TextView
+        android:id="@+id/item_tv"
+        style="@style/text"
+        android:layout_width="@dimen/d_50dp"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:background="@drawable/evaluate_bar_bg"
+        android:gravity="center"
+        android:text="20" />
+
+    <TextView
+        android:id="@+id/topic_tv"
+        style="@style/text"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:text="50临床医生 （难）" />
+
+
+</LinearLayout>

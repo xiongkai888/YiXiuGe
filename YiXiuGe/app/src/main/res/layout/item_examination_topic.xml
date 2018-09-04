@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/h_match_parent"
+    android:padding="@dimen/d_10dp">
+
+
+    <TextView
+        android:id="@+id/item_tv"
+        style="@style/text14colorFF4A4A"
+        android:background="@drawable/circle_topic_off"
+        android:gravity="center"
+        android:text="A" />
+
+    <TextView
+        android:id="@+id/topic_tv"
+        style="@style/text"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:text="功能提升或兴奋" />
+
+
+</LinearLayout>

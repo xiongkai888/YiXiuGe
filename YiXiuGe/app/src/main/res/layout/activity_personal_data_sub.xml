@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.mine.activity.PersonalDataSubActivity">
+
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_personal_icons"
+                style="@style/ll_bottom_h"
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    style="@style/text"
+                    android:layout_width="0dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/d_30dp"
+                    android:layout_marginTop="@dimen/d_30dp"
+                    android:layout_weight="1"
+                    android:text="@string/individuality_portrait" />
+
+                <com.xson.common.widget.CircleImageView
+                    android:id="@+id/avatar_iv"
+                    android:layout_width="@dimen/d_55dp"
+                    android:layout_height="@dimen/d_55dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/temp_pic" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_name"
+                style="@style/ll_bottom_personal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    style="@style/text_weight"
+                    android:text="昵\u3000\u3000称：" />
+
+                <TextView
+                    android:id="@+id/name_tv"
+                    style="@style/text" />
+
+                <ImageView style="@style/in_right_icon" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_id_number"
+                style="@style/ll_bottom_personal"
+                android:paddingBottom="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_10dp">
+
+                <TextView
+                    style="@style/text_weight"
+                    android:layout_gravity="center_vertical"
+                    android:text="性\u3000\u3000别：" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/d_10dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/btnMan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:drawableLeft="@drawable/check_bg_personal"
+                        android:drawablePadding="5dp"
+                        android:text="男" />
+
+                    <RadioButton
+                        android:id="@+id/btnWoman"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:button="@null"
+                        android:drawableLeft="@drawable/check_bg_personal"
+                        android:drawablePadding="5dp"
+                        android:text="女" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_email"
+                style="@style/ll_bottom_personal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    style="@style/text_weight"
+                    android:text="邮\u3000\u3000箱：" />
+
+                <TextView
+                    android:id="@+id/email_tv"
+                    style="@style/text" />
+
+                <ImageView style="@style/in_right_icon" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_phone"
+                style="@style/ll_bottom_personal"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/text_weight"
+                    android:text="电\u3000\u3000话：" />
+
+                <TextView
+                    android:id="@+id/phone_tv"
+                    style="@style/text"
+                    android:text="10086" />
+
+                <ImageView
+                    style="@style/in_right_icon"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/ll_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom_divider"
+                android:paddingBottom="@dimen/d_12dp"
+                android:paddingLeft="@dimen/d_10dp"
+                android:paddingRight="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_12dp">
+
+                <TextView
+                    android:id="@+id/address_area_tv"
+                    style="@style/text"
+                    android:text="地\u3000\u3000址：" />
+
+
+                <TextView
+                    android:id="@+id/address_tv"
+                    style="@style/text"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/address_area_tv"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/in_right"
+                    android:gravity="right"
+                    android:lineSpacingMultiplier="1.3" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ll_address_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom_divider"
+                android:paddingBottom="@dimen/d_12dp"
+                android:paddingLeft="@dimen/d_10dp"
+                android:paddingRight="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_12dp">
+
+                <TextView
+                    android:id="@+id/address"
+                    style="@style/text"
+                    android:text="详细地址：" />
+
+
+                <TextView
+                    android:id="@+id/address_details_tv"
+                    style="@style/text"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/address"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/in_right"
+                    android:gravity="right"
+                    android:lineSpacingMultiplier="1.3" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/save_bt"
+        style="@style/button_style"
+        android:background="@drawable/button_unable"
+        android:text="@string/save" />
+
+</LinearLayout>

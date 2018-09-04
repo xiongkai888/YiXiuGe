@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/h_match_parent"
+    android:gravity="center_vertical"
+    android:padding="@dimen/d_5dp">
+
+
+   <EditText
+       android:id="@+id/option_et"
+       android:background="@drawable/class_details"
+       style="@style/text_weight" />
+
+
+    <ImageView
+        android:id="@+id/option_minus_tv"
+        android:src="@drawable/teacher_option_minus"
+        android:paddingRight="@dimen/d_5dp"
+        android:paddingLeft="@dimen/d_10dp"
+        style="@style/text"/>
+
+    <ImageView
+        android:id="@+id/option_plus_tv"
+        android:src="@drawable/teacher_option_plus"
+        android:paddingRight="@dimen/d_5dp"
+        android:paddingLeft="@dimen/d_5dp"
+        style="@style/text"/>
+
+</LinearLayout>

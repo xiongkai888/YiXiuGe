@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.lanmei.yixiu.widget.SudokuView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <com.lanmei.yixiu.widget.DoubleScaleImageView
+        android:id="@+id/only_imageView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d_200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_pic" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</com.lanmei.yixiu.widget.SudokuView>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/v_match_parent_no"
+    android:layout_marginBottom="@dimen/d_10dp">
+
+    <include layout="@layout/include_banner" />
+
+    <TextView style="@style/line_H1dp_divider" />
+
+    <LinearLayout
+        style="@style/h_match_parent"
+        android:paddingBottom="@dimen/d_10dp"
+        android:paddingTop="@dimen/d_10dp">
+
+        <TextView
+            android:id="@+id/ke_cheng_tv"
+            style="@style/text_weight"
+            android:drawableTop="@drawable/home_1"
+            android:gravity="center"
+            android:text="@string/ke_cheng" />
+
+        <TextView
+            android:id="@+id/zi_xun_tv"
+            style="@style/text_weight"
+            android:drawableTop="@drawable/home_2"
+            android:gravity="center"
+            android:text="@string/zi_xun" />
+
+        <TextView
+            android:id="@+id/jiao_cheng_tv"
+            style="@style/text_weight"
+            android:drawableTop="@drawable/home_3"
+            android:gravity="center"
+            android:text="@string/jiao_shi" />
+
+        <TextView
+            android:id="@+id/kao_shi_tv"
+            style="@style/text_weight"
+            android:drawableTop="@drawable/home_4"
+            android:gravity="center"
+            android:text="@string/kao_shi" />
+
+        <TextView
+            android:id="@+id/questionnaire_tv"
+            style="@style/text_weight"
+            android:drawableTop="@drawable/home_5"
+            android:gravity="center"
+            android:text="@string/questionnaire" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

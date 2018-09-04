@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent_no"
+    tools:context=".ui.teacher.activity.AddQuestionnaireActivity">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <LinearLayout
+        style="@style/v_match_parent"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:paddingLeft="@dimen/d_10dp">
+
+
+        <LinearLayout
+            style="@style/h_match_parent_no"
+            android:gravity="center_vertical">
+
+            <ImageView
+                style="@style/text"
+                android:src="@drawable/class_name" />
+
+            <EditText
+                style="@style/match_parent"
+                android:background="@drawable/border_bottom_divider"
+                android:hint="请输入问卷标题"
+                android:paddingBottom="@dimen/d_10dp"
+                android:paddingLeft="@dimen/d_5dp"
+                android:paddingRight="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/h_match_parent_no"
+            android:gravity="center_vertical">
+
+            <ImageView
+                style="@style/text"
+                android:src="@drawable/class_time" />
+
+            <TextView
+                style="@style/match_parent"
+                android:background="@drawable/border_bottom_divider"
+                android:paddingBottom="@dimen/d_10dp"
+                android:paddingLeft="@dimen/d_5dp"
+                android:paddingRight="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_10dp"
+                android:text="2018-08-27 18:30 -- 2018-08-27 20:30" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/h_match_parent_no"
+            android:gravity="center_vertical">
+
+            <ImageView
+                style="@style/text"
+                android:src="@drawable/teacher_num" />
+
+            <LinearLayout
+                style="@style/match_parent"
+                android:background="@drawable/border_bottom_divider"
+                android:gravity="center_vertical"
+                android:paddingBottom="@dimen/d_10dp"
+                android:paddingLeft="@dimen/d_5dp"
+                android:paddingRight="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_10dp">
+
+                <TextView
+                    style="@style/text_weight"
+                    android:text="25人" />
+
+                <ImageView
+
+                    style="@style/text"
+                    android:src="@drawable/in_right" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/h_match_parent_no"
+            android:paddingTop="@dimen/d_5dp">
+
+            <ImageView
+                style="@style/text"
+                android:layout_marginTop="@dimen/d_5dp"
+                android:src="@drawable/teacher_attention" />
+
+            <LinearLayout
+                style="@style/match_parent"
+                android:layout_marginRight="@dimen/d_10dp"
+                android:background="@drawable/border_bottom_divider"
+                android:paddingBottom="@dimen/d_10dp">
+
+                <TextView
+                    style="@style/text"
+                    android:padding="@dimen/d_5dp"
+                    android:text="注意" />
+
+                <TextView
+                    style="@style/text12color666"
+                    android:layout_height="@dimen/d_80dp"
+                    android:background="@drawable/class_details"
+                    android:text="大家记得准时考试，过后不会有补考。大家记得准时考试，过后不会有补考。大家记得准时考试，过后不会有补考。大家记得准时考试，过后不会有补考。" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/h_match_parent_no"
+            android:gravity="center_vertical">
+
+            <ImageView
+                style="@style/text"
+                android:src="@drawable/teacher_subject" />
+
+            <LinearLayout
+                style="@style/match_parent"
+                android:gravity="center_vertical"
+                android:paddingBottom="@dimen/d_10dp"
+                android:paddingLeft="@dimen/d_5dp"
+                android:paddingRight="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_10dp">
+
+                <TextView
+                    style="@style/text_weight"
+                    android:padding="@dimen/d_5dp"
+                    android:text="51道题目" />
+
+                <ImageView
+
+                    style="@style/text"
+                    android:src="@drawable/in_right" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

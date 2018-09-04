@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorF4F4"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                style="@style/line_H1dp_divider"
+                android:layout_marginTop="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:id="@+id/ll_about_us"
+                    style="@style/ll_bottom_h"
+                    android:layout_marginLeft="@dimen/d_20dp">
+
+                    <TextView
+                        style="@style/setting_text"
+                        android:text="关于我们" />
+
+                    <ImageView style="@style/in_right_icon" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_clean_cache"
+                    style="@style/ll_bottom_h"
+                    android:layout_marginLeft="@dimen/d_20dp">
+
+                    <TextView
+                        style="@style/setting_text"
+                        android:text="清除缓存" />
+
+                    <TextView
+                        android:id="@+id/cache_count"
+                        style="@style/text"
+                        android:layout_marginRight="5dp"
+                        android:text="0KB" />
+
+                    <ImageView style="@style/in_right_icon" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_help_info"
+                    style="@style/ll_bottom_h"
+                    android:layout_marginLeft="@dimen/d_20dp">
+
+                    <TextView
+                        style="@style/setting_text"
+                        android:text="隐私设置" />
+
+                    <ImageView style="@style/in_right_icon" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_reset_pwd"
+                    style="@style/ll_bottom_h"
+                    android:layout_marginLeft="@dimen/d_20dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/setting_text"
+                        android:text="修改密码" />
+
+                    <ImageView style="@style/in_right_icon" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_info_setting"
+                    style="@style/ll_bottom_h"
+                    android:layout_marginLeft="@dimen/d_20dp"
+                    android:visibility="visible">
+
+                    <TextView
+                        style="@style/setting_text"
+                        android:text="消息设置" />
+
+                    <ImageView style="@style/in_right_icon" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_versions"
+                    style="@style/ll_bottom_h_no"
+                    android:layout_marginLeft="@dimen/d_20dp">
+
+                    <TextView
+                        style="@style/setting_text"
+                        android:text="版本信息" />
+
+                    <ImageView style="@style/in_right_icon" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View style="@style/line_H1dp_divider" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/back_login"
+        style="@style/button_style"
+        android:text="退出登录" />
+
+</LinearLayout>

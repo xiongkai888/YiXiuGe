@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/v_match_parent">
+
+
+    <TextView
+        android:id="@+id/evaluate_tv"
+        style="@style/text"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/d_10dp"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.4"
+        android:text="@string/evaluate" />
+
+    <LinearLayout
+        style="@style/h_match_parent_no"
+        android:layout_marginBottom="@dimen/d_10dp"
+        android:layout_marginLeft="@dimen/d_20dp"
+        android:layout_marginRight="@dimen/d_20dp"
+        android:gravity="center_vertical">
+
+
+        <TextView
+            style="@style/text"
+            android:layout_marginRight="@dimen/d_10dp"
+            android:text="星级：" />
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            style="?android:attr/ratingBarStyleIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d_5dp"
+            android:isIndicator="false"
+            android:numStars="5"
+            android:progressTint="@color/colorF9D14D"
+            android:rating="1"
+            android:stepSize="1" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d_100dp"
+        android:layout_marginBottom="@dimen/d_10dp"
+        android:layout_marginLeft="@dimen/d_20dp"
+        android:layout_marginRight="@dimen/d_20dp"
+        android:background="@drawable/evaluate_bar_bg"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/d_5dp"
+        android:paddingLeft="@dimen/d_10dp"
+        android:paddingRight="@dimen/d_10dp"
+        android:paddingTop="@dimen/d_5dp">
+
+        <EditText
+            android:id="@+id/reply_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="@string/input_evaluate_content"
+            android:maxLength="120" />
+
+        <TextView
+            android:id="@+id/num_tv"
+            style="@style/text12color999"
+            android:layout_gravity="end"
+            android:text="0/120" />
+
+    </LinearLayout>
+
+
+    <TextView style="@style/line_H1dp_divider" />
+
+    <LinearLayout style="@style/h_match_parent_no">
+
+
+        <TextView
+            android:id="@+id/no_tv"
+            style="@style/text14color999"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/cancel" />
+
+        <TextView style="@style/line_v1dp_divider" />
+
+        <TextView
+            android:id="@+id/yes_tv"
+            style="@style/text14colorWhite"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@color/color1593f0"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/submit" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

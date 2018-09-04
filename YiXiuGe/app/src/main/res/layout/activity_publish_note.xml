@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:calendarview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent_no"
+    tools:context=".ui.mine.activity.PublishNoteActivity">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <com.xson.common.widget.DrawClickableEditText
+        android:padding="@dimen/d_10dp"
+        android:lines="1"
+        android:hint="请输入笔记标题"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:layout_marginBottom="@dimen/d_10dp"
+        android:background="@drawable/border_bottom_top_divider"
+        style="@style/match_parent" />
+
+    <LinearLayout
+        android:padding="@dimen/d_10dp"
+        android:background="@drawable/border_bottom_top_divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.xson.common.widget.DrawClickableEditText
+            android:hint="请输入笔记内容"
+            android:background="@null"
+            style="@style/match_parent" />
+
+        <ImageView
+            android:id="@+id/file_iv1"
+            android:layout_marginTop="@dimen/d_10dp"
+            android:src="@drawable/icon_select"
+            style="@style/text" />
+
+    </LinearLayout>
+
+    <TextView
+        android:text="上传附件 (PDF/JPG/XLSX/DOC/DOCX/PPT/PPTX/PNG/XLS)"
+        android:layout_margin="@dimen/d_10dp"
+        style="@style/text12color666" />
+
+
+    <LinearLayout
+        android:padding="@dimen/d_10dp"
+        android:background="@drawable/border_bottom_top_divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/file_iv2"
+            android:src="@drawable/icon_select"
+            style="@style/text" />
+
+    </LinearLayout>
+
+</LinearLayout>

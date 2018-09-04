@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/match_parent_has"
+    android:padding="@dimen/d_10dp"
+    android:layout_marginBottom="@dimen/d_5dp"
+    android:layout_marginTop="@dimen/d_5dp">
+
+
+    <LinearLayout
+        style="@style/v_match_parent_no">
+
+        <TextView
+            android:drawableLeft="@drawable/teacher_name"
+            android:text="33人"
+            android:drawablePadding="@dimen/d_5dp"
+            style="@style/text14color666" />
+
+        <TextView
+            android:layout_marginTop="@dimen/d_5dp"
+            android:drawableLeft="@drawable/teacher_time"
+            android:text="2016-06-21（周三） 18:30"
+            android:drawablePadding="@dimen/d_5dp"
+            style="@style/text14color666" />
+
+        <TextView
+            android:layout_marginTop="@dimen/d_5dp"
+            android:drawableLeft="@drawable/teacher_position"
+            android:text="教师2"
+            android:drawablePadding="@dimen/d_5dp"
+            style="@style/text14color666" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/examination_details_tv"
+        style="@style/text12color1593f0"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/examination_button_bg"
+        android:text="考勤管理" />
+
+    <ImageView
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/teacher_qr"
+        style="@style/text" />
+
+
+</RelativeLayout>

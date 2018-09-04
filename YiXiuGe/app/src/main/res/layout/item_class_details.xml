@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/v_match_parent"
+    android:layout_marginBottom="@dimen/d_5dp"
+    android:layout_marginTop="@dimen/d_5dp"
+    android:background="@drawable/border_bottom_top_divider"
+    android:padding="@dimen/d_10dp">
+
+    <LinearLayout
+        style="@style/h_match_parent_no"
+        android:layout_marginBottom="@dimen/d_10dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            style="@style/text"
+            android:src="@drawable/temp_pic" />
+
+        <TextView
+            style="@style/text"
+            android:layout_marginLeft="@dimen/d_5dp"
+            android:text="@string/name" />
+
+    </LinearLayout>
+
+    <TextView style="@style/line_H1dp_divider" />
+
+    <TextView
+        style="@style/text12color666"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:drawableLeft="@drawable/class_name"
+        android:drawablePadding="@dimen/d_5dp"
+        android:text="美肤管理" />
+
+    <TextView
+        style="@style/text12color666"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:layout_marginTop="@dimen/d_5dp"
+        android:drawableLeft="@drawable/class_time"
+        android:drawablePadding="@dimen/d_5dp"
+        android:text="2018-8-23 (周一) 18:00" />
+
+    <TextView
+        style="@style/text12color666"
+        android:layout_marginBottom="@dimen/d_10dp"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:layout_marginTop="@dimen/d_5dp"
+        android:drawableLeft="@drawable/class_position"
+        android:drawablePadding="@dimen/d_5dp"
+        android:text="教室2" />
+
+    <TextView style="@style/line_H1dp_divider" />
+
+    <TextView
+        style="@style/text12colorBlack"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:text="备注" />
+
+    <TextView
+        style="@style/text12colorBlack"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:background="@drawable/class_details"
+        android:text="请同学们带好电脑！" />
+
+
+    <LinearLayout
+        style="@style/h_match_parent_no"
+        android:layout_width="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="@dimen/d_10dp">
+
+        <TextView
+            android:id="@+id/class_hour_evaluate_tv"
+            style="@style/text12color1593f0"
+            android:layout_marginLeft="@dimen/d_5dp"
+            android:layout_marginRight="@dimen/d_5dp"
+            android:background="@drawable/examination_button_bg"
+            android:text="@string/class_hour_evaluate" />
+
+        <TextView
+            android:id="@+id/teacher_evaluate_tv"
+            style="@style/text12color1593f0"
+            android:layout_marginLeft="@dimen/d_5dp"
+            android:layout_marginRight="@dimen/d_5dp"
+            android:background="@drawable/examination_button_bg"
+            android:text="@string/teacher_evaluate" />
+
+        <TextView
+            android:id="@+id/schoolmate_evaluate_tv"
+            style="@style/text12color1593f0"
+            android:layout_marginLeft="@dimen/d_5dp"
+            android:layout_marginRight="@dimen/d_5dp"
+            android:background="@drawable/examination_button_bg"
+            android:text="@string/schoolmate_evaluate" />
+
+    </LinearLayout>
+
+</LinearLayout>

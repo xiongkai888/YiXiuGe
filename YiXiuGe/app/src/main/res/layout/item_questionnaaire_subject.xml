@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/h_match_parent"
+    android:layout_marginBottom="@dimen/d_5dp"
+    android:layout_marginTop="@dimen/d_5dp"
+    android:padding="@dimen/d_10dp">
+
+    <ImageView
+        style="@style/text"
+        android:src="@drawable/class_name" />
+
+    <LinearLayout
+        style="@style/v_match_parent_no"
+        android:layout_marginLeft="@dimen/d_5dp">
+
+        <TextView
+            style="@style/text"
+            android:text="你觉得你的学习能力如何？" />
+
+
+        <LinearLayout
+            style="@style/h_match_parent_no"
+            android:layout_marginTop="@dimen/d_5dp"
+            android:background="@drawable/class_details">
+
+            <ImageView
+                style="@style/text"
+                android:src="@drawable/teacher_answer" />
+
+
+            <LinearLayout
+                style="@style/v_match_parent_no"
+                android:layout_marginLeft="@dimen/d_10dp">
+
+                <TextView
+                    style="@style/text12colorBlack"
+                    android:text="很好" />
+
+                <TextView
+                    style="@style/text12colorBlack"
+                    android:layout_marginTop="@dimen/d_10dp"
+                    android:text="一般" />
+
+                <TextView
+                    style="@style/text12colorBlack"
+                    android:layout_marginTop="@dimen/d_10dp"
+                    android:text="很差" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
