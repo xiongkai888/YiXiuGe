@@ -8,6 +8,7 @@ import com.lanmei.yixiu.adapter.NewsSubAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.AdBean;
 import com.lanmei.yixiu.bean.NewsClassifyListBean;
+import com.lanmei.yixiu.event.NewsOperationEvent;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
@@ -17,12 +18,15 @@ import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
 import butterknife.InjectView;
 
 /**
- * 资讯
+ * 资讯列表sub
  */
 public class NewsSubActivity extends BaseActivity {
 
@@ -40,6 +44,8 @@ public class NewsSubActivity extends BaseActivity {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
+
         setSupportActionBar(mToolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayShowTitleEnabled(true);
@@ -49,6 +55,7 @@ public class NewsSubActivity extends BaseActivity {
 
         YiXiuGeApi api = new YiXiuGeApi("post/index");
         api.addParams("cid", 1);
+        api.addParams("uid", api.getUserId(this));
 
         mAdapter = new NewsSubAdapter(this);
 
@@ -76,5 +83,18 @@ public class NewsSubActivity extends BaseActivity {
                 mAdapter.setList(list);
             }
         });
+    }
+
+    //
+    @Subscribe
+    public void newsOperationEvent(NewsOperationEvent event){
+        controller.loadFirstPage();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

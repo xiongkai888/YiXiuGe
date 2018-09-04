@@ -9,12 +9,13 @@ import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.bean.HomeBean;
 import com.lanmei.yixiu.bean.NewsClassifyListBean;
-import com.lanmei.yixiu.utils.CommonUtils;
+import com.lanmei.yixiu.bean.NewsCommentBean;
 import com.lanmei.yixiu.utils.FormatTime;
 import com.lanmei.yixiu.webviewpage.WebViewPhotoBrowserUtil;
 import com.xson.common.adapter.SwipeRefreshAdapter;
+import com.xson.common.helper.ImageHelper;
+import com.xson.common.widget.CircleImageView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -23,7 +24,7 @@ import butterknife.InjectView;
 /**
  * 资讯详情评论列表
  */
-public class NewsDetailsAdapter extends SwipeRefreshAdapter<HomeBean> {
+public class NewsDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
 
     public int TYPE_BANNER = 100;
     private NewsClassifyListBean newsBean;
@@ -57,16 +58,33 @@ public class NewsDetailsAdapter extends SwipeRefreshAdapter<HomeBean> {
             onBindBannerViewHolder(holder, position); // banner
             return;
         }
+        NewsCommentBean bean = getItem(position - 1);
+        ViewHolder viewHolder = (ViewHolder) holder;
+        viewHolder.setParameter(bean);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
+        @InjectView(R.id.head_iv)
+        CircleImageView headIv;
+        @InjectView(R.id.name_tv)
+        TextView nameTv;
+        @InjectView(R.id.content_tv)
+        TextView contentTv;
+        @InjectView(R.id.time_tv)
+        TextView timeTv;
 
         ViewHolder(View view) {
             super(view);
             ButterKnife.inject(this, view);
         }
 
-        public void setParameter(final HomeBean bean) {
+        public void setParameter(NewsCommentBean bean) {
+            ImageHelper.load(context,bean.getMemberpic(),headIv,null,true,R.drawable.default_pic,R.drawable.default_pic);
+            nameTv.setText(bean.getNickname());
+            contentTv.setText(bean.getContent());
+            time.setTime(bean.getAddtime());
+            timeTv.setText(time.formatterTime());
         }
     }
 
@@ -106,7 +124,7 @@ public class NewsDetailsAdapter extends SwipeRefreshAdapter<HomeBean> {
 
     @Override
     public int getCount() {
-        return CommonUtils.quantity;
+        return super.getCount() + 1;
     }
 
     public void onBindBannerViewHolder(RecyclerView.ViewHolder holder, int position) {

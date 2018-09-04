@@ -6,10 +6,9 @@
     android:padding="@dimen/d_10dp">
 
     <com.xson.common.widget.CircleImageView
-        android:id="@+id/user_head_iv"
+        android:id="@+id/head_iv"
         android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/temp_pic" />
+        android:layout_height="50dp" />
 
     <LinearLayout
         style="@style/match_parent"
@@ -22,23 +21,20 @@
 
             <TextView
                 android:id="@+id/name_tv"
-                style="@style/text"
-                android:text="小不点" />
+                style="@style/text" />
 
 
             <TextView
                 android:id="@+id/content_tv"
                 style="@style/text14color666"
                 android:layout_marginBottom="6dp"
-                android:layout_marginTop="8dp"
-                android:text="美了美了美了" />
+                android:layout_marginTop="8dp" />
 
 
             <TextView
                 android:id="@+id/time_tv"
                 style="@style/text12color666"
-                android:layout_marginTop="3dp"
-                android:text="@string/time" />
+                android:layout_marginTop="3dp" />
 
         </LinearLayout>
 

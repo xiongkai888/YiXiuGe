@@ -96,6 +96,15 @@ public class NewsClassifyListBean {
     private String area_format;
     private List<String> file;
     private List<String> pic;
+    /**
+     * uid : null
+     * file : []
+     * liked : 0
+     * memberpic : null
+     * nickname : null
+     */
+
+    private String liked;
 
     public String getId() {
         return id;
@@ -432,4 +441,14 @@ public class NewsClassifyListBean {
     public void setPic(List<String> pic) {
         this.pic = pic;
     }
+
+
+    public String getLiked() {
+        return liked;
+    }
+
+    public void setLiked(String liked) {
+        this.liked = liked;
+    }
+
 }

@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.bean.CourseClassifyBean;
 import com.lanmei.yixiu.ui.home.activity.NoticeDetailsActivity;
-import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.utils.IntentUtil;
 
@@ -37,12 +36,6 @@ public class NoticeAdapter extends SwipeRefreshAdapter<CourseClassifyBean> {
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.setParameter(null);
-    }
-
-
-    @Override
-    public int getCount() {
-        return CommonUtils.quantity;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

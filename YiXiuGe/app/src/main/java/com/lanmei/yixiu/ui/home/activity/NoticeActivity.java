@@ -41,16 +41,14 @@ public class NoticeActivity extends BaseActivity {
         actionbar.setTitle(R.string.notice);
         actionbar.setHomeAsUpIndicator(R.drawable.back);
 
-        YiXiuGeApi api = new YiXiuGeApi("app/adpic");
-        api.addParams("uid", api.getUserId(this));
-        api.addParams("row", 20);
+        YiXiuGeApi api = new YiXiuGeApi("app/notice");
+        api.addParams("cid", 7);
 
         mAdapter = new NoticeAdapter(this);
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<CourseClassifyBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
         };
-//        controller.loadFirstPage();
-        mAdapter.notifyDataSetChanged();
+        controller.loadFirstPage();
     }
 }

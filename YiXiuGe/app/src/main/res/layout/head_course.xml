@@ -95,7 +95,7 @@
             <TextView
                 android:id="@+id/like_tv"
                 style="@style/text"
-                android:drawableLeft="@drawable/dianzan"
+                android:drawableLeft="@drawable/dianzan_off"
                 android:drawablePadding="@dimen/d_5dp"
                 android:gravity="center"
                 android:text="@string/zero"
