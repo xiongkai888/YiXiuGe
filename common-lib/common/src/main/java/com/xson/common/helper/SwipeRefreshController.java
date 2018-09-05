@@ -39,10 +39,6 @@ public abstract class SwipeRefreshController<T2 extends AbsListBean> implements 
         NO_CACHE
     }
 
-    public void setHasMore(boolean mHasMore) {
-        this.mHasMore = mHasMore;
-    }
-
     public SwipeRefreshController(Context context, SmartSwipeRefreshLayout smartSwipeRefreshLayout, AbstractApi api, LoadMoreAdapter adapter) {
         if (smartSwipeRefreshLayout.getAdapter() == null) {
             L.e("Please set the " + adapter.getClass().getSimpleName() + " to SmartSwipeRefreshLayout.");
@@ -145,11 +141,11 @@ public abstract class SwipeRefreshController<T2 extends AbsListBean> implements 
                  * 数据修改后，要马上通知Adapter数据已经改变，期间若做其它操作会导致异常
                  */
                 adapter.notifyDataSetChanged();
-                if (!mHasMore) {
-                    view.setMode(SmartSwipeRefreshLayout.Mode.REFRESH);
-                } else {
-                    view.setMode(SmartSwipeRefreshLayout.Mode.BOTH);
-                }
+//                if (!mHasMore) {
+//                    view.setMode(SmartSwipeRefreshLayout.Mode.REFRESH);
+//                } else {
+//                    view.setMode(SmartSwipeRefreshLayout.Mode.BOTH);
+//                }
                 if (!isCacheResult) {
                     view.hideLoading();
                 } else {
