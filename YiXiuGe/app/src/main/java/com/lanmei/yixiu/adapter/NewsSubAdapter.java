@@ -2,6 +2,7 @@ package com.lanmei.yixiu.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,8 +99,9 @@ public class NewsSubAdapter extends SwipeRefreshAdapter<NewsClassifyListBean> {
             sudokuView.setOnSingleClickListener(new SudokuView.SudokuViewClickListener() {
                 @Override
                 public void onClick(int positionSub) {
-//                    startActivity(bean);
-                    IntentUtil.startActivity(context, NewsDetailsActivity.class, bean.getId());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("bean",bean);
+                    IntentUtil.startActivity(context, NewsDetailsActivity.class, bundle);
                 }
 
                 @Override
@@ -110,7 +112,9 @@ public class NewsSubAdapter extends SwipeRefreshAdapter<NewsClassifyListBean> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    IntentUtil.startActivity(context, NewsDetailsActivity.class, bean.getId());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("bean",bean);
+                    IntentUtil.startActivity(context, NewsDetailsActivity.class, bundle);
                 }
             });
             titleTv.setText(bean.getTitle());

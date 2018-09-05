@@ -12,9 +12,11 @@ import android.widget.TextView;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.bean.CourseClassifyListBean;
 import com.lanmei.yixiu.ui.home.activity.CourseDetailsActivity;
+import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
 import com.xson.common.utils.IntentUtil;
+import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.CircleImageView;
 
 import butterknife.ButterKnife;
@@ -67,6 +69,8 @@ public class CourseListAdapter extends SwipeRefreshAdapter<CourseClassifyListBea
         CircleImageView picIv;//头像
         @InjectView(R.id.nickname_tv)
         TextView nicknameTv;//
+        @InjectView(R.id.like_iv)
+        ImageView likeIv;//
 
 
         ViewHolder(View view) {
@@ -80,6 +84,7 @@ public class CourseListAdapter extends SwipeRefreshAdapter<CourseClassifyListBea
             titleTv.setText(bean.getTitle());
             nicknameTv.setText(bean.getNickname());
             ImageHelper.load(context,bean.getMemberpic(),picIv,null,true,R.drawable.default_pic,R.drawable.default_pic);
+            likeIv.setImageResource(StringUtils.isSame(CommonUtils.isZero,bean.getLiked())?R.drawable.dianzan_off:R.drawable.news_like_on);
         }
     }
 

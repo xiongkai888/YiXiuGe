@@ -84,5 +84,6 @@
     <string name="setting">设置</string>
     <string name="publish_course">发布教程</string>
     <string name="zero">0</string>
+    <string name="search_course">搜索教程</string>
 
 </resources>

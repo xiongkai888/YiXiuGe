@@ -6,16 +6,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.NewsClassifyListBean;
 import com.lanmei.yixiu.bean.NewsCommentBean;
+import com.lanmei.yixiu.event.NewsCollectEvent;
+import com.lanmei.yixiu.event.NewsOperationEvent;
+import com.lanmei.yixiu.utils.CommonUtils;
 import com.lanmei.yixiu.utils.FormatTime;
 import com.lanmei.yixiu.webviewpage.WebViewPhotoBrowserUtil;
 import com.xson.common.adapter.SwipeRefreshAdapter;
+import com.xson.common.bean.BaseBean;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.ImageHelper;
+import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.CircleImageView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -107,6 +118,11 @@ public class NewsDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
         @InjectView(R.id.time_sub_tv)
         TextView timeTv;
 
+        @InjectView(R.id.favoured_iv)
+        ImageView favouredIv;//是否收藏
+        @InjectView(R.id.share_iv)
+        ImageView shareIv;//分享
+
         BannerViewHolder(View view) {
             super(view);
             ButterKnife.inject(this, view);
@@ -131,11 +147,48 @@ public class NewsDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
         if (newsBean == null) {
             return;
         }
-        BannerViewHolder viewHolder = (BannerViewHolder) holder;
+        final BannerViewHolder viewHolder = (BannerViewHolder) holder;
         WebViewPhotoBrowserUtil.photoBrowser(context, viewHolder.mWebView, newsBean.getContent());
         viewHolder.titleTv.setText(newsBean.getTitle());
         time.setTime(newsBean.getAddtime());
         viewHolder.timeTv.setText(time.getAgoDateFomat());
+
+        viewHolder.favouredIv.setImageResource(StringUtils.isSame(newsBean.getFavoured(), CommonUtils.isZero)?R.drawable.favoured_off:R.drawable.favoured_on);
+        viewHolder.favouredIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFavoured(viewHolder.favouredIv);
+            }
+        });
+        viewHolder.shareIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommonUtils.developing(context);
+            }
+        });
+    }
+
+    //点击收藏或者取消收藏
+    private void loadFavoured(final ImageView imageView) {
+        YiXiuGeApi api = new YiXiuGeApi("app/favour");
+        api.addParams("id", newsBean.getId());
+        api.addParams("uid", api.getUserId(context));
+        api.addParams("mod", "post");
+        if (StringUtils.isSame(newsBean.getFavoured(), CommonUtils.isOne)) {
+            api.addParams("del", CommonUtils.isOne);//取消收藏这个值随便传，不为空就行
+        }
+        HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+            @Override
+            public void onResponse(BaseBean response) {
+                if (context == null) {
+                    return;
+                }
+                newsBean.setFavoured(StringUtils.isSame(newsBean.getFavoured(), CommonUtils.isOne)?CommonUtils.isZero:CommonUtils.isOne);
+                EventBus.getDefault().post(new NewsOperationEvent(newsBean.getId(),newsBean.getReviews(),newsBean.getFavoured()));
+                EventBus.getDefault().post(new NewsCollectEvent());////如果是从收藏列表点击进来的就通知刷新资讯收藏列表
+                imageView.setImageResource(StringUtils.isSame(newsBean.getFavoured(), CommonUtils.isOne)?R.drawable.favoured_on:R.drawable.favoured_off);
+            }
+        });
     }
 
     public void removeWebView() {

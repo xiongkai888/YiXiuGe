@@ -24,8 +24,7 @@
         <TextView
             android:id="@+id/title_tv"
             style="@style/text"
-            android:padding="@dimen/d_5dp"
-            android:text="医学美肤管理" />
+            android:padding="@dimen/d_5dp" />
 
     </RelativeLayout>
 
@@ -37,15 +36,13 @@
         <com.xson.common.widget.CircleImageView
             android:id="@+id/pic_iv"
             android:layout_width="@dimen/d_30dp"
-            android:layout_height="@dimen/d_30dp"
-            android:src="@drawable/temp_pic" />
+            android:layout_height="@dimen/d_30dp" />
 
 
         <TextView
             android:id="@+id/nickname_tv"
             style="@style/text_weight"
             android:padding="@dimen/d_5dp"
-            android:text="@string/name"
             android:textSize="@dimen/txt_12sp" />
 
 
@@ -60,6 +57,7 @@
             android:src="@drawable/home_share" />
 
         <ImageView
+            android:id="@+id/like_iv"
             style="@style/text"
             android:padding="@dimen/d_5dp"
             android:src="@drawable/home_zan" />

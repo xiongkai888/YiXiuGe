@@ -6,10 +6,17 @@ import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.CourseListAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.CourseClassifyListBean;
+import com.lanmei.yixiu.event.CourseOperationEvent;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
+import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
 
 import butterknife.InjectView;
 
@@ -35,9 +42,9 @@ public class CourseListFragment extends BaseFragment {
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         initSwipeRefreshLayout();
-//        if (!EventBus.getDefault().isRegistered(this)) {
-//            EventBus.getDefault().register(this);
-//        }
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     private void initSwipeRefreshLayout() {
@@ -52,11 +59,31 @@ public class CourseListFragment extends BaseFragment {
         controller.loadFirstPage();
     }
 
+    //教程详情点赞是调用
+    @Subscribe
+    public void courseOperationEvent(CourseOperationEvent event) {
+        String id = event.getId();
+        List<CourseClassifyListBean> list = mAdapter.getData();
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            CourseClassifyListBean bean = list.get(i);
+            if (StringUtils.isSame(id,bean.getId())){
+                bean.setLiked(event.getLiked());
+                bean.setView(event.getViewNum());
+                bean.setFavoured(event.getFavoured());
+                bean.setReviews(event.getReviews());
+                bean.setLike(event.getLike());
+                mAdapter.notifyDataSetChanged();
+                return;
+            }
+        }
+    }
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 
 }

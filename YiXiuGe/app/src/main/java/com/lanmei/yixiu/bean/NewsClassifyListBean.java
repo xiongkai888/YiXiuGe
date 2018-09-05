@@ -1,5 +1,6 @@
 package com.lanmei.yixiu.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * 资讯分类列表（资讯详情）
  */
 
-public class NewsClassifyListBean {
+public class NewsClassifyListBean implements Serializable{
 
     /**
      * id : 790
@@ -94,7 +95,6 @@ public class NewsClassifyListBean {
     private String memberpic;
     private String nickname;
     private String area_format;
-    private List<String> file;
     private List<String> pic;
     /**
      * uid : null
@@ -424,14 +424,6 @@ public class NewsClassifyListBean {
 
     public void setArea_format(String area_format) {
         this.area_format = area_format;
-    }
-
-    public List<String> getFile() {
-        return file;
-    }
-
-    public void setFile(List<String> file) {
-        this.file = file;
     }
 
     public List<String> getPic() {

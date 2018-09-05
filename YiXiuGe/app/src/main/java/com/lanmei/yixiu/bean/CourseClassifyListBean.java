@@ -4,27 +4,30 @@ import java.io.Serializable;
 
 /**
  * Created by xkai on 2018/8/17.
- * 教程分类列表
+ * 教程分类列表（教程收藏列表）
  */
 
 public class CourseClassifyListBean implements Serializable{
 
     /**
-     * id : 17
-     * title : 视频4
+     * id : 22
+     * title : 中山一院基础外科学院成立宣传视频
      * uid : 820516
-     * addtime : 1535698749
-     * pic : null
-     * video : http://zsqz.oss-cn-shenzhen.aliyuncs.com/lanmei/screen/imgvideo/1532075975706.mp4
-     * view : 0
-     * favour : 0
-     * reviews : 0
-     * like : 0
-     * recommend : 0
-     * cid : 495
-     * cname : 教程3
-     * memberpic : http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/head-1807198884.jpg.tmp
-     * nickname : b_1889860****
+     * addtime : 1535962721
+     * pic : http://gzyxg.img-cn-shenzhen.aliyuncs.com/Uploads/imgs/20180903/15359626922492.jpg
+     * video : http://gzyxg.oss-cn-shenzhen.aliyuncs.com/video/dsyszsyp.mp4
+     * view : 28
+     * favour : 10
+     * reviews : 10
+     * like : 10
+     * recommend : 1
+     * cid : 22
+     * uptime : 1536060616
+     * cname : null
+     * liked : 0
+     * favoured : 0
+     * memberpic : http://gzyxg.img-cn-shenzhen.aliyuncs.com/Uploads/tmp/5b88db556b95e.jpg
+     * nickname : 医修哥
      * subscribe : 10
      */
 
@@ -40,18 +43,13 @@ public class CourseClassifyListBean implements Serializable{
     private String like;
     private String recommend;
     private String cid;
+    private String uptime;
     private String cname;
+    private String liked;
+    private String favoured;
     private String memberpic;
     private String nickname;
     private int subscribe;
-
-    /**
-     * uptime : 1535957641
-     * liked : 0
-     */
-
-    private String uptime;
-    private int liked;
 
     public String getId() {
         return id;
@@ -149,12 +147,36 @@ public class CourseClassifyListBean implements Serializable{
         this.cid = cid;
     }
 
+    public String getUptime() {
+        return uptime;
+    }
+
+    public void setUptime(String uptime) {
+        this.uptime = uptime;
+    }
+
     public String getCname() {
         return cname;
     }
 
     public void setCname(String cname) {
         this.cname = cname;
+    }
+
+    public String getLiked() {
+        return liked;
+    }
+
+    public void setLiked(String liked) {
+        this.liked = liked;
+    }
+
+    public String getFavoured() {
+        return favoured;
+    }
+
+    public void setFavoured(String favoured) {
+        this.favoured = favoured;
     }
 
     public String getMemberpic() {
@@ -179,21 +201,5 @@ public class CourseClassifyListBean implements Serializable{
 
     public void setSubscribe(int subscribe) {
         this.subscribe = subscribe;
-    }
-
-    public String getUptime() {
-        return uptime;
-    }
-
-    public void setUptime(String uptime) {
-        this.uptime = uptime;
-    }
-
-    public int getLiked() {
-        return liked;
-    }
-
-    public void setLiked(int liked) {
-        this.liked = liked;
     }
 }

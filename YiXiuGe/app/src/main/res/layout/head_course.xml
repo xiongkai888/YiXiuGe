@@ -10,24 +10,24 @@
         <com.xson.common.widget.CircleImageView
             android:id="@+id/member_pic_iv"
             android:layout_width="@dimen/d_50dp"
-            android:layout_height="@dimen/d_50dp"
-            android:src="@drawable/temp_pic" />
+            android:layout_height="@dimen/d_50dp" />
 
 
         <TextView
             android:id="@+id/name_tv"
             style="@style/text_weight"
             android:padding="@dimen/d_5dp"
-            android:text="@string/name"
             android:textSize="@dimen/txt_12sp" />
 
 
         <ImageView
+            android:id="@+id/favoured_iv"
             style="@style/text"
             android:padding="@dimen/d_5dp"
-            android:src="@drawable/home_life" />
+            android:src="@drawable/favoured_off" />
 
         <ImageView
+            android:id="@+id/share_iv"
             style="@style/text"
             android:padding="@dimen/d_5dp"
             android:src="@drawable/home_share" />
@@ -38,8 +38,7 @@
         android:id="@+id/title_tv"
         style="@style/text"
         android:layout_marginBottom="@dimen/d_10dp"
-        android:layout_marginTop="@dimen/d_10dp"
-        android:text="医学美肤管理" />
+        android:layout_marginTop="@dimen/d_10dp" />
 
     <LinearLayout
         style="@style/h_match_parent_no"

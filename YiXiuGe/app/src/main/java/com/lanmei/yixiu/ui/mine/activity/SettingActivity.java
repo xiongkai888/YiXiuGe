@@ -145,6 +145,7 @@ public class SettingActivity extends BaseActivity {
 
     public void showClearCache() {
         try {
+            DataCleanManager.cleanInternalCache(getApplicationContext());
             DataCleanManager.cleanExternalCache(getApplicationContext());
             mCleanCacheTv.setText(DataCleanManager.getCacheSize(getCacheDir()));
             UIHelper.ToastMessage(this, "清理完毕");

@@ -19,11 +19,8 @@ import com.lanmei.yixiu.adapter.HomeAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.AdBean;
 import com.lanmei.yixiu.bean.CourseClassifyListBean;
+import com.lanmei.yixiu.event.CourseOperationEvent;
 import com.lanmei.yixiu.ui.home.activity.NewsSubActivity;
-import com.lanmei.yixiu.ui.home.activity.QuestionnaireActivity;
-import com.lanmei.yixiu.ui.home.activity.TeacherActivity;
-import com.lanmei.yixiu.ui.mine.activity.ClassDetailsActivity;
-import com.lanmei.yixiu.ui.mine.activity.ExaminationActivity;
 import com.lanmei.yixiu.ui.scan.ScanActivity;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
@@ -34,6 +31,9 @@ import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -68,6 +68,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
         toolbar.setTitle(R.string.home);
         toolbar.getMenu().clear();
         toolbar.inflateMenu(R.menu.menu_home_message);
@@ -97,6 +101,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     private void loadHome() {
         YiXiuGeApi api = new YiXiuGeApi("app/video_index");
+        api.addParams("uid", api.getUserId(context));
         api.addParams("recommend", 1);
 
         HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<NoPageListBean<CourseClassifyListBean>>() {
@@ -111,16 +116,16 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 }
                 mAdapter.setData(list);
                 mAdapter.notifyDataSetChanged();
-                if (swipeRefreshLayout != null){
+                if (swipeRefreshLayout != null) {
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (swipeRefreshLayout != null){
+                if (swipeRefreshLayout != null) {
                     swipeRefreshLayout.setRefreshing(false);
-                    UIHelper.ToastMessage(context,error.getMessage());
+                    UIHelper.ToastMessage(context, error.getMessage());
                 }
 
             }
@@ -153,11 +158,30 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         });
     }
 
+    //教程详情点赞是调用
+    @Subscribe
+    public void courseOperationEvent(CourseOperationEvent event) {
+        String id = event.getId();
+        List<CourseClassifyListBean> list = mAdapter.getData();
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            CourseClassifyListBean bean = list.get(i);
+            if (StringUtils.isSame(id,bean.getId())){
+                bean.setLiked(event.getLiked());
+                bean.setView(event.getViewNum());
+                bean.setFavoured(event.getFavoured());
+                bean.setReviews(event.getReviews());
+                bean.setLike(event.getLike());
+                mAdapter.notifyDataSetChanged();
+                return;
+            }
+        }
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -186,19 +210,23 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ke_cheng_tv://课程
-                IntentUtil.startActivity(context, ClassDetailsActivity.class);
+                CommonUtils.developing(context);
+//                IntentUtil.startActivity(context, ClassDetailsActivity.class);
                 break;
             case R.id.zi_xun_tv://资讯
                 IntentUtil.startActivity(context, NewsSubActivity.class);
                 break;
             case R.id.jiao_cheng_tv://教师
-                IntentUtil.startActivity(context, TeacherActivity.class);
+                CommonUtils.developing(context);
+//                IntentUtil.startActivity(context, TeacherActivity.class);
                 break;
             case R.id.kao_shi_tv://考试
-                IntentUtil.startActivity(context, ExaminationActivity.class);
+                CommonUtils.developing(context);
+//                IntentUtil.startActivity(context, ExaminationActivity.class);
                 break;
             case R.id.questionnaire_tv://问卷
-                IntentUtil.startActivity(context, QuestionnaireActivity.class);
+                CommonUtils.developing(context);
+//                IntentUtil.startActivity(context, QuestionnaireActivity.class);
                 break;
         }
     }

@@ -85,10 +85,21 @@ public class NewsSubActivity extends BaseActivity {
         });
     }
 
-    //
+    //资讯评论、点击收藏时
     @Subscribe
     public void newsOperationEvent(NewsOperationEvent event){
-        controller.loadFirstPage();
+        String id = event.getId();
+        List<NewsClassifyListBean> list = mAdapter.getData();
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            NewsClassifyListBean bean = list.get(i);
+            if (StringUtils.isSame(id,bean.getId())){
+                bean.setFavoured(event.getFavoured());
+                bean.setReviews(event.getReviews());
+                mAdapter.notifyDataSetChanged();
+                return;
+            }
+        }
     }
 
 

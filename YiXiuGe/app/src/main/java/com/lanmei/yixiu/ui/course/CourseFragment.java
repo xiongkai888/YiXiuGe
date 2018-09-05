@@ -12,15 +12,19 @@ import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.CourseAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.CourseClassifyBean;
+import com.lanmei.yixiu.ui.course.activity.SearchCourseActivity;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.utils.IntentUtil;
 import com.xson.common.widget.CenterTitleToolbar;
 
 import java.lang.reflect.Field;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 
 /**
@@ -57,16 +61,22 @@ public class CourseFragment extends BaseFragment {
     }
 
 
-    private void loadCourseClassify(){
+    private void loadCourseClassify() {
         YiXiuGeApi api = new YiXiuGeApi("app/course_list");
         HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<NoPageListBean<CourseClassifyBean>>() {
             @Override
             public void onResponse(NoPageListBean<CourseClassifyBean> response) {
-                if (context == null){
+                if (context == null) {
                     return;
                 }
                 mAdapter.setList(response.data);
                 mViewPager.setAdapter(mAdapter);
+                mTabLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setIndicator(mTabLayout, 5, 5);
+                    }
+                });
             }
         });
     }
@@ -102,16 +112,14 @@ public class CourseFragment extends BaseFragment {
         }
     }
 
-
     @Override
-    public void onStart() {
-        super.onStart();
-        mTabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                setIndicator(mTabLayout, 10, 10);
-            }
-        });
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
     }
 
+    @OnClick(R.id.keywordEditText)
+    public void onViewClicked() {
+        IntentUtil.startActivity(context, SearchCourseActivity.class);
+    }
 }

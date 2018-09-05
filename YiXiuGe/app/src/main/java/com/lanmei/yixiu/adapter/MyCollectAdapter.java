@@ -39,7 +39,7 @@ public class MyCollectAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "课程";
+                return "教程";
             case 1:
                 return "资讯";
         }

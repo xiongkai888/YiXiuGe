@@ -22,7 +22,6 @@ import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.SwipeRefreshController;
-import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
@@ -46,7 +45,7 @@ public class NewsDetailsActivity extends BaseActivity {
     NewsDetailsAdapter mAdapter;
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
-    private String id;//资讯ID
+    private NewsClassifyListBean bean;
 
     private SwipeRefreshController<NoPageListBean<NewsCommentBean>> controller;
 
@@ -58,7 +57,11 @@ public class NewsDetailsActivity extends BaseActivity {
     @Override
     public void initIntent(Intent intent) {
         super.initIntent(intent);
-
+        Bundle bundle = intent.getBundleExtra("bundle");
+        if (bundle == null){
+            return;
+        }
+        bean = (NewsClassifyListBean)bundle.getSerializable("bean");
     }
 
     @Override
@@ -70,27 +73,28 @@ public class NewsDetailsActivity extends BaseActivity {
         actionbar.setTitle(R.string.news_details);
         actionbar.setHomeAsUpIndicator(R.drawable.back);
 
-        id = getIntent().getStringExtra("value");
-        L.d(L.TAG,id);
-        loadNewsDetails();
-
+//        loadNewsDetails();
         smartSwipeRefreshLayout.initWithLinearLayout();
 
         YiXiuGeApi api = new YiXiuGeApi("app/post_reviews_list");
-        api.addParams("id",id);
+        if (bean != null){
+            api.addParams("id",bean.getId());
+        }
         api.addParams("mod","post");//资讯
         api.addParams("uid",api.getUserId(this));
         mAdapter = new NewsDetailsAdapter(this);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<NewsCommentBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
         };
+        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.DISABLED);
         controller.loadFirstPage();
+        mAdapter.setNewsBean(bean);
     }
 
     //资讯详情
     private void loadNewsDetails() {
         YiXiuGeApi api = new YiXiuGeApi("post/details");
-        api.addParams("id", id);
+        api.addParams("id", bean.getId());
         api.addParams("uid",api.getUserId(this));
         HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<DataBean<NewsClassifyListBean>>() {
             @Override
@@ -98,7 +102,8 @@ public class NewsDetailsActivity extends BaseActivity {
                 if (isFinishing()) {
                     return;
                 }
-                mAdapter.setNewsBean(response.data);
+                bean = response.data;
+                mAdapter.setNewsBean(bean);
             }
         });
     }
@@ -145,13 +150,16 @@ public class NewsDetailsActivity extends BaseActivity {
             UIHelper.ToastMessage(this,getString(R.string.input_comment));
             return;
         }
+        if (bean == null){
+            return;
+        }
         pushReviews(content);
     }
 
     //评论
     private void pushReviews(String content) {
         YiXiuGeApi api = new YiXiuGeApi("app/post_reviews");
-        api.addParams("id",id);
+        api.addParams("id",bean.getId());
         api.addParams("content",content);
         api.addParams("mod","post");//资讯
         api.addParams("uid",api.getUserId(this));
@@ -163,7 +171,7 @@ public class NewsDetailsActivity extends BaseActivity {
                 }
                 mCompileCommentEt.setText("");
                 controller.loadFirstPage();
-                EventBus.getDefault().post(new NewsOperationEvent());//通知资讯列表刷新
+                EventBus.getDefault().post(new NewsOperationEvent(bean.getId(),""+(StringUtils.toInt(bean.getReviews(),0)+1),bean.getFavoured()));//通知资讯列表刷新
             }
         });
     }

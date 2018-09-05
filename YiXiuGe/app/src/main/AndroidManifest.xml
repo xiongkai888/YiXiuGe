@@ -155,6 +155,9 @@
             android:name=".ui.teacher.activity.SelectStudentsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.course.activity.SearchCourseActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.teacher.activity.TeachingAttachmentsActivity"
             android:screenOrientation="portrait" />
         <activity

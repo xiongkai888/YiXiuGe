@@ -1,32 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/v_match_parent"
-    android:paddingTop="@dimen/d_6dp"
     android:paddingBottom="@dimen/d_6dp"
     android:paddingLeft="@dimen/d_10dp"
-    android:paddingRight="@dimen/d_10dp">
+    android:paddingRight="@dimen/d_10dp"
+    android:paddingTop="@dimen/d_6dp">
 
-    <LinearLayout
-        android:id="@+id/ll_search"
+    <com.xson.common.widget.DrawClickableEditText
+        android:id="@+id/keywordEditText"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d_25dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/search_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/d_5dp">
-
-
-        <ImageView
-            style="@style/text"
-            android:padding="5dp"
-            android:src="@drawable/search" />
-
-        <TextView
-            style="@style/text12colorWhite"
-            android:hint="@string/input_keyword"
-            android:padding="3dp" />
-
-
-    </LinearLayout>
+        android:drawableLeft="@drawable/search"
+        android:drawablePadding="8dp"
+        android:hint="@string/input_keyword"
+        android:imeOptions="actionSearch"
+        android:maxLines="1"
+        android:padding="7dp"
+        android:focusable="false"
+        android:singleLine="true"
+        android:textSize="12sp" />
 
 </LinearLayout>

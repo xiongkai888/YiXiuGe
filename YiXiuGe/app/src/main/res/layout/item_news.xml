@@ -26,6 +26,7 @@
             style="@style/text12color666"
             android:drawableLeft="@drawable/home_zan"
             android:gravity="center_vertical"
+            android:drawablePadding="@dimen/d_3dp"
             android:paddingLeft="@dimen/d_6dp"
             android:paddingRight="@dimen/d_6dp"
             android:text="@string/zero" />
@@ -36,6 +37,7 @@
             style="@style/text12color666"
             android:drawableLeft="@drawable/home_message"
             android:gravity="center_vertical"
+            android:drawablePadding="@dimen/d_3dp"
             android:paddingLeft="@dimen/d_6dp"
             android:paddingRight="@dimen/d_6dp"
             android:text="@string/zero" />
