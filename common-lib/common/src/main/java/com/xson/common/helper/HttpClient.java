@@ -59,15 +59,6 @@ public class HttpClient implements IHttpClient {
         return new HttpClient(context);
     }
 
-//    public synchronized HttpClient getClient(Context context) {
-//        this.contextWeakReference = new WeakReference<Context>(context);
-//        if (httpClient == null) {
-//            httpClient = new HttpClient();
-//            L.d("synchronizedHttpClient","getClient == null");
-//        }
-//        return httpClient;
-//    }
-
     public static interface ErrorInterceptor {
         public boolean onError(Context context, Exception e);
     }
@@ -94,7 +85,6 @@ public class HttpClient implements IHttpClient {
 
     public <T extends BaseBean> BeanRequest<T> request(AbstractApi api, BeanRequest.SuccessListener<T> successListener, Response.ErrorListener errorListener) {
         if (contextWeakReference.get() == null){
-            L.d("synchronizedHttpClient","contextWeakReference.get() == null");
             return null;
         }
         String url = api.getUrl();
@@ -120,7 +110,6 @@ public class HttpClient implements IHttpClient {
      */
     public <T extends BaseBean> T syncRequest(AbstractApi api, BeanRequestFuture<T> future) throws InterruptedException, ExecutionException, TimeoutException {
         if (contextWeakReference.get() == null){
-            L.d("synchronizedHttpClient","contextWeakReference.get() == null");
             return null;
         }
         String url = api.getUrl();
@@ -179,7 +168,6 @@ public class HttpClient implements IHttpClient {
 
     public <T extends BaseBean> BeanRequest<T> request(AbstractApi api, BeanRequest.SuccessListener<T> successListener, Response.ErrorListener errorListener, String loadingText, boolean hasLoading) {
         if (contextWeakReference.get() == null){
-            L.d("synchronizedHttpClient","contextWeakReference.get() == null");
             return null;
         }
         String url = api.getUrl();
@@ -198,7 +186,6 @@ public class HttpClient implements IHttpClient {
 
     public <T extends BaseBean> BeanRequest<T> loadingRequest(AbstractApi api, BeanRequest.SuccessListener<T> successListener, Response.ErrorListener errorListener, String loadingText) {
         if (contextWeakReference.get() == null){
-            L.d("synchronizedHttpClient","contextWeakReference.get() == null");
             return null;
         }
         String url = api.getUrl();
@@ -373,22 +360,17 @@ public class HttpClient implements IHttpClient {
         if (!(error instanceof BeanRequest.UserLevelError)) {
             if (!NetworkHelper.isNetworkAvailable(context)) {
                 error = new VolleyError(context.getString(R.string.network_unconnect), error);
-                L.d("api.handleParams", context.getString(R.string.network_unconnect));
             } else if (error instanceof TimeoutError) {
                 error = new VolleyError(context.getString(R.string.http_request_timeout), error);
-                L.d("api.handleParams", context.getString(R.string.http_request_timeout));
             } else {
                 String msg;
                 if (error != null && error.getCause() != null && error.getCause() instanceof JSONException) {
                     msg = context.getString(R.string.http_parse_error);
-                    L.d("api.handleParams", msg);
                 } else {
                     msg = context.getString(R.string.http_request_error);
-                    L.d("api.handleParams", msg);
                 }
                 if (error != null && error.networkResponse != null) {
                     msg += " #" + error.networkResponse.statusCode;
-                    L.d("api.handleParams", msg + " !");
                 }
                 error = new VolleyError(msg, error);
             }
@@ -417,7 +399,6 @@ public class HttpClient implements IHttpClient {
             String msg;
             error = humanError(context, error);
             msg = error.getMessage();
-            L.d("api.handleParams", msg + ":onErrorResponse");
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         }
     }
@@ -425,7 +406,6 @@ public class HttpClient implements IHttpClient {
     private void startLoading(final String tag, String loadingText) {
         try {
             if (contextWeakReference.get() == null){
-                L.d("synchronizedHttpClient","contextWeakReference.get() == null");
                 return ;
             }
 

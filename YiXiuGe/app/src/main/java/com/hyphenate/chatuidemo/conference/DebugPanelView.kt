@@ -157,7 +157,7 @@ class DebugPanelView : LinearLayout {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             var contentView = convertView
 
-            var viewHolder: ViewHolder? = null
+            var viewHolder: ViewHolder?
 
             if (contentView == null) {
                 contentView = LayoutInflater.from(context).inflate(R.layout.em_item_layout_debug, null)

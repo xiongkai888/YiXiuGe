@@ -73,7 +73,7 @@ public class SearchCourseActivity extends BaseActivity  implements TextView.OnEd
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<CourseClassifyListBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
         };
-        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.DISABLED);
+        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.ONLY_PULL_UP);
         mAdapter.notifyDataSetChanged();
 //        controller.loadFirstPage();
     }

@@ -126,14 +126,8 @@ public abstract class SwipeRefreshController<T2 extends AbsListBean> implements 
                     mHasMore = (data != null && data.size() == L.limit);//个数为limit判断为有下一页
                     if (page > 1) {
                         adapter.addData(data);
-                        if (mIsFirstPageListener != null) {
-                            mIsFirstPageListener.isMore();
-                        }
                     } else {
                         adapter.setData(data);
-                        if (mIsFirstPageListener != null) {
-                            mIsFirstPageListener.isFirst();
-                        }
                     }
                 }
                 /**
@@ -141,11 +135,11 @@ public abstract class SwipeRefreshController<T2 extends AbsListBean> implements 
                  * 数据修改后，要马上通知Adapter数据已经改变，期间若做其它操作会导致异常
                  */
                 adapter.notifyDataSetChanged();
-//                if (!mHasMore) {
-//                    view.setMode(SmartSwipeRefreshLayout.Mode.REFRESH);
-//                } else {
-//                    view.setMode(SmartSwipeRefreshLayout.Mode.BOTH);
-//                }
+                if (!mHasMore) {
+                    view.setMode(SmartSwipeRefreshLayout.Mode.NONE);
+                } else if (view.getMode() == SmartSwipeRefreshLayout.Mode.NONE){
+                    view.setMode(SmartSwipeRefreshLayout.Mode.BOTH);
+                }
                 if (!isCacheResult) {
                     view.hideLoading();
                 } else {

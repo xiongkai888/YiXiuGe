@@ -67,18 +67,17 @@ public class CourseDetailsActivity extends BaseActivity {
         YiXiuGeApi api = new YiXiuGeApi("app/post_reviews_list");
         if (bean != null) {
             api.addParams("id", bean.getId());
-            loadCurse();
+            loadCurse();//为的是更新浏览数
         }
         api.addParams("mod", "video");//教程
 //        api.addParams("uid", api.getUserId(this));
         adapter = new CourseDetailsAdapter(this);
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.setAdapter(adapter);
+        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.ONLY_PULL_UP);
         controller = new SwipeRefreshController<NoPageListBean<NewsCommentBean>>(this, smartSwipeRefreshLayout, api, adapter) {
         };
-        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.DISABLED);
         controller.loadFirstPage();
-
         adapter.setCourseClassifyListBean(bean);
         mJzvdStd.setUp(bean.getVideo(), bean.getTitle()
                 , JzvdStd.SCREEN_WINDOW_NORMAL);

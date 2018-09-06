@@ -86,7 +86,7 @@ public class NewsDetailsActivity extends BaseActivity {
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<NewsCommentBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
         };
-        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.DISABLED);
+        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.ONLY_PULL_UP);
         controller.loadFirstPage();
         mAdapter.setNewsBean(bean);
     }

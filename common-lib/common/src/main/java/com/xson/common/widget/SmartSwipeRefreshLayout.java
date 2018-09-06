@@ -41,20 +41,21 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
     private OnTryLoadListener onTryLoadListener;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean loadingMore = false;
-    private Mode mode = Mode.REFRESH;
+    private Mode mode = Mode.BOTH;
     private Drawable divider;
     private int dividerHeight;
     private BaseAttacher attacher;
     private HorizontalDividerItemDecoration.Builder itemDecoration;
 
     public static enum Mode {
-        DISABLED,
-        //pull from start
-        REFRESH,
-        //pull from end
-        LOAD_MORE,
-        //refresh and load more
-        BOTH
+        ONLY_PULL_UP,//只上拉加载
+        NONE,//不上拉加载下一页
+        BOTH,//下拉刷新、上拉加载
+        NO_PAGE//既不下拉刷新、也不上拉加载（不分页时候）
+    }
+
+    public Mode getMode() {
+        return mode;
     }
 
     public SmartSwipeRefreshLayout(Context context) {
@@ -81,7 +82,7 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
         dividerHeight = a.getDimensionPixelOffset(1, 0);
         int colorControlActivated = a.getColor(2, 0);
         a.recycle();
-        L.d("colorControlActivated="+colorControlActivated);
+        L.d("colorControlActivated=" + colorControlActivated);
         if (dividerHeight == 0 && divider != null) {
             dividerHeight = divider.getIntrinsicHeight();
         }
@@ -117,6 +118,7 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
             public void onLoadMore() {
                 setLoadingMore(true);
                 onLoadingListener.onLoadMore();
+//                L.d("SwipeRefreshController","SmartSwipeRefreshLayout.initRecyclerView=>onLoadMore");
             }
 
             @Override
@@ -128,6 +130,7 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
                 *
                 * If there is no load operation ongoing, return false
                 */
+//                L.d("SwipeRefreshController","SmartSwipeRefreshLayout.initRecyclerView=>isLoading:"+isLoadingMore());
                 return isLoadingMore();
             }
 
@@ -141,7 +144,18 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
                 * This is useful when say, the data is being fetched from the network
                 */
                 //return false;
-                return onLoadingListener == null || (mode != Mode.BOTH && mode != Mode.LOAD_MORE);
+                if (onLoadingListener == null) {
+                    return true;
+                }
+                switch (mode) {
+                    case NONE://不加载下一页
+                    case NO_PAGE://没有分页
+                        return true;
+                    case BOTH:
+                    case ONLY_PULL_UP:
+                        return false;
+                }
+                return true;
             }
         }).start();
 
@@ -158,7 +172,7 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
     }
 
     public void setOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
-        if(attacher == null)
+        if (attacher == null)
             return;
         /*
         * mugen uses an internal OnScrollListener to detect and trigger load events.
@@ -174,21 +188,20 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
     }
 
     public void initGridLinearLayout(int spanCount) {
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),spanCount);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), spanCount);
         setLayoutManager(layoutManager);
     }
 
     /**
-     *
      * @param spanCount
      * @param location  位置location 跨度 spanCount
      */
-    public void initGridLinearLayout(final int spanCount,final int location) {
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),spanCount);
+    public void initGridLinearLayout(final int spanCount, final int location) {
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), spanCount);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                if (position == location){
+                if (position == location) {
                     return spanCount;
                 }
                 return 1;
@@ -196,12 +209,12 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
         });
         setLayoutManager(layoutManager);
     }
+
     /**
-     *
      * @param spanCount
      */
     public void initGridLinearLayout2(int spanCount) {
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),spanCount);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), spanCount);
         setLayoutManager(layoutManager);
     }
 
@@ -223,7 +236,7 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
         public void onChanged() {
             setLoadingMore(false);
             int totalItem = getAdapter().getCount();
-            if(totalItem == 0) {
+            if (totalItem == 0) {
                 showEmptyLayout();
             } else {
                 showSwipeRefreshLayout();
@@ -234,37 +247,37 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
     };
 
     public void setAdapter(LoadMoreAdapter adapter) {
-        if(divider != null && dividerHeight > 0) {
+        if (divider != null && dividerHeight > 0) {
             recyclerView.addItemDecoration(itemDecoration.build());
         }
 
-        if(adapter == null && recyclerView.getAdapter() != null) {
+        if (adapter == null && recyclerView.getAdapter() != null) {
             try {
                 recyclerView.getAdapter().unregisterAdapterDataObserver(adapterDataObserver);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
         recyclerView.setAdapter(adapter);
-        if(adapter != null) {
+        if (adapter != null) {
             adapter.registerAdapterDataObserver(adapterDataObserver);
 //            adapterDataObserver.onChanged();
         }
     }
 
     public LoadMoreAdapter getAdapter() {
-        return (LoadMoreAdapter)recyclerView.getAdapter();
+        return (LoadMoreAdapter) recyclerView.getAdapter();
     }
 
     private void ensureLoadingLayout() {
-        if(loadingLayout == null) {
-            loadingLayout = ((ViewStub)findViewById(R.id.ssrl___loading_vs)).inflate();
+        if (loadingLayout == null) {
+            loadingLayout = ((ViewStub) findViewById(R.id.ssrl___loading_vs)).inflate();
         }
     }
 
     private void hideLoadingLayout() {
-        if(loadingLayout != null && loadingLayout.getVisibility() != GONE)
+        if (loadingLayout != null && loadingLayout.getVisibility() != GONE)
             loadingLayout.setVisibility(GONE);
     }
 
@@ -274,7 +287,7 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
         hideEmptyLayout();
         ensureLoadingLayout();
 
-        if(loadingLayout.getVisibility() != VISIBLE)
+        if (loadingLayout.getVisibility() != VISIBLE)
             loadingLayout.setVisibility(VISIBLE);
     }
 
@@ -297,11 +310,11 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
     }
 
     private void ensureErrorLayout() {
-        if(errorLayout == null) {
-            errorLayout = ((ViewStub)findViewById(R.id.ssrl___error_vs)).inflate();
-            errorTextView = (TextView)errorLayout.findViewById(R.id.ssrl___error_tv);
+        if (errorLayout == null) {
+            errorLayout = ((ViewStub) findViewById(R.id.ssrl___error_vs)).inflate();
+            errorTextView = (TextView) errorLayout.findViewById(R.id.ssrl___error_tv);
 
-            if(onTryLoadListener != null) {
+            if (onTryLoadListener != null) {
                 View tryAgainButton = errorLayout.findViewById(R.id.ssrl___try_btn);
                 tryAgainButton.setOnClickListener(new OnClickListener() {
                     @Override
@@ -315,13 +328,13 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
     }
 
     private void ensureEmptyLayout() {
-        if(emptyLayout == null) {
-            emptyLayout = ((ViewStub)findViewById(R.id.ssrl___empty)).inflate();
+        if (emptyLayout == null) {
+            emptyLayout = ((ViewStub) findViewById(R.id.ssrl___empty)).inflate();
         }
     }
 
     private void hideErrorLayout() {
-        if(errorLayout != null && errorLayout.getVisibility() != GONE)
+        if (errorLayout != null && errorLayout.getVisibility() != GONE)
             errorLayout.setVisibility(GONE);
 
         if (getAdapter() != null)
@@ -329,12 +342,11 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
     }
 
     public boolean setError(String errorMessage) {
-        if(!TextUtils.isEmpty(errorMessage) && getAdapter() != null && getAdapter().getCount() > 0) {
+        if (!TextUtils.isEmpty(errorMessage) && getAdapter() != null && getAdapter().getCount() > 0) {
             TypedValue tv = new TypedValue();
             int actionBarHeight;
-            if (getContext().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
-            {
-                actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
+            if (getContext().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+                actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
             } else {
                 actionBarHeight = 180;
             }
@@ -347,7 +359,7 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
             toast.show();
             return true;
         }
-        if(isRefreshing() || isLoading() || isEmpty()) {
+        if (isRefreshing() || isLoading() || isEmpty()) {
             hideLoading();
             hideLoadingLayout();
             hideEmptyLayout();
@@ -361,7 +373,7 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
                 errorTextView.setText(errorMessage);
             }
             return true;
-        } else if(isLoadingMore()) {
+        } else if (isLoadingMore()) {
             getAdapter().setError(errorMessage);
             return true;
         }
@@ -374,6 +386,7 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
 
     /**
      * 是否初始化加载状态
+     *
      * @return
      */
     public boolean isLoading() {
@@ -382,6 +395,7 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
 
     /**
      * 是否下拉刷新状态
+     *
      * @return
      */
     public boolean isRefreshing() {
@@ -390,6 +404,7 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
 
     /**
      * 是否加载更多状态
+     *
      * @return
      */
     public boolean isLoadingMore() {
@@ -397,7 +412,7 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
     }
 
     private void hideSwipeRefreshLayout() {
-        if(swipeRefreshLayout.getVisibility() == GONE)
+        if (swipeRefreshLayout.getVisibility() == GONE)
             return;
         swipeRefreshLayout.setVisibility(GONE);
         recyclerView.setVisibility(GONE);
@@ -407,7 +422,7 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
         hideLoadingLayout();
         hideErrorLayout();
         hideEmptyLayout();
-        if(swipeRefreshLayout.getVisibility() == VISIBLE)
+        if (swipeRefreshLayout.getVisibility() == VISIBLE)
             return;
         recyclerView.setVisibility(VISIBLE);
         swipeRefreshLayout.setVisibility(VISIBLE);
@@ -415,23 +430,17 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
 
     public void setMode(Mode mode) {
         this.mode = mode;
-
         switch (mode) {
-            case DISABLED:
+            case ONLY_PULL_UP:
                 swipeRefreshLayout.setEnabled(false);
-                break;
-            case REFRESH:
-                swipeRefreshLayout.setEnabled(true);
-                break;
-            case LOAD_MORE:
-                swipeRefreshLayout.setEnabled(false);
-                //避免当前位置在最底下没有更多数据，更新后有更多数据时不能上拉更新，这里自动帮Ta加载下一页
-//                onScrollListener.onScrolled(recyclerView, 0, 0);
                 break;
             case BOTH:
                 swipeRefreshLayout.setEnabled(true);
                 //避免当前位置在最底下没有更多数据，更新后有更多数据时不能上拉更新，这里自动帮Ta加载下一页
 //                onScrollListener.onScrolled(recyclerView, 0, 0);
+                break;
+            case NO_PAGE:
+                swipeRefreshLayout.setEnabled(false);
                 break;
         }
 
