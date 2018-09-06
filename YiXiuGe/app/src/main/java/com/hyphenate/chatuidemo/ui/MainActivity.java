@@ -507,13 +507,13 @@ public class MainActivity extends BaseActivity {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-						exceptionBuilder = null;
-						isExceptionDialogShow = false;
-						finish();
+						dialog.cancel();
 						Intent intent = new Intent(MainActivity.this, com.lanmei.yixiu.ui.login.LoginActivity.class);
 						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 						startActivity(intent);
+						exceptionBuilder = null;
+						isExceptionDialogShow = false;
+						finish();
 					}
 				});
 				exceptionBuilder.setCancelable(false);

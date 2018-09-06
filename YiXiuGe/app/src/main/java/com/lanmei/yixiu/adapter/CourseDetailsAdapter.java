@@ -42,7 +42,6 @@ public class CourseDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
 
     public void setCourseClassifyListBean(CourseClassifyListBean courseClassifyListBean) {
         this.courseClassifyListBean = courseClassifyListBean;
-//        notifyDataSetChanged();
     }
 
     public CourseDetailsAdapter(Context context) {

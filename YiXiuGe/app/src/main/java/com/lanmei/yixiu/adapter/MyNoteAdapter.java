@@ -5,17 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.bean.CourseClassifyBean;
-import com.lanmei.yixiu.ui.home.activity.NewsDetailsActivity;
+import com.lanmei.yixiu.bean.NotesBean;
 import com.lanmei.yixiu.utils.CommonUtils;
+import com.lanmei.yixiu.utils.FormatTime;
 import com.lanmei.yixiu.widget.SudokuView;
 import com.xson.common.adapter.SwipeRefreshAdapter;
-import com.xson.common.utils.IntentUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -24,16 +21,13 @@ import butterknife.InjectView;
 /**
  * 我的笔记
  */
-public class MyNoteAdapter extends SwipeRefreshAdapter<CourseClassifyBean> {
+public class MyNoteAdapter extends SwipeRefreshAdapter<NotesBean> {
 
-
-    List<String> list;
+    private FormatTime formatTime;
 
     public MyNoteAdapter(Context context) {
         super(context);
-        list = new ArrayList<>();
-        list.add("https://goss.veer.com/creative/vcg/veer/800water/veer-319821774.jpg");
-        list.add("https://goss.veer.com/creative/vcg/veer/800water/veer-319823827.jpg");
+        formatTime = new FormatTime();
     }
 
 
@@ -44,20 +38,22 @@ public class MyNoteAdapter extends SwipeRefreshAdapter<CourseClassifyBean> {
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
-        ViewHolder viewHolder = (ViewHolder)holder;
-        viewHolder.setParameter(null);
-    }
-
-
-    @Override
-    public int getCount() {
-        return CommonUtils.quantity;
+        NotesBean bean = getItem(position);
+        if (bean == null){
+            return;
+        }
+        ViewHolder viewHolder = (ViewHolder) holder;
+        viewHolder.setParameter(bean);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @InjectView(R.id.sudokuView)
         SudokuView sudokuView;
+        @InjectView(R.id.title_tv)
+        TextView titleTv;
+        @InjectView(R.id.time_tv)
+        TextView timeTv;
 
         ViewHolder(View view) {
             super(view);
@@ -65,25 +61,26 @@ public class MyNoteAdapter extends SwipeRefreshAdapter<CourseClassifyBean> {
         }
 
 
-        public void setParameter(final CourseClassifyBean bean) {
-
-            sudokuView.setListData(list);
+        public void setParameter(final NotesBean bean) {
+            titleTv.setText(bean.getTitle());
+            formatTime.setTime(bean.getAddtime());
+            timeTv.setText(formatTime.formatterTime());
+            sudokuView.setListData(bean.getPic());
             sudokuView.setOnSingleClickListener(new SudokuView.SudokuViewClickListener() {
                 @Override
                 public void onClick(int positionSub) {
-//                    startActivity(bean);
-                    IntentUtil.startActivity(context, NewsDetailsActivity.class);
+//                    UIHelper.ToastMessage(context,""+positionSub);
                 }
 
                 @Override
                 public void onDoubleTap(int position) {
-                    CommonUtils.showPhotoBrowserActivity(context, list, list.get(position));
+                    CommonUtils.showPhotoBrowserActivity(context, bean.getPic(), bean.getPic().get(position));
                 }
             });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    IntentUtil.startActivity(context, NewsDetailsActivity.class);
+
                 }
             });
         }

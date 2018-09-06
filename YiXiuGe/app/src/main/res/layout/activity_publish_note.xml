@@ -1,59 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:calendarview="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/v_all_match_parent_no"
     tools:context=".ui.mine.activity.PublishNoteActivity">
 
     <include layout="@layout/include_centertitletoolbar" />
 
-    <com.xson.common.widget.DrawClickableEditText
-        android:padding="@dimen/d_10dp"
-        android:lines="1"
-        android:hint="请输入笔记标题"
-        android:layout_marginTop="@dimen/d_10dp"
-        android:layout_marginBottom="@dimen/d_10dp"
-        android:background="@drawable/border_bottom_top_divider"
-        style="@style/match_parent" />
-
-    <LinearLayout
-        android:padding="@dimen/d_10dp"
-        android:background="@drawable/border_bottom_top_divider"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <com.xson.common.widget.DrawClickableEditText
-            android:hint="请输入笔记内容"
-            android:background="@null"
-            style="@style/match_parent" />
+        <LinearLayout style="@style/v_all_match_parent_no">
 
-        <ImageView
-            android:id="@+id/file_iv1"
-            android:layout_marginTop="@dimen/d_10dp"
-            android:src="@drawable/icon_select"
-            style="@style/text" />
+            <com.xson.common.widget.DrawClickableEditText
+                android:id="@+id/note_title_et"
+                style="@style/match_parent"
+                android:layout_marginBottom="@dimen/d_10dp"
+                android:layout_marginTop="@dimen/d_10dp"
+                android:background="@drawable/border_bottom_top_divider"
+                android:hint="@string/input_note_title"
+                android:lines="1"
+                android:padding="@dimen/d_10dp" />
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom_top_divider"
+                android:orientation="vertical"
+                android:padding="@dimen/d_10dp">
 
-    <TextView
-        android:text="上传附件 (PDF/JPG/XLSX/DOC/DOCX/PPT/PPTX/PNG/XLS)"
-        android:layout_margin="@dimen/d_10dp"
-        style="@style/text12color666" />
+                <com.xson.common.widget.DrawClickableEditText
+                    android:id="@+id/note_content_et"
+                    style="@style/match_parent"
+                    android:background="@null"
+                    android:hint="@string/input_note_content" />
+
+                <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
+                    android:id="@+id/snpl_moment_add_photos"
+                    style="@style/WrapWrap"
+                    android:layout_marginTop="@dimen/d_10dp"
+                    app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+                    app:bga_snpl_deleteDrawableOverlapQuarter="false"
+                    app:bga_snpl_editable="true"
+                    app:bga_snpl_itemCornerRadius="0dp"
+                    app:bga_snpl_itemSpanCount="3"
+                    app:bga_snpl_itemWhiteSpacing="4dp"
+                    app:bga_snpl_itemWidth="0dp"
+                    app:bga_snpl_maxItemCount="9"
+                    app:bga_snpl_otherWhiteSpacing="80dp"
+                    app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
+                    app:bga_snpl_plusDrawable="@drawable/icon_select"
+                    app:bga_snpl_plusEnable="true"
+                    app:bga_snpl_sortable="true" />
 
 
-    <LinearLayout
-        android:padding="@dimen/d_10dp"
-        android:background="@drawable/border_bottom_top_divider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+            </LinearLayout>
 
-        <ImageView
-            android:id="@+id/file_iv2"
-            android:src="@drawable/icon_select"
-            style="@style/text" />
+            <TextView
+                style="@style/text12color666"
+                android:layout_margin="@dimen/d_10dp"
+                android:text="上传附件 (PDF/JPG/XLSX/DOC/DOCX/PPT/PPTX/PNG/XLS)" />
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom_top_divider"
+                android:orientation="vertical"
+                android:padding="@dimen/d_10dp">
+
+                <ImageView
+                    android:id="@+id/file_iv2"
+                    android:layout_width="@dimen/d_90dp"
+                    android:layout_height="@dimen/d_90dp"
+                    android:src="@drawable/icon_select" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>

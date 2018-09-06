@@ -40,7 +40,6 @@ public class CommonUtils {
     public static int quantity = 3;
 
 
-
     /**
      * 获取TextView 字符串
      *
@@ -70,7 +69,25 @@ public class CommonUtils {
     }
 
     public static void developing(Context context) {
-        UIHelper.ToastMessage(context,R.string.developing);
+        UIHelper.ToastMessage(context, R.string.developing);
+    }
+
+
+    /**
+     * String 逗号隔开 0,2,3
+     * @param list
+     * @return
+     */
+    public static String getStringByList(List<String> list) {
+        if (StringUtils.isEmpty(list)) {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder();
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            builder.append(((size-1) != i)?list.get(i)+",":list.get(i));
+        }
+        return builder.toString();
     }
 
     /**
@@ -86,7 +103,7 @@ public class CommonUtils {
         if (StringUtils.isEmpty(bean)) {
             return "";
         }
-        return bean.getId()+"";
+        return bean.getId() + "";
     }
 
     public static UserBean getUserBean(Context context) {
@@ -153,7 +170,6 @@ public class CommonUtils {
 
         void error(String error);
     }
-
 
 
     /**
