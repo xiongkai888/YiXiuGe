@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent_no"
+    tools:context=".ui.mine.activity.NoteDetailsActivity">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <ScrollView style="@style/match_parent">
+
+        <LinearLayout
+            style="@style/v_match_parent">
+
+            <TextView
+                style="@style/line_H10dp_on"/>
+
+            <TextView
+                android:id="@+id/title_tv"
+                style="@style/text"
+                android:layout_marginRight="@dimen/d_15dp"
+                android:layout_marginLeft="@dimen/d_15dp"
+                android:layout_marginTop="@dimen/d_10dp"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/time_tv"
+                style="@style/text12color666"
+                android:layout_marginTop="@dimen/d_5dp"
+                android:layout_marginBottom="@dimen/d_5dp"
+                android:layout_marginRight="@dimen/d_15dp"
+                android:layout_marginLeft="@dimen/d_15dp" />
+            <TextView
+                android:id="@+id/content_tv"
+                style="@style/text14color666"
+                android:layout_marginRight="@dimen/d_15dp"
+                android:layout_marginLeft="@dimen/d_15dp"
+                android:layout_marginBottom="@dimen/d_10dp"/>
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/d_15dp"
+                android:layout_marginLeft="@dimen/d_15dp"
+                android:id="@+id/sudokuView"
+                layout="@layout/view_sudoku"
+                android:layout_marginBottom="@dimen/d_10dp"/>
+
+            <TextView
+                android:background="@color/colorF4F4"
+                android:text="附件"
+                android:padding="@dimen/d_10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewEn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+
+

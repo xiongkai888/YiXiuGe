@@ -23,6 +23,8 @@
 
     </RelativeLayout>
 
+    <TextView style="@style/line_H1dp_divider" />
+
     <com.xson.common.widget.SmartSwipeRefreshLayout
         android:id="@+id/pull_refresh_rv"
         android:layout_width="match_parent"
@@ -33,9 +35,9 @@
         android:listSelector="@null" />
 
     <include
+        layout="@layout/include_send_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        layout="@layout/include_send_message"/>
+        android:layout_alignParentBottom="true" />
 
 </LinearLayout>

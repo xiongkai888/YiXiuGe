@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONArray;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.data.volley.Response;
@@ -88,6 +89,21 @@ public class CommonUtils {
             builder.append(((size-1) != i)?list.get(i)+",":list.get(i));
         }
         return builder.toString();
+    }
+    /**
+     * String 逗号隔开 0,2,3
+     * @param list
+     * @return
+     */
+    public static JSONArray getJSONArrayByList(List<String> list) {
+        JSONArray array = new JSONArray();
+        if (StringUtils.isEmpty(list)) {
+            return array;
+        }
+        for (String s:list){
+            array.add(s);
+        }
+        return array;
     }
 
     /**

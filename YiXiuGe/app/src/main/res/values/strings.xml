@@ -88,5 +88,7 @@
     <string name="input_note_title">请输入笔记标题</string>
     <string name="input_note_content">请输入笔记内容</string>
     <string name="please_select_picture">请选择图片</string>
+    <string name="note_details">笔记详情</string>
+    <string name="check">查看</string>
 
 </resources>

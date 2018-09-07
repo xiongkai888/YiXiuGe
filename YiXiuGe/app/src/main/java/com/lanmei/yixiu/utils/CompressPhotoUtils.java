@@ -35,34 +35,40 @@ public class CompressPhotoUtils {
     private CompressCallBack callBack;
     private CompressTask compressTask;
     private UpdateImageViewTask updateImageViewTask;
+    private String uploadingText = "照片上传中...";
 
+    public void setUploadingText(String uploadingText) {
+        this.uploadingText = uploadingText;
+    }
 
-    public void compressPhoto(Context context, List<String> list, CompressCallBack callBack, String type) {
-        this.type = type;
+    public CompressPhotoUtils(Context context){
         this.context = context;
+    }
+
+    public void compressPhoto(List<String> list, CompressCallBack callBack, String type) {
+        this.type = type;
         this.callBack = callBack;
         compressTask = new CompressTask(list);
         compressTask.execute();
     }
 
-    public void compressPhoto(Context context, String path, CompressCallBack callBack, String type) {
+    public void compressPhoto( String path, CompressCallBack callBack, String type) {
         this.type = type;
-        this.context = context;
         this.callBack = callBack;
 
         compressTask = new CompressTask(path);
         compressTask.execute();
     }
 
-    class CompressTask extends AsyncTask<Void, Integer, Integer> {
+    public class CompressTask extends AsyncTask<Void, Integer, Integer> {
 
         private List<String> list;
         private String path;
 
-        CompressTask(List<String> list) {
+        public CompressTask(List<String> list) {
             this.list = list;
         }
-        CompressTask(String path) {
+        public CompressTask(String path) {
             this.path = path;
         }
 
@@ -177,7 +183,7 @@ public class CompressPhotoUtils {
 
         public UpdateImageViewTask(List<String> list) {
             this.list = list;
-            mProgressHUD = ProgressHUD.show(context, "照片上传中...", true, false, null);
+            mProgressHUD = ProgressHUD.show(context, uploadingText, true, false, null);
         }
 
         /**
@@ -259,7 +265,7 @@ public class CompressPhotoUtils {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1://上传某张图片失败
-                    UIHelper.ToastMessage(context, "上传图片失败：" + msg.obj);
+                    UIHelper.ToastMessage(context, "上传文件失败：" + msg.obj);
                     break;
             }
         }

@@ -100,6 +100,9 @@
     <style name="text12color666" parent="Text.Size12">
         <item name="android:textColor">@color/color666</item>
     </style>
+    <style name="text10color666" parent="Text.Size10">
+        <item name="android:textColor">@color/color666</item>
+    </style>
 
     <style name="text10color999" parent="Text.Size10">
         <item name="android:textColor">@color/color999</item>

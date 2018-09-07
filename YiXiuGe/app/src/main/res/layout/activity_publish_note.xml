@@ -35,6 +35,7 @@
                     android:id="@+id/note_content_et"
                     style="@style/match_parent"
                     android:background="@null"
+                    android:layout_marginBottom="@dimen/d_10dp"
                     android:hint="@string/input_note_content" />
 
                 <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
@@ -67,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/border_bottom_top_divider"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:padding="@dimen/d_10dp">
 
                 <ImageView
@@ -76,7 +77,17 @@
                     android:layout_height="@dimen/d_90dp"
                     android:src="@drawable/icon_select" />
 
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_marginLeft="@dimen/d_5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
+
+
+
         </LinearLayout>
     </ScrollView>
 

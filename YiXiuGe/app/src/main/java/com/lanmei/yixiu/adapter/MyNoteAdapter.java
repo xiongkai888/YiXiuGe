@@ -1,6 +1,7 @@
 package com.lanmei.yixiu.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +10,12 @@ import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.bean.NotesBean;
+import com.lanmei.yixiu.ui.mine.activity.NoteDetailsActivity;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.lanmei.yixiu.utils.FormatTime;
 import com.lanmei.yixiu.widget.SudokuView;
 import com.xson.common.adapter.SwipeRefreshAdapter;
+import com.xson.common.utils.IntentUtil;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -70,6 +73,9 @@ public class MyNoteAdapter extends SwipeRefreshAdapter<NotesBean> {
                 @Override
                 public void onClick(int positionSub) {
 //                    UIHelper.ToastMessage(context,""+positionSub);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("bean",bean);
+                    IntentUtil.startActivity(context, NoteDetailsActivity.class,bundle);
                 }
 
                 @Override
@@ -80,7 +86,9 @@ public class MyNoteAdapter extends SwipeRefreshAdapter<NotesBean> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("bean",bean);
+                    IntentUtil.startActivity(context, NoteDetailsActivity.class,bundle);
                 }
             });
         }

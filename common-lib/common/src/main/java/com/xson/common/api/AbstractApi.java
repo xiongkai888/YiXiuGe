@@ -5,7 +5,6 @@ import android.content.Context;
 import com.xson.common.utils.L;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -17,6 +16,7 @@ public abstract class AbstractApi {
 
     private int p;
     public static String API_URL = "";
+    private String key = "yxg";
     public HashMap<String, Object> paramsHashMap = new HashMap<String, Object>();
 
     public static enum Method {
@@ -54,30 +54,17 @@ public abstract class AbstractApi {
 
     public Map<String, Object> getParams() {
         HashMap<String, Object> params = new HashMap<String, Object>();
-        Field[] field;
-        Class clazz = getClass();
-        try {
-            for (Class<?> c = clazz; c != null; c = c.getSuperclass()) {
-                field = c.getDeclaredFields();
-                for (Field f : field) {
-                    f.setAccessible(true);
-                    Object value = f.get(this);
-                    if (value != null &&
-                            !L.API_URL.equals(f.getName()) &&
-                            !L.paramsHashMap.equals(f.getName()) &&
-                            !L.serialVersionUID.equals(f.getName()) &&
-                            !f.getName().contains(L.shadow) &&
-                            !L.path.equals(f.getName())) {
-                        params.put(f.getName(), value);
-                    }
-                }
-            }
-        } catch (IllegalArgumentException | IllegalAccessException e) {
-            L.e(e);
-        }
+        params.put("key", key);
         for (Map.Entry<String, Object> item : paramsHashMap.entrySet()) {
-            if (item.getKey() != null && item.getValue() != null) {
+//            if (item.getKey() != null && item.getValue() != null) {
+//                params.put(item.getKey(), item.getValue());
+//            }
+            if (item.getValue() instanceof com.alibaba.fastjson.JSONArray) {
+                params.put(item.getKey(), (com.alibaba.fastjson.JSONArray) item.getValue());
+                L.d(L.TAG, item.getKey() + "," + item.getValue());
+            } else {
                 params.put(item.getKey(), item.getValue());
+//                    L.d(L.TAG, item.getKey() + "," + item.getValue());
             }
         }
         if (p > 0) {

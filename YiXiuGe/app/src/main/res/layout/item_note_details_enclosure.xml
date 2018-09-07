@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ll_bottom_h">
+
+
+    <ImageView
+        android:id="@+id/pic_iv"
+        style="@style/text"
+        android:layout_marginBottom="@dimen/d_5dp"
+        android:layout_marginTop="@dimen/d_5dp"
+        android:src="@mipmap/file_style_yellow" />
+
+    <TextView
+        android:id="@+id/name_tv"
+        style="@style/text_weight"
+        android:layout_marginLeft="@dimen/d_5dp"
+        android:text="我们不一样" />
+
+    <TextView
+        android:id="@+id/check_tv"
+        style="@style/text14color1593f0"
+        android:background="@drawable/enclosure_check_button_bg"
+        android:layout_marginRight="@dimen/d_10dp"
+        android:gravity="center"
+        android:text="@string/check" />
+
+
+</LinearLayout>

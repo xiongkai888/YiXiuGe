@@ -11,8 +11,6 @@ import com.xson.common.utils.UserHelper;
  */
 public abstract class ApiV2 extends AbstractApi {
 
-    public String key = "yxg";
-
     public String getUserId(Context context) {
         UserBean userBean = UserHelper.getInstance(context).getUserBean();
         return StringUtils.isEmpty(userBean) ? "" : userBean.getId()+"";

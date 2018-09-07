@@ -61,7 +61,9 @@ public class MyNoteActivity extends BaseActivity {
 
     @Subscribe
     public void publishNoteEvent(PublishNoteEvent event){
-        controller.loadFirstPage();
+        if (controller != null){
+            controller.loadFirstPage();
+        }
     }
 
 

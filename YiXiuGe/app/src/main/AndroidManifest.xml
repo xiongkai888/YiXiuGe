@@ -85,6 +85,9 @@
             android:name=".ui.mine.activity.MyNoteActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.NoteDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.home.activity.NewsDetailsActivity"
             android:screenOrientation="portrait" />
         <activity

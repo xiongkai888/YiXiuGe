@@ -1,5 +1,6 @@
 package com.lanmei.yixiu.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,25 +8,25 @@ import java.util.List;
  * 笔记
  */
 
-public class NotesBean {
+public class NotesBean implements Serializable{
 
     /**
-     * id : 1
-     * title : 第一次上传笔记
-     * pic : ["http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/2018-09-06%2017%3A40%3A31-0.jpg","http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/2018-09-06%2017%3A40%3A31-1.jpg","http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/2018-09-06%2017%3A40%3A31-2.jpg","http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/2018-09-06%2017%3A40%3A31-3.jpg","http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/2018-09-06%2017%3A40%3A31-4.jpg","http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/2018-09-06%2017%3A40%3A31-5.jpg","http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/2018-09-06%2017%3A40%3A31-6.jpg"]
-     * enclosure : 附件是要传什么东东啦？
-     * addtime : 1536226832
+     * id : 4
+     * title : 哈哈
+     * pic : ["http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/2018-09-07%2011%3A49%3A58-0.jpg"]
+     * enclosure : [{"name":"1617721478.png","url":"/storage/emulated/0/.360gamecentersdk/com.tciplay.doa5if.qihoo/pushsdk/1617721478.png"}]
+     * addtime : 1536292200
      * uid : 820515
-     * content : 恭喜发财
+     * content : 啊啊啊
      */
 
     private String id;
     private String title;
-    private String enclosure;
     private String addtime;
     private String uid;
     private String content;
     private List<String> pic;
+    private List<EnclosureBean> enclosure;
 
     public String getId() {
         return id;
@@ -41,14 +42,6 @@ public class NotesBean {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getEnclosure() {
-        return enclosure;
-    }
-
-    public void setEnclosure(String enclosure) {
-        this.enclosure = enclosure;
     }
 
     public String getAddtime() {
@@ -81,5 +74,39 @@ public class NotesBean {
 
     public void setPic(List<String> pic) {
         this.pic = pic;
+    }
+
+    public List<EnclosureBean> getEnclosure() {
+        return enclosure;
+    }
+
+    public void setEnclosure(List<EnclosureBean> enclosure) {
+        this.enclosure = enclosure;
+    }
+
+    public static class EnclosureBean implements Serializable{
+        /**
+         * name : 1617721478.png
+         * url : /storage/emulated/0/.360gamecentersdk/com.tciplay.doa5if.qihoo/pushsdk/1617721478.png
+         */
+
+        private String name;
+        private String url;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
     }
 }
