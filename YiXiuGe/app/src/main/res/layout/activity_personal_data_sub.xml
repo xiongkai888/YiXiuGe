@@ -103,6 +103,47 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_phone"
+                style="@style/ll_bottom_personal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    style="@style/text_weight"
+                    android:text="电\u3000\u3000话：" />
+
+                <TextView
+                    android:id="@+id/phone_tv"
+                    style="@style/text" />
+
+                <ImageView
+                    style="@style/in_right_icon"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_weixin"
+                style="@style/ll_bottom_personal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    style="@style/text_weight"
+                    android:text="微\u3000\u3000信：" />
+
+                <TextView
+                    android:id="@+id/weixin_tv"
+                    style="@style/text"
+                    android:text="" />
+
+                <ImageView
+                    style="@style/in_right_icon"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:id="@+id/ll_email"
                 style="@style/ll_bottom_personal"
                 android:gravity="center_vertical">
@@ -119,27 +160,34 @@
 
             </LinearLayout>
 
-
-            <LinearLayout
-                android:id="@+id/ll_phone"
-                style="@style/ll_bottom_personal"
-                android:gravity="center_vertical"
-                android:visibility="gone">
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/ll_unit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom_divider"
+                android:paddingBottom="@dimen/d_12dp"
+                android:paddingLeft="@dimen/d_10dp"
+                android:paddingRight="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_12dp">
 
                 <TextView
-                    style="@style/text_weight"
-                    android:text="电\u3000\u3000话：" />
-
-                <TextView
-                    android:id="@+id/phone_tv"
+                    android:id="@+id/unit_u_tv"
                     style="@style/text"
-                    android:text="10086" />
+                    android:text="单\u3000\u3000位：" />
 
-                <ImageView
-                    style="@style/in_right_icon"
-                    android:visibility="invisible" />
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/unit_tv"
+                    style="@style/text"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/unit_u_tv"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/in_right"
+                    android:gravity="right"
+                    android:lineSpacingMultiplier="1.3" />
+
+            </RelativeLayout>
 
 
             <RelativeLayout

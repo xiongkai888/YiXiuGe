@@ -24,6 +24,15 @@ public class CourseClassifyBean {
     private String recommend;
     private String update_time;
     private String cid;
+    private boolean isChoose;//发布教程的分类列表（需要）
+
+    public void setChoose(boolean choose) {
+        isChoose = choose;
+    }
+
+    public boolean isChoose() {
+        return isChoose;
+    }
 
     public String getId() {
         return id;

@@ -38,27 +38,15 @@
             android:textColor="@color/color666" />
 
         <TextView
+            android:id="@+id/name_tv"
             style="@style/text"
-            android:layout_marginRight="@dimen/d_10dp"
-            android:text="美肤" />
+            android:layout_marginRight="@dimen/d_10dp" />
 
     </LinearLayout>
 
-    <LinearLayout
-        style="@style/ll_bottom_h"
-        android:padding="@dimen/d_10dp">
-
-        <ImageView
-            style="@style/text"
-            android:src="@drawable/pay_off" />
-
-        <TextView style="@style/text_weight" />
-
-        <TextView
-            style="@style/text"
-            android:layout_marginRight="@dimen/d_10dp"
-            android:text="美肤" />
-
-    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
