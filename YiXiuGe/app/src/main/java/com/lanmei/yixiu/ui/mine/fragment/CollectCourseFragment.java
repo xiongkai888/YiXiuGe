@@ -76,6 +76,7 @@ public class CollectCourseFragment extends BaseFragment {
                 bean.setFavoured(event.getFavoured());
                 bean.setReviews(event.getReviews());
                 bean.setLike(event.getLike());
+                bean.setFavour(event.getFavour());
                 mAdapter.notifyDataSetChanged();
                 return;
             }

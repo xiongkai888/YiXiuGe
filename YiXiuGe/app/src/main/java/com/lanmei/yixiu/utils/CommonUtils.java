@@ -243,4 +243,11 @@ public class CommonUtils {
         context.startActivity(intent);
     }
 
+    public static String getFileName(String url) {
+        if (StringUtils.isEmpty(url)){
+            return "";
+        }
+        return url.substring(url.lastIndexOf("/") + 1, url.length());
+    }
+
 }

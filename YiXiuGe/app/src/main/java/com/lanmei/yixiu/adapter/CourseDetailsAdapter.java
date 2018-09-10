@@ -189,7 +189,7 @@ public class CourseDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
                 }
                 courseClassifyListBean.setLiked(StringUtils.isSame(courseClassifyListBean.getLiked(), CommonUtils.isOne)?CommonUtils.isZero:(CommonUtils.isOne));
                 courseClassifyListBean.setLike(StringUtils.isSame(courseClassifyListBean.getLiked(), CommonUtils.isOne)?(StringUtils.toInt(courseClassifyListBean.getLike(),0)+1)+"":(StringUtils.toInt(courseClassifyListBean.getLike(),0)-1)+"");
-                EventBus.getDefault().post(new CourseOperationEvent(courseClassifyListBean.getId(),courseClassifyListBean.getLiked(),courseClassifyListBean.getLike(),courseClassifyListBean.getView(),courseClassifyListBean.getReviews(),courseClassifyListBean.getFavoured()));
+                EventBus.getDefault().post(new CourseOperationEvent(courseClassifyListBean.getId(),courseClassifyListBean.getLiked(),courseClassifyListBean.getLike(),courseClassifyListBean.getView(),courseClassifyListBean.getReviews(),courseClassifyListBean.getFavoured(), courseClassifyListBean.getFavour()));
                 notifyDataSetChanged();
             }
         });
@@ -209,8 +209,10 @@ public class CourseDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
                 if (context == null) {
                     return;
                 }
-                courseClassifyListBean.setFavoured(StringUtils.isSame(courseClassifyListBean.getFavoured(), CommonUtils.isOne)?CommonUtils.isZero:(CommonUtils.isOne));
-                EventBus.getDefault().post(new CourseOperationEvent(courseClassifyListBean.getId(),courseClassifyListBean.getLiked(),courseClassifyListBean.getLike(),courseClassifyListBean.getView(),courseClassifyListBean.getReviews(),courseClassifyListBean.getFavoured()));
+                courseClassifyListBean.setFavoured(StringUtils.isSame(courseClassifyListBean.getFavoured(), CommonUtils.isOne)?CommonUtils.isZero:CommonUtils.isOne);
+                int favoure = StringUtils.toInt(courseClassifyListBean.getFavour(),0);
+                courseClassifyListBean.setFavour(StringUtils.isSame(courseClassifyListBean.getFavoured(), CommonUtils.isOne)?(favoure+1)+"":(favoure-1)+"");
+                EventBus.getDefault().post(new CourseOperationEvent(courseClassifyListBean.getId(),courseClassifyListBean.getLiked(),courseClassifyListBean.getLike(),courseClassifyListBean.getView(),courseClassifyListBean.getReviews(),courseClassifyListBean.getFavoured(),courseClassifyListBean.getFavour()));
                 notifyDataSetChanged();
                 EventBus.getDefault().post(new CourseCollectEvent());//如果是从收藏列表点击进来的就通知刷新教程收藏列表
             }

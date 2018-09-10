@@ -102,7 +102,7 @@ public class CourseDetailsActivity extends BaseActivity {
                 }
                 bean = response.data;
                 adapter.setCourseClassifyListBean(bean);
-                EventBus.getDefault().post(new CourseOperationEvent(bean.getId(), bean.getLiked(), bean.getLike(),"" + (StringUtils.toInt(bean.getView(), 0) + 1), bean.getReviews(), bean.getFavoured()));
+                EventBus.getDefault().post(new CourseOperationEvent(bean.getId(), bean.getLiked(), bean.getLike(),"" + (StringUtils.toInt(bean.getView(), 0) + 1), bean.getReviews(), bean.getFavoured(), bean.getFavour()));
             }
         });
     }
@@ -182,7 +182,7 @@ public class CourseDetailsActivity extends BaseActivity {
                 mCompileCommentEt.setText("");
                 controller.loadFirstPage();
                 bean.setReviews("" + (StringUtils.toInt(bean.getReviews()) + 1));
-                EventBus.getDefault().post(new CourseOperationEvent(bean.getId(), bean.getLiked(), bean.getLike(), "" + (StringUtils.toInt(bean.getView(), 0) + 1), bean.getReviews(), bean.getFavoured()));
+                EventBus.getDefault().post(new CourseOperationEvent(bean.getId(), bean.getLiked(), bean.getLike(), "" + (StringUtils.toInt(bean.getView(), 0) + 1), bean.getReviews(), bean.getFavoured(), bean.getFavour()));
                 adapter.notifyDataSetChanged();
             }
         });

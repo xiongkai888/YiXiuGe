@@ -19,16 +19,17 @@ import java.util.Date;
  */
 
 public class FileUtils {
+
     public static void savePhoto(final Context context, final Bitmap bmp, final SaveResultCallback saveResultCallback) {
         final File sdDir = getSDPath();
         if (sdDir == null) {
-            Toast.makeText(context,"设备自带的存储不可用", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "设备自带的存储不可用", Toast.LENGTH_LONG).show();
             return;
         }
         new Thread(new Runnable() {
             @Override
             public void run() {
-                File appDir = new File(sdDir, "BiLan");
+                File appDir = new File(sdDir, "PaiXingRen");
                 if (!appDir.exists()) {
                     appDir.mkdir();
                 }
@@ -40,12 +41,18 @@ public class FileUtils {
                     bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
                     fos.flush();
                     fos.close();
-                    saveResultCallback.onSavedSuccess();
+                    if (saveResultCallback != null){
+                        saveResultCallback.onSavedSuccess(file.getPath());
+                    }
                 } catch (FileNotFoundException e) {
-                    saveResultCallback.onSavedFailed();
+                    if (saveResultCallback != null){
+                        saveResultCallback.onSavedFailed();
+                    }
                     e.printStackTrace();
                 } catch (IOException e) {
-                    saveResultCallback.onSavedFailed();
+                    if (saveResultCallback != null){
+                        saveResultCallback.onSavedFailed();
+                    }
                     e.printStackTrace();
                 }
 
@@ -61,13 +68,14 @@ public class FileUtils {
         File sdDir = null;
         boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED); //判断sd卡是否存在
         if (sdCardExist) {
-            sdDir = Environment.getExternalStorageDirectory();//获取跟目录
+            sdDir = Environment.getExternalStorageDirectory();//获取根目录
         }
         return sdDir;
     }
 
     public interface SaveResultCallback {
-        void onSavedSuccess();
+
+        void onSavedSuccess(String path);
 
         void onSavedFailed();
     }

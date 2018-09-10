@@ -10,8 +10,9 @@ import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.bean.NotesBean;
-import com.lanmei.yixiu.utils.CommonUtils;
+import com.lanmei.yixiu.ui.mine.activity.ShowEnclosureActivity;
 import com.xson.common.adapter.SwipeRefreshAdapter;
+import com.xson.common.utils.IntentUtil;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -33,7 +34,7 @@ public class NoteDetailsEnclosureAdapter extends SwipeRefreshAdapter<NotesBean.E
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, final int position) {
-        NotesBean.EnclosureBean bean = getItem(position);
+        final NotesBean.EnclosureBean bean = getItem(position);
         if (bean == null) {
             return;
         }
@@ -42,7 +43,7 @@ public class NoteDetailsEnclosureAdapter extends SwipeRefreshAdapter<NotesBean.E
         viewHolder.checkTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonUtils.developing(context);
+                IntentUtil.startActivity(context, ShowEnclosureActivity.class,bean.getUrl());
             }
         });
     }

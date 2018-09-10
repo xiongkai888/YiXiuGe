@@ -243,7 +243,7 @@ public class PhotoBrowserActivity extends Activity implements View.OnClickListen
             }
             FileUtils.savePhoto(this, bitmap, new FileUtils.SaveResultCallback() {
                 @Override
-                public void onSavedSuccess() {
+                public void onSavedSuccess(String path) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

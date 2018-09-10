@@ -172,6 +172,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 bean.setFavoured(event.getFavoured());
                 bean.setReviews(event.getReviews());
                 bean.setLike(event.getLike());
+                bean.setFavour(event.getFavour());
                 mAdapter.notifyDataSetChanged();
                 return;
             }

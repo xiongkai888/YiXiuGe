@@ -15,15 +15,26 @@
         android:layout_marginTop="@dimen/d_10dp"
         android:padding="@dimen/d_10dp">
 
-        <TextView
+        <EditText
+            android:id="@+id/video_title_et"
             style="@style/match_parent"
-            android:background="@null"
-            android:text="分享视频" />
+            android:hint="@string/input_video_title"
+            android:background="@null" />
 
         <ImageView
-            style="@style/text"
+            android:id="@+id/video_pic_tv"
             android:layout_marginTop="@dimen/d_10dp"
-            android:src="@drawable/icon_select" />
+            android:src="@drawable/icon_select"
+            android:scaleType="centerCrop"
+            android:layout_width="@dimen/d_100dp"
+            android:layout_height="@dimen/d_100dp" />
+
+        <TextView
+            android:id="@+id/video_name_tv"
+            android:layout_marginTop="@dimen/d_10dp"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

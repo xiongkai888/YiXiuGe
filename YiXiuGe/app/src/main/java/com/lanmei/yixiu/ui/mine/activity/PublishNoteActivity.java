@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
 import com.lanmei.yixiu.R;
@@ -251,13 +250,13 @@ public class PublishNoteActivity extends BaseActivity implements BGASortableNine
         if (resultCode == RESULT_OK) {
             if (requestCode == 100) {
                 List<String> list = data.getStringArrayListExtra(Constant.RESULT_INFO);
-                Toast.makeText(getApplicationContext(), "选中了" + list.size() + "个文件", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "选中了" + list.size() + "个文件", Toast.LENGTH_SHORT).show();
                 if (!StringUtils.isEmpty(list)) {
                     List<NotesBean.EnclosureBean> notesBeanList = new ArrayList<>();
                     for (String s : list) {
                         if (!StringUtils.isEmpty(s)) {
                             NotesBean.EnclosureBean bean = new NotesBean.EnclosureBean();
-                            bean.setName(getName(s));
+                            bean.setName(CommonUtils.getFileName(s));
                             bean.setUrl(s);
                             notesBeanList.add(bean);
                         }
@@ -274,10 +273,6 @@ public class PublishNoteActivity extends BaseActivity implements BGASortableNine
                 mPhotoHelper.onActivityResult(requestCode, resultCode, data);
             }
         }
-    }
-
-    public String getName(String url) {
-        return url.substring(url.lastIndexOf("/") + 1, url.length());
     }
 
     @Override

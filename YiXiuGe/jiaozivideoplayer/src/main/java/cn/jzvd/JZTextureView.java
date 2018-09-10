@@ -156,6 +156,6 @@ public class JZTextureView extends TextureView {
                 }
             }
         }
-        setMeasuredDimension(width, height);
+        setMeasuredDimension(width+14, height);
     }
 }

@@ -67,7 +67,7 @@ public class WebViewPhotoBrowserUtil {
         return htmlStr; // 返回文本字符串
     }
 
-    public static void loadUrl(String url, WebView webview) {
+    public static void loadUrl(WebView webview,String url) {
         WebSettings webSettings = webview.getSettings();
         //设置WebView属性，能够执行Javascript脚本
         webSettings.setJavaScriptEnabled(true);
