@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.YiXiuApp;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.helper.CameraHelper;
 import com.lanmei.yixiu.utils.AssetsUtils;
@@ -44,7 +43,6 @@ import cn.qqtheme.framework.entity.County;
 import cn.qqtheme.framework.entity.Province;
 import cn.qqtheme.framework.picker.AddressPicker;
 import cn.qqtheme.framework.picker.OptionPicker;
-import oss.OssUserInfo;
 
 
 /**
@@ -128,6 +126,11 @@ public class PersonalDataSubActivity extends BaseActivity {
         addressAsyncTask = new AddressAsyncTask();//异步获取省市区列表
         addressAsyncTask.execute();
 
+//        List<String> list = new ArrayList<>();
+//        list.add("http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/2018-09-11%2010%3A34%3A39-0.jpg");
+//        list.add("http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/2018-09-11%2010%3A34%3A39-1.jpg");
+//        CommonUtils.deleteOssObjectList(list);
+
         cameraHelper = new CameraHelper(this);
         cameraHelper.setHeadUrlListener(new CameraHelper.HeadUrlListener() {
             @Override
@@ -190,7 +193,7 @@ public class PersonalDataSubActivity extends BaseActivity {
 //        List<String> list = new ArrayList<>();
 //        list.add("http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/2018-09-11%2010%3A34%3A39-0.jpg");
 //        list.add("http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/2018-09-11%2010%3A34%3A39-1.jpg");
-//        CommonUtils.deleteOssObjectList(YiXiuApp.applicationContext,list);
+//        CommonUtils.deleteOssObject("http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/2018-09-11-22-00-25-0.jpg");
     }
 
     private void initOptionPicker() {
@@ -414,8 +417,8 @@ public class PersonalDataSubActivity extends BaseActivity {
                 if (isFinishing()) {
                     return;
                 }
-                if (!StringUtils.isEmpty(url)&& !StringUtils.isEmpty(pic) && pic.contains(OssUserInfo.endpoint)) {
-                    CommonUtils.deleteOssObject(YiXiuApp.applicationContext,pic);//更新头像后删除从oss删除旧的头像
+                if (!StringUtils.isEmpty(url)) {
+                    CommonUtils.deleteOssObject(pic);//更新头像后删除从oss删除旧的头像
                 }
                 UIHelper.ToastMessage(getContext(), "修改资料成功");
                 CommonUtils.loadUserInfo(getContext(), null);

@@ -123,7 +123,7 @@ public class ManageOssUpload {
     public void deleteObject(DeleteObjectRequest request){
         try {
             DeleteObjectResult result =  oss.deleteObject(request);
-            L.d("AyncListObjects",result.toString());
+            L.d("deleteObject",result.toString());
         } catch (ClientException e) {
             e.printStackTrace();
         } catch (ServiceException e) {
@@ -133,7 +133,7 @@ public class ManageOssUpload {
 
     public void logAyncListObjects(){
 
-        ListObjectsRequest listObjects = new ListObjectsRequest(OssUserInfo.endpoint);
+        ListObjectsRequest listObjects = new ListObjectsRequest(OssUserInfo.testBucket);
 // 设定前缀
         listObjects.setPrefix("lanmei");
 

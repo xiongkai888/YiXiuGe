@@ -12,6 +12,7 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.data.volley.Response;
 import com.data.volley.error.VolleyError;
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.YiXiuApp;
 import com.lanmei.yixiu.adapter.BannerHolderView;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.event.SetUserEvent;
@@ -268,33 +269,42 @@ public class CommonUtils {
     /**
      * 删除OSS文件
      *
-     * @param context
      * @param url
      */
-    public static void deleteOssObject(Context context, String url) {
-        ManageOssUpload manageOssUpload = new ManageOssUpload(context);
-        manageOssUpload.deleteObject(new DeleteObjectRequest(OssUserInfo.testBucket, getObjectKey(url)));
+    public static void deleteOssObject(String url) {
+        ManageOssUpload manageOssUpload = new ManageOssUpload(YiXiuApp.applicationContext);
+        manageOssUpload.logAyncListObjects();
+        String objectKey =  getObjectKey(url);
+        if (StringUtils.isEmpty(objectKey)){
+            return;
+        }
+        manageOssUpload.deleteObject(new DeleteObjectRequest(OssUserInfo.testBucket, objectKey));
+        manageOssUpload.logAyncListObjects();
     }
 
     /**
      * 删除OSS文件(批量)
      *
-     * @param context
      * @param paths
      */
-    public static void deleteOssObjectList(Context context, List<String> paths) {
+    public static void deleteOssObjectList(final List<String> paths) {
         if (StringUtils.isEmpty(paths)) {
             return;
         }
-        ManageOssUpload manageOssUpload = new ManageOssUpload(context);
-        int size = paths.size();
-        for (int i = 0; i < size; i++) {
-            String objectKey =  getObjectKey(paths.get(i));
-            if (!StringUtils.isEmpty(objectKey)){
-                manageOssUpload.deleteObject(new DeleteObjectRequest(OssUserInfo.testBucket, objectKey));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ManageOssUpload manageOssUpload = new ManageOssUpload(YiXiuApp.applicationContext);
+                manageOssUpload.logAyncListObjects();
+                int size = paths.size();
+                for (int i = 0; i < size; i++) {
+                    String objectKey =  getObjectKey(paths.get(i));
+                    if (!StringUtils.isEmpty(objectKey)){
+                        manageOssUpload.deleteObject(new DeleteObjectRequest(OssUserInfo.testBucket, objectKey));
+                    }
+                }
+                manageOssUpload.logAyncListObjects();
             }
-        }
-
+        }).start();
     }
-
 }

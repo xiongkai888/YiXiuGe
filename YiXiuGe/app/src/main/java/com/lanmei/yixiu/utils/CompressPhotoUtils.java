@@ -97,7 +97,8 @@ public class CompressPhotoUtils {
 
         public void setList(String nativePath,int num){
             Bitmap bitmap = getBitmap(nativePath);
-            String path = SaveBitmap(bitmap, num);
+            String path = saveBitmap(bitmap, num);
+            L.d("AyncListObjects","压缩后的图片地址："+path);
             fileList.add(path);
         }
 
@@ -148,13 +149,13 @@ public class CompressPhotoUtils {
     /**
      * 保存bitmap到内存卡
      */
-    public String SaveBitmap(Bitmap bmp, int num) {
-        File file = new File("mnt/sdcard/lan" + type + "/");
+    public String saveBitmap(Bitmap bmp, int num) {
+        File file = new File("mnt/sdcard/yixiuge" + type + "/");
         String path = null;
         if (!file.exists())
             file.mkdirs();
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String picName = formatter.format(new Date());
             path = file.getPath() + "/" + picName + "-" + num + ".jpg";
             FileOutputStream fileOutputStream = new FileOutputStream(path);
