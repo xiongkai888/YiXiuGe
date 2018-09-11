@@ -6,6 +6,7 @@ import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.CourseListAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.CourseClassifyListBean;
+import com.lanmei.yixiu.event.AddCourseEvent;
 import com.lanmei.yixiu.event.CourseOperationEvent;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
@@ -32,6 +33,7 @@ public class CourseListFragment extends BaseFragment {
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     CourseListAdapter mAdapter;
     private SwipeRefreshController<NoPageListBean<CourseClassifyListBean>> controller;
+    private String cid;
 
     @Override
     public int getContentViewId() {
@@ -48,9 +50,10 @@ public class CourseListFragment extends BaseFragment {
     }
 
     private void initSwipeRefreshLayout() {
+        cid = getArguments().getString("cid");
         smartSwipeRefreshLayout.initWithLinearLayout();
         YiXiuGeApi api = new YiXiuGeApi("app/video_index");
-        api.addParams("cid", getArguments().getString("cid"));
+        api.addParams("cid", cid);
         api.addParams("uid", api.getUserId(context));
         mAdapter = new CourseListAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
@@ -67,7 +70,7 @@ public class CourseListFragment extends BaseFragment {
         int size = list.size();
         for (int i = 0; i < size; i++) {
             CourseClassifyListBean bean = list.get(i);
-            if (StringUtils.isSame(id,bean.getId())){
+            if (StringUtils.isSame(id, bean.getId())) {
                 bean.setLiked(event.getLiked());
                 bean.setView(event.getViewNum());
                 bean.setFavoured(event.getFavoured());
@@ -80,6 +83,13 @@ public class CourseListFragment extends BaseFragment {
         }
     }
 
+    //添加视频教程后调用
+    @Subscribe
+    public void AddCourseEvent(AddCourseEvent event) {
+        if (StringUtils.isSame(event.getCid(), cid) && controller != null) {
+            controller.loadFirstPage();
+        }
+    }
 
     @Override
     public void onDestroy() {

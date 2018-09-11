@@ -139,6 +139,10 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="text16color4D4D" parent="Text.Size16">
+        <item name="android:textColor">@color/color4D4D</item>
+    </style>
+
     <style name="text14color1593f0" parent="Text.Size14">
         <item name="android:textColor">@color/color1593f0</item>
     </style>
@@ -168,6 +172,9 @@
 
     <style name="Text.Size14" parent="text">
         <item name="android:textSize">@dimen/txt_14sp</item>
+    </style>
+    <style name="Text.Size16" parent="text">
+        <item name="android:textSize">@dimen/txt_16sp</item>
     </style>
 
     <style name="match_parent_has" parent="match_parent">

@@ -236,7 +236,7 @@ public class PublishNoteActivity extends BaseActivity implements BGASortableNine
                         .withTitle("选择上传附件")//标题文字
                         .withStartPath("/sdcard")//指定初始显示路径
                         .withMutilyMode(true)//多选
-                        .withFileFilter(new String[]{".pdf", ".jpg", ".xlsx", ".doc", ".docx", ".ppt", ".pptx", ".png", ".xls"})//过滤！
+                        .withFileFilter(new String[]{".pdf", ".jpg", ".xlsx", ".doc", ".docx", ".ppt", ".pptx", ".png", ".xls", ".txt"})//过滤！
                         .withBackIcon(Constant.BACKICON_STYLEONE)
                         .withBackgroundColor("#1593f0")//标题背景颜色
                         .start();

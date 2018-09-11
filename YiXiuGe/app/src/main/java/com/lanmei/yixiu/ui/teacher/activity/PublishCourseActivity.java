@@ -19,6 +19,7 @@ import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.PublishCourseClassifyAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.CourseClassifyBean;
+import com.lanmei.yixiu.event.AddCourseEvent;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.lanmei.yixiu.utils.UpdateFileTask;
 import com.lanmei.yixiu.webviewpage.FileUtils;
@@ -32,6 +33,8 @@ import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -169,6 +172,7 @@ public class PublishCourseActivity extends BaseActivity {
                     return;
                 }
                 UIHelper.ToastMessage(getContext(),"发布成功");
+                EventBus.getDefault().post(new AddCourseEvent(classifyBean.getCid()));//刷新cid == classifyBean.getCid()的教程列表
                 finish();
             }
         });

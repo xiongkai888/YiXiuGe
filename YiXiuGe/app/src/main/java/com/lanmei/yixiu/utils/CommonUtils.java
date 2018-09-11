@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.sdk.android.oss.model.DeleteObjectRequest;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.data.volley.Response;
@@ -30,6 +31,9 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
+
+import oss.ManageOssUpload;
+import oss.OssUserInfo;
 
 public class CommonUtils {
 
@@ -76,6 +80,7 @@ public class CommonUtils {
 
     /**
      * String 逗号隔开 0,2,3
+     *
      * @param list
      * @return
      */
@@ -86,12 +91,14 @@ public class CommonUtils {
         StringBuilder builder = new StringBuilder();
         int size = list.size();
         for (int i = 0; i < size; i++) {
-            builder.append(((size-1) != i)?list.get(i)+",":list.get(i));
+            builder.append(((size - 1) != i) ? list.get(i) + "," : list.get(i));
         }
         return builder.toString();
     }
+
     /**
      * String 逗号隔开 0,2,3
+     *
      * @param list
      * @return
      */
@@ -100,7 +107,7 @@ public class CommonUtils {
         if (StringUtils.isEmpty(list)) {
             return array;
         }
-        for (String s:list){
+        for (String s : list) {
             array.add(s);
         }
         return array;
@@ -244,10 +251,50 @@ public class CommonUtils {
     }
 
     public static String getFileName(String url) {
-        if (StringUtils.isEmpty(url)){
+        if (StringUtils.isEmpty(url)) {
             return "";
         }
         return url.substring(url.lastIndexOf("/") + 1, url.length());
+
+    }
+
+    public static String getObjectKey(String url) {
+        if (StringUtils.isEmpty(url) || !url.contains(OssUserInfo.endpoint)) {
+            return "";
+        }
+        return url.substring(url.indexOf("/",40) + 1, url.length());
+    }
+
+    /**
+     * 删除OSS文件
+     *
+     * @param context
+     * @param url
+     */
+    public static void deleteOssObject(Context context, String url) {
+        ManageOssUpload manageOssUpload = new ManageOssUpload(context);
+        manageOssUpload.deleteObject(new DeleteObjectRequest(OssUserInfo.testBucket, getObjectKey(url)));
+    }
+
+    /**
+     * 删除OSS文件(批量)
+     *
+     * @param context
+     * @param paths
+     */
+    public static void deleteOssObjectList(Context context, List<String> paths) {
+        if (StringUtils.isEmpty(paths)) {
+            return;
+        }
+        ManageOssUpload manageOssUpload = new ManageOssUpload(context);
+        int size = paths.size();
+        for (int i = 0; i < size; i++) {
+            String objectKey =  getObjectKey(paths.get(i));
+            if (!StringUtils.isEmpty(objectKey)){
+                manageOssUpload.deleteObject(new DeleteObjectRequest(OssUserInfo.testBucket, objectKey));
+            }
+        }
+
     }
 
 }

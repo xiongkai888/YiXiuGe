@@ -9,13 +9,11 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
 
 import com.umeng.analytics.MobclickAgent;
 import com.xson.common.R;
 import com.xson.common.utils.L;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -50,44 +48,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 //        ((BaseApp)getApplication()).watch(this);
-        fixInputMethodManagerLeak(this);
+        L.fixInputMethodManagerLeak(this);
         ButterKnife.reset(this);
     }
 
-    public void fixInputMethodManagerLeak(Context destContext) {
-        if (destContext == null) {
-            return;
-        }
-
-        InputMethodManager inputMethodManager = (InputMethodManager) destContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (inputMethodManager == null) {
-            return;
-        }
-
-        String [] viewArray = new String[]{"mCurRootView", "mServedView", "mNextServedView"};
-        Field filed;
-        Object filedObject;
-
-        for (String view:viewArray) {
-            try{
-                filed = inputMethodManager.getClass().getDeclaredField(view);
-                if (!filed.isAccessible()) {
-                    filed.setAccessible(true);
-                }
-                filedObject = filed.get(inputMethodManager);
-                if (filedObject != null && filedObject instanceof View) {
-                    View fileView = (View) filedObject;
-                    if (fileView.getContext() == destContext) { // 被InputMethodManager持有引用的context是想要目标销毁的
-                        filed.set(inputMethodManager, null); // 置空，破坏掉path to gc节点
-                    } else {
-                        break;// 不是想要目标销毁的，即为又进了另一层界面了，不要处理，避免影响原逻辑,也就不用继续for循环了
-                    }
-                }
-            }catch(Throwable t){
-                t.printStackTrace();
-            }
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

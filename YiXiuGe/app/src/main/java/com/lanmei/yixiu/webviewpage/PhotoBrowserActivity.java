@@ -3,7 +3,6 @@ package com.lanmei.yixiu.webviewpage;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,8 +22,8 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.lanmei.yixiu.R;
+import com.xson.common.utils.L;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -269,43 +267,6 @@ public class PhotoBrowserActivity extends Activity implements View.OnClickListen
     protected void onDestroy() {
         releaseResource();
         super.onDestroy();
-        fixInputMethodManagerLeak(this);
+        L.fixInputMethodManagerLeak(this);
     }
-
-    //防止inputMethodManager引用this发生
-    public void fixInputMethodManagerLeak(Context destContext) {
-        if (destContext == null) {
-            return;
-        }
-
-        InputMethodManager inputMethodManager = (InputMethodManager) destContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (inputMethodManager == null) {
-            return;
-        }
-
-        String [] viewArray = new String[]{"mCurRootView", "mServedView", "mNextServedView"};
-        Field filed;
-        Object filedObject;
-
-        for (String view:viewArray) {
-            try{
-                filed = inputMethodManager.getClass().getDeclaredField(view);
-                if (!filed.isAccessible()) {
-                    filed.setAccessible(true);
-                }
-                filedObject = filed.get(inputMethodManager);
-                if (filedObject != null && filedObject instanceof View) {
-                    View fileView = (View) filedObject;
-                    if (fileView.getContext() == destContext) { // 被InputMethodManager持有引用的context是想要目标销毁的
-                        filed.set(inputMethodManager, null); // 置空，破坏掉path to gc节点
-                    } else {
-                        break;// 不是想要目标销毁的，即为又进了另一层界面了，不要处理，避免影响原逻辑,也就不用继续for循环了
-                    }
-                }
-            }catch(Throwable t){
-                t.printStackTrace();
-            }
-        }
-    }
-
 }

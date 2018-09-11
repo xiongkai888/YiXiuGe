@@ -108,4 +108,10 @@ public class SplashActivity extends AppCompatActivity implements ViewPager.OnPag
     public void onPageScrollStateChanged(int state) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        L.fixInputMethodManagerLeak(this);
+    }
 }

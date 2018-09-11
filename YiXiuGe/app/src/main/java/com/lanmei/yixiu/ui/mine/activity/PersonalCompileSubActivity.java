@@ -3,6 +3,7 @@ package com.lanmei.yixiu.ui.mine.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.utils.AKDialog;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.utils.StringUtils;
@@ -82,11 +84,16 @@ public class PersonalCompileSubActivity extends BaseActivity {
                 mCompileEt.setHint("请输入邮箱");
                 mCompileEt.setInputType(InputType.TYPE_CLASS_TEXT);
                 break;
+            case 104:
+                actionbar.setTitle("微信");
+                mCompileEt.setHint("请输入微信号");
+                mCompileEt.setInputType(InputType.TYPE_CLASS_TEXT);
+                break;
         }
         mCompileEt.setText(value);
     }
 
-//    AlertDialog alertDialog;
+    AlertDialog alertDialog;
 
     @OnClick(R.id.save_bt)
     public void showSave() {
@@ -99,27 +106,27 @@ public class PersonalCompileSubActivity extends BaseActivity {
                 }
                 break;
             case 101://电话号码
-//                if (alertDialog != null && !alertDialog.isShowing()) {
-//                    alertDialog.show();
-//                    return;
-//                }
-//                if (StringUtils.isEmpty(value)) {
-//                    UIHelper.ToastMessage(this, "您还没有绑定手机号，请先绑定");
-//                    return;
-//                }
-//                alertDialog = AKDialog.getChangePhoneDialog(this, "验证码将以短息方式发送至您的手机，点击获取验证码按钮后请在60s内输入验证码！", value, "changePhone", new AKDialog.ChangePhoneListener() {
-//                    @Override
-//                    public void succeed(String newPhone) {
-//                        alertDialog.cancel();
-//                        setCompileIntent(newPhone);
-//                    }
-//
-//                    @Override
-//                    public void unBound() {
-//
-//                    }
-//                });
-//                alertDialog.show();
+                if (alertDialog != null && !alertDialog.isShowing()) {
+                    alertDialog.show();
+                    return;
+                }
+                if (StringUtils.isEmpty(value)) {
+                    UIHelper.ToastMessage(this, "您还没有绑定手机号，请先绑定");
+                    return;
+                }
+                alertDialog = AKDialog.getChangePhoneDialog(this, "验证码将以短息方式发送至您的手机，点击获取验证码按钮后请在60s内输入验证码！", value, "changePhone", new AKDialog.ChangePhoneListener() {
+                    @Override
+                    public void succeed(String newPhone) {
+                        alertDialog.cancel();
+                        setCompileIntent(newPhone);
+                    }
+
+                    @Override
+                    public void unBound() {
+
+                    }
+                });
+                alertDialog.show();
                 break;
             case 102://详细地址
                 if (StringUtils.isEmpty(compile)) {
@@ -134,6 +141,12 @@ public class PersonalCompileSubActivity extends BaseActivity {
                 }
                 if (!StringUtils.isEmail(compile)) {
                     UIHelper.ToastMessage(this, "邮箱格式不正确");
+                    return;
+                }
+                break;
+            case 104://微信
+                if (StringUtils.isEmpty(compile)) {
+                    UIHelper.ToastMessage(this, "请输入微信号");
                     return;
                 }
                 break;

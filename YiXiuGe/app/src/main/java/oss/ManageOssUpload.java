@@ -15,6 +15,9 @@ import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvide
 import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.DeleteObjectRequest;
 import com.alibaba.sdk.android.oss.model.DeleteObjectResult;
+import com.alibaba.sdk.android.oss.model.ListObjectsRequest;
+import com.alibaba.sdk.android.oss.model.ListObjectsResult;
+import com.xson.common.utils.L;
 
 
 /**
@@ -43,11 +46,11 @@ public class ManageOssUpload {
 
     }
 
-    public void uploadFile_img(String uploadFilePath, OssUploadListener ossUploadListener){
+    public void uploadFile_img(String uploadFilePath,String type, OssUploadListener ossUploadListener){
         if (TextUtils.isEmpty(uploadFilePath))
             return ;
         String fileName=uploadFilePath.substring(uploadFilePath.lastIndexOf("/")+1);
-        fileName= OssUserInfo.uploadPath+fileName;
+        fileName= OssUserInfo.uploadPath+type+fileName;
         new PutObjectSamples(oss, OssUserInfo.testBucket, fileName, uploadFilePath)
                 .asyncPutObjectFromLocalFile(ossUploadListener);
 
@@ -115,4 +118,55 @@ public class ManageOssUpload {
 //        L.d("uploadFile_del",""+name);
         return name;
     }
+
+    //删除oss文件
+    public void deleteObject(DeleteObjectRequest request){
+        try {
+            DeleteObjectResult result =  oss.deleteObject(request);
+            L.d("AyncListObjects",result.toString());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void logAyncListObjects(){
+
+        ListObjectsRequest listObjects = new ListObjectsRequest(OssUserInfo.endpoint);
+// 设定前缀
+        listObjects.setPrefix("lanmei");
+
+// 设置成功、失败回调，发送异步罗列请求
+        OSSAsyncTask task = oss.asyncListObjects(listObjects, new OSSCompletedCallback<ListObjectsRequest, ListObjectsResult>() {
+            @Override
+            public void onSuccess(ListObjectsRequest request, ListObjectsResult result) {
+                L.d("AyncListObjects", "Success!");
+                for (int i = 0; i < result.getObjectSummaries().size(); i++) {
+                    L.d("AyncListObjects", "object: " + result.getObjectSummaries().get(i).getKey() + " "
+                            + result.getObjectSummaries().get(i).getETag() + " "
+                            + result.getObjectSummaries().get(i).getLastModified());
+                }
+            }
+
+            @Override
+            public void onFailure(ListObjectsRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                // 请求异常
+                if (clientExcepion != null) {
+                    // 本地异常如网络异常等
+                    clientExcepion.printStackTrace();
+                }
+                if (serviceException != null) {
+                    // 服务异常
+                    L.e("ErrorCode", serviceException.getErrorCode());
+                    L.e("RequestId", serviceException.getRequestId());
+                    L.e("HostId", serviceException.getHostId());
+                    L.e("RawMessage", serviceException.getRawMessage());
+                }
+            }
+        });
+        task.waitUntilFinished();
+
+    }
+
 }

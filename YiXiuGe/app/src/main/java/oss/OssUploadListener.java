@@ -4,7 +4,7 @@ package oss;
  *
  */
 
-interface OssUploadListener {
+public interface OssUploadListener {
 
      void onUpLoadListener(boolean isSuccess, String path);
 }

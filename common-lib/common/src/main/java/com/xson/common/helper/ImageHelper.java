@@ -55,7 +55,7 @@ public class ImageHelper {
             ((NetworkImageView)imageView).setStatus(NetworkImageView.StatusEnum.LOADING);
         }
 
-        final String finalImageUrl = imageUrl;
+//        final String finalImageUrl = imageUrl;
         ImageCallback imageCallback = new ImageCallback(imageView, callback) {
             @Override
             public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {

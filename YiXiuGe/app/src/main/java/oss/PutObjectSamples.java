@@ -16,6 +16,7 @@ import com.alibaba.sdk.android.oss.model.DeleteObjectResult;
 import com.alibaba.sdk.android.oss.model.ObjectMetadata;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
+import com.xson.common.utils.L;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,10 +49,10 @@ public class PutObjectSamples {
         try {
             PutObjectResult putResult = oss.putObject(put);
 
-            Log.d("PutObject", "UploadSuccess");
-            Log.d("Url", putResult.getUrl());
-            Log.d("ETag", putResult.getETag());
-            Log.d("RequestId", putResult.getRequestId());
+            L.d("PutObject", "UploadSuccess:"+"testBucket:"+testBucket+":"+testObject+":"+ uploadFilePath);
+            L.d("Url", putResult.getUrl());
+            L.d("ETag", putResult.getETag());
+            L.d("RequestId", putResult.getRequestId());
             url=putResult.getUrl();
         } catch (ClientException e) {
             // 本地异常如网络异常等
@@ -72,23 +73,24 @@ public class PutObjectSamples {
     public void asyncPutObjectFromLocalFile(final OssUploadListener ossUploadListener) {
         // 构造上传请求
         PutObjectRequest put = new PutObjectRequest(testBucket, testObject, uploadFilePath);
+        final String url=null;
 
         // 异步上传时可以设置进度回调
         put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
             @Override
             public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
-                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                L.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
             }
         });
 
         OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
             @Override
             public void onSuccess(PutObjectRequest request, PutObjectResult result) {
-                Log.d("PutObject", "UploadSuccess");
-                Log.d("Url", result.getUrl());
-                Log.d("ETag", result.getETag());
-                Log.d("RequestId", result.getRequestId());
-                Log.d("上传图片：", uploadFilePath);
+                L.d("PutObject", "UploadSuccess");
+                L.d("Url", result.getUrl());
+                L.d("ETag", result.getETag());
+                L.d("RequestId", result.getRequestId());
+                L.d("上传图片：", uploadFilePath);
                 File fileImg=new File(uploadFilePath);
                 if (fileImg.exists()){
                     fileImg.delete();

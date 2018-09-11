@@ -8,28 +8,27 @@ package com.xson.common.bean;
 
 public class UserBean {
 
-
     /**
      * id : 820515
      * username : b_820515
-     * nickname : b_1591436****
+     * nickname : 小四轮
      * realname : null
      * user_type : 0
      * user_type_fix : 0
-     * pic : null
-     * email : 
+     * pic : http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/head-1807198884.jpg.tmp
+     * email : 173422222@qq.com
      * password : e10adc3949ba59abbe56e057f20f883e
      * hash : 
      * phone : 15914369252
-     * area : null
+     * area : 广东省广州市天河区
      * city_id : null
-     * sex : 0
+     * sex : 1
      * birth : null
      * qq : 
      * reg_ip : 
      * reg_time : 1535597009
      * ip : 
-     * address : null
+     * address : 天河客运站
      * time : 0
      * login_count : 0
      * point : null
@@ -48,7 +47,7 @@ public class UserBean {
      * token : 
      * talent_label : 
      * avatar_bg : 
-     * uptime : 1535597009
+     * uptime : 1536071955
      * addtime : 1535597009
      * balance : 0.00
      * state : 1
@@ -57,6 +56,16 @@ public class UserBean {
      * content : null
      * phonecode : 
      * rtid2 : null
+     * education : null
+     * school : null
+     * unit : null
+     * weixin : null
+     * student_type : null
+     * student_nature : null
+     * department : null
+     * position : null
+     * learned : null
+     * mechanism : null
      */
 
     private String id;
@@ -106,6 +115,16 @@ public class UserBean {
     private String content;
     private String phonecode;
     private String rtid2;
+    private String education;
+    private String school;
+    private String unit;
+    private String weixin;
+    private String student_type;
+    private String student_nature;
+    private String department;
+    private String position;
+    private String learned;
+    private String mechanism;
 
     public String getId() {
         return id;
@@ -481,5 +500,85 @@ public class UserBean {
 
     public void setRtid2(String rtid2) {
         this.rtid2 = rtid2;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getWeixin() {
+        return weixin;
+    }
+
+    public void setWeixin(String weixin) {
+        this.weixin = weixin;
+    }
+
+    public String getStudent_type() {
+        return student_type;
+    }
+
+    public void setStudent_type(String student_type) {
+        this.student_type = student_type;
+    }
+
+    public String getStudent_nature() {
+        return student_nature;
+    }
+
+    public void setStudent_nature(String student_nature) {
+        this.student_nature = student_nature;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getLearned() {
+        return learned;
+    }
+
+    public void setLearned(String learned) {
+        this.learned = learned;
+    }
+
+    public String getMechanism() {
+        return mechanism;
+    }
+
+    public void setMechanism(String mechanism) {
+        this.mechanism = mechanism;
     }
 }

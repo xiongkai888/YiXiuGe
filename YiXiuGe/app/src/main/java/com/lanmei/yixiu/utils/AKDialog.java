@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.helper.SimpleTextWatcher;
+import com.lanmei.yixiu.widget.ChangePhoneView;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 
@@ -275,6 +276,41 @@ public class AKDialog {
 
     public interface EvaluateListener {
         void evaluate(String content, int rating);
+    }
+
+    public static AlertDialog getChangePhoneDialog(Context context, String title, String phone, String type, final ChangePhoneListener l) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        ChangePhoneView view = (ChangePhoneView) View.inflate(context, R.layout.dialog_change_phone, null);
+        view.setTitle(title);
+        view.setPhone(phone);
+        view.setType(type);
+        view.setChangePhoneListener(new ChangePhoneView.ChangePhoneListener() {
+            @Override
+            public void succeed(String newPhone) {
+                if (l != null) {
+                    l.succeed(newPhone);
+                }
+            }
+
+            @Override
+            public void unBound() {
+                if (l != null) {
+                    l.unBound();
+                }
+            }
+        });
+        builder.setView(view);
+        builder.setCancelable(true);
+        AlertDialog dialog = builder.create();
+        return dialog;
+    }
+
+    public interface ChangePhoneListener {
+
+        void succeed(String newPhone);//更换手机号
+
+        void unBound();//解绑银行卡
     }
 
 }

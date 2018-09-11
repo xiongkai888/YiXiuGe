@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.lanmei.yixiu.adapter.MainPagerAdapter;
+import com.lanmei.yixiu.event.AddCourseEvent;
 import com.lanmei.yixiu.event.LogoutEvent;
 import com.lanmei.yixiu.helper.TabHelper;
 import com.lanmei.yixiu.utils.CommonUtils;
@@ -62,6 +63,12 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     @Subscribe
     public void logoutEvent(LogoutEvent event){
         finish();
+    }
+
+    //添加视频教程后调用
+    @Subscribe
+    public void AddCourseEvent(AddCourseEvent event) {
+        mViewPager.setCurrentItem(2);
     }
 
     @Override

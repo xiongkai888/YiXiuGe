@@ -424,7 +424,7 @@ public class ImageUtils {
 
             file = File.createTempFile(
                     name,  /* prefix */
-                    ".jpg.tmp",         /* suffix */
+                    ".jpg",         /* suffix */
                     path      /* directory */
             );
             return file;

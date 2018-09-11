@@ -35,8 +35,8 @@
                     android:layout_marginTop="@dimen/d_30dp"
                     android:layout_weight="1"
                     android:text="@string/individuality_portrait" />
-
                 <com.xson.common.widget.CircleImageView
+
                     android:id="@+id/avatar_iv"
                     android:layout_width="@dimen/d_55dp"
                     android:layout_height="@dimen/d_55dp"
@@ -63,7 +63,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_id_number"
                 style="@style/ll_bottom_personal"
                 android:paddingBottom="@dimen/d_10dp"
                 android:paddingTop="@dimen/d_10dp">
@@ -103,7 +102,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/ll_phone"
                 style="@style/ll_bottom_personal"
                 android:gravity="center_vertical">
@@ -122,7 +121,7 @@
 
             </LinearLayout>
             <LinearLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/ll_weixin"
                 style="@style/ll_bottom_personal"
                 android:gravity="center_vertical">
@@ -161,7 +160,7 @@
             </LinearLayout>
 
             <RelativeLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/ll_unit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -189,6 +188,179 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:visibility="visible"
+                android:id="@+id/ll_education"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom_divider"
+                android:paddingBottom="@dimen/d_12dp"
+                android:paddingLeft="@dimen/d_10dp"
+                android:paddingRight="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_12dp">
+
+                <TextView
+                    android:id="@+id/education_u_tv"
+                    style="@style/text"
+                    android:text="学\u3000\u3000历：" />
+
+
+                <TextView
+                    android:id="@+id/education_tv"
+                    style="@style/text"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/education_u_tv"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/in_right"
+                    android:gravity="right"
+                    android:lineSpacingMultiplier="1.3" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:visibility="visible"
+                android:id="@+id/ll_school"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom_divider"
+                android:paddingBottom="@dimen/d_12dp"
+                android:paddingLeft="@dimen/d_10dp"
+                android:paddingRight="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_12dp">
+
+                <TextView
+                    android:id="@+id/school_u_tv"
+                    style="@style/text"
+                    android:text="毕业院校：" />
+
+
+                <TextView
+                    android:id="@+id/school_tv"
+                    style="@style/text"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/school_u_tv"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/in_right"
+                    android:gravity="right"
+                    android:lineSpacingMultiplier="1.3" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:visibility="visible"
+                android:id="@+id/ll_student_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom_divider"
+                android:paddingBottom="@dimen/d_12dp"
+                android:paddingLeft="@dimen/d_10dp"
+                android:paddingRight="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_12dp">
+
+                <TextView
+                    android:id="@+id/student_type_u_tv"
+                    style="@style/text"
+                    android:text="学生类型：" />
+
+
+                <TextView
+                    android:id="@+id/student_type_tv"
+                    style="@style/text"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/student_type_u_tv"
+                    android:drawablePadding="5dp"
+                    android:gravity="right"
+                    android:text="018级进入1年级课程"
+                    android:lineSpacingMultiplier="1.3" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:visibility="visible"
+                android:id="@+id/ll_student_nature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom_divider"
+                android:paddingBottom="@dimen/d_12dp"
+                android:paddingLeft="@dimen/d_10dp"
+                android:paddingRight="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_12dp">
+
+                <TextView
+                    android:id="@+id/student_nature_u_tv"
+                    style="@style/text"
+                    android:text="学员性质：" />
+
+
+                <TextView
+                    android:id="@+id/student_nature_tv"
+                    style="@style/text"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/student_nature_u_tv"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/in_right"
+                    android:gravity="right"
+                    android:lineSpacingMultiplier="1.3" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:visibility="visible"
+                android:id="@+id/ll_learn_subject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom_divider"
+                android:paddingBottom="@dimen/d_12dp"
+                android:paddingLeft="@dimen/d_10dp"
+                android:paddingRight="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_12dp">
+
+                <TextView
+                    android:id="@+id/learn_subject_u_tv"
+                    style="@style/text"
+                    android:text="要学科室：" />
+
+
+                <TextView
+                    android:id="@+id/learn_subject_tv"
+                    style="@style/text"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/learn_subject_u_tv"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/in_right"
+                    android:gravity="right"
+                    android:lineSpacingMultiplier="1.3" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom_divider"
+                android:paddingBottom="@dimen/d_12dp"
+                android:paddingLeft="@dimen/d_10dp"
+                android:paddingRight="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_12dp">
+
+                <TextView
+                    android:id="@+id/technical_post_u_tv"
+                    style="@style/text"
+                    android:text="职\u3000\u3000称：" />
+
+
+                <TextView
+                    android:id="@+id/technical_post_tv"
+                    style="@style/text"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/technical_post_u_tv"
+                    android:drawablePadding="5dp"
+                    android:gravity="right"
+                    android:text="住院医师"
+                    android:lineSpacingMultiplier="1.3" />
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/ll_address"

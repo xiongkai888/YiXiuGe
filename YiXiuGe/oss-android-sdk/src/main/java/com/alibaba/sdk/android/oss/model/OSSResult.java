@@ -57,4 +57,14 @@ public class OSSResult {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public String toString() {
+        return "OSSResult{" +
+                "url='" + url + '\'' +
+                ", statusCode=" + statusCode +
+                ", responseHeader=" + responseHeader +
+                ", requestId='" + requestId + '\'' +
+                '}';
+    }
 }
