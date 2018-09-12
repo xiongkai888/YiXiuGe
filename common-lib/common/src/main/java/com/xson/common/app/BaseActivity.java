@@ -46,9 +46,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        L.fixInputMethodManagerLeak(this);
         super.onDestroy();
 //        ((BaseApp)getApplication()).watch(this);
-        L.fixInputMethodManagerLeak(this);
         ButterKnife.reset(this);
     }
 

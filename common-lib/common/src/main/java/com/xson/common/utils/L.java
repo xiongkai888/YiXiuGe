@@ -14,7 +14,7 @@ public class L {
 
     public static int limit = 20;//列表条数限制
 
-    public static boolean debug = false;
+    public static boolean debug = true;
     public final static String TAG = "BeanRequest";
     public final static String p = "p";
 

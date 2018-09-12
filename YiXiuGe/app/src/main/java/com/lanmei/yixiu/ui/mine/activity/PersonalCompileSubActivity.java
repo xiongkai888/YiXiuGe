@@ -89,6 +89,16 @@ public class PersonalCompileSubActivity extends BaseActivity {
                 mCompileEt.setHint("请输入微信号");
                 mCompileEt.setInputType(InputType.TYPE_CLASS_TEXT);
                 break;
+            case 105:
+                actionbar.setTitle("毕业院校");
+                mCompileEt.setHint("请输入毕业院校");
+                mCompileEt.setInputType(InputType.TYPE_CLASS_TEXT);
+                break;
+            case 106:
+                actionbar.setTitle("单位");
+                mCompileEt.setHint("请输入单位名称");
+                mCompileEt.setInputType(InputType.TYPE_CLASS_TEXT);
+                break;
         }
         mCompileEt.setText(value);
     }
@@ -147,6 +157,18 @@ public class PersonalCompileSubActivity extends BaseActivity {
             case 104://微信
                 if (StringUtils.isEmpty(compile)) {
                     UIHelper.ToastMessage(this, "请输入微信号");
+                    return;
+                }
+                break;
+            case 105://
+                if (StringUtils.isEmpty(compile)) {
+                    UIHelper.ToastMessage(this, "请输入毕业院校");
+                    return;
+                }
+                break;
+            case 106://
+                if (StringUtils.isEmpty(compile)) {
+                    UIHelper.ToastMessage(this, "请输入单位名称");
                     return;
                 }
                 break;

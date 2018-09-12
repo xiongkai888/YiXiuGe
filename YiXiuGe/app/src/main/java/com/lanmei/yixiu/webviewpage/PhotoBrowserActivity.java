@@ -266,7 +266,7 @@ public class PhotoBrowserActivity extends Activity implements View.OnClickListen
     @Override
     protected void onDestroy() {
         releaseResource();
-        super.onDestroy();
         L.fixInputMethodManagerLeak(this);
+        super.onDestroy();
     }
 }

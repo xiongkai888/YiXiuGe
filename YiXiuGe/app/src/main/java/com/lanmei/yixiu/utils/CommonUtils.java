@@ -127,7 +127,16 @@ public class CommonUtils {
         if (StringUtils.isEmpty(bean)) {
             return "";
         }
-        return bean.getId() + "";
+        return bean.getId();
+    }
+
+    //获取 用户类型
+    public static String getUserType(Context context) {
+        UserBean bean = UserHelper.getInstance(context).getUserBean();
+        if (StringUtils.isEmpty(bean)) {
+            return "";
+        }
+        return bean.getUser_type();
     }
 
     public static UserBean getUserBean(Context context) {
@@ -263,7 +272,7 @@ public class CommonUtils {
         if (StringUtils.isEmpty(url) || !url.contains(OssUserInfo.endpoint)) {
             return "";
         }
-        return url.substring(url.indexOf("/",40) + 1, url.length());
+        return url.substring(url.indexOf("/", 40) + 1, url.length());
     }
 
     /**
@@ -274,8 +283,8 @@ public class CommonUtils {
     public static void deleteOssObject(String url) {
         ManageOssUpload manageOssUpload = new ManageOssUpload(YiXiuApp.applicationContext);
         manageOssUpload.logAyncListObjects();
-        String objectKey =  getObjectKey(url);
-        if (StringUtils.isEmpty(objectKey)){
+        String objectKey = getObjectKey(url);
+        if (StringUtils.isEmpty(objectKey)) {
             return;
         }
         manageOssUpload.deleteObject(new DeleteObjectRequest(OssUserInfo.testBucket, objectKey));
@@ -298,8 +307,8 @@ public class CommonUtils {
                 manageOssUpload.logAyncListObjects();
                 int size = paths.size();
                 for (int i = 0; i < size; i++) {
-                    String objectKey =  getObjectKey(paths.get(i));
-                    if (!StringUtils.isEmpty(objectKey)){
+                    String objectKey = getObjectKey(paths.get(i));
+                    if (!StringUtils.isEmpty(objectKey)) {
                         manageOssUpload.deleteObject(new DeleteObjectRequest(OssUserInfo.testBucket, objectKey));
                     }
                 }
