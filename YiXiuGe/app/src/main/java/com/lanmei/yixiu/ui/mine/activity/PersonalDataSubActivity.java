@@ -40,7 +40,6 @@ import com.xson.common.widget.CircleImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.qqtheme.framework.entity.City;
@@ -218,7 +217,7 @@ public class PersonalDataSubActivity extends BaseActivity {
             cameraHelper.setHeadPathStr(pic);
             ImageHelper.load(this, pic, mAvatarIv, null, true, R.drawable.default_pic, R.drawable.default_pic);
 
-            if (StringUtils.isSame(CommonUtils.getUserType(this),CommonUtils.isOne)){//是教师隐藏
+            if (!StringUtils.isSame(CommonUtils.getUserType(this),CommonUtils.isZero)){//是教师隐藏
                 llSchool.setVisibility(View.GONE);
                 llStudentType.setVisibility(View.GONE);
                 llStudentNature.setVisibility(View.GONE);
@@ -550,12 +549,8 @@ public class PersonalDataSubActivity extends BaseActivity {
         if (addressAsyncTask != null && addressAsyncTask.getStatus() == AsyncTask.Status.RUNNING) {
             addressAsyncTask.cancel(true);
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.inject(this);
+        addressAsyncTask = null;
+        educationPicker = null;
+        technicalPostPicker = null;
     }
 }

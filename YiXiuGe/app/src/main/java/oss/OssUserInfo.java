@@ -13,6 +13,6 @@ public class OssUserInfo {
     public static final String testBucket = "gzyxg";
     public static final String downloadObject = "yixiuge";
 
-    public static final String uploadPath = "lanmei/yixiuge/img";
+    public static final String uploadPath = "lanmei/yixiuge/";
 
 }

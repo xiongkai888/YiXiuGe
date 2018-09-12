@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.lanmei.yixiu.widget.DetailsMoreView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="80dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_details_more"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/delete_tv"
+        style="@style/text16color4D4D"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="删除" />
+
+    <TextView style="@style/line_H1dp_divider" />
+
+    <TextView
+        android:id="@+id/share_tv"
+        style="@style/text16color4D4D"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="分享" />
+
+</com.lanmei.yixiu.widget.DetailsMoreView>

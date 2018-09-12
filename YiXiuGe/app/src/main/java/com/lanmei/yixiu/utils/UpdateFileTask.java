@@ -77,6 +77,7 @@ public class UpdateFileTask extends AsyncTask<Void, Integer, List<String>> {
         }
         List<String> successPath = new ArrayList<>();
         ManageOssUpload manageOssUpload = new ManageOssUpload(context);//图片上传类
+        manageOssUpload.setTimeStamp(true);
         int size = paths.size();
         for (int i = 0; i < size; i++) {
             String picPath = paths.get(i);

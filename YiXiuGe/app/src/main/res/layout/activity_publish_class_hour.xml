@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:calendarview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent_no"
+    tools:context=".ui.teacher.activity.PublishClassHourActivity">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <LinearLayout
+        android:id="@+id/ll_subjects"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:padding="@dimen/d_10dp"
+        style="@style/ll_bottom_h">
+
+        <TextView
+            android:text="选择科目"
+            android:textColor="@color/color666"
+            style="@style/text_weight" />
+
+        <TextView
+            android:id="@+id/subjects_tv"
+            style="@style/text"
+            android:drawableRight="@drawable/in_right"
+            android:drawablePadding="5dp"
+            android:lineSpacingMultiplier="1.3" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_class"
+        android:padding="@dimen/d_10dp"
+        style="@style/ll_bottom_h">
+
+        <TextView
+            android:text="选择班级"
+            android:textColor="@color/color666"
+            style="@style/text_weight" />
+
+        <TextView
+            android:id="@+id/class_tv"
+            style="@style/text"
+            android:drawableRight="@drawable/in_right"
+            android:drawablePadding="5dp"
+            android:lineSpacingMultiplier="1.3" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_classroom"
+        android:padding="@dimen/d_10dp"
+        style="@style/ll_bottom_h">
+
+        <TextView
+            android:text="所在教室"
+            android:textColor="@color/color666"
+            style="@style/text_weight" />
+
+        <TextView
+            android:id="@+id/classroom_tv"
+            style="@style/text"
+            android:drawableRight="@drawable/in_right"
+            android:drawablePadding="5dp"
+            android:lineSpacingMultiplier="1.3" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_start_time"
+        android:padding="@dimen/d_10dp"
+        style="@style/ll_bottom_h">
+
+        <TextView
+            android:text="开始时间"
+            android:textColor="@color/color666"
+            style="@style/text_weight" />
+
+        <TextView
+            android:id="@+id/start_time_tv"
+            style="@style/text"
+            android:drawableRight="@drawable/in_right"
+            android:drawablePadding="5dp"
+            android:lineSpacingMultiplier="1.3" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_end_time"
+        android:padding="@dimen/d_10dp"
+        style="@style/ll_bottom_h">
+
+        <TextView
+            android:text="结束时间"
+            android:textColor="@color/color666"
+            style="@style/text_weight" />
+
+        <TextView
+            android:id="@+id/end_time_tv"
+            style="@style/text"
+            android:drawableRight="@drawable/in_right"
+            android:drawablePadding="5dp"
+            android:lineSpacingMultiplier="1.3" />
+
+    </LinearLayout>
+
+</LinearLayout>

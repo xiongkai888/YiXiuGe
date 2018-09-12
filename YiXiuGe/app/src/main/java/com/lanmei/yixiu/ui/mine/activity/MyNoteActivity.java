@@ -59,6 +59,7 @@ public class MyNoteActivity extends BaseActivity {
         controller.loadFirstPage();
     }
 
+    //发布笔记和删除笔记时候调用
     @Subscribe
     public void publishNoteEvent(PublishNoteEvent event){
         if (controller != null){

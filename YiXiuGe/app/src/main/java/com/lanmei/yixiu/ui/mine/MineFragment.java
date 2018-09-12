@@ -5,9 +5,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
 
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.event.SetUserEvent;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.utils.StringUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.InjectView;
 
@@ -28,13 +32,28 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         setUserType();
     }
 
     public void setUserType() {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.fl_content, StringUtils.isSame(CommonUtils.getUserType(context), CommonUtils.isZero) ? new MineStudentFragment() : new MineTeacherFragment());
+        transaction.replace(R.id.fl_content, !StringUtils.isSame(CommonUtils.getUserType(context), CommonUtils.isZero) ? new MineStudentFragment() : new MineTeacherFragment());
         transaction.commitAllowingStateLoss();
+    }
+
+
+    @Subscribe
+    public void setUserEvent(SetUserEvent event) {
+        setUserType();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
 }

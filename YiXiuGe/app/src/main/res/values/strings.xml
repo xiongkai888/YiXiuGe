@@ -33,7 +33,7 @@
     <string name="my_examination">我的考试</string>
     <string name="uploading_note">上传笔记</string>
     <string name="publish_note">发笔记</string>
-    <string name="publish">发送</string>
+    <string name="publish">发布</string>
     <string name="my_class_schedule">我的课程表</string>
     <string name="class_details">课程详情</string>
     <string name="class_hour_evaluate">课时评价</string>
@@ -93,5 +93,6 @@
     <string name="enclosure_details">附件详情</string>
     <string name="input_video_title">请输入视频标题</string>
     <string name="change_phone_code">验证码以短息方式发送至您的手机，请在60s内输入验证码！</string>
+    <string name="publish_class_hour">发布课时</string>
 
 </resources>

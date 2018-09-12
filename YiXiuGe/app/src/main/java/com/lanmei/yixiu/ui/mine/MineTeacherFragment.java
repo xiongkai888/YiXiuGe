@@ -14,6 +14,7 @@ import com.lanmei.yixiu.ui.teacher.activity.AddQuestionnaireSubjectActivity;
 import com.lanmei.yixiu.ui.teacher.activity.ClassListActivity;
 import com.lanmei.yixiu.ui.teacher.activity.EvaluateActivity;
 import com.lanmei.yixiu.ui.teacher.activity.ExaminationManagementActivity;
+import com.lanmei.yixiu.ui.teacher.activity.PublishClassHourActivity;
 import com.lanmei.yixiu.ui.teacher.activity.PublishCourseActivity;
 import com.lanmei.yixiu.ui.teacher.activity.QuestionnaireManagementActivity;
 import com.lanmei.yixiu.ui.teacher.activity.TeachingAttachmentsActivity;
@@ -113,14 +114,12 @@ public class MineTeacherFragment extends BaseFragment {
                 IntentUtil.startActivity(context, PublishCourseActivity.class);
                 break;
             case R.id.ll_mine_teacher2://发布课时
-                CommonUtils.developing(getContext());
-//                IntentUtil.startActivity(context, MainActivity.class);
+                IntentUtil.startActivity(context, PublishClassHourActivity.class);
                 break;
             case R.id.ll_mine_teacher3://调查问卷
                 IntentUtil.startActivity(context, QuestionnaireManagementActivity.class);
                 break;
             case R.id.ll_mine_teacher4://发布题库
-//                CommonUtils.developing(getContext());
                 IntentUtil.startActivity(context, AddQuestionnaireSubjectActivity.class);
                 break;
             case R.id.ll_mine_teacher5://教学设备

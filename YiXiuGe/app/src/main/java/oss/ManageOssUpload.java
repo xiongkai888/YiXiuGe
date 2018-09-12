@@ -19,6 +19,9 @@ import com.alibaba.sdk.android.oss.model.ListObjectsRequest;
 import com.alibaba.sdk.android.oss.model.ListObjectsResult;
 import com.xson.common.utils.L;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 /**
  * Created by Administrator on 2016/9/14.
@@ -27,6 +30,7 @@ import com.xson.common.utils.L;
 public class ManageOssUpload {
 
     private OSS oss;
+    private boolean isNeedTime = false;
 
 //    private static final String uploadFilePath = "/storage/emulated/0/ckw/img/head1473820263615.jpeg";
 //    private static final String uploadObject = "wlyg/img/1473820263615.jpeg";
@@ -66,10 +70,19 @@ public class ManageOssUpload {
         if (TextUtils.isEmpty(uploadFilePath))
             return null;
         String fileName = uploadFilePath.substring(uploadFilePath.lastIndexOf("/")+1);
-        fileName= OssUserInfo.uploadPath+type+"/"+fileName;
+        String timeStamp = "";
+        if (isNeedTime){//防止上传同一文件时，删除后不能访问
+            SimpleDateFormat formatter = new SimpleDateFormat("yyMMddHHmmss");
+            timeStamp = formatter.format(new Date());
+        }
+        fileName= OssUserInfo.uploadPath+type+"/"+timeStamp+fileName;
         return new PutObjectSamples(oss, OssUserInfo.testBucket, fileName, uploadFilePath)
                 .putObjectFromLocalFile();
 
+    }
+
+    public void setTimeStamp(boolean isNeedTime){
+        this.isNeedTime = isNeedTime;
     }
 
     public boolean uploadFile_del(String imgUrl){
@@ -123,7 +136,7 @@ public class ManageOssUpload {
     public void deleteObject(DeleteObjectRequest request){
         try {
             DeleteObjectResult result =  oss.deleteObject(request);
-            L.d("deleteObject",result.toString());
+            L.d("AyncListObjects",result.toString());
         } catch (ClientException e) {
             e.printStackTrace();
         } catch (ServiceException e) {

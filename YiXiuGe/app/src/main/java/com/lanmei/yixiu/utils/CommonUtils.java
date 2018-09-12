@@ -281,12 +281,11 @@ public class CommonUtils {
      * @param url
      */
     public static void deleteOssObject(String url) {
-        ManageOssUpload manageOssUpload = new ManageOssUpload(YiXiuApp.applicationContext);
-        manageOssUpload.logAyncListObjects();
         String objectKey = getObjectKey(url);
         if (StringUtils.isEmpty(objectKey)) {
             return;
         }
+        ManageOssUpload manageOssUpload = new ManageOssUpload(YiXiuApp.applicationContext);
         manageOssUpload.deleteObject(new DeleteObjectRequest(OssUserInfo.testBucket, objectKey));
         manageOssUpload.logAyncListObjects();
     }

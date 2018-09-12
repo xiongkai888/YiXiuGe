@@ -170,6 +170,9 @@
             android:name=".ui.teacher.activity.EvaluateActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.teacher.activity.ClassSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.teacher.activity.ClassListActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -189,6 +192,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.teacher.activity.ExamTopicsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.teacher.activity.PublishClassHourActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.teacher.activity.PublishCourseActivity"
