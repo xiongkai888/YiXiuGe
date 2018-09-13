@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent"
+    tools:context=".ui.mine.activity.MyCheckingInActivity">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+
+    <LinearLayout
+        style="@style/ll_bottom_h"
+        android:background="@drawable/border_left_right_bottom_divider">
+
+        <TextView
+            style="@style/text_weight"
+            android:gravity="center"
+            android:paddingBottom="@dimen/d_6dp"
+            android:paddingTop="@dimen/d_6dp"
+            android:text="名字" />
+
+        <TextView style="@style/line_v1dp_divider" />
+
+        <TextView
+            style="@style/text_weight"
+            android:gravity="center"
+            android:paddingBottom="@dimen/d_10dp"
+            android:paddingTop="@dimen/d_10dp"
+            android:text="出勤时间" />
+
+        <TextView style="@style/line_v1dp_divider" />
+
+        <TextView
+            style="@style/text_weight"
+            android:gravity="center"
+            android:paddingBottom="@dimen/d_10dp"
+            android:paddingTop="@dimen/d_10dp"
+            android:text="出勤类型" />
+
+        <TextView style="@style/line_v1dp_divider" />
+
+        <TextView
+            style="@style/text_weight"
+            android:gravity="center"
+            android:paddingBottom="@dimen/d_10dp"
+            android:paddingTop="@dimen/d_10dp"
+            android:text="@string/remark" />
+
+    </LinearLayout>
+
+   <include layout="@layout/fragment_single_listview"/>
+
+</LinearLayout>

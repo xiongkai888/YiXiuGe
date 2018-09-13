@@ -118,6 +118,9 @@
             android:name=".ui.mine.activity.ClassDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.teacher.activity.CheckingInManageActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.mine.activity.ExaminationActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -173,13 +176,16 @@
             android:name=".ui.teacher.activity.ClassSelectActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.ClassListActivity"
+            android:name=".ui.teacher.activity.ClassHourActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.teacher.activity.AddQuestionnaireActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.teacher.activity.AddExaminationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.teacher.activity.AddCheckInActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.teacher.activity.AddQuestionnaireOptionActivity"

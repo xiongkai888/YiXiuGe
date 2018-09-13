@@ -6,18 +6,11 @@ import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.event.SetUserEvent;
-import com.lanmei.yixiu.ui.mine.activity.MyCheckingInActivity;
 import com.lanmei.yixiu.ui.mine.activity.MyCollectActivity;
 import com.lanmei.yixiu.ui.mine.activity.PersonalDataSubActivity;
 import com.lanmei.yixiu.ui.mine.activity.SettingActivity;
-import com.lanmei.yixiu.ui.teacher.activity.AddQuestionnaireSubjectActivity;
-import com.lanmei.yixiu.ui.teacher.activity.ClassListActivity;
-import com.lanmei.yixiu.ui.teacher.activity.EvaluateActivity;
-import com.lanmei.yixiu.ui.teacher.activity.ExaminationManagementActivity;
-import com.lanmei.yixiu.ui.teacher.activity.PublishClassHourActivity;
+import com.lanmei.yixiu.ui.teacher.activity.ClassHourActivity;
 import com.lanmei.yixiu.ui.teacher.activity.PublishCourseActivity;
-import com.lanmei.yixiu.ui.teacher.activity.QuestionnaireManagementActivity;
-import com.lanmei.yixiu.ui.teacher.activity.TeachingAttachmentsActivity;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.UserBean;
@@ -75,7 +68,7 @@ public class MineTeacherFragment extends BaseFragment {
         }
         ImageHelper.load(context, userBean.getPic(), picIv, null, true, R.drawable.default_pic, R.drawable.default_pic);
         nameTv.setText(userBean.getNickname());
-        idTv.setText("id:"+ userBean.getId());
+        idTv.setText("id:" + userBean.getId());
     }
 
     @Override
@@ -85,10 +78,10 @@ public class MineTeacherFragment extends BaseFragment {
     }
 
 
-
-    @OnClick({R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_evaluate, R.id.ll_setting, R.id.class_schedule_tv, R.id.kao_shi_tv, R.id.ll_mine_teacher1, R.id.ll_mine_teacher2, R.id.ll_mine_teacher3, R.id.ll_mine_teacher4, R.id.ll_mine_teacher5})
+    @OnClick({R.id.pic_iv,R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_evaluate, R.id.ll_setting, R.id.class_schedule_tv, R.id.kao_shi_tv, R.id.ll_mine_teacher1, R.id.ll_mine_teacher2, R.id.ll_mine_teacher3, R.id.ll_mine_teacher4, R.id.ll_mine_teacher5})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.pic_iv://个人资料
             case R.id.ll_data://个人资料
                 IntentUtil.startActivity(context, PersonalDataSubActivity.class);
                 break;
@@ -96,34 +89,40 @@ public class MineTeacherFragment extends BaseFragment {
                 IntentUtil.startActivity(context, MyCollectActivity.class);
                 break;
             case R.id.ll_checking_in://我的考勤
-                IntentUtil.startActivity(context, MyCheckingInActivity.class);
+//                IntentUtil.startActivity(context, MyCheckingInActivity.class);
+                CommonUtils.developing(context);
                 break;
             case R.id.ll_evaluate://我的评价
-                IntentUtil.startActivity(context, EvaluateActivity.class);
+                CommonUtils.developing(context);
+//                IntentUtil.startActivity(context, EvaluateActivity.class);
                 break;
             case R.id.ll_setting://设置
                 IntentUtil.startActivity(context, SettingActivity.class);
                 break;
             case R.id.class_schedule_tv://课程表
-                IntentUtil.startActivity(context, ClassListActivity.class);
+                CommonUtils.developing(context);
                 break;
             case R.id.kao_shi_tv://考试(管理)
-                IntentUtil.startActivity(context, ExaminationManagementActivity.class);
+//                IntentUtil.startActivity(context, ExaminationManagementActivity.class);
+                CommonUtils.developing(context);
                 break;
             case R.id.ll_mine_teacher1://发布教程
                 IntentUtil.startActivity(context, PublishCourseActivity.class);
                 break;
-            case R.id.ll_mine_teacher2://发布课时
-                IntentUtil.startActivity(context, PublishClassHourActivity.class);
+            case R.id.ll_mine_teacher2://我的课时
+                IntentUtil.startActivity(context, ClassHourActivity.class);
                 break;
             case R.id.ll_mine_teacher3://调查问卷
-                IntentUtil.startActivity(context, QuestionnaireManagementActivity.class);
+//                IntentUtil.startActivity(context, QuestionnaireManagementActivity.class);
+                CommonUtils.developing(context);
                 break;
             case R.id.ll_mine_teacher4://发布题库
-                IntentUtil.startActivity(context, AddQuestionnaireSubjectActivity.class);
+//                IntentUtil.startActivity(context, AddQuestionnaireSubjectActivity.class);
+                CommonUtils.developing(context);
                 break;
             case R.id.ll_mine_teacher5://教学设备
-                IntentUtil.startActivity(context, TeachingAttachmentsActivity.class);
+//                IntentUtil.startActivity(context, TeachingAttachmentsActivity.class);
+                CommonUtils.developing(context);
                 break;
         }
     }

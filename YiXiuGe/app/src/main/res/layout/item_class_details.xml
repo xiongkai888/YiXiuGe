@@ -55,7 +55,7 @@
         style="@style/text12colorBlack"
         android:layout_marginLeft="@dimen/d_10dp"
         android:layout_marginTop="@dimen/d_10dp"
-        android:text="备注" />
+        android:text="@string/remark" />
 
     <TextView
         style="@style/text12colorBlack"

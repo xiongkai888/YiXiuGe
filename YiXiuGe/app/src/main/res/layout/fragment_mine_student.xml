@@ -118,7 +118,7 @@
                 android:drawableLeft="@drawable/mine_3"
                 android:drawablePadding="@dimen/d_10dp"
                 android:gravity="center_vertical"
-                android:text="我的考勤" />
+                android:text="@string/my_checking_in" />
 
             <TextView
                 style="@style/text12color666"

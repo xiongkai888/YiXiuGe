@@ -1,60 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/match_parent"
-    android:layout_marginBottom="@dimen/d_5dp"
-    android:layout_marginLeft="@dimen/d_10dp"
-    android:layout_marginRight="@dimen/d_10dp"
-    android:layout_marginTop="@dimen/d_5dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/v_match_parent_no">
+
+    <TextView
+        android:id="@+id/grade_name_tv"
+        android:padding="@dimen/d_10dp"
+        android:background="@color/colorF4F4"
+        style="@style/match_parent" />
 
 
-    <LinearLayout
-        style="@style/h_match_parent_no"
-        android:background="@drawable/evaluate_bg"
-        android:padding="@dimen/d_10dp">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        style="@style/match_parent"/>
 
-        <ImageView
-            android:src="@drawable/temp_teacher_sui"
-            android:layout_width="@dimen/d_60dp"
-            android:layout_height="@dimen/d_60dp" />
-
-        <LinearLayout
-            style="@style/v_match_parent_no"
-            android:layout_marginLeft="@dimen/d_10dp">
-
-            <TextView
-                style="@style/text"
-                android:layout_marginBottom="@dimen/d_5dp"
-                android:drawableLeft="@drawable/examination_subject"
-                android:drawablePadding="@dimen/d_5dp"
-                android:text="2018美肤管理第一单元测试" />
-
-            <TextView
-                style="@style/text12color666"
-                android:layout_marginTop="@dimen/d_10dp"
-                android:drawableLeft="@drawable/examination_time_start"
-                android:drawablePadding="@dimen/d_5dp"
-                android:gravity="center_vertical"
-                android:text="2018-8-29  08:30" />
-
-            <TextView
-                style="@style/text12color666"
-                android:layout_marginTop="@dimen/d_10dp"
-                android:drawableLeft="@drawable/examination_time_end"
-                android:drawablePadding="@dimen/d_5dp"
-                android:gravity="center_vertical"
-                android:text="2018-8-29  12:00" />
-
-
-            <TextView
-                android:id="@+id/examination_details_tv"
-                style="@style/text12color1593f0"
-                android:layout_gravity="right"
-                android:background="@drawable/examination_button_bg"
-                android:text="@string/examination_details" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-</RelativeLayout>
+</LinearLayout>

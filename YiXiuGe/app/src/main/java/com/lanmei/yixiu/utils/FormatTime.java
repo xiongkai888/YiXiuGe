@@ -98,17 +98,36 @@ public class FormatTime {
         return format.format(date);
     }
 
+    /**
+     * 时间戳格式为“MM-dd HH:mm”
+     */
+    public String formatterCheckIn() {
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
+        Date date = new Date(time);
+        return format.format(date);
+    }
+
 
     /**
      * 将时间转换为时间戳
      */
-    public static String dateToStamp(String s) throws ParseException {
+    public String dateToStamp(String s) throws ParseException {
         String res;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date = simpleDateFormat.parse(s);
         long ts = date.getTime()/1000;
         res = String.valueOf(ts);
         return res;
+    }
+
+    /**
+     * 将时间转换为时间戳
+     */
+    public long dateToStampLong(String s) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date = simpleDateFormat.parse(s);
+        long ts = date.getTime()/1000;
+        return ts;
     }
 
 

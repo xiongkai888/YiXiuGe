@@ -236,6 +236,7 @@ public class PublishCourseActivity extends BaseActivity {
         if (updateFileTask != null && updateFileTask.getStatus() == AsyncTask.Status.RUNNING){
             updateFileTask.cancel(true);
         }
+        updateFileTask = null;
     }
 }
 

@@ -121,7 +121,7 @@
                 android:drawableLeft="@drawable/mine_3"
                 android:drawablePadding="@dimen/d_10dp"
                 android:gravity="center_vertical"
-                android:text="我的考勤" />
+                android:text="@string/my_checking_in" />
 
 
             <TextView
@@ -185,7 +185,7 @@
                 android:drawableLeft="@drawable/mine_teacher_2"
                 android:drawablePadding="@dimen/d_10dp"
                 android:gravity="center_vertical"
-                android:text="发布课时" />
+                android:text="我的课时" />
 
             <TextView
                 style="@style/text12color666"

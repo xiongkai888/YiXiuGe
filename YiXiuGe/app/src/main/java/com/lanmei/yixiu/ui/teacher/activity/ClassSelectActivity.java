@@ -1,13 +1,21 @@
 package com.lanmei.yixiu.ui.teacher.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 
 import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.adapter.ExaminationManagementAdapter;
+import com.lanmei.yixiu.adapter.ClassSelectAdapter;
+import com.lanmei.yixiu.bean.ClassSelectBean;
+import com.lanmei.yixiu.event.ClassSelectEvent;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
 
 import butterknife.InjectView;
 
@@ -20,10 +28,19 @@ public class ClassSelectActivity extends BaseActivity {
     CenterTitleToolbar mToolbar;
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
-    ExaminationManagementAdapter mAdapter;
+    private List<ClassSelectBean> classSelectBeans;
 
     public int getContentViewId() {
-        return R.layout.activity_single_listview;
+        return R.layout.activity_single_listview_no;
+    }
+
+    @Override
+    public void initIntent(Intent intent) {
+        super.initIntent(intent);
+        Bundle bundle = intent.getBundleExtra("bundle");
+        if (bundle != null){
+            classSelectBeans = (List<ClassSelectBean>)bundle.getSerializable("bean");
+        }
     }
 
     @Override
@@ -32,13 +49,28 @@ public class ClassSelectActivity extends BaseActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setTitle(R.string.publish_class_hour);
+        actionbar.setTitle(R.string.class_select);
         actionbar.setHomeAsUpIndicator(R.drawable.back);
 
-        mAdapter = new ExaminationManagementAdapter(this);
+        EventBus.getDefault().register(this);
+
+        ClassSelectAdapter adapter = new ClassSelectAdapter(this);
+        adapter.setData(classSelectBeans);
         smartSwipeRefreshLayout.initWithLinearLayout();
-        smartSwipeRefreshLayout.setAdapter(mAdapter);
+        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NO_PAGE);
+        smartSwipeRefreshLayout.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
+    @Subscribe
+    public void classSelectEvent(ClassSelectEvent event){
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }
 

@@ -40,7 +40,7 @@ public class MineFragment extends BaseFragment {
 
     public void setUserType() {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.fl_content, !StringUtils.isSame(CommonUtils.getUserType(context), CommonUtils.isZero) ? new MineStudentFragment() : new MineTeacherFragment());
+        transaction.replace(R.id.fl_content, StringUtils.isSame(CommonUtils.getUserType(context), CommonUtils.isZero) ? new MineStudentFragment() : new MineTeacherFragment());
         transaction.commitAllowingStateLoss();
     }
 

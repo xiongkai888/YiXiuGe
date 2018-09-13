@@ -3,7 +3,7 @@
     xmlns:calendarview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/v_all_match_parent_no"
-    tools:context=".ui.teacher.activity.PublishClassHourActivity">
+    tools:context=".ui.teacher.activity.AddCheckInActivity">
 
     <include layout="@layout/include_centertitletoolbar" />
 
@@ -15,86 +15,52 @@
 
 
             <LinearLayout
-                android:id="@+id/ll_subjects"
+                android:id="@+id/ll_student"
                 style="@style/ll_bottom_h"
                 android:layout_marginTop="@dimen/d_10dp"
                 android:padding="@dimen/d_10dp">
 
                 <TextView
                     style="@style/text_weight"
-                    android:text="选择科目"
+                    android:text="学生姓名"
                     android:textColor="@color/color666" />
 
                 <TextView
-                    android:id="@+id/subjects_tv"
+                    android:id="@+id/student_tv"
                     style="@style/text"
                     android:drawableRight="@drawable/in_right" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_class"
+                android:id="@+id/ll_check_type"
                 style="@style/ll_bottom_h"
                 android:padding="@dimen/d_10dp">
 
                 <TextView
                     style="@style/text_weight"
-                    android:text="@string/class_select"
+                    android:text="出勤类型"
                     android:textColor="@color/color666" />
 
                 <TextView
-                    android:id="@+id/class_tv"
+                    android:id="@+id/check_type_tv"
                     style="@style/text"
                     android:drawableRight="@drawable/in_right" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_classroom"
+                android:id="@+id/ll_check_in_time"
                 style="@style/ll_bottom_h"
                 android:padding="@dimen/d_10dp">
 
                 <TextView
                     style="@style/text_weight"
-                    android:text="所在教室"
+                    android:text="出勤时间"
                     android:textColor="@color/color666" />
 
                 <TextView
-                    android:id="@+id/classroom_tv"
-                    style="@style/text"
-                    android:drawableRight="@drawable/in_right" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_start_time"
-                style="@style/ll_bottom_h"
-                android:padding="@dimen/d_10dp">
-
-                <TextView
-                    style="@style/text_weight"
-                    android:text="开始时间"
-                    android:textColor="@color/color666" />
-
-                <TextView
-                    android:id="@+id/start_time_tv"
-                    style="@style/text"
-                    android:drawableRight="@drawable/in_right" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_end_time"
-                style="@style/ll_bottom_h"
-                android:padding="@dimen/d_10dp">
-
-                <TextView
-                    style="@style/text_weight"
-                    android:text="结束时间"
-                    android:textColor="@color/color666" />
-
-                <TextView
-                    android:id="@+id/end_time_tv"
+                    android:id="@+id/check_in_time_tv"
                     style="@style/text"
                     android:drawableRight="@drawable/in_right" />
 

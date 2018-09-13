@@ -66,7 +66,7 @@
             android:gravity="center"
             android:paddingBottom="@dimen/d_10dp"
             android:paddingTop="@dimen/d_10dp"
-            android:text="备注" />
+            android:text="@string/remark" />
 
 
     </LinearLayout>

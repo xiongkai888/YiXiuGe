@@ -78,9 +78,10 @@ public class MineStudentFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_notes, R.id.ll_evaluate, R.id.ll_setting,R.id.class_schedule_tv,R.id.kao_shi_tv})
+    @OnClick({R.id.pic_iv,R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_notes, R.id.ll_evaluate, R.id.ll_setting,R.id.class_schedule_tv,R.id.kao_shi_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.pic_iv://个人资料
             case R.id.ll_data://个人资料
                 IntentUtil.startActivity(context, PersonalDataSubActivity.class);
                 break;
