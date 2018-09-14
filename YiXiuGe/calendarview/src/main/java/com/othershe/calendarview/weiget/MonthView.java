@@ -57,6 +57,7 @@ public class MonthView extends ViewGroup {
      * @param currentMonthDays 当月天数
      */
     public void setDateList(List<DateBean> dates, int currentMonthDays) {
+
         if (getChildCount() > 0) {
             removeAllViews();
         }
@@ -64,11 +65,11 @@ public class MonthView extends ViewGroup {
         nextMonthDays = 0;
 //        boolean findSingleDate = false;//是否找到单选时默认选中的日期
         chooseDays.clear();
-
+        int size = dates.size();
         this.currentMonthDays = currentMonthDays;
-        for (int i = 0; i < dates.size(); i++) {
+        for (int i = 0; i < size; i++) {
             final DateBean date = dates.get(i);
-
+//            Log.d("MonthView", "date"+i+" : " +date.toString());
             if (date.getType() == 0) {
                 lastMonthDays++;
                 if (!mAttrsBean.isShowLastNext()) {
@@ -109,7 +110,27 @@ public class MonthView extends ViewGroup {
                 solarDay.setTextColor(mAttrsBean.getColorLunar());
             }
             solarDay.setText(String.valueOf(date.getSolar()[2]));
-
+//            Log.d("AyncListObjects", "date"+i+" : " +date.toString());
+//            switch (date.getScreen()){
+//                case 1:
+//                    view.setBackgroundResource(mAttrsBean.getDayBg_1());
+//                    solarDay.setTextColor(mAttrsBean.getColorChoose());
+//                    lunarDay.setTextColor(mAttrsBean.getColorChoose());
+//                    lunarDay.setText(R.string.attend_class);
+//                    break;
+//                case 2:
+//                    view.setBackgroundResource(mAttrsBean.getDayBg_2());
+//                    solarDay.setTextColor(mAttrsBean.getColorChoose());
+//                    lunarDay.setTextColor(mAttrsBean.getColorChoose());
+//                    lunarDay.setText(R.string.evaluate);
+//                    break;
+//                case 3:
+//                    view.setBackgroundResource(mAttrsBean.getDayBg_2());
+//                    solarDay.setTextColor(mAttrsBean.getColorChoose());
+//                    lunarDay.setTextColor(mAttrsBean.getColorChoose());
+//                    lunarDay.setText(R.string.evaluated);
+//                    break;
+//            }
             //设置农历（节假日显示）
             if (mAttrsBean.isShowLunar()) {
                 if ("初一".equals(date.getLunar()[1])) {
@@ -195,8 +216,8 @@ public class MonthView extends ViewGroup {
                     OnSingleChooseListener clickListener = calendarView.getSingleChooseListener();
                     if (clickListener != null) {
                         clickListener.onSingleChoose(v, date);
+//                        Log.d("AyncListObjects", date.toString());
                     }
-
 
 //                    OnMultiChooseListener chooseListener = calendarView.getMultiChooseListener();
 
@@ -381,7 +402,7 @@ public class MonthView extends ViewGroup {
         View view = null;
         for (int i = lastMonthDays; i < getChildCount() - nextMonthDays; i++) {
             int dayNum = (Integer) getChildAt(i).getTag();
-            Log.d("lastMonthDays",dayNum+","+day);
+            Log.d("lastMonthDays", dayNum + "," + day);
             if (dayNum == day) {
                 view = getChildAt(i);
                 break;

@@ -6,18 +6,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.othershe.calendarview.bean.AttrsBean;
+import com.othershe.calendarview.bean.DateBean;
 import com.othershe.calendarview.listener.CalendarViewAdapter;
 import com.othershe.calendarview.utils.CalendarUtil;
 import com.othershe.calendarview.utils.SolarUtil;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class CalendarPagerAdapter extends PagerAdapter {
 
     //缓存上一次回收的MonthView
     private LinkedList<MonthView> cache = new LinkedList<>();
     private SparseArray<MonthView> mViews = new SparseArray<>();
-
+    private int year;//日历当前年
+    private int month;//日历当前月
+    private List<Integer> list;//网络请求筛选的数据
+    private int listCount;//数据个数
     private int count;
 
     private int item_layout;
@@ -39,6 +44,14 @@ public class CalendarPagerAdapter extends PagerAdapter {
         return view == object;
     }
 
+    public void setParameter(List<Integer> list, int year, int month) {
+        this.list = list;
+        this.year = year;
+        this.month = month;
+        listCount = (list == null) ? 0 : list.size();
+//        Log.d("AyncListObjects", "year:"+year+" , month:" +month);
+    }
+
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         MonthView view;
@@ -51,7 +64,23 @@ public class CalendarPagerAdapter extends PagerAdapter {
         int[] date = CalendarUtil.positionToDate(position, mAttrsBean.getStartDate()[0], mAttrsBean.getStartDate()[1]);
         view.setAttrsBean(mAttrsBean);
         view.setOnCalendarViewAdapter(item_layout, calendarViewAdapter);
-        view.setDateList(CalendarUtil.getMonthDate(date[0], date[1], mAttrsBean.getSpecifyMap()), SolarUtil.getMonthDays(date[0], date[1]));
+        List<DateBean> dateBeanList = CalendarUtil.getMonthDate(date[0], date[1], mAttrsBean.getSpecifyMap());
+        int monthDays = SolarUtil.getMonthDays(date[0], date[1]);
+//        Log.d("AyncListObjects", "year:"+year+" , month:" +month);
+        if (year != 0 && listCount == monthDays){
+            int size = dateBeanList.size();
+            for (int i = 0; i < size; i++) {
+                DateBean bean = dateBeanList.get(i);
+                if (bean.getSolar()[0] == year && bean.getSolar()[1] == month) {
+                    int day = bean.getSolar()[2];
+//                    Log.d("AyncListObjects", "day"+day+" : " +date.toString());
+                    if (day < listCount) {
+                        bean.setScreen(list.get(day-1));
+                    }
+                }
+            }
+        }
+        view.setDateList(dateBeanList, monthDays);
         mViews.put(position, view);
         container.addView(view);
 

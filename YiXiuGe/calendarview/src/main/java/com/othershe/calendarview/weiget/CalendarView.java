@@ -11,8 +11,8 @@ import com.othershe.calendarview.bean.AttrsBean;
 import com.othershe.calendarview.bean.DateBean;
 import com.othershe.calendarview.listener.CalendarViewAdapter;
 import com.othershe.calendarview.listener.OnMultiChooseListener;
-import com.othershe.calendarview.listener.OnSingleChooseListener;
 import com.othershe.calendarview.listener.OnPagerChangeListener;
+import com.othershe.calendarview.listener.OnSingleChooseListener;
 import com.othershe.calendarview.utils.CalendarUtil;
 import com.othershe.calendarview.utils.SolarUtil;
 
@@ -45,6 +45,8 @@ public class CalendarView extends ViewPager {
 
     private AttrsBean mAttrsBean;
 
+
+
     public CalendarView(Context context) {
         this(context, null);
     }
@@ -53,6 +55,13 @@ public class CalendarView extends ViewPager {
         super(context, attrs);
         mAttrsBean = new AttrsBean();
         initAttr(context, attrs);
+    }
+
+    public void setParameter(List<Integer> list,int year,int month){
+        calendarPagerAdapter.setParameter(list,year, month);
+//        Log.d("AyncListObjects", "year:"+year+" , month:" +month);
+        calendarPagerAdapter.notifyDataSetChanged();
+//        invalidate();
     }
 
     private void initAttr(Context context, AttributeSet attrs) {
@@ -512,4 +521,5 @@ public class CalendarView extends ViewPager {
         }
         return list;
     }
+
 }

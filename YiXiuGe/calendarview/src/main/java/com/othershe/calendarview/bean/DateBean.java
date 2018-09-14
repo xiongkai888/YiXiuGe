@@ -1,5 +1,7 @@
 package com.othershe.calendarview.bean;
 
+import java.util.Arrays;
+
 public class DateBean {
     private int[] solar;//阳历年、月、日
     private String[] lunar;//农历月、日
@@ -7,6 +9,15 @@ public class DateBean {
     private String lunarHoliday;//阳历节假日
     private int type;//0:上月，1:当月，2:下月
     private String term;//节气
+    private int screen = -1;//在日历上显示  筛选0|1|2|3=>全部|上课|评价|已评
+
+    public void setScreen(int screen) {
+        this.screen = screen;
+    }
+
+    public int getScreen() {
+        return screen;
+    }
 
     public int[] getSolar() {
         return solar;
@@ -54,5 +65,18 @@ public class DateBean {
 
     public void setTerm(String term) {
         this.term = term;
+    }
+
+    @Override
+    public String toString() {
+        return "DateBean{" +
+                "solar=" + Arrays.toString(solar) +
+                ", lunar=" + Arrays.toString(lunar) +
+                ", solarHoliday='" + solarHoliday + '\'' +
+                ", lunarHoliday='" + lunarHoliday + '\'' +
+                ", type=" + type +
+                ", term='" + term + '\'' +
+                ", screen=" + screen +
+                '}';
     }
 }
