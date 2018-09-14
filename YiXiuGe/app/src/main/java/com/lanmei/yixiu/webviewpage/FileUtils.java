@@ -29,7 +29,7 @@ public class FileUtils {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                File appDir = new File(sdDir, "PaiXingRen");
+                File appDir = new File(sdDir, "yiXiaoBei");
                 if (!appDir.exists()) {
                     appDir.mkdir();
                 }
