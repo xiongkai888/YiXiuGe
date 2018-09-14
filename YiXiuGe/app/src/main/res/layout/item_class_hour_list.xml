@@ -12,90 +12,99 @@
             android:id="@+id/kec_tv"
             style="@style/text14color666"
             android:drawableLeft="@drawable/teacher_name"
-            android:drawablePadding="@dimen/d_5dp"
-            android:text="口腔" />
+            android:drawablePadding="@dimen/d_5dp" />
 
         <TextView
             android:id="@+id/class_name_tv"
             style="@style/text14color666"
             android:layout_marginTop="@dimen/d_5dp"
             android:drawableLeft="@drawable/teacher_grade"
-            android:drawablePadding="@dimen/d_5dp"
-            android:text="18级2班" />
+            android:drawablePadding="@dimen/d_5dp" />
+
+        <TextView
+            android:id="@+id/title_tv"
+            style="@style/text14color666"
+            android:layout_marginTop="@dimen/d_5dp"
+            android:drawableLeft="@drawable/teacher_title"
+            android:drawablePadding="@dimen/d_5dp" />
+
+        <TextView
+            android:id="@+id/type_tv"
+            style="@style/text14color666"
+            android:layout_marginTop="@dimen/d_5dp"
+            android:drawableLeft="@drawable/teacher_type"
+            android:drawablePadding="@dimen/d_5dp" />
 
         <TextView
             android:id="@+id/num_tv"
             style="@style/text14color666"
             android:layout_marginTop="@dimen/d_5dp"
             android:drawableLeft="@drawable/teacher_num"
-            android:drawablePadding="@dimen/d_5dp"
-            android:text="22人" />
+            android:drawablePadding="@dimen/d_5dp" />
 
-        <TextView
-            android:id="@+id/time_tv"
-            style="@style/text14color666"
-            android:layout_marginTop="@dimen/d_5dp"
-            android:drawableLeft="@drawable/teacher_time"
-            android:drawablePadding="@dimen/d_5dp"
-            android:text="2016-06-21（周三） 18:30" />
 
         <TextView
             android:id="@+id/roomname_tv"
             style="@style/text14color666"
             android:layout_marginTop="@dimen/d_5dp"
             android:drawableLeft="@drawable/teacher_position"
-            android:drawablePadding="@dimen/d_5dp"
-            android:text="教师2" />
+            android:drawablePadding="@dimen/d_5dp" />
+
+        <TextView
+            android:id="@+id/time_tv"
+            style="@style/text14color666"
+            android:layout_marginTop="@dimen/d_5dp"
+            android:drawableLeft="@drawable/teacher_time"
+            android:drawablePadding="@dimen/d_5dp" />
 
 
         <TextView
             style="@style/text"
-            android:layout_marginTop="@dimen/d_5dp"
             android:layout_marginBottom="@dimen/d_5dp"
+            android:layout_marginTop="@dimen/d_5dp"
             android:text="@string/remark" />
 
         <TextView
             android:id="@+id/remark_tv"
             style="@style/text14color666"
-            android:lineSpacingMultiplier="1.3"
             android:layout_width="match_parent"
-            android:background="@drawable/class_details" />
+            android:background="@drawable/class_details"
+            android:lineSpacingMultiplier="1.3" />
 
     </LinearLayout>
 
 
     <LinearLayout
         android:id="@+id/ll_check"
-        android:layout_alignParentRight="true"
+        style="@style/h_match_parent_no"
         android:layout_width="wrap_content"
-        style="@style/h_match_parent_no">
+        android:layout_alignParentRight="true">
 
         <TextView
             android:id="@+id/state_tv"
             style="@style/text12color1593f0"
-            android:textColor="@color/red"
-            android:minWidth="@dimen/d_60dp"
-            android:gravity="center"
             android:layout_marginRight="@dimen/d_10dp"
             android:background="@drawable/class_hour_red_bg"
-            android:text="@string/not_check" />
+            android:gravity="center"
+            android:minWidth="@dimen/d_60dp"
+            android:text="@string/not_check"
+            android:textColor="@color/red" />
 
         <TextView
             android:id="@+id/checking_in_manage_tv"
             style="@style/text12color1593f0"
-            android:minWidth="@dimen/d_60dp"
             android:background="@drawable/examination_button_bg"
-            android:text="考勤管理" />
+            android:minWidth="@dimen/d_60dp"
+            android:text="@string/checking_in_manage" />
 
     </LinearLayout>
 
-
-
     <ImageView
+        android:id="@+id/qr_iv"
         style="@style/text"
-        android:layout_below="@id/ll_check"
-        android:layout_marginTop="@dimen/d_10dp"
         android:layout_alignParentRight="true"
-        android:src="@drawable/teacher_qr" />
+        android:layout_below="@id/ll_check"
+        android:layout_marginRight="@dimen/d_10dp"
+        android:layout_marginTop="@dimen/d_80dp" />
 
 </RelativeLayout>

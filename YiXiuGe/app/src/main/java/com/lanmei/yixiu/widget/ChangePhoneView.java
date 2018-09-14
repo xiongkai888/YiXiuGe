@@ -49,7 +49,7 @@ public class ChangePhoneView extends LinearLayout {
         mPhoneEt = (EditText) findViewById(R.id.phone_et);
         mPhoneEt.setEnabled(false);
         mObtainCodeTv = (TextView) findViewById(R.id.obtain_code_tv);
-        mTitleTv = (TextView) findViewById(R.id.title_tv);
+        mTitleTv = (TextView) findViewById(R.id.title_et);
         mCodeEt = (EditText) findViewById(R.id.code_et);
         mNextStepBt.setOnClickListener(new OnClickListener() {//下一步
             @Override
@@ -95,7 +95,7 @@ public class ChangePhoneView extends LinearLayout {
     private void verification(String phone,String code,final boolean isNew) {
         YiXiuGeApi api = new YiXiuGeApi("app/code_verification");//验证验证码
         api.addParams("phone",phone);
-        api.addParams("phone_code",code);
+        api.addParams("pcode    ",code);
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

@@ -49,7 +49,7 @@ public class NoteDetailsActivity extends BaseActivity {
 
     @InjectView(R.id.toolbar)
     CenterTitleToolbar mToolbar;
-    @InjectView(R.id.title_tv)
+    @InjectView(R.id.title_et)
     TextView titleTv;
     @InjectView(R.id.time_tv)
     TextView timeTv;

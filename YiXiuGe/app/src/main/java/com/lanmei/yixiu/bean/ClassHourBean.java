@@ -39,6 +39,15 @@ public class ClassHourBean {
     private String classname;
     private String num;
     private String code;
+    /**
+     * title : null
+     * type : null
+     * uptime : null
+     */
+
+    private String title;
+    private String type;
+    private String uptime;
 
     public String getId() {
         return id;
@@ -158,5 +167,29 @@ public class ClassHourBean {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUptime() {
+        return uptime;
+    }
+
+    public void setUptime(String uptime) {
+        this.uptime = uptime;
     }
 }

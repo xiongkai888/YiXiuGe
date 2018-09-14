@@ -4,7 +4,7 @@
 
 
     <TextView
-        android:id="@+id/title_tv"
+        android:id="@+id/title_et"
         style="@style/text"
         android:layout_width="match_parent"
         android:layout_marginRight="@dimen/d_10dp"

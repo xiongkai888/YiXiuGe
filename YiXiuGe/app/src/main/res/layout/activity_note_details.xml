@@ -16,7 +16,7 @@
                 style="@style/line_H10dp_on"/>
 
             <TextView
-                android:id="@+id/title_tv"
+                android:id="@+id/title_et"
                 style="@style/text"
                 android:layout_marginRight="@dimen/d_15dp"
                 android:layout_marginLeft="@dimen/d_15dp"

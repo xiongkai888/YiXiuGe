@@ -136,7 +136,12 @@ public class AddCheckInActivity extends BaseActivity {
         int size = studentsBeans.size();
         String[] strings = new String[size];
         for (int i = 0; i < size; i++) {
-            strings[i] = studentsBeans.get(i).getRealname();
+            String realName = studentsBeans.get(i).getRealname();
+            if (StringUtils.isEmpty(realName)){
+                strings[i] = getString(R.string.anonymity_student)+i;
+            }else {
+                strings[i] = realName;
+            }
         }
         studentsPicker = new OptionPicker(this, strings);
         studentsPicker.setOffset(3);
@@ -158,7 +163,12 @@ public class AddCheckInActivity extends BaseActivity {
         int size = classroomBeans.size();
         String[] strings = new String[size];
         for (int i = 0; i < size; i++) {
-            strings[i] = classroomBeans.get(i).getName();
+            String name = classroomBeans.get(i).getName();
+            if (StringUtils.isEmpty(name)){
+                strings[i] = getString(R.string.anonymity_classroom)+i;
+            }else {
+                strings[i] = name;
+            }
         }
         checkTypePicker = new OptionPicker(this, strings);
         checkTypePicker.setOffset(3);

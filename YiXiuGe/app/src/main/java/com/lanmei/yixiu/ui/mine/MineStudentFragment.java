@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.event.SetUserEvent;
+import com.lanmei.yixiu.ui.mine.activity.MyClassScheduleActivity;
 import com.lanmei.yixiu.ui.mine.activity.MyCollectActivity;
 import com.lanmei.yixiu.ui.mine.activity.MyNoteActivity;
 import com.lanmei.yixiu.ui.mine.activity.PersonalDataSubActivity;
@@ -104,8 +105,7 @@ public class MineStudentFragment extends BaseFragment {
                 IntentUtil.startActivity(context, SettingActivity.class);
                 break;
             case R.id.class_schedule_tv://课程表
-                CommonUtils.developing(context);
-//                IntentUtil.startActivity(context, MyClassScheduleActivity.class);
+                IntentUtil.startActivity(context, MyClassScheduleActivity.class);
                 break;
             case R.id.kao_shi_tv://考试
                 CommonUtils.developing(context);

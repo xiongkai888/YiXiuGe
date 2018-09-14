@@ -21,6 +21,7 @@ import com.lanmei.yixiu.bean.AdBean;
 import com.lanmei.yixiu.bean.CourseClassifyListBean;
 import com.lanmei.yixiu.event.CourseOperationEvent;
 import com.lanmei.yixiu.ui.home.activity.NewsSubActivity;
+import com.lanmei.yixiu.ui.mine.activity.MyClassScheduleActivity;
 import com.lanmei.yixiu.ui.scan.ScanActivity;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
@@ -211,8 +212,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ke_cheng_tv://课程
-                CommonUtils.developing(context);
+//                CommonUtils.developing(context);
 //                IntentUtil.startActivity(context, ClassDetailsActivity.class);
+                IntentUtil.startActivity(context, MyClassScheduleActivity.class);
                 break;
             case R.id.zi_xun_tv://资讯
                 IntentUtil.startActivity(context, NewsSubActivity.class);

@@ -53,8 +53,6 @@ public class RegisterActivity extends BaseActivity implements Toolbar.OnMenuItem
     ImageView showPwdAgainIv;
     @InjectView(R.id.register_bt)
     Button button;
-//    @InjectView(R.id.agree_protocol_tv)
-//    FormatTextView agreeProtocolTv;
 
     String type;
     boolean isRegister;//是不是注册
@@ -72,7 +70,7 @@ public class RegisterActivity extends BaseActivity implements Toolbar.OnMenuItem
     protected void initAllMembersView(Bundle savedInstanceState) {
 
         //初始化倒计时
-        mCountDownTimer = new CodeCountDownTimer(this, 10 * 1000, 1000, obtainCodeBt);
+        mCountDownTimer = new CodeCountDownTimer(this, 60 * 1000, 1000, obtainCodeBt);
 
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -207,9 +205,7 @@ public class RegisterActivity extends BaseActivity implements Toolbar.OnMenuItem
 
     //注册
     private void loadRegister() {
-//        phone = CommonUtils.getStringByEditText(phoneEt);//电话号码
         if (StringUtils.isEmpty(phone)) {
-//            UIHelper.ToastMessage(this, R.string.input_phone_number);
             UIHelper.ToastMessage(this, "先输入手机号获取验证码");
             return;
         }
@@ -236,21 +232,6 @@ public class RegisterActivity extends BaseActivity implements Toolbar.OnMenuItem
             UIHelper.ToastMessage(this, R.string.password_inconformity);
             return;
         }
-
-//        String phone1 = CommonUtils.getStringByEditText(referrerPhoneEt);//推荐人电话号码
-
-//        if (StringUtils.isSame(type, CommonUtils.isOne)) {
-//
-//            if (StringUtils.isEmpty(phone1)) {
-//                UIHelper.ToastMessage(this, "请输入推荐人手机号码");
-//                return;
-//            }
-//            if (!StringUtils.isMobile(phone1)) {
-//                UIHelper.ToastMessage(this, "推荐人手机号码格式不正确");
-//                return;
-//            }
-//        }
-
         registerOrRetrievePwd(phone, code, pwd);
     }
 

@@ -50,7 +50,7 @@ public class NoticeAdapter extends SwipeRefreshAdapter<NoticeBean> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @InjectView(R.id.title_tv)
+        @InjectView(R.id.title_et)
         TextView titleTv;
         @InjectView(R.id.time_tv)
         TextView timeTv;

@@ -113,7 +113,7 @@ public class NewsDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
 
         @InjectView(R.id.web_view)
         WebView mWebView;
-        @InjectView(R.id.title_tv)
+        @InjectView(R.id.title_et)
         TextView titleTv;
         @InjectView(R.id.time_sub_tv)
         TextView timeTv;

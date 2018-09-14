@@ -34,6 +34,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.List;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.DateTimePicker;
@@ -58,6 +59,10 @@ public class PublishClassHourActivity extends BaseActivity {
     TextView endTimeTv;
     @InjectView(R.id.remark_et)
     EditText remarkEt;
+    @InjectView(R.id.title_et)
+    EditText titleEt;//标题
+    @InjectView(R.id.teaching_methods_et)
+    EditText teachingMethodsEt;//教学方式
     private List<SubjectsBean> subjectsBeans;//科目列表
     private OptionPicker subjectsPicker;//科目选择器
     private SubjectsBean subjectsBean;//
@@ -139,7 +144,7 @@ public class PublishClassHourActivity extends BaseActivity {
     }
 
     //选错时间重新选择（清空）
-    public void setTimeNull(){
+    public void setTimeNull() {
         startTime = "";
         endTime = "";
         startTimeTv.setText("");
@@ -237,13 +242,13 @@ public class PublishClassHourActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_publish, menu);
+        getMenuInflater().inflate(R.menu.menu_submit, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_publish) {
+        if (item.getItemId() == R.id.action_submit) {
             submitPublish();
         }
         return super.onOptionsItemSelected(item);
@@ -257,6 +262,16 @@ public class PublishClassHourActivity extends BaseActivity {
             }
             if (StringUtils.isEmpty(xiajiBean)) {
                 UIHelper.ToastMessage(this, "请选择班级");
+                return;
+            }
+            String title = CommonUtils.getStringByEditText(titleEt);
+            if (StringUtils.isEmpty(title)) {
+                UIHelper.ToastMessage(this, R.string.input_title);
+                return;
+            }
+            String teachingMethods = CommonUtils.getStringByEditText(teachingMethodsEt);
+            if (StringUtils.isEmpty(teachingMethods)) {
+                UIHelper.ToastMessage(this, R.string.input_teaching_methods);
                 return;
             }
             if (StringUtils.isEmpty(classroomBean)) {
@@ -279,6 +294,8 @@ public class PublishClassHourActivity extends BaseActivity {
             api.addParams("room", classroomBean.getId());
             api.addParams("cid", xiajiBean.getParent_id() + "," + xiajiBean.getId());
             api.addParams("kid", subjectsBean.getId());
+            api.addParams("title", title);
+            api.addParams("type", teachingMethods);
             HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
                 @Override
                 public void onResponse(BaseBean response) {
@@ -352,5 +369,11 @@ public class PublishClassHourActivity extends BaseActivity {
         classroomPicker = null;
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.inject(this);
+    }
 }
 

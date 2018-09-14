@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Display;
@@ -15,14 +17,19 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.zxing.WriterException;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.helper.SimpleTextWatcher;
+import com.lanmei.yixiu.webviewpage.FileUtils;
 import com.lanmei.yixiu.widget.ChangePhoneView;
 import com.xson.common.utils.StringUtils;
+import com.xson.common.utils.UIBaseUtils;
 import com.xson.common.utils.UIHelper;
+import com.yzq.zxinglibrary.encode.CodeCreator;
 
 /**
  * Dialog工具类
@@ -271,6 +278,53 @@ public class AKDialog {
         });
         dialog.show();
 
+    }
+
+    public static void qrDialog(final Context context, String code) {
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            final ImageView view = new ImageView(context);
+//            Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.drawable.logo);
+            final Bitmap bitmap = CodeCreator.createQRCode(code, UIBaseUtils.dp2pxInt(context, 200), UIBaseUtils.dp2pxInt(context, 200), null);
+            view.setImageBitmap(bitmap);
+            builder.setView(view);
+            builder.setCancelable(true);
+            AlertDialog dialog = builder.create();
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    FileUtils.savePhoto(context, bitmap, new FileUtils.SaveResultCallback() {
+                        @Override
+                        public void onSavedSuccess(String path) {
+                            view.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    UIHelper.ToastMessage(context,"保存成功");
+                                }
+                            });
+
+                        }
+
+                        @Override
+                        public void onSavedFailed() {
+                            view.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    UIHelper.ToastMessage(context,"保存失败");
+                                }
+                            });
+                        }
+                    });
+
+                    return false;
+                }
+            });
+            Window window = dialog.getWindow();
+            window.setBackgroundDrawable(new ColorDrawable(0));//设置背景透明
+            dialog.show();
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
     }
 
 

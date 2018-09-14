@@ -59,7 +59,7 @@ public class CollectNewsAdapter extends SwipeRefreshAdapter<NewsClassifyListBean
 
         @InjectView(R.id.sudokuView)
         SudokuView sudokuView;
-        @InjectView(R.id.title_tv)
+        @InjectView(R.id.title_et)
         TextView titleTv;
         @InjectView(R.id.like_tv)
         TextView likeTv;

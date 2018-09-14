@@ -116,7 +116,7 @@ public class CourseDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
         CircleImageView memberPicIv;
         @InjectView(R.id.name_tv)
         TextView nameTv;
-        @InjectView(R.id.title_tv)
+        @InjectView(R.id.title_et)
         TextView titleTv;
         @InjectView(R.id.view_tv)
         TextView viewTv;

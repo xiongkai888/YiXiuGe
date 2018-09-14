@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">医小贝</string>
+    <string name="app_name">中山一院</string>
     <string name="save">保存</string>
     <string name="sure">确定</string>
     <string name="cancel">取消</string>
@@ -104,5 +104,9 @@
     <string name="not_check">未审核</string>
     <string name="checked">已审核</string>
     <string name="add_check_in">添加考勤</string>
+    <string name="anonymity_student">匿名学生</string>
+    <string name="anonymity_classroom">匿名教室</string>
+    <string name="input_title">请输入标题</string>
+    <string name="input_teaching_methods">请输入教学方式</string>
 
 </resources>

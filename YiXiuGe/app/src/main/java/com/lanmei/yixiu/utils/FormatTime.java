@@ -111,20 +111,21 @@ public class FormatTime {
     /**
      * 将时间转换为时间戳
      */
-    public String dateToStamp(String s) throws ParseException {
-        String res;
+    public long dateToStampLong(String s) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date = simpleDateFormat.parse(s);
         long ts = date.getTime()/1000;
-        res = String.valueOf(ts);
-        return res;
+        return ts;
     }
 
     /**
-     * 将时间转换为时间戳
+     *
+     * @param s
+     * @param simpleDateFormat
+     * @return
+     * @throws ParseException
      */
-    public long dateToStampLong(String s) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    public long dateToStampLong(String s,SimpleDateFormat simpleDateFormat) throws ParseException {
         Date date = simpleDateFormat.parse(s);
         long ts = date.getTime()/1000;
         return ts;
@@ -282,7 +283,6 @@ public class FormatTime {
         }
         return list;
     }
-
 
     public String getDate(Long time){
         SimpleDateFormat format = new SimpleDateFormat("MM月dd日");

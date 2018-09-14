@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SplashActivity">
@@ -10,27 +10,26 @@
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:canLoop="true" >
+        app:canLoop="true">
 
     </com.bigkoo.convenientbanner.ConvenientBanner>
 
 
     <ImageView
-        android:visibility="gone"
+        android:id="@+id/skip_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/skip_tv"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="@dimen/d_50dp"
-        android:src="@drawable/experience_now"/>
+        android:src="@drawable/experience_now"
+        android:visibility="gone" />
 
     <ImageView
-        android:visibility="gone"
         android:id="@+id/launch_iv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:src="@drawable/launch"
-        />
+        android:visibility="gone" />
 
 </FrameLayout>

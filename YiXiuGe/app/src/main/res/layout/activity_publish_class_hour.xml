@@ -49,6 +49,53 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom_divider"
+                android:padding="@dimen/d_10dp">
+
+                <TextView
+                    android:id="@+id/title_u_tv"
+                    style="@style/text14color666"
+                    android:text="标题" />
+
+
+                <EditText
+                    android:layout_marginLeft="@dimen/d_10dp"
+                    android:id="@+id/title_et"
+                    style="@style/text"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/title_u_tv"
+                    android:background="@null"
+                    android:hint="@string/input_title"
+                    android:gravity="right" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom_divider"
+                android:padding="@dimen/d_10dp">
+
+                <TextView
+                    android:id="@+id/teaching_methods_u_tv"
+                    style="@style/text14color666"
+                    android:text="教学方式" />
+
+
+                <EditText
+                    android:layout_marginLeft="@dimen/d_10dp"
+                    android:id="@+id/teaching_methods_et"
+                    style="@style/text"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/teaching_methods_u_tv"
+                    android:background="@null"
+                    android:hint="@string/input_teaching_methods"
+                    android:gravity="right" />
+            </RelativeLayout>
+
             <LinearLayout
                 android:id="@+id/ll_classroom"
                 style="@style/ll_bottom_h"
@@ -111,13 +158,13 @@
                 <EditText
                     android:id="@+id/remark_et"
                     style="@style/text14color666"
-                    android:lineSpacingMultiplier="1.3"
                     android:layout_width="match_parent"
                     android:layout_marginBottom="@dimen/d_10dp"
                     android:layout_marginLeft="@dimen/d_10dp"
                     android:layout_marginRight="@dimen/d_10dp"
                     android:background="@drawable/class_details"
-                    android:hint="@string/input_remark" />
+                    android:hint="@string/input_remark"
+                    android:lineSpacingMultiplier="1.3" />
 
             </LinearLayout>
         </LinearLayout>

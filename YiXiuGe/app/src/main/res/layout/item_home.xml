@@ -22,7 +22,7 @@
             android:src="@drawable/video_btn" />
 
         <TextView
-            android:id="@+id/title_tv"
+            android:id="@+id/title_et"
             style="@style/text"
             android:padding="@dimen/d_5dp" />
 
