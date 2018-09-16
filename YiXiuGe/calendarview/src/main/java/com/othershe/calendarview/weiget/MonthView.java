@@ -111,26 +111,26 @@ public class MonthView extends ViewGroup {
             }
             solarDay.setText(String.valueOf(date.getSolar()[2]));
 //            Log.d("AyncListObjects", "date"+i+" : " +date.toString());
-//            switch (date.getScreen()){
-//                case 1:
-//                    view.setBackgroundResource(mAttrsBean.getDayBg_1());
-//                    solarDay.setTextColor(mAttrsBean.getColorChoose());
-//                    lunarDay.setTextColor(mAttrsBean.getColorChoose());
-//                    lunarDay.setText(R.string.attend_class);
-//                    break;
-//                case 2:
-//                    view.setBackgroundResource(mAttrsBean.getDayBg_2());
-//                    solarDay.setTextColor(mAttrsBean.getColorChoose());
-//                    lunarDay.setTextColor(mAttrsBean.getColorChoose());
-//                    lunarDay.setText(R.string.evaluate);
-//                    break;
-//                case 3:
-//                    view.setBackgroundResource(mAttrsBean.getDayBg_2());
-//                    solarDay.setTextColor(mAttrsBean.getColorChoose());
-//                    lunarDay.setTextColor(mAttrsBean.getColorChoose());
-//                    lunarDay.setText(R.string.evaluated);
-//                    break;
-//            }
+            switch (date.getScreen()){
+                case 1:
+                    view.setBackgroundResource(mAttrsBean.getDayBg_1());
+                    solarDay.setTextColor(mAttrsBean.getColorChoose());
+                    lunarDay.setTextColor(mAttrsBean.getColorChoose());
+                    lunarDay.setText(R.string.attend_class);
+                    break;
+                case 2:
+                    view.setBackgroundResource(mAttrsBean.getDayBg_2());
+                    solarDay.setTextColor(mAttrsBean.getColorChoose());
+                    lunarDay.setTextColor(mAttrsBean.getColorChoose());
+                    lunarDay.setText(R.string.evaluate);
+                    break;
+                case 3:
+                    view.setBackgroundResource(mAttrsBean.getDayBg_2());
+                    solarDay.setTextColor(mAttrsBean.getColorChoose());
+                    lunarDay.setTextColor(mAttrsBean.getColorChoose());
+                    lunarDay.setText(R.string.evaluated);
+                    break;
+            }
             //设置农历（节假日显示）
             if (mAttrsBean.isShowLunar()) {
                 if ("初一".equals(date.getLunar()[1])) {
