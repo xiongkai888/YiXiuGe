@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.api.YiXiuGeApi;
-import com.lanmei.yixiu.utils.CommonUtils;
 import com.lanmei.yixiu.utils.FormatTime;
 import com.othershe.calendarview.bean.CalendarEvent;
 import com.othershe.calendarview.bean.DateBean;
@@ -47,7 +46,7 @@ public class MyClassScheduleActivity extends BaseActivity {
     private FormatTime formatTime;
     private int filtrate = 0;//筛选0|1|2|3=>全部上课|评价|已评
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    private YiXiuGeApi api = new YiXiuGeApi("app/syllabuslist");
+    private YiXiuGeApi api = new YiXiuGeApi("app/syllabuslist");//课程表
 
     @Override
     public int getContentViewId() {
@@ -68,16 +67,13 @@ public class MyClassScheduleActivity extends BaseActivity {
         int year= formatTime.getYear();
         int month = formatTime.getMonth();
         calendarView.setInitDate(year + "." + month).init();
-        title.setText(year + "年" + month);
+        title.setText(getString(R.string.year_month,String.valueOf(year),String.valueOf(month)));
         calendarView.setOnSingleChooseListener(new OnSingleChooseListener() {
             @Override
             public void onSingleChoose(View view, DateBean date) {
-//                TextView solarDay = (TextView) view.findViewById(com.othershe.calendarview.R.id.solar_day);
-//                TextView lunarDay = (TextView) view.findViewById(com.othershe.calendarview.R.id.lunar_day);
-//                solarDay.setText("111");
-//                lunarDay.setText("222");
-//                IntentUtil.startActivity(getContext(), ClassDetailsActivity.class);
-                CommonUtils.developing(getContext());
+//                if (date.getScreen() != 0){
+//                    IntentUtil.startActivity(getContext(), ClassDetailsActivity.class);
+//                }
             }
         });
 
@@ -86,7 +82,7 @@ public class MyClassScheduleActivity extends BaseActivity {
             @Override
             public void onPagerChanged(int[] date) {
                 L.d(L.TAG, date[0] + "年" + date[1] + "月一共" + SolarUtil.getMonthDays(date[0], date[1]) + "天");
-                title.setText(date[0] + "年" + date[1] + "月");
+                title.setText(getString(R.string.year_month,String.valueOf(date[0]),String.valueOf(date[1])));
             }
         });
     }

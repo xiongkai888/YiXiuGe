@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.lanmei.yixiu.R;
@@ -37,6 +38,8 @@ public class RegisterActivity extends BaseActivity implements Toolbar.OnMenuItem
 
     @InjectView(R.id.toolbar)
     CenterTitleToolbar toolbar;
+    @InjectView(R.id.realname_et)
+    DrawClickableEditText realnameEt;
     @InjectView(R.id.phone_et)
     DrawClickableEditText phoneEt;
     @InjectView(R.id.code_et)
@@ -53,6 +56,8 @@ public class RegisterActivity extends BaseActivity implements Toolbar.OnMenuItem
     ImageView showPwdAgainIv;
     @InjectView(R.id.register_bt)
     Button button;
+    @InjectView(R.id.ll_real_name)
+    LinearLayout llRealName;//真实名字
 
     String type;
     boolean isRegister;//是不是注册
@@ -84,6 +89,7 @@ public class RegisterActivity extends BaseActivity implements Toolbar.OnMenuItem
 
         if (isRegister) {//1是注册2是找回密码
             actionbar.setTitle(R.string.register);
+            llRealName.setVisibility(View.VISIBLE);
         } else {
             actionbar.setTitle("找回密码");
             button.setText(R.string.sure);
@@ -120,6 +126,15 @@ public class RegisterActivity extends BaseActivity implements Toolbar.OnMenuItem
         api.addParams("phone", phone);
         api.addParams("password", pwd);
         api.addParams("pcode", code);
+
+        if (isRegister){
+            String realName = CommonUtils.getStringByEditText(realnameEt);
+            if (StringUtils.isEmpty(realName)){
+                UIHelper.ToastMessage(this,R.string.input_real_name);
+                return;
+            }
+            api.addParams("realname", realName);
+        }
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

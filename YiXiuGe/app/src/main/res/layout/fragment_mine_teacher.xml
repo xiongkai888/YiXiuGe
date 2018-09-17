@@ -166,7 +166,7 @@
                 android:drawableLeft="@drawable/mine_teacher_1"
                 android:drawablePadding="@dimen/d_10dp"
                 android:gravity="center_vertical"
-                android:text="发布教程" />
+                android:text="@string/my_course" />
 
             <TextView
                 style="@style/text12color666"

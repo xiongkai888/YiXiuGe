@@ -1,36 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/border_left_right_bottom_divider"
-    style="@style/ll_bottom_h">
+    style="@style/ll_bottom_h"
+    android:background="@drawable/border_left_right_bottom_divider">
 
     <TextView
+        android:id="@+id/date_tv"
         style="@style/text_weight"
+        android:layout_weight="2"
         android:gravity="center"
         android:paddingBottom="@dimen/d_6dp"
         android:paddingTop="@dimen/d_6dp"
-        android:text="8/1 三" />
+        android:text="8/1 三"
+        android:textSize="@dimen/txt_12sp" />
 
     <TextView style="@style/line_v1dp_divider" />
 
     <TextView
+        android:id="@+id/attend_time_tv"
         style="@style/text_weight"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:gravity="center"
         android:paddingBottom="@dimen/d_10dp"
         android:paddingTop="@dimen/d_10dp"
-        android:text="10:30-11:30" />
+        android:text="10:30-11:30"
+        android:textSize="@dimen/txt_12sp" />
 
     <TextView style="@style/line_v1dp_divider" />
 
     <TextView
+        android:id="@+id/explain_tv"
         style="@style/text_weight"
-        android:layout_weight="2"
-        android:gravity="center"
-        android:paddingBottom="@dimen/d_10dp"
-        android:paddingTop="@dimen/d_10dp"
-        android:lines="1"
+        android:layout_weight="3"
         android:ellipsize="end"
-        android:text="请假一天" />
+        android:gravity="center"
+        android:lines="1"
+        android:paddingBottom="@dimen/d_10dp"
+        android:paddingTop="@dimen/d_10dp"
+        android:text="请假一天"
+        android:textSize="@dimen/txt_12sp" />
 
 
 </LinearLayout>

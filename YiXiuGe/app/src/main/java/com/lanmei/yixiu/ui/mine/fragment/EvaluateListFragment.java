@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.EvaluateListAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
-import com.lanmei.yixiu.bean.CourseClassifyBean;
+import com.lanmei.yixiu.bean.EvaluateListBean;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
@@ -24,7 +24,7 @@ public class EvaluateListFragment extends BaseFragment {
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     EvaluateListAdapter mAdapter;
-    private SwipeRefreshController<NoPageListBean<CourseClassifyBean>> controller;
+    private SwipeRefreshController<NoPageListBean<EvaluateListBean>> controller;
 
     @Override
     public int getContentViewId() {
@@ -42,16 +42,14 @@ public class EvaluateListFragment extends BaseFragment {
 
     private void initSwipeRefreshLayout() {
         smartSwipeRefreshLayout.initWithLinearLayout();
-        YiXiuGeApi api = new YiXiuGeApi("app/adpic");
+        YiXiuGeApi api = new YiXiuGeApi("app/my_comment");
         api.addParams("uid", api.getUserId(context));
-        api.addParams("row", 20);
-        api.addParams("status", getArguments().getString("status"));
+        api.addParams("type", getArguments().getString("type"));
         mAdapter = new EvaluateListAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<CourseClassifyBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
+        controller = new SwipeRefreshController<NoPageListBean<EvaluateListBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
         };
-//        controller.loadFirstPage();
-        mAdapter.notifyDataSetChanged();
+        controller.loadFirstPage();
     }
 
 

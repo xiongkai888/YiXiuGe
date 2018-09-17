@@ -1,7 +1,6 @@
 package com.othershe.calendarview.weiget;
 
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,15 +24,8 @@ public class CalendarPagerAdapter extends PagerAdapter {
     //缓存上一次回收的MonthView
     private LinkedList<MonthView> cache = new LinkedList<>();
     private SparseArray<MonthView> mViews = new SparseArray<>();
-    private int year;//日历当前年
-    private int month;//日历当前月
-    private List<Integer> list;//网络请求筛选的数据
     private int listCount;//数据个数
     private int count;
-
-    public Map<String, List<DateBean>> getListMap() {
-        return listMap;
-    }
 
     private Map<String, List<DateBean>> listMap = new HashMap<>();
 
@@ -57,9 +49,6 @@ public class CalendarPagerAdapter extends PagerAdapter {
     }
 
     public void setParameter(List<Integer> list, int year, int month,int position) {
-        this.list = list;
-        this.year = year;
-        this.month = month;
         listCount = (list == null) ? 0 : list.size();
         if (listMap.containsKey(year + "-" + month)) {
             List<DateBean> beanList = listMap.get(year + "-" + month);
@@ -81,10 +70,8 @@ public class CalendarPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         MonthView view;
         if (!cache.isEmpty()) {
-            Log.d("AyncListObjects", "cache.isEmpty() = "+cache.isEmpty());
             view = cache.removeFirst();
         } else {
-            Log.d("AyncListObjects", "cache.isEmpty()   "+cache.isEmpty());
             view = new MonthView(container.getContext());
         }
         //根据position计算对应年、月
@@ -98,7 +85,6 @@ public class CalendarPagerAdapter extends PagerAdapter {
         int monthDays = SolarUtil.getMonthDays(yearPosition, monthPosition);
         if (listMap.containsKey(key)) {
             dateBeanList = listMap.get(key);
-            Log.d("AyncListObjects", "listMap.get(yearPosition+monthPosition);key:" + position);
         } else {
             dateBeanList = CalendarUtil.getMonthDate(yearPosition, monthPosition, mAttrsBean.getSpecifyMap());
             listMap.put(key, dateBeanList);

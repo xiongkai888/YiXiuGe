@@ -14,16 +14,11 @@ import java.util.List;
  */
 
 public class FormatTime {
+
     private long time;
     private boolean is12Hour;
     private Calendar calendar = Calendar.getInstance();
 
-    public int year;
-    public int month;
-    public int day;
-    public int hour;
-    public int minute;
-    public int week;
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private Date date = new Date();
 
@@ -85,8 +80,34 @@ public class FormatTime {
      */
     public String formatterTimeToDay() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date(time);
+        date.setTime(time);
         return format.format(date);
+    }
+
+
+    /**
+     * 获取一个月前的日期
+     *
+     * @param year
+     * @param month
+     * @param isNext 是不是下一个月的
+     * @return
+     */
+    public String[] getMonthAgoOrNext(int year, int month,boolean isNext) {
+        String[] strings = null;
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+            Date date = new Date(dateToStampLong(year + "-" + month, simpleDateFormat)*1000);
+            //过去一月
+            calendar.setTime(date);
+            calendar.add(Calendar.MONTH, isNext?1:-1);
+            Date m = calendar.getTime();
+            String mon = simpleDateFormat.format(m);
+            strings = mon.split("-");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return strings;
     }
 
     /**
@@ -94,7 +115,7 @@ public class FormatTime {
      */
     public String formatterTimeNoSeconds() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        Date date = new Date(time);
+        date.setTime(time);
         return format.format(date);
     }
 
@@ -103,8 +124,12 @@ public class FormatTime {
      */
     public String formatterCheckIn() {
         SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
-        Date date = new Date(time);
+        date.setTime(time);
         return format.format(date);
+    }
+
+    public SimpleDateFormat getSimpleDateFormat(String pattern) {
+        return new SimpleDateFormat(pattern);
     }
 
 
@@ -114,35 +139,26 @@ public class FormatTime {
     public long dateToStampLong(String s) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date = simpleDateFormat.parse(s);
-        long ts = date.getTime()/1000;
+        long ts = date.getTime() / 1000;
         return ts;
     }
 
     /**
-     *
      * @param s
      * @param simpleDateFormat
      * @return
      * @throws ParseException
      */
-    public long dateToStampLong(String s,SimpleDateFormat simpleDateFormat) throws ParseException {
+    public long dateToStampLong(String s, SimpleDateFormat simpleDateFormat) throws ParseException {
         Date date = simpleDateFormat.parse(s);
-        long ts = date.getTime()/1000;
+        long ts = date.getTime() / 1000;
         return ts;
     }
 
 
-
-    /**
-     * yyyy-MM-dd-  星期x  -  x:x
-     */
-    public String getTime() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd # HH:mm");
-        Date date = new Date(time);
-//        return getYear() + line + getMonth() + line + getDay() + left + getWeekStr() + right + getHour() + point + getMinuteSub();
-//        return String.format(format.format(date), getWeekStr());
-        String time = format.format(date);
-        return time.replace("#", "(" + getWeekStr() + ")");
+    public String getTimeForWeek(SimpleDateFormat format) {
+        date.setTime(time);
+        return format.format(date) + " " + getWeekStr();
     }
 
 
@@ -181,30 +197,30 @@ public class FormatTime {
         String week = "";
         switch (getWeek()) {
             case 1:
-                week = "星期日";
+                week = "周日";
                 break;
             case 2:
-                week = "星期一";
+                week = "周一";
 
                 break;
             case 3:
-                week = "星期二";
+                week = "周二";
 
                 break;
             case 4:
-                week = "星期三";
+                week = "周三";
 
                 break;
             case 5:
-                week = "星期四";
+                week = "周四";
 
                 break;
             case 6:
-                week = "星期五";
+                week = "周五";
 
                 break;
             case 7:
-                week = "星期六";
+                week = "周六";
                 break;
 
         }
@@ -265,7 +281,7 @@ public class FormatTime {
         }
     }
 
-    public Long getLong(int amount){
+    public Long getLong(int amount) {
         calendar.add(Calendar.DAY_OF_MONTH, amount);
         return calendar.getTime().getTime();
     }
@@ -275,16 +291,16 @@ public class FormatTime {
         List<Long> list = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            if (i == 0){
+            if (i == 0) {
                 list.add(getLong(0));
-            }else {
+            } else {
                 list.add(getLong(1));
             }
         }
         return list;
     }
 
-    public String getDate(Long time){
+    public String getDate(Long time) {
         SimpleDateFormat format = new SimpleDateFormat("MM月dd日");
         Date date = new Date(time);
         return format.format(date);

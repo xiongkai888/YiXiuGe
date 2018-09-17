@@ -6,8 +6,10 @@ import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.event.SetUserEvent;
+import com.lanmei.yixiu.ui.mine.activity.MyCheckingInActivity;
 import com.lanmei.yixiu.ui.mine.activity.MyClassScheduleActivity;
 import com.lanmei.yixiu.ui.mine.activity.MyCollectActivity;
+import com.lanmei.yixiu.ui.mine.activity.MyEvaluateActivity;
 import com.lanmei.yixiu.ui.mine.activity.MyNoteActivity;
 import com.lanmei.yixiu.ui.mine.activity.PersonalDataSubActivity;
 import com.lanmei.yixiu.ui.mine.activity.SettingActivity;
@@ -90,16 +92,16 @@ public class MineStudentFragment extends BaseFragment {
                 IntentUtil.startActivity(context, MyCollectActivity.class);
                 break;
             case R.id.ll_checking_in://我的考勤
-                CommonUtils.developing(context);
-//                IntentUtil.startActivity(context, MyCheckingInActivity.class);
+//                CommonUtils.developing(context);
+                IntentUtil.startActivity(context, MyCheckingInActivity.class);
                 break;
             case R.id.ll_notes://我的笔记
 //                CommonUtils.developing(context);
                 IntentUtil.startActivity(context, MyNoteActivity.class);
                 break;
             case R.id.ll_evaluate://我的评价
-                CommonUtils.developing(context);
-//                IntentUtil.startActivity(context, MyEvaluateActivity.class);
+//                CommonUtils.developing(context);
+                IntentUtil.startActivity(context, MyEvaluateActivity.class);
                 break;
             case R.id.ll_setting://设置
                 IntentUtil.startActivity(context, SettingActivity.class);

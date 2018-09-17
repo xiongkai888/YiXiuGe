@@ -9,7 +9,7 @@ public class DateBean {
     private String lunarHoliday;//阳历节假日
     private int type;//0:上月，1:当月，2:下月
     private String term;//节气
-    private int screen = -1;//在日历上显示  筛选0|1|2|3=>全部|上课|评价|已评
+    private int screen = 0;//在日历上显示  筛选0|1|2|3=>全部|上课|评价|已评
 
     public void setScreen(int screen) {
         this.screen = screen;

@@ -44,7 +44,7 @@
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SplashActivity">
@@ -201,6 +201,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.teacher.activity.PublishClassHourActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.teacher.activity.MyCourseActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.teacher.activity.PublishCourseActivity"

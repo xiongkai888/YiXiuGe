@@ -116,19 +116,19 @@ public class MonthView extends ViewGroup {
                     view.setBackgroundResource(mAttrsBean.getDayBg_1());
                     solarDay.setTextColor(mAttrsBean.getColorChoose());
                     lunarDay.setTextColor(mAttrsBean.getColorChoose());
-                    lunarDay.setText(R.string.attend_class);
+//                    lunarDay.setText(R.string.attend_class);
                     break;
                 case 2:
                     view.setBackgroundResource(mAttrsBean.getDayBg_2());
                     solarDay.setTextColor(mAttrsBean.getColorChoose());
                     lunarDay.setTextColor(mAttrsBean.getColorChoose());
-                    lunarDay.setText(R.string.evaluate);
+//                    lunarDay.setText(R.string.evaluate);
                     break;
                 case 3:
-                    view.setBackgroundResource(mAttrsBean.getDayBg_2());
+                    view.setBackgroundResource(mAttrsBean.getDayBg_3());
                     solarDay.setTextColor(mAttrsBean.getColorChoose());
                     lunarDay.setTextColor(mAttrsBean.getColorChoose());
-                    lunarDay.setText(R.string.evaluated);
+//                    lunarDay.setText(R.string.evaluated);
                     break;
             }
             //设置农历（节假日显示）

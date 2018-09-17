@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class CalendarView extends ViewPager {
@@ -46,10 +45,6 @@ public class CalendarView extends ViewPager {
     private CalendarPagerAdapter calendarPagerAdapter;
 
     private AttrsBean mAttrsBean;
-
-    public Map<String, List<DateBean>> getListMap() {
-        return calendarPagerAdapter.getListMap();
-    }
 
     public CalendarView(Context context) {
         this(context, null);

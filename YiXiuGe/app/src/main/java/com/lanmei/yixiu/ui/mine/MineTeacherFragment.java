@@ -11,7 +11,8 @@ import com.lanmei.yixiu.ui.mine.activity.MyCollectActivity;
 import com.lanmei.yixiu.ui.mine.activity.PersonalDataSubActivity;
 import com.lanmei.yixiu.ui.mine.activity.SettingActivity;
 import com.lanmei.yixiu.ui.teacher.activity.ClassHourActivity;
-import com.lanmei.yixiu.ui.teacher.activity.PublishCourseActivity;
+import com.lanmei.yixiu.ui.teacher.activity.EvaluateActivity;
+import com.lanmei.yixiu.ui.teacher.activity.MyCourseActivity;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.UserBean;
@@ -94,8 +95,8 @@ public class MineTeacherFragment extends BaseFragment {
                 CommonUtils.developing(context);
                 break;
             case R.id.ll_evaluate://我的评价
-                CommonUtils.developing(context);
-//                IntentUtil.startActivity(context, EvaluateActivity.class);
+//                CommonUtils.developing(context);
+                IntentUtil.startActivity(context, EvaluateActivity.class);
                 break;
             case R.id.ll_setting://设置
                 IntentUtil.startActivity(context, SettingActivity.class);
@@ -108,8 +109,8 @@ public class MineTeacherFragment extends BaseFragment {
 //                IntentUtil.startActivity(context, ExaminationManagementActivity.class);
                 CommonUtils.developing(context);
                 break;
-            case R.id.ll_mine_teacher1://发布教程
-                IntentUtil.startActivity(context, PublishCourseActivity.class);
+            case R.id.ll_mine_teacher1://我的教程
+                IntentUtil.startActivity(context, MyCourseActivity.class);
                 break;
             case R.id.ll_mine_teacher2://我的课时
                 IntentUtil.startActivity(context, ClassHourActivity.class);

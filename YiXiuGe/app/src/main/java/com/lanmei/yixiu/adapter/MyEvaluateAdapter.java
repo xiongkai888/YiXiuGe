@@ -22,15 +22,15 @@ public class MyEvaluateAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         EvaluateListFragment fragment = new EvaluateListFragment();
         Bundle bundle = new Bundle();
-        switch (position) {//0待支付|1待接单|2待处理|3出发中|4已到达|5服务中|6服务完成|7确认完成|8待评价|9 全部|10取消
+        switch (position) {//1|2|3=>课时|教师|同学
             case 0:
-                bundle.putString("status","");//全部
+                bundle.putString("type","1");//课时
                 break;
             case 1:
-                bundle.putString("status","1");//执行中
+                bundle.putString("type","2");//教师
                 break;
             case 2:
-                bundle.putString("status","2");//取消
+                bundle.putString("type","3");//同学
                 break;
 
         }
@@ -47,9 +47,9 @@ public class MyEvaluateAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "老师";
-            case 1:
                 return "课程";
+            case 1:
+                return "教师";
             case 2:
                 return "同学";
         }
