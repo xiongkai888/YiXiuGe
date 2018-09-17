@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.SparseArray;
+import android.view.MotionEvent;
 
 import com.othershe.calendarview.R;
 import com.othershe.calendarview.bean.AttrsBean;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class CalendarView extends ViewPager {
@@ -45,7 +47,9 @@ public class CalendarView extends ViewPager {
 
     private AttrsBean mAttrsBean;
 
-
+    public Map<String, List<DateBean>> getListMap() {
+        return calendarPagerAdapter.getListMap();
+    }
 
     public CalendarView(Context context) {
         this(context, null);
@@ -57,11 +61,8 @@ public class CalendarView extends ViewPager {
         initAttr(context, attrs);
     }
 
-    public void setParameter(List<Integer> list,int year,int month){
-        calendarPagerAdapter.setParameter(list,year, month);
-//        Log.d("AyncListObjects", "year:"+year+" , month:" +month);
-        calendarPagerAdapter.notifyDataSetChanged();
-//        invalidate();
+    public void setParameter(List<Integer> list,int year,int month,int position){
+        calendarPagerAdapter.setParameter(list,year, month,position);
     }
 
     private void initAttr(Context context, AttributeSet attrs) {
@@ -112,9 +113,7 @@ public class CalendarView extends ViewPager {
         calendarPagerAdapter.setAttrsBean(mAttrsBean);
         calendarPagerAdapter.setOnCalendarViewAdapter(item_layout, calendarViewAdapter);
         setAdapter(calendarPagerAdapter);
-
         currentPosition = CalendarUtil.dateToPosition(initDate[0], initDate[1], startDate[0], startDate[1]);
-
         //单选
         if (mAttrsBean.getChooseType() == 0) {
             int[] singleDate = mAttrsBean.getSingleDate();
@@ -182,8 +181,9 @@ public class CalendarView extends ViewPager {
     private void refreshMonthView(int position) {
         MonthView monthView = calendarPagerAdapter.getViews().get(position);
         if (mAttrsBean.getChooseType() == 1) {//多选
-            if (chooseDate.get(position) != null)
+            if (chooseDate.get(position) != null){
                 monthView.multiChooseRefresh(chooseDate.get(position));
+            }
         } else {
             //单选时，如果设置切换月份不选中上次选中的日期但如果切换回有选中日期的页则需要刷新选中，或者切换选中开启则需要刷新选中
             boolean flag = (!mAttrsBean.isSwitchChoose() && lastClickDate[0] == position)
@@ -520,6 +520,45 @@ public class CalendarView extends ViewPager {
             }
         }
         return list;
+    }
+
+
+    private boolean noScroll = false;
+
+
+    public void setNoScroll(boolean noScroll) {
+        this.noScroll = noScroll;
+    }
+
+    @Override
+    public void scrollTo(int x, int y) {
+        super.scrollTo(x, y);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent arg0) {
+        if (noScroll)
+            return false;
+        else
+            return super.onTouchEvent(arg0);
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent arg0) {
+        if (noScroll)
+            return false;
+        else
+            return super.onInterceptTouchEvent(arg0);
+    }
+
+    @Override
+    public void setCurrentItem(int item, boolean smoothScroll) {
+        super.setCurrentItem(item, smoothScroll);
+    }
+
+    @Override
+    public void setCurrentItem(int item) {
+        super.setCurrentItem(item);
     }
 
 }

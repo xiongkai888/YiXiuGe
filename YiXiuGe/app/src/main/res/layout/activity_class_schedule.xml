@@ -65,6 +65,7 @@
             android:src="@drawable/day_bg_1b" />
 
         <TextView
+            android:layout_marginLeft="@dimen/d_5dp"
             style="@style/text_weight"
             android:text="上课" />
 
@@ -75,8 +76,9 @@
             android:src="@drawable/day_bg_2b" />
 
         <TextView
+            android:layout_marginLeft="@dimen/d_5dp"
             style="@style/text_weight"
-            android:text="评价" />
+            android:text="未评价" />
 
 
         <ImageView
@@ -85,6 +87,7 @@
             android:src="@drawable/day_bg_3b" />
 
         <TextView
+            android:layout_marginLeft="@dimen/d_5dp"
             style="@style/text_weight"
             android:text="已评价" />
 

@@ -1,18 +1,24 @@
 package com.othershe.calendarview.weiget;
 
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.othershe.calendarview.bean.AttrsBean;
+import com.othershe.calendarview.bean.CalendarEvent;
 import com.othershe.calendarview.bean.DateBean;
 import com.othershe.calendarview.listener.CalendarViewAdapter;
 import com.othershe.calendarview.utils.CalendarUtil;
 import com.othershe.calendarview.utils.SolarUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class CalendarPagerAdapter extends PagerAdapter {
 
@@ -24,6 +30,12 @@ public class CalendarPagerAdapter extends PagerAdapter {
     private List<Integer> list;//网络请求筛选的数据
     private int listCount;//数据个数
     private int count;
+
+    public Map<String, List<DateBean>> getListMap() {
+        return listMap;
+    }
+
+    private Map<String, List<DateBean>> listMap = new HashMap<>();
 
     private int item_layout;
     private CalendarViewAdapter calendarViewAdapter;
@@ -44,41 +56,53 @@ public class CalendarPagerAdapter extends PagerAdapter {
         return view == object;
     }
 
-    public void setParameter(List<Integer> list, int year, int month) {
+    public void setParameter(List<Integer> list, int year, int month,int position) {
         this.list = list;
         this.year = year;
         this.month = month;
         listCount = (list == null) ? 0 : list.size();
-//        Log.d("AyncListObjects", "year:"+year+" , month:" +month);
+        if (listMap.containsKey(year + "-" + month)) {
+            List<DateBean> beanList = listMap.get(year + "-" + month);
+            if (beanList != null && listCount > 0) {
+                int size = beanList.size();
+                for (int i = 0; i < size; i++) {
+                    DateBean bean = beanList.get(i);
+                    if (bean.getSolar()[0] == year && bean.getSolar()[1] == month){
+                        bean.setScreen(list.get(bean.getSolar()[2]-1));
+                    }
+                }
+            }
+            MonthView monthView = mViews.get(position);
+            monthView.setDateList(beanList,listCount);
+        }
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         MonthView view;
         if (!cache.isEmpty()) {
+            Log.d("AyncListObjects", "cache.isEmpty() = "+cache.isEmpty());
             view = cache.removeFirst();
         } else {
+            Log.d("AyncListObjects", "cache.isEmpty()   "+cache.isEmpty());
             view = new MonthView(container.getContext());
         }
         //根据position计算对应年、月
         int[] date = CalendarUtil.positionToDate(position, mAttrsBean.getStartDate()[0], mAttrsBean.getStartDate()[1]);
+        int yearPosition = date[0];
+        int monthPosition = date[1];
         view.setAttrsBean(mAttrsBean);
         view.setOnCalendarViewAdapter(item_layout, calendarViewAdapter);
-        List<DateBean> dateBeanList = CalendarUtil.getMonthDate(date[0], date[1], mAttrsBean.getSpecifyMap());
-        int monthDays = SolarUtil.getMonthDays(date[0], date[1]);
-//        Log.d("AyncListObjects", "year:"+year+" , month:" +month);
-        if (year != 0 && listCount == monthDays){
-            int size = dateBeanList.size();
-            for (int i = 0; i < size; i++) {
-                DateBean bean = dateBeanList.get(i);
-                if (bean.getSolar()[0] == year && bean.getSolar()[1] == month) {
-                    int day = bean.getSolar()[2];
-//                    Log.d("AyncListObjects", "day"+day+" : " +date.toString());
-                    if (day < listCount) {
-                        bean.setScreen(list.get(day-1));
-                    }
-                }
-            }
+        List<DateBean> dateBeanList;
+        String key = yearPosition + "-" + monthPosition;
+        int monthDays = SolarUtil.getMonthDays(yearPosition, monthPosition);
+        if (listMap.containsKey(key)) {
+            dateBeanList = listMap.get(key);
+            Log.d("AyncListObjects", "listMap.get(yearPosition+monthPosition);key:" + position);
+        } else {
+            dateBeanList = CalendarUtil.getMonthDate(yearPosition, monthPosition, mAttrsBean.getSpecifyMap());
+            listMap.put(key, dateBeanList);
+            EventBus.getDefault().post(new CalendarEvent(yearPosition, monthPosition, monthDays,position));
         }
         view.setDateList(dateBeanList, monthDays);
         mViews.put(position, view);
