@@ -18,6 +18,7 @@ import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.CenterTitleToolbar;
@@ -64,16 +65,26 @@ public class MyClassScheduleActivity extends BaseActivity {
         actionbar.setHomeAsUpIndicator(R.drawable.back);
         api.addParams("uid", api.getUserId(this));
         formatTime = new FormatTime();
-        int year= formatTime.getYear();
+        int year = formatTime.getYear();
         int month = formatTime.getMonth();
-        calendarView.setInitDate(year + "." + month).init();
-        title.setText(getString(R.string.year_month,String.valueOf(year),String.valueOf(month)));
+
+        String[] string = formatTime.getMonthAgoOrNext(year, month, true);
+        if (!StringUtils.isEmpty(string) && string.length == 2) {
+            calendarView.setStartEndDate((year-3)+"."+month, string[0]+"."+string[1]);
+        }
+        calendarView.setInitDate(year + "." + month)
+                .init();
+
+        title.setText(getString(R.string.year_month, String.valueOf(year), String.valueOf(month)));
         calendarView.setOnSingleChooseListener(new OnSingleChooseListener() {
             @Override
             public void onSingleChoose(View view, DateBean date) {
-//                if (date.getScreen() != 0){
-//                    IntentUtil.startActivity(getContext(), ClassDetailsActivity.class);
-//                }
+                if (date.getScreen() != 0) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("position",calendarView.getCurrentPosition());
+                    bundle.putSerializable("bean", date);
+                    IntentUtil.startActivity(getContext(), ClassDetailsActivity.class, bundle);
+                }
             }
         });
 
@@ -82,10 +93,11 @@ public class MyClassScheduleActivity extends BaseActivity {
             @Override
             public void onPagerChanged(int[] date) {
                 L.d(L.TAG, date[0] + "年" + date[1] + "月一共" + SolarUtil.getMonthDays(date[0], date[1]) + "天");
-                title.setText(getString(R.string.year_month,String.valueOf(date[0]),String.valueOf(date[1])));
+                title.setText(getString(R.string.year_month, String.valueOf(date[0]), String.valueOf(date[1])));
             }
         });
     }
+
     private void loadClassSchedule(final int year, final int month, final int monthDays, final int position) {
         try {
             api.addParams("start_time", formatTime.dateToStampLong(year + "-" + month + "-" + 1, format));
@@ -104,7 +116,7 @@ public class MyClassScheduleActivity extends BaseActivity {
                     if (monthDays != list.size()) {
                         return;
                     }
-                    calendarView.setParameter(list,year, month,position);
+                    calendarView.setParameter(list, year, month, position);
                 }
             });
         } catch (ParseException e) {
@@ -125,8 +137,8 @@ public class MyClassScheduleActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void calendarEvent(CalendarEvent event){
-        loadClassSchedule(event.getYear(),event.getMonth(),event.getMonthDays(),event.getPosition());
+    public void calendarEvent(CalendarEvent event) {
+        loadClassSchedule(event.getYear(), event.getMonth(), event.getMonthDays(), event.getPosition());
     }
 
     @Override

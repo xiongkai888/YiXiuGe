@@ -43,6 +43,7 @@
 
         <LinearLayout
             style="@style/h_match_parent"
+            android:visibility="gone"
             android:paddingBottom="@dimen/d_10dp"
             android:paddingTop="@dimen/d_10dp">
 
@@ -113,6 +114,7 @@
 
         <LinearLayout
             android:id="@+id/ll_checking_in"
+            android:visibility="gone"
             style="@style/ll_bottom_h"
             android:padding="@dimen/d_10dp">
 

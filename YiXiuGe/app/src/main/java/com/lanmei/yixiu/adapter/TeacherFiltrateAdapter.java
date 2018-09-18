@@ -58,7 +58,7 @@ public class TeacherFiltrateAdapter extends SwipeRefreshAdapter<TeacherFiltrateB
                 bean.setSelect(!bean.isSelect());
                 notifyDataSetChanged();
                 if (teacherFiltrateListener != null){
-                    teacherFiltrateListener.onFiltrate(bean.getName());
+                    teacherFiltrateListener.onFiltrate(bean);
                 }
             }
         });
@@ -88,7 +88,7 @@ public class TeacherFiltrateAdapter extends SwipeRefreshAdapter<TeacherFiltrateB
     }
 
     public interface TeacherFiltrateListener{
-        void onFiltrate(String name);
+        void onFiltrate(TeacherFiltrateBean bean);
     }
 
 }

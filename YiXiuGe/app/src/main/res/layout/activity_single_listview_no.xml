@@ -6,9 +6,6 @@
 
     <include layout="@layout/include_centertitletoolbar"/>
 
-    <com.xson.common.widget.SmartSwipeRefreshLayout
-        android:id="@+id/pull_refresh_rv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include layout="@layout/fragment_single_listview_no"/>
 
 </LinearLayout>

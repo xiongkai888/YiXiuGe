@@ -62,8 +62,6 @@ public class MineStudentFragment extends BaseFragment {
     }
 
 
-
-
     private void setUser() {
         UserBean userBean = CommonUtils.getUserBean(context);
         if (StringUtils.isEmpty(userBean)) {

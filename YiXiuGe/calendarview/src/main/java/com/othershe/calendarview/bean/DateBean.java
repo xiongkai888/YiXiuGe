@@ -1,8 +1,9 @@
 package com.othershe.calendarview.bean;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class DateBean {
+public class DateBean implements Serializable{
     private int[] solar;//阳历年、月、日
     private String[] lunar;//农历月、日
     private String solarHoliday;//阳历节假日

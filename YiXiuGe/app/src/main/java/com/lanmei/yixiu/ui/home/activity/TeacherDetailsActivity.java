@@ -1,9 +1,12 @@
 package com.lanmei.yixiu.ui.home.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,11 +15,18 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.adapter.TeacherDetailsCommentAdapter;
 import com.lanmei.yixiu.adapter.TeacherDetailsPublishAdapter;
+import com.lanmei.yixiu.api.YiXiuGeApi;
+import com.lanmei.yixiu.bean.TeacherDetailsBean;
+import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.xson.common.bean.DataBean;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
+import com.xson.common.helper.ImageHelper;
+import com.xson.common.utils.StringUtils;
+import com.xson.common.widget.CircleImageView;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -26,17 +36,39 @@ import butterknife.OnClick;
  */
 public class TeacherDetailsActivity extends BaseActivity {
 
+    @InjectView(R.id.pic_iv)
+    CircleImageView picIv;
+    @InjectView(R.id.realname_tv)
+    TextView realnameTv;
+    @InjectView(R.id.teachingage_tv)
+    TextView teachingageTv;
+    @InjectView(R.id.info_tv)
+    TextView infoTv;
+    @InjectView(R.id.kec_tv)
+    TextView kecTv;//主要科目
+    @InjectView(R.id.intro_tv)
+    TextView introTv;//简介
+
 
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @InjectView(R.id.good_reputation_tv)
-    TextView goodReputationTv;
-    @InjectView(R.id.middle_reputation_tv)
-    TextView middleReputationTv;
-    @InjectView(R.id.bad_reputation_tv)
-    TextView badReputationTv;
+//    @InjectView(R.id.good_reputation_tv)
+//    TextView goodReputationTv;
+//    @InjectView(R.id.middle_reputation_tv)
+//    TextView middleReputationTv;
+//    @InjectView(R.id.bad_reputation_tv)
+//    TextView badReputationTv;
 
-    TextView[] textViews = new TextView[3];
+    @InjectView(R.id.viewPager)
+    ViewPager mViewPager;
+    @InjectView(R.id.tabLayout)
+    TabLayout mTabLayout;
+
+    TeacherDetailsCommentAdapter teacherDetailsCommentAdapter;
+
+    private String tid;
+    private TeacherDetailsBean bean;//老师详情
+//    TextView[] textViews = new TextView[3];
 
     @Override
     public int getContentViewId() {
@@ -44,28 +76,63 @@ public class TeacherDetailsActivity extends BaseActivity {
     }
 
     @Override
+    public void initIntent(Intent intent) {
+        super.initIntent(intent);
+        tid = intent.getStringExtra("value");
+    }
+
+    @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        textViews[0] = goodReputationTv;
-        textViews[1] = middleReputationTv;
-        textViews[2] = badReputationTv;
+//        textViews[0] = goodReputationTv;
+//        textViews[1] = middleReputationTv;
+//        textViews[2] = badReputationTv;
 
         fullScreen(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
-        TeacherDetailsPublishAdapter adapter = new TeacherDetailsPublishAdapter(this);
-        adapter.setData(getList());
         recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setAdapter(adapter);
+        loadTeacherDetails();
+
+
+        teacherDetailsCommentAdapter = new TeacherDetailsCommentAdapter(getSupportFragmentManager(),tid);
+//        mViewPager.setOffscreenPageLimit(3);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        mViewPager.setAdapter(teacherDetailsCommentAdapter);
+
     }
 
+    private void loadTeacherDetails() {
+        YiXiuGeApi api = new YiXiuGeApi("app/teacher_details");
+        api.addParams("tid", tid);
+        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<DataBean<TeacherDetailsBean>>() {
+            @Override
+            public void onResponse(DataBean<TeacherDetailsBean> response) {
+                if (isFinishing()) {
+                    return;
+                }
+                bean = response.data;
+                setTeacherDetails();
+            }
+        });
+    }
 
-    private List<String> getList() {
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            list.add("https://goss.veer.com/creative/vcg/veer/800water/veer-305535622.jpg");
+    private void setTeacherDetails() {
+        if (bean == null) {
+            return;
         }
-        return list;
+        ImageHelper.load(this,bean.getPic(),picIv,null,true,R.drawable.default_pic,R.drawable.default_pic);
+        kecTv.setText(bean.getKec());
+        introTv.setText(bean.getIntro());
+        realnameTv.setText(bean.getRealname());
+        teachingageTv.setText(String.format(getString(R.string.teaching_age),bean.getTeachingage()+""));
+        infoTv.setText(String.format(getString(R.string.teacher_info), StringUtils.isSame(bean.getSex(), CommonUtils.isOne)?getString(R.string.man):getString(R.string.woman),bean.getAge(),bean.getCityname()));
+
+        TeacherDetailsPublishAdapter adapter = new TeacherDetailsPublishAdapter(this);
+        adapter.setData(bean.getVideo());
+        recyclerView.setAdapter(adapter);
+
     }
 
 
@@ -96,7 +163,7 @@ public class TeacherDetailsActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.back_iv, R.id.message_iv, R.id.good_reputation_tv, R.id.middle_reputation_tv, R.id.bad_reputation_tv})
+    @OnClick({R.id.back_iv, R.id.message_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_iv:
@@ -104,26 +171,26 @@ public class TeacherDetailsActivity extends BaseActivity {
                 break;
             case R.id.message_iv:
                 break;
-            case R.id.good_reputation_tv://好评
-                setTextViewBg(goodReputationTv);
-                break;
-            case R.id.middle_reputation_tv://中评
-                setTextViewBg(middleReputationTv);
-                break;
-            case R.id.bad_reputation_tv://差评
-                setTextViewBg(badReputationTv);
-                break;
+//            case R.id.good_reputation_tv://好评
+//                setTextViewBg(goodReputationTv);
+//                break;
+//            case R.id.middle_reputation_tv://中评
+//                setTextViewBg(middleReputationTv);
+//                break;
+//            case R.id.bad_reputation_tv://差评
+//                setTextViewBg(badReputationTv);
+//                break;
         }
     }
 
-    private void setTextViewBg(TextView view) {
-        int size = textViews.length;
-        for (int i = 0; i < size; i++) {
-            textViews[i].setTextColor(getResources().getColor(R.color.color666));
-            textViews[i].setBackgroundColor(getResources().getColor(R.color.colorF4F4));
-        }
-        view.setTextColor(getResources().getColor(R.color.color1593f0));
-        view.setBackgroundColor(getResources().getColor(R.color.white));
-    }
+//    private void setTextViewBg(TextView view) {
+//        int size = textViews.length;
+//        for (int i = 0; i < size; i++) {
+//            textViews[i].setTextColor(getResources().getColor(R.color.color666));
+//            textViews[i].setBackgroundColor(getResources().getColor(R.color.colorF4F4));
+//        }
+//        view.setTextColor(getResources().getColor(R.color.color1593f0));
+//        view.setBackgroundColor(getResources().getColor(R.color.white));
+//    }
 
 }

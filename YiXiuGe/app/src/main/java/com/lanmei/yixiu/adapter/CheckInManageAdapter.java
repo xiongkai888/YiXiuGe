@@ -12,6 +12,8 @@ import com.lanmei.yixiu.bean.CheckingInManageBean;
 import com.lanmei.yixiu.utils.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 
+import java.text.SimpleDateFormat;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -22,10 +24,12 @@ import butterknife.InjectView;
 public class CheckInManageAdapter extends SwipeRefreshAdapter<CheckingInManageBean> {
 
     private FormatTime formatTime;
+    private SimpleDateFormat format;
 
     public CheckInManageAdapter(Context context) {
         super(context);
         formatTime = new FormatTime();
+        format = formatTime.getSimpleDateFormat("MM-dd HH:mm");
     }
 
 
@@ -64,7 +68,7 @@ public class CheckInManageAdapter extends SwipeRefreshAdapter<CheckingInManageBe
         public void setParameter(CheckingInManageBean bean) {
             realnameTv.setText(bean.getRealname());
             formatTime.setTime(bean.getAttend_time());
-            attendTimeTv.setText(formatTime.formatterCheckIn());
+            attendTimeTv.setText(formatTime.formatterTime(format));
             attendTypeTv.setText(bean.getAttend_type());
             explainTv.setText(bean.getExplain());
         }

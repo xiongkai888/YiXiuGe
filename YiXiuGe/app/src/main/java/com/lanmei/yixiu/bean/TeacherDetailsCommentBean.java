@@ -1,25 +1,24 @@
 package com.lanmei.yixiu.bean;
 
 /**
- * Created by xkai on 2018/9/17.
- * 评价列表
+ * Created by xkai on 2018/9/18.
  */
 
-public class EvaluateListBean {
-
+public class TeacherDetailsCommentBean {
 
     /**
-     * id : 23
-     * content : 哈哈哈，差评没毛病
-     * addtime : 1537247991
+     * id : 17
+     * content :
+     * addtime : 1537155752
      * grade : 1
-     * type : 1
-     * uid : 820619
-     * pid : 18
+     * type : 2
+     * uid : 820517
+     * pid : 24
      * tid : 820516
      * like : 0
-     * pic : http://gzyxg.img-cn-shenzhen.aliyuncs.com/Uploads/tmp/5b88db556b95e.jpg
-     * realname : 医修哥
+     * pic : http://gzyxg.oss-cn-shenzhen.aliyuncs.com/820517/1535711357.png
+     * realname : b_1341615****
+     * liked : 0
      */
 
     private String id;
@@ -33,6 +32,7 @@ public class EvaluateListBean {
     private String like;
     private String pic;
     private String realname;
+    private String liked;
 
     public String getId() {
         return id;
@@ -120,5 +120,13 @@ public class EvaluateListBean {
 
     public void setRealname(String realname) {
         this.realname = realname;
+    }
+
+    public String getLiked() {
+        return liked;
+    }
+
+    public void setLiked(String liked) {
+        this.liked = liked;
     }
 }

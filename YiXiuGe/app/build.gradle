@@ -11,8 +11,8 @@ android {
         applicationId "com.lanmei.yixiu"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 4
-        versionName "1.1.4"
+        versionCode 17
+        versionName "1.2.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "API_URL", "\"http://47.107.59.111/api/\""
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
@@ -36,7 +36,7 @@ android {
         variant.outputs.all { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.startsWith('app-release')) {
-                def fileName = outputFile.name.replace("app-release", "yixiuge_vc${defaultConfig.versionCode}_vn${defaultConfig.versionName}_${buildTime()}")
+                def fileName = outputFile.name.replace("app-release", "zhongshanyiyuan_vc${defaultConfig.versionCode}_vn${defaultConfig.versionName}_${buildTime()}")
                 outputFileName = fileName
             }
         }
@@ -126,5 +126,9 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     //lifecycle-viewmodel
 //    implementation 'androidx.lifecycle:lifecycle-viewmodel:latest.release'
+
+    //版本更新
+    implementation 'com.github.yjfnypeu:UpdatePlugin:2.5.1'
+    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.9.2'
 
 }

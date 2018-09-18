@@ -3,6 +3,7 @@
     android:id="@+id/pull_refresh_rv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorF4F4"
     android:listSelector="@null">
 
 </com.xson.common.widget.SmartSwipeRefreshLayout>

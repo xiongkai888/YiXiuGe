@@ -11,43 +11,44 @@
         android:layout_marginBottom="@dimen/d_10dp"
         android:gravity="center_vertical">
 
-        <ImageView
-            style="@style/text"
-            android:src="@drawable/temp_pic" />
+        <com.xson.common.widget.CircleImageView
+            android:id="@+id/pic_iv"
+            android:layout_width="@dimen/d_40dp"
+            android:layout_height="@dimen/d_40dp" />
 
         <TextView
+            android:id="@+id/realname_tv"
             style="@style/text"
-            android:layout_marginLeft="@dimen/d_5dp"
-            android:text="@string/name" />
+            android:layout_marginLeft="@dimen/d_5dp" />
 
     </LinearLayout>
 
     <TextView style="@style/line_H1dp_divider" />
 
     <TextView
+        android:id="@+id/kec_tv"
         style="@style/text12color666"
         android:layout_marginLeft="@dimen/d_10dp"
         android:layout_marginTop="@dimen/d_10dp"
         android:drawableLeft="@drawable/class_name"
-        android:drawablePadding="@dimen/d_5dp"
-        android:text="美肤管理" />
+        android:drawablePadding="@dimen/d_5dp" />
 
     <TextView
+        android:id="@+id/time_tv"
         style="@style/text12color666"
         android:layout_marginLeft="@dimen/d_10dp"
         android:layout_marginTop="@dimen/d_5dp"
         android:drawableLeft="@drawable/class_time"
-        android:drawablePadding="@dimen/d_5dp"
-        android:text="2018-8-23 (周一) 18:00" />
+        android:drawablePadding="@dimen/d_5dp" />
 
     <TextView
+        android:id="@+id/roomname_tv"
         style="@style/text12color666"
         android:layout_marginBottom="@dimen/d_10dp"
         android:layout_marginLeft="@dimen/d_10dp"
         android:layout_marginTop="@dimen/d_5dp"
         android:drawableLeft="@drawable/class_position"
-        android:drawablePadding="@dimen/d_5dp"
-        android:text="教室2" />
+        android:drawablePadding="@dimen/d_5dp" />
 
     <TextView style="@style/line_H1dp_divider" />
 
@@ -58,12 +59,12 @@
         android:text="@string/remark" />
 
     <TextView
+        android:id="@+id/remark_tv"
         style="@style/text12colorBlack"
         android:layout_width="match_parent"
         android:layout_marginLeft="@dimen/d_10dp"
         android:layout_marginTop="@dimen/d_10dp"
-        android:background="@drawable/class_details"
-        android:text="请同学们带好电脑！" />
+        android:background="@drawable/class_details" />
 
 
     <LinearLayout

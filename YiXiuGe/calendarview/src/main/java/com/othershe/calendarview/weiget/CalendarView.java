@@ -60,6 +60,10 @@ public class CalendarView extends ViewPager {
         calendarPagerAdapter.setParameter(list,year, month,position);
     }
 
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+
     private void initAttr(Context context, AttributeSet attrs) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CalendarView);
         for (int i = 0; i < ta.getIndexCount(); i++) {

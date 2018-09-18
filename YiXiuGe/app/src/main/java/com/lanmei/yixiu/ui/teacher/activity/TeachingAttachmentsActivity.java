@@ -69,13 +69,19 @@ public class TeachingAttachmentsActivity extends BaseActivity {
 
     private List<TeacherFiltrateBean> getTeacherFiltrateListBean() {
         List<TeacherFiltrateBean> list = new ArrayList<>();
-        TeacherFiltrateBean bean1 = new TeacherFiltrateBean("全部");
+        TeacherFiltrateBean bean1 = new TeacherFiltrateBean();
+        bean1.setName("全部");
         bean1.setSelect(true);
-        TeacherFiltrateBean bean2 = new TeacherFiltrateBean("妇产教室");
-        TeacherFiltrateBean bean3 = new TeacherFiltrateBean("骨科教室");
-        TeacherFiltrateBean bean4 = new TeacherFiltrateBean("牙科教室");
-        TeacherFiltrateBean bean5 = new TeacherFiltrateBean("解剖教室");
-        TeacherFiltrateBean bean6 = new TeacherFiltrateBean("活动教室");
+        TeacherFiltrateBean bean2 = new TeacherFiltrateBean();
+        bean2.setName("妇产教室");
+        TeacherFiltrateBean bean3 = new TeacherFiltrateBean();
+        bean3.setName("骨科教室");
+        TeacherFiltrateBean bean4 = new TeacherFiltrateBean();
+        bean4.setName("牙科教室");
+        TeacherFiltrateBean bean5 = new TeacherFiltrateBean();
+        bean5.setName("解剖教室");
+        TeacherFiltrateBean bean6 = new TeacherFiltrateBean();
+        bean6.setName("活动教室");
         list.add(bean1);
         list.add(bean2);
         list.add(bean3);
@@ -114,8 +120,8 @@ public class TeachingAttachmentsActivity extends BaseActivity {
         view.setAdapter(teacherFiltrateAdapter);
         teacherFiltrateAdapter.setTeacherFiltrateListener(new TeacherFiltrateAdapter.TeacherFiltrateListener() {
             @Override
-            public void onFiltrate(String name) {
-                toolbarNameTv.setText(name);
+            public void onFiltrate(TeacherFiltrateBean bean) {
+                toolbarNameTv.setText(bean.getName());
                 window.dismiss();
                 CommonUtils.developing(getContext());
             }

@@ -10,9 +10,12 @@ import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.bean.EvaluateListBean;
+import com.lanmei.yixiu.utils.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
 import com.xson.common.widget.CircleImageView;
+
+import java.text.SimpleDateFormat;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -24,8 +27,13 @@ import butterknife.InjectView;
 public class EvaluateListAdapter extends SwipeRefreshAdapter<EvaluateListBean> {
 
 
+    private FormatTime formatTime;
+    private SimpleDateFormat format;
+
     public EvaluateListAdapter(Context context) {
         super(context);
+        formatTime = new FormatTime();
+        format = formatTime.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     }
 
 
@@ -55,6 +63,8 @@ public class EvaluateListAdapter extends SwipeRefreshAdapter<EvaluateListBean> {
         TextView gradeTv;
         @InjectView(R.id.content_tv)
         TextView contentTv;
+        @InjectView(R.id.time_tv)
+        TextView timeTv;
 
         ViewHolder(View view) {
             super(view);
@@ -65,8 +75,13 @@ public class EvaluateListAdapter extends SwipeRefreshAdapter<EvaluateListBean> {
         public void setParameter(EvaluateListBean bean) {
             ImageHelper.load(context,bean.getPic(),picIv,null,true,R.drawable.default_pic,R.drawable.default_pic);
             realnameTv.setText(bean.getRealname());
-            ratingbar.setRating(Float.parseFloat(bean.getGrade()));
             contentTv.setText(bean.getContent());
+            formatTime.setTime(bean.getAddtime());
+            timeTv.setText(formatTime.formatterTime(format));
+
+            float grade = Float.parseFloat(bean.getGrade());
+            ratingbar.setRating(grade);
+            gradeTv.setText(String.format(context.getString(R.string.grade),grade+""));
         }
     }
 

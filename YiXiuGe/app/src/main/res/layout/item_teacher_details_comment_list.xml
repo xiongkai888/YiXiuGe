@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/h_match_parent"
+    android:padding="@dimen/d_10dp">
+
+
+    <com.xson.common.widget.CircleImageView
+        android:id="@+id/pic_iv"
+        android:layout_width="@dimen/d_50dp"
+        android:layout_height="@dimen/d_50dp" />
+
+    <LinearLayout
+        style="@style/v_match_parent_no"
+        android:layout_marginLeft="@dimen/d_10dp">
+
+
+        <LinearLayout
+            style="@style/h_match_parent_no"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/realname_tv"
+                style="@style/text_weight"
+                android:textColor="@color/color666"
+                android:textSize="@dimen/txt_12sp" />
+
+            <TextView
+                style="@style/text12color666"
+                android:text="@string/user_evaluation" />
+
+            <RatingBar
+                android:id="@+id/rating_bar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d_5dp"
+                android:numStars="5"
+                android:progressTint="@color/colorF9D14D"
+                android:rating="1"
+                android:stepSize="0.5" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/content_tv"
+            style="@style/text12color666"
+            android:layout_marginBottom="@dimen/d_5dp"
+            android:layout_marginTop="@dimen/d_5dp"
+            android:text="" />
+
+        <LinearLayout
+            style="@style/h_match_parent_no"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/time_tv"
+                style="@style/text_weight"
+                android:textColor="@color/color666"
+                android:textSize="@dimen/txt_12sp" />
+
+            <TextView
+                android:id="@+id/like_tv"
+                style="@style/text12color666"
+                android:drawableLeft="@drawable/home_zan"
+                android:gravity="center_vertical" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

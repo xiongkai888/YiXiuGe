@@ -8,6 +8,7 @@ import com.lanmei.yixiu.adapter.MainPagerAdapter;
 import com.lanmei.yixiu.event.AddCourseEvent;
 import com.lanmei.yixiu.event.LogoutEvent;
 import com.lanmei.yixiu.helper.TabHelper;
+import com.lanmei.yixiu.update.UpdateAppConfig;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
 
@@ -41,6 +42,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 //        mViewPager.setNoScroll(true);
         EventBus.getDefault().register(this);
         CommonUtils.loadUserInfo(this,null);
+        UpdateAppConfig.requestStoragePermission(this);
     }
 
     @Override

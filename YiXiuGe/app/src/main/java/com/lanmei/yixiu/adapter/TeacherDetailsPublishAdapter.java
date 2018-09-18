@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.bean.TeacherDetailsBean;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
 
@@ -18,7 +19,7 @@ import butterknife.InjectView;
 /**
  * 老师详情 发布列表
  */
-public class TeacherDetailsPublishAdapter extends SwipeRefreshAdapter<String> {
+public class TeacherDetailsPublishAdapter extends SwipeRefreshAdapter<TeacherDetailsBean.VideoBean> {
 
     public TeacherDetailsPublishAdapter(Context context) {
         super(context);
@@ -32,9 +33,12 @@ public class TeacherDetailsPublishAdapter extends SwipeRefreshAdapter<String> {
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
-        String url = getItem(position);
+        TeacherDetailsBean.VideoBean bean = getItem(position);
+        if (bean == null){
+            return;
+        }
         ViewHolder viewHolder = (ViewHolder)holder;
-        viewHolder.setParameter(url);
+        viewHolder.setParameter(bean);
     }
 
 
@@ -48,8 +52,8 @@ public class TeacherDetailsPublishAdapter extends SwipeRefreshAdapter<String> {
             ButterKnife.inject(this, view);
         }
 
-        public void setParameter(String url) {
-            ImageHelper.load(context,url,imageView,null,true,R.drawable.default_pic,R.drawable.default_pic);
+        public void setParameter(TeacherDetailsBean.VideoBean bean) {
+            ImageHelper.load(context,bean.getPic(),imageView,null,true,R.drawable.default_pic,R.drawable.default_pic);
         }
     }
 

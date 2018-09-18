@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.hyphenate.chatuidemo.DemoHelper;
+import com.lanmei.yixiu.update.UpdateAppConfig;
+import com.squareup.leakcanary.LeakCanary;
 import com.xson.common.app.BaseApp;
 
 /**
@@ -19,8 +21,9 @@ public class YiXiuApp extends BaseApp {
     protected void installMonitor() {
         applicationContext = this;
         instance = this;
-//        LeakCanary.install(this);//LeakCanary内存泄漏监控
+        LeakCanary.install(this);//LeakCanary内存泄漏监控
         DemoHelper.getInstance().init(this);
+        UpdateAppConfig.initUpdateApp(applicationContext);//app版本更新
     }
 
     @Override

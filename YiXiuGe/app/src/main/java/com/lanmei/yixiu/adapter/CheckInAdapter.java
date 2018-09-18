@@ -69,7 +69,7 @@ public class CheckInAdapter extends SwipeRefreshAdapter<MyCheckingBean> {
             dateTv.setText(formatTime.getTimeForWeek(format));
 
             formatTime.setTime(bean.getAttend_time());
-            attendTimeTv.setText(formatTime.formatterTimeNoSeconds());
+            attendTimeTv.setText(formatTime.formatterTime());
             explainTv.setText(bean.getExplain());
         }
     }

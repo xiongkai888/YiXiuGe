@@ -5,23 +5,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.bean.CourseClassifyBean;
+import com.lanmei.yixiu.bean.TeacherBean;
 import com.lanmei.yixiu.ui.home.activity.TeacherDetailsActivity;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
+import com.xson.common.helper.ImageHelper;
 import com.xson.common.utils.IntentUtil;
+import com.xson.common.utils.StringUtils;
+import com.xson.common.widget.CircleImageView;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 
 /**
  * 老师
  */
-public class TeacherAdapter extends SwipeRefreshAdapter<CourseClassifyBean> {
-
-
+public class TeacherAdapter extends SwipeRefreshAdapter<TeacherBean> {
 
     public TeacherAdapter(Context context) {
         super(context);
@@ -35,24 +39,35 @@ public class TeacherAdapter extends SwipeRefreshAdapter<CourseClassifyBean> {
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
-        ViewHolder viewHolder = (ViewHolder)holder;
-        viewHolder.setParameter(null);
+        final TeacherBean bean = getItem(position);
+        if (bean == null) {
+            return;
+        }
+        ViewHolder viewHolder = (ViewHolder) holder;
+        viewHolder.setParameter(bean);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentUtil.startActivity(context, TeacherDetailsActivity.class);
+                IntentUtil.startActivity(context, TeacherDetailsActivity.class,bean.getId());
             }
         });
     }
 
 
-    @Override
-    public int getCount() {
-        return CommonUtils.quantity;
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        @InjectView(R.id.pic_iv)
+        CircleImageView picIv;
+        @InjectView(R.id.realname_tv)
+        TextView realnameTv;
+        @InjectView(R.id.teachingage_tv)
+        TextView teachingageTv;
+        @InjectView(R.id.info_tv)
+        TextView infoTv;
+        @InjectView(R.id.rating_bar)
+        RatingBar ratingBar;
+        @InjectView(R.id.grade_tv)
+        TextView gradeTv;
 
         ViewHolder(View view) {
             super(view);
@@ -60,8 +75,14 @@ public class TeacherAdapter extends SwipeRefreshAdapter<CourseClassifyBean> {
         }
 
 
-        public void setParameter(final CourseClassifyBean bean) {
-
+        public void setParameter(TeacherBean bean) {
+            ImageHelper.load(context,bean.getPic(),picIv,null,true,R.drawable.default_pic,R.drawable.default_pic);
+            realnameTv.setText(bean.getRealname());
+            teachingageTv.setText(String.format(context.getString(R.string.teaching_age),bean.getTeachingage()+""));
+            infoTv.setText(String.format(context.getString(R.string.teacher_info), StringUtils.isSame(bean.getSex(), CommonUtils.isOne)?context.getString(R.string.man):context.getString(R.string.woman),bean.getAge(),bean.getCityname()));
+            float grade = Float.parseFloat(bean.getGrade());
+            ratingBar.setRating(grade);
+            gradeTv.setText(String.format(context.getString(R.string.grade),grade+""));
         }
     }
 

@@ -13,6 +13,8 @@ import com.hyphenate.chatuidemo.DemoHelper;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.event.LogoutEvent;
 import com.lanmei.yixiu.ui.login.LoginActivity;
+import com.lanmei.yixiu.update.UpdateAppConfig;
+import com.lanmei.yixiu.update.UpdateEvent;
 import com.lanmei.yixiu.utils.AKDialog;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.helper.DataCleanManager;
@@ -22,6 +24,7 @@ import com.xson.common.utils.UserHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -53,6 +56,8 @@ public class SettingActivity extends BaseActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(R.string.setting);
         actionbar.setHomeAsUpIndicator(R.drawable.back);
+
+        EventBus.getDefault().register(this);
 
         try {
             mCleanCacheTv.setText(DataCleanManager.getCacheSize(getCacheDir()));
@@ -91,7 +96,7 @@ public class SettingActivity extends BaseActivity {
 //                RegisterActivity.startActivity(this, RegisterActivity.RESET_PWD_STYLE);
                 break;
             case R.id.ll_versions://版本信息
-                UIHelper.ToastMessage(this, R.string.developing);
+                UpdateAppConfig.requestStoragePermission(this);
                 break;
         }
 
@@ -153,6 +158,17 @@ public class SettingActivity extends BaseActivity {
             e.printStackTrace();
         }
 
+    }
+
+    @Subscribe
+    public void updateEvent(UpdateEvent event) {
+        UIHelper.ToastMessage(this, event.getContent());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
 }

@@ -9,7 +9,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.bean.EvaluateListBean;
+import com.lanmei.yixiu.bean.TeacherDetailsCommentBean;
 import com.lanmei.yixiu.utils.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
@@ -22,14 +22,15 @@ import butterknife.InjectView;
 
 
 /**
- * 评价列表（教师端）
+ * 教师详情评论列表
  */
-public class EvaluateTeacherListAdapter extends SwipeRefreshAdapter<EvaluateListBean> {
+public class TeacherDetailsCommentListAdapter extends SwipeRefreshAdapter<TeacherDetailsCommentBean> {
+
 
     private FormatTime formatTime;
-    private SimpleDateFormat format;
+    private SimpleDateFormat format ;
 
-    public EvaluateTeacherListAdapter(Context context) {
+    public TeacherDetailsCommentListAdapter(Context context) {
         super(context);
         formatTime = new FormatTime();
         format = formatTime.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -38,19 +39,19 @@ public class EvaluateTeacherListAdapter extends SwipeRefreshAdapter<EvaluateList
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder2(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_evaluate_teacher, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_teacher_details_comment_list, parent, false));
     }
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
-        EvaluateListBean bean = getItem(position);
-        if (bean == null){
+        TeacherDetailsCommentBean bean = getItem(position);
+        if (bean == null) {
             return;
         }
-        ViewHolder viewHolder = (ViewHolder)holder;
+        ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.setParameter(bean);
-    }
 
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -58,14 +59,14 @@ public class EvaluateTeacherListAdapter extends SwipeRefreshAdapter<EvaluateList
         CircleImageView picIv;
         @InjectView(R.id.realname_tv)
         TextView realnameTv;
-        @InjectView(R.id.ratingbar)
-        RatingBar ratingbar;
-        @InjectView(R.id.grade_tv)
-        TextView gradeTv;
+        @InjectView(R.id.rating_bar)
+        RatingBar ratingBar;
         @InjectView(R.id.content_tv)
         TextView contentTv;
         @InjectView(R.id.time_tv)
         TextView timeTv;
+        @InjectView(R.id.like_tv)
+        TextView likeTv;
 
 
         ViewHolder(View view) {
@@ -74,14 +75,16 @@ public class EvaluateTeacherListAdapter extends SwipeRefreshAdapter<EvaluateList
         }
 
 
-        public void setParameter(EvaluateListBean bean) {
-            ImageHelper.load(context,bean.getPic(),picIv,null,true,R.drawable.default_pic,R.drawable.default_pic);
+        public void setParameter(final TeacherDetailsCommentBean bean) {
+            ImageHelper.load(context, bean.getPic(), picIv, null, true, R.drawable.default_pic, R.drawable.default_pic);
             realnameTv.setText(bean.getRealname());
-            ratingbar.setRating(Float.parseFloat(bean.getGrade()));
-            gradeTv.setText(String.format(context.getString(R.string.grade),bean.getGrade()));
+            ratingBar.setRating(Float.parseFloat(bean.getGrade()));
             contentTv.setText(bean.getContent());
+            likeTv.setText(bean.getLike());
+
             formatTime.setTime(bean.getAddtime());
             timeTv.setText(formatTime.formatterTime(format));
+
         }
     }
 

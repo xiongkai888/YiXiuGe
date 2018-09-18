@@ -14,22 +14,20 @@
         <com.xson.common.widget.CircleImageView
             android:id="@+id/pic_iv"
             android:layout_width="@dimen/d_50dp"
-            android:layout_height="@dimen/d_50dp"
-            android:src="@drawable/temp_pic" />
+            android:layout_height="@dimen/d_50dp" />
 
         <LinearLayout
             style="@style/v_match_parent_no"
             android:layout_marginLeft="@dimen/d_10dp">
 
             <TextView
-                style="@style/text"
-                android:text="李菲菲" />
+                android:id="@+id/realname_tv"
+                style="@style/text" />
 
             <TextView
                 android:id="@+id/time_tv"
                 android:layout_marginTop="@dimen/d_5dp"
-                style="@style/text12color666"
-                android:text="@string/time" />
+                style="@style/text12color666" />
 
             <LinearLayout
                 style="@style/h_match_parent_no"
@@ -39,7 +37,7 @@
 
                 <TextView
                     style="@style/text12color666"
-                    android:text="用户评价：" />
+                    android:text="@string/user_evaluation" />
 
                 <RatingBar
                     android:id="@+id/ratingbar"
@@ -53,17 +51,16 @@
                     android:stepSize="1" />
 
                 <TextView
+                    android:id="@+id/grade_tv"
                     style="@style/text14colorF9D14D"
-                    android:layout_marginLeft="@dimen/d_10dp"
-                    android:text="3分" />
+                    android:layout_marginLeft="@dimen/d_10dp" />
 
             </LinearLayout>
 
 
             <TextView
                 android:id="@+id/content_tv"
-                style="@style/text12color666"
-                android:text="我们不一样我们不一样我们不一样我们不一样我们不一样我们不一样我们不一样我们不一样我们不一样我们不一样我们不一样我们不一样我们不一样我们不一样我们不一样我们不一样" />
+                style="@style/text12color666" />
 
         </LinearLayout>
 

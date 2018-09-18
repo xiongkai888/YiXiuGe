@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.lanmei.yixiu.ui.message.fragment.MessageFragment;
 import com.lanmei.yixiu.ui.message.fragment.QunFragment;
-import com.lanmei.yixiu.ui.mine.MineStudentFragment;
 
 
 /**
@@ -26,8 +25,6 @@ public class MessageAdapter extends FragmentPagerAdapter {
                 return new MessageFragment();
             case 1:
                 return new QunFragment();
-            case 2:
-                return new MineStudentFragment();
         }
         return null;
     }
@@ -44,10 +41,8 @@ public class MessageAdapter extends FragmentPagerAdapter {
                 return "消息";
             case 1:
                 return "群聊";
-            case 2:
-                return "我的学生";
         }
-        return "I am in";
+        return "";
     }
 
 

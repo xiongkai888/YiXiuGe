@@ -6,7 +6,7 @@ import android.support.v7.app.ActionBar;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.EvaluateTeacherListAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
-import com.lanmei.yixiu.bean.CourseClassifyBean;
+import com.lanmei.yixiu.bean.EvaluateListBean;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
@@ -24,8 +24,7 @@ public class EvaluateActivity extends BaseActivity {
     CenterTitleToolbar mToolbar;
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
-    EvaluateTeacherListAdapter mAdapter;
-    private SwipeRefreshController<NoPageListBean<CourseClassifyBean>> controller;
+    private SwipeRefreshController<NoPageListBean<EvaluateListBean>> controller;
 
     @Override
     public int getContentViewId() {
@@ -41,17 +40,15 @@ public class EvaluateActivity extends BaseActivity {
         actionbar.setTitle(R.string.my_evaluate);
         actionbar.setHomeAsUpIndicator(R.drawable.back);
 
-        YiXiuGeApi api = new YiXiuGeApi("app/adpic");
-        api.addParams("uid", api.getUserId(this));
-        api.addParams("row", 20);
+        YiXiuGeApi api = new YiXiuGeApi("app/mys_comment");
+        api.addParams("tid", api.getUserId(this));
 
-        mAdapter = new EvaluateTeacherListAdapter(this);
+        EvaluateTeacherListAdapter adapter = new EvaluateTeacherListAdapter(this);
         smartSwipeRefreshLayout.initWithLinearLayout();
-        smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<CourseClassifyBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
+        smartSwipeRefreshLayout.setAdapter(adapter);
+        controller = new SwipeRefreshController<NoPageListBean<EvaluateListBean>>(this, smartSwipeRefreshLayout, api, adapter) {
         };
-//        controller.loadFirstPage();
-        mAdapter.notifyDataSetChanged();
+        controller.loadFirstPage();
     }
 
 }

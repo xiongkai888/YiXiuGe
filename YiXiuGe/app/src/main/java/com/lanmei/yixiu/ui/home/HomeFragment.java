@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
@@ -20,9 +21,12 @@ import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.AdBean;
 import com.lanmei.yixiu.bean.CourseClassifyListBean;
 import com.lanmei.yixiu.event.CourseOperationEvent;
+import com.lanmei.yixiu.event.SetUserEvent;
 import com.lanmei.yixiu.ui.home.activity.NewsSubActivity;
+import com.lanmei.yixiu.ui.home.activity.TeacherActivity;
 import com.lanmei.yixiu.ui.mine.activity.MyClassScheduleActivity;
 import com.lanmei.yixiu.ui.scan.ScanActivity;
+import com.lanmei.yixiu.ui.teacher.activity.ClassHourActivity;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
@@ -54,6 +58,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     CenterTitleToolbar toolbar;
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @InjectView(R.id.kao_shi_tv)
+    TextView kaoShiTv;//考试
     HomeAdapter mAdapter;
 
     @InjectView(R.id.banner)
@@ -97,7 +103,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
         loadAd();//加载首页的轮播图
         loadHome();
-
+        setUser();
     }
 
     private void loadHome() {
@@ -180,6 +186,16 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         }
     }
 
+    //
+    @Subscribe
+    public void setUserEvent(SetUserEvent event) {
+        setUser();
+    }
+
+    private void setUser() {
+        kaoShiTv.setVisibility(StringUtils.isSame(CommonUtils.getUserType(context), CommonUtils.isZero)?View.VISIBLE:View.GONE);
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -196,13 +212,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         switch (item.getItemId()) {
             case R.id.action_home_info:
                 CommonUtils.developing(context);
-//                YiXiuGeApi api = new YiXiuGeApi("app/course_list");
-//                HttpClient.newInstance(context).getClient(context).request(api, new BeanRequest.SuccessListener<BaseBean>() {
-//                    @Override
-//                    public void onResponse(BaseBean response) {
-//
-//                    }
-//                });
                 break;
         }
         return true;
@@ -212,16 +221,18 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ke_cheng_tv://课程
-//                CommonUtils.developing(context);
-//                IntentUtil.startActivity(context, ClassDetailsActivity.class);
-                IntentUtil.startActivity(context, MyClassScheduleActivity.class);
+                if (StringUtils.isSame(CommonUtils.getUserType(context), CommonUtils.isZero)){//学生是跳到课程表，老师跳到我的课时
+                    IntentUtil.startActivity(context, MyClassScheduleActivity.class);
+                }else {
+                    IntentUtil.startActivity(context, ClassHourActivity.class);
+                }
                 break;
             case R.id.zi_xun_tv://资讯
                 IntentUtil.startActivity(context, NewsSubActivity.class);
                 break;
             case R.id.jiao_cheng_tv://教师
-                CommonUtils.developing(context);
-//                IntentUtil.startActivity(context, TeacherActivity.class);
+//                CommonUtils.developing(context);
+                IntentUtil.startActivity(context, TeacherActivity.class);
                 break;
             case R.id.kao_shi_tv://考试
                 CommonUtils.developing(context);

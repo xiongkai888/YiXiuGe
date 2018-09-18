@@ -14,16 +14,17 @@ import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.TeacherAdapter;
 import com.lanmei.yixiu.adapter.TeacherFiltrateAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
-import com.lanmei.yixiu.bean.CourseClassifyBean;
+import com.lanmei.yixiu.bean.TeacherBean;
 import com.lanmei.yixiu.bean.TeacherFiltrateBean;
-import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.SwipeRefreshController;
+import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.SysUtils;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -41,7 +42,9 @@ public class TeacherActivity extends BaseActivity {
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     TeacherAdapter mAdapter;
-    private SwipeRefreshController<NoPageListBean<CourseClassifyBean>> controller;
+    private SwipeRefreshController<NoPageListBean<TeacherBean>> controller;
+    private List<TeacherFiltrateBean> list;
+    private YiXiuGeApi api;
 
     @Override
     public int getContentViewId() {
@@ -51,50 +54,46 @@ public class TeacherActivity extends BaseActivity {
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         toolbarNameTv.setText("全部");
-        setCompoundDrawables(R.color.color666,R.drawable.common_filter_arrow_down);
+        setCompoundDrawables(R.color.color666, R.drawable.common_filter_arrow_down);
 
-        YiXiuGeApi api = new YiXiuGeApi("app/adpic");
-        api.addParams("uid", api.getUserId(this));
-        api.addParams("row", 20);
+        api = new YiXiuGeApi("app/teacher_list");
 
         mAdapter = new TeacherAdapter(this);
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<CourseClassifyBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
+        controller = new SwipeRefreshController<NoPageListBean<TeacherBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
         };
-//        controller.loadFirstPage();
-        mAdapter.notifyDataSetChanged();
+        controller.loadFirstPage();
+        loadTeacherType();
     }
 
-
-    private List<TeacherFiltrateBean> getTeacherFiltrateListBean() {
-        List<TeacherFiltrateBean> list = new ArrayList<>();
-        TeacherFiltrateBean bean1 = new TeacherFiltrateBean("全部");
-        bean1.setSelect(true);
-        TeacherFiltrateBean bean2 = new TeacherFiltrateBean("美容老师");
-        TeacherFiltrateBean bean3 = new TeacherFiltrateBean("骨科老师");
-        TeacherFiltrateBean bean4 = new TeacherFiltrateBean("眼科老师");
-        TeacherFiltrateBean bean5 = new TeacherFiltrateBean("喉科老师");
-        TeacherFiltrateBean bean6 = new TeacherFiltrateBean("鼻科老师");
-        TeacherFiltrateBean bean7 = new TeacherFiltrateBean("妇科老师");
-        TeacherFiltrateBean bean8 = new TeacherFiltrateBean("儿科老师");
-        TeacherFiltrateBean bean9 = new TeacherFiltrateBean("产科老师");
-        list.add(bean1);
-        list.add(bean2);
-        list.add(bean3);
-        list.add(bean4);
-        list.add(bean5);
-        list.add(bean6);
-        list.add(bean7);
-        list.add(bean8);
-        list.add(bean9);
-        return list;
+    //老师类型
+    private void loadTeacherType() {
+        YiXiuGeApi api = new YiXiuGeApi("app/teacher_type");
+        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<TeacherFiltrateBean>>() {
+            @Override
+            public void onResponse(NoPageListBean<TeacherFiltrateBean> response) {
+                if (isFinishing()) {
+                    return;
+                }
+                list = response.data;
+                TeacherFiltrateBean bean = new TeacherFiltrateBean();
+                bean.setSelect(true);
+                bean.setName(getString(R.string.all));
+                if (!StringUtils.isEmpty(list)){
+                    list.add(0,bean);
+                }
+            }
+        });
     }
 
     @OnClick({R.id.toolbar_name_tv, R.id.back_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_name_tv:
+                if (StringUtils.isEmpty(list)) {
+                    return;
+                }
                 popupWindow();
                 break;
             case R.id.back_iv:
@@ -106,7 +105,7 @@ public class TeacherActivity extends BaseActivity {
     PopupWindow window;
 
     private void popupWindow() {
-        setCompoundDrawables(R.color.color1593f0,R.drawable.common_filter_arrow_up);
+        setCompoundDrawables(R.color.color1593f0, R.drawable.common_filter_arrow_up);
         if (window != null) {
             window.showAsDropDown(lineTv);
             return;
@@ -116,14 +115,15 @@ public class TeacherActivity extends BaseActivity {
         view.setBackgroundColor(getResources().getColor(R.color.white));
 
         TeacherFiltrateAdapter teacherFiltrateAdapter = new TeacherFiltrateAdapter(this);
-        teacherFiltrateAdapter.setData(getTeacherFiltrateListBean());
+        teacherFiltrateAdapter.setData(list);
         view.setAdapter(teacherFiltrateAdapter);
         teacherFiltrateAdapter.setTeacherFiltrateListener(new TeacherFiltrateAdapter.TeacherFiltrateListener() {
             @Override
-            public void onFiltrate(String name) {
-                toolbarNameTv.setText(name);
+            public void onFiltrate(TeacherFiltrateBean bean) {
+                toolbarNameTv.setText(bean.getName());
                 window.dismiss();
-                CommonUtils.developing(getContext());
+                api.addParams("type",bean.getId());
+                controller.loadFirstPage();
             }
         });
 //        int width = UIBaseUtils.dp2pxInt(this, 80);
@@ -140,7 +140,7 @@ public class TeacherActivity extends BaseActivity {
         window.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                setCompoundDrawables(R.color.color666,R.drawable.common_filter_arrow_down);
+                setCompoundDrawables(R.color.color666, R.drawable.common_filter_arrow_down);
             }
         });
     }
@@ -148,7 +148,7 @@ public class TeacherActivity extends BaseActivity {
     /**
      * @param drawableId 项目图片id
      */
-    private void setCompoundDrawables(int colorId,int drawableId) {
+    private void setCompoundDrawables(int colorId, int drawableId) {
         Drawable img = getResources().getDrawable(drawableId);
 // 调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
         img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());

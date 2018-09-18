@@ -19,7 +19,7 @@ public class FormatTime {
     private boolean is12Hour;
     private Calendar calendar = Calendar.getInstance();
 
-    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private Date date = new Date();
 
     public FormatTime() {
@@ -30,7 +30,6 @@ public class FormatTime {
      * @param time 毫秒
      */
     public FormatTime(long time) {
-
         this.time = time * 1000;
         calendar.setTimeInMillis(this.time);
     }
@@ -68,7 +67,8 @@ public class FormatTime {
     }
 
     /**
-     * 时间戳格式为“yyyy-MM-dd  HH:mm:ss     ”
+     *
+     * 默认时间格式：时间戳格式为“yyyy-MM-dd  HH:mm”
      */
     public String formatterTime() {
         date.setTime(time);
@@ -76,14 +76,12 @@ public class FormatTime {
     }
 
     /**
-     * 时间戳格式为“yyyy-MM-dd”
+     * 例如：时间戳格式为“MM-dd HH:mm”
      */
-    public String formatterTimeToDay() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    public String formatterTime(SimpleDateFormat format) {
         date.setTime(time);
         return format.format(date);
     }
-
 
     /**
      * 获取一个月前的日期
@@ -110,23 +108,6 @@ public class FormatTime {
         return strings;
     }
 
-    /**
-     * 时间戳格式为“yyyy-MM-dd  HH:mm”
-     */
-    public String formatterTimeNoSeconds() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        date.setTime(time);
-        return format.format(date);
-    }
-
-    /**
-     * 时间戳格式为“MM-dd HH:mm”
-     */
-    public String formatterCheckIn() {
-        SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
-        date.setTime(time);
-        return format.format(date);
-    }
 
     public SimpleDateFormat getSimpleDateFormat(String pattern) {
         return new SimpleDateFormat(pattern);
@@ -300,10 +281,5 @@ public class FormatTime {
         return list;
     }
 
-    public String getDate(Long time) {
-        SimpleDateFormat format = new SimpleDateFormat("MM月dd日");
-        Date date = new Date(time);
-        return format.format(date);
-    }
 
 }

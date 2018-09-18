@@ -5,9 +5,9 @@ package com.lanmei.yixiu.bean;
  */
 public class TeacherFiltrateBean {
 
-    public TeacherFiltrateBean(String name){
-        this.name = name;
-    }
+    private boolean isSelect;
+    private String id = "";
+    private String name;
 
     public boolean isSelect() {
         return isSelect;
@@ -25,6 +25,11 @@ public class TeacherFiltrateBean {
         this.name = name;
     }
 
-    private boolean isSelect;
-    private String name;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

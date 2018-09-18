@@ -112,5 +112,12 @@
     <string name="add_course">添加教程</string>
     <string name="my_course">我的教程</string>
     <string name="year_month">%1$s年%2$s月</string>
+    <string name="grade">%1$s分</string>
+    <string name="user_evaluation">用户评价：</string>
+    <string name="teaching_age">%1$s年教龄</string>
+    <string name="teacher_info">%1$s | %2$s岁 | %3$s</string>
+    <string name="man">男</string>
+    <string name="woman">女</string>
+    <string name="all">全部</string>
 
 </resources>
