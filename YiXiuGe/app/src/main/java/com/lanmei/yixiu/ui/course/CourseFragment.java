@@ -66,7 +66,7 @@ public class CourseFragment extends BaseFragment {
         HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<NoPageListBean<CourseClassifyBean>>() {
             @Override
             public void onResponse(NoPageListBean<CourseClassifyBean> response) {
-                if (context == null) {
+                if (mViewPager == null) {
                     return;
                 }
                 mAdapter.setList(response.data);

@@ -125,7 +125,7 @@ public class TeacherDetailsCommentListAdapter extends SwipeRefreshAdapter<Teache
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
-                if (context == null) {
+                if (format == null) {
                     return;
                 }
                 bean.setLiked(StringUtils.isSame(bean.getLiked(), CommonUtils.isOne)?CommonUtils.isZero:(CommonUtils.isOne));

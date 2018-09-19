@@ -60,6 +60,11 @@ public class CalendarView extends ViewPager {
         calendarPagerAdapter.setParameter(list,year, month,position);
     }
 
+    public void setType(int type){
+        calendarPagerAdapter.setType(type,currentPosition);
+    }
+
+
     public int getCurrentPosition() {
         return currentPosition;
     }

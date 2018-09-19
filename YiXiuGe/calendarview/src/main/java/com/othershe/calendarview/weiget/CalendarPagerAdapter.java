@@ -30,6 +30,7 @@ public class CalendarPagerAdapter extends PagerAdapter {
     private Map<String, List<DateBean>> listMap = new HashMap<>();
 
     private int item_layout;
+    private int type = 0;//设置(筛选) 上课、未评价、已评价 在日历上那个显示 0全部显示、1只上课可见、2只未评价可见、3只已评价可见
     private CalendarViewAdapter calendarViewAdapter;
 
     private AttrsBean mAttrsBean;
@@ -66,6 +67,23 @@ public class CalendarPagerAdapter extends PagerAdapter {
         }
     }
 
+    /**
+     *
+     * @param type
+     * @param currentPosition 当前日历的下标
+     */
+    public void setType(int type,int currentPosition){
+        this.type = type;
+        mViews.get(currentPosition).setType(type,true);
+        if (currentPosition != 0){
+            mViews.get(currentPosition-1).setType(type,true);
+        }
+        if (currentPosition+1 != count){
+            mViews.get(currentPosition+1).setType(type,true);
+        }
+
+    }
+
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         MonthView view;
@@ -74,6 +92,7 @@ public class CalendarPagerAdapter extends PagerAdapter {
         } else {
             view = new MonthView(container.getContext());
         }
+        view.setType(type,false);
         //根据position计算对应年、月
         int[] date = CalendarUtil.positionToDate(position, mAttrsBean.getStartDate()[0], mAttrsBean.getStartDate()[1]);
         int yearPosition = date[0];
@@ -93,7 +112,6 @@ public class CalendarPagerAdapter extends PagerAdapter {
         view.setDateList(dateBeanList, monthDays);
         mViews.put(position, view);
         container.addView(view);
-
         return view;
     }
 

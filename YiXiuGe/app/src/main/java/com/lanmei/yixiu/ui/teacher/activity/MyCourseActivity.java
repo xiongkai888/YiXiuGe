@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.MyCourseAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
-import com.lanmei.yixiu.bean.CheckingInManageBean;
+import com.lanmei.yixiu.bean.MyCourseBean;
 import com.lanmei.yixiu.event.AddCourseEvent;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
@@ -31,7 +31,7 @@ public class MyCourseActivity extends BaseActivity {
     CenterTitleToolbar mToolbar;
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
-    private SwipeRefreshController<NoPageListBean<CheckingInManageBean>> controller;
+    private SwipeRefreshController<NoPageListBean<MyCourseBean>> controller;
 
 
     public int getContentViewId() {
@@ -50,16 +50,15 @@ public class MyCourseActivity extends BaseActivity {
 
         EventBus.getDefault().register(this);
 
-        YiXiuGeApi api = new YiXiuGeApi("app/attendance");
-        api.addParams("id","0");
+        YiXiuGeApi api = new YiXiuGeApi("app/my_video");
+        api.addParams("uid",api.getUserId(this));
 
         MyCourseAdapter adapter = new MyCourseAdapter(this);
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.setAdapter(adapter);
-        controller = new SwipeRefreshController<NoPageListBean<CheckingInManageBean>>(this, smartSwipeRefreshLayout, api, adapter) {
+        controller = new SwipeRefreshController<NoPageListBean<MyCourseBean>>(this, smartSwipeRefreshLayout, api, adapter) {
         };
-        adapter.notifyDataSetChanged();
-//        controller.loadFirstPage();
+        controller.loadFirstPage();
     }
 
     //添加教程时调用

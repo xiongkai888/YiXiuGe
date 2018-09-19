@@ -5,7 +5,11 @@
     style="@style/v_all_match_parent_no"
     tools:context=".ui.mine.activity.MyClassScheduleActivity">
 
-    <include layout="@layout/include_centertitletoolbar" />
+    <include layout="@layout/include_examination_tablayout" />
+
+    <TextView
+        android:id="@+id/line_tv"
+        style="@style/line_H1dp_divider" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -65,8 +69,8 @@
             android:src="@drawable/day_bg_1b" />
 
         <TextView
-            android:layout_marginLeft="@dimen/d_5dp"
             style="@style/text_weight"
+            android:layout_marginLeft="@dimen/d_5dp"
             android:text="上课" />
 
 
@@ -76,8 +80,8 @@
             android:src="@drawable/day_bg_2b" />
 
         <TextView
-            android:layout_marginLeft="@dimen/d_5dp"
             style="@style/text_weight"
+            android:layout_marginLeft="@dimen/d_5dp"
             android:text="未评价" />
 
 
@@ -87,8 +91,8 @@
             android:src="@drawable/day_bg_3b" />
 
         <TextView
-            android:layout_marginLeft="@dimen/d_5dp"
             style="@style/text_weight"
+            android:layout_marginLeft="@dimen/d_5dp"
             android:text="已评价" />
 
     </LinearLayout>

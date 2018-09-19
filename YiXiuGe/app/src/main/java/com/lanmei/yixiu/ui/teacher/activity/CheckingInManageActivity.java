@@ -23,7 +23,7 @@ import org.greenrobot.eventbus.Subscribe;
 import butterknife.InjectView;
 
 /**
- * 考勤管理
+ * 考勤管理（老是端）
  */
 public class CheckingInManageActivity extends BaseActivity {
 

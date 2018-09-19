@@ -1,12 +1,18 @@
 package com.lanmei.yixiu.ui.mine.activity;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.adapter.ScheduleFiltrateAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
+import com.lanmei.yixiu.bean.TeacherFiltrateBean;
 import com.lanmei.yixiu.utils.FormatTime;
 import com.othershe.calendarview.bean.CalendarEvent;
 import com.othershe.calendarview.bean.DateBean;
@@ -21,13 +27,15 @@ import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
-import com.xson.common.widget.CenterTitleToolbar;
+import com.xson.common.utils.SysUtils;
+import com.xson.common.utils.UIBaseUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -38,12 +46,18 @@ import butterknife.OnClick;
  */
 public class MyClassScheduleActivity extends BaseActivity {
 
-    @InjectView(R.id.toolbar)
-    CenterTitleToolbar mToolbar;
+    //    @InjectView(R.id.toolbar)
+//    CenterTitleToolbar mToolbar;
     @InjectView(R.id.calendar)
     CalendarView calendarView;
+    @InjectView(R.id.toolbar_name_tv)
+    TextView toolbarNameTv;
+    @InjectView(R.id.menu_tv)
+    TextView menuTv;
     @InjectView(R.id.title)
     TextView title;
+    @InjectView(R.id.line_tv)
+    TextView lineTv;
     private FormatTime formatTime;
     private int filtrate = 0;//筛选0|1|2|3=>全部上课|评价|已评
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -57,12 +71,16 @@ public class MyClassScheduleActivity extends BaseActivity {
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
-        setSupportActionBar(mToolbar);
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayShowTitleEnabled(true);
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setTitle(R.string.my_class_schedule);
-        actionbar.setHomeAsUpIndicator(R.drawable.back);
+//        setSupportActionBar(mToolbar);
+//        ActionBar actionbar = getSupportActionBar();
+//        actionbar.setDisplayShowTitleEnabled(true);
+//        actionbar.setDisplayHomeAsUpEnabled(true);
+//        actionbar.setTitle(R.string.my_class_schedule);
+//        actionbar.setHomeAsUpIndicator(R.drawable.back);
+
+        toolbarNameTv.setText(R.string.my_class_schedule);
+        menuTv.setText("全部");
+
         api.addParams("uid", api.getUserId(this));
         formatTime = new FormatTime();
         int year = formatTime.getYear();
@@ -70,7 +88,7 @@ public class MyClassScheduleActivity extends BaseActivity {
 
         String[] string = formatTime.getMonthAgoOrNext(year, month, true);
         if (!StringUtils.isEmpty(string) && string.length == 2) {
-            calendarView.setStartEndDate((year-3)+"."+month, string[0]+"."+string[1]);
+            calendarView.setStartEndDate((year - 3) + "." + month, string[0] + "." + string[1]);
         }
         calendarView.setInitDate(year + "." + month)
                 .init();
@@ -81,7 +99,7 @@ public class MyClassScheduleActivity extends BaseActivity {
             public void onSingleChoose(View view, DateBean date) {
                 if (date.getScreen() != 0) {
                     Bundle bundle = new Bundle();
-                    bundle.putInt("position",calendarView.getCurrentPosition());
+                    bundle.putInt("position", calendarView.getCurrentPosition());
                     bundle.putSerializable("bean", date);
                     IntentUtil.startActivity(getContext(), ClassDetailsActivity.class, bundle);
                 }
@@ -124,7 +142,7 @@ public class MyClassScheduleActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.last_month_iv, R.id.next_month_iv})
+    @OnClick({R.id.last_month_iv, R.id.next_month_iv, R.id.menu_tv, R.id.back_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.last_month_iv:
@@ -133,7 +151,76 @@ public class MyClassScheduleActivity extends BaseActivity {
             case R.id.next_month_iv:
                 calendarView.nextMonth();
                 break;
+            case R.id.menu_tv:
+                popupWindow();
+                break;
+            case R.id.back_iv:
+                finish();
+                break;
         }
+    }
+
+
+    PopupWindow window;
+    int width;
+    int xoff;
+
+    private void popupWindow() {
+        if (window != null) {
+            window.showAsDropDown(lineTv, xoff, 2);
+            return;
+        }
+        RecyclerView view = new RecyclerView(this);
+        view.setLayoutManager(new LinearLayoutManager(this));
+        view.setBackgroundColor(getResources().getColor(R.color.white));
+
+        ScheduleFiltrateAdapter teacherFiltrateAdapter = new ScheduleFiltrateAdapter(this);
+        teacherFiltrateAdapter.setData(getList());
+        view.setAdapter(teacherFiltrateAdapter);
+        teacherFiltrateAdapter.setScheduleFiltrateListener(new ScheduleFiltrateAdapter.ScheduleFiltrateListener() {
+            @Override
+            public void onFiltrate(TeacherFiltrateBean bean) {
+                menuTv.setText(bean.getName());
+                window.dismiss();
+                calendarView.setType(Integer.valueOf(bean.getId()));
+//                calendarView.getAdapter().notifyDataSetChanged();
+            }
+        });
+        width = UIBaseUtils.dp2pxInt(this, 80);
+        window = new PopupWindow(view, width, ViewGroup.LayoutParams.WRAP_CONTENT);
+        window.setContentView(view);
+        window.setFocusable(true);
+        window.setOutsideTouchable(true);
+        window.setBackgroundDrawable(new BitmapDrawable());
+        int paddingRight = UIBaseUtils.dp2pxInt(this, 0);
+        xoff = SysUtils.getScreenWidth(this) - width - paddingRight;
+        window.showAsDropDown(lineTv, xoff, 2);
+//        L.d(L.TAG,"width:"+width+",paddingRight:"+paddingRight+",xoff:"+xoff);
+    }
+
+    private List<TeacherFiltrateBean> getList() {
+        List<TeacherFiltrateBean> list = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            TeacherFiltrateBean bean = new TeacherFiltrateBean();
+            switch (i){
+                case 0:
+                    bean.setName("全部");
+                    bean.setSelect(true);
+                    break;
+                case 1:
+                    bean.setName("上课");
+                    break;
+                case 2:
+                    bean.setName("未评价");
+                    break;
+                case 3:
+                    bean.setName("已评价");
+                    break;
+            }
+            bean.setId(String.valueOf(i));
+            list.add(bean);
+        }
+        return list;
     }
 
     @Subscribe

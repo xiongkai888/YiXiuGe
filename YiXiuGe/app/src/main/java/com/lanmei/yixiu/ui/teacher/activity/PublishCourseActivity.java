@@ -93,7 +93,7 @@ public class PublishCourseActivity extends BaseActivity {
             }
         });
         loadCourseClassify();
-        updateFileTask = new UpdateFileTask(this);
+
     }
 
     private void loadCourseClassify() {
@@ -141,6 +141,7 @@ public class PublishCourseActivity extends BaseActivity {
         List<String> list = new ArrayList<>();
         list.add(videoPicPath);
         list.add(videoPath);
+        updateFileTask = new UpdateFileTask(this);
         updateFileTask.setParameter(list, CommonUtils.isOne);
         updateFileTask.setUploadingText("教程上传中...");
         updateFileTask.setUploadingFileCallBack(new UpdateFileTask.UploadingFileCallBack() {

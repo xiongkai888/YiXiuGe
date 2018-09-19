@@ -40,6 +40,7 @@ public class MonthView extends ViewGroup {
     private CalendarViewAdapter calendarViewAdapter;
     private Set<Integer> chooseDays = new HashSet<>();//记录多选时当前页选中的日期
     private AttrsBean mAttrsBean;
+    private List<DateBean> dates;
 
     public MonthView(Context context) {
         this(context, null);
@@ -52,12 +53,26 @@ public class MonthView extends ViewGroup {
         setBackgroundColor(Color.WHITE);
     }
 
+    private int type = 0;//设置(筛选) 上课、未评价、已评价 在日历上那个显示 0全部显示、1只上课可见、2只未评价可见、3只已评价可见
+
+    /**
+     *
+     * @param type
+     * @param isFiltrate 是不是筛选
+     */
+    public void setType(int type,boolean isFiltrate){
+        this.type = type;
+        if (isFiltrate){
+            setDateList(dates,currentMonthDays);
+        }
+    }
+
     /**
      * @param dates            需要展示的日期数据
      * @param currentMonthDays 当月天数
      */
     public void setDateList(List<DateBean> dates, int currentMonthDays) {
-
+        this.dates = dates;
         if (getChildCount() > 0) {
             removeAllViews();
         }
@@ -113,21 +128,27 @@ public class MonthView extends ViewGroup {
 //            Log.d("AyncListObjects", "date"+i+" : " +date.toString());
             switch (date.getScreen()){
                 case 1:
-                    view.setBackgroundResource(mAttrsBean.getDayBg_1());
-                    solarDay.setTextColor(mAttrsBean.getColorChoose());
-                    lunarDay.setTextColor(mAttrsBean.getColorChoose());
+                    if (type == 0 || type == 1){
+                        view.setBackgroundResource(mAttrsBean.getDayBg_1());
+                        solarDay.setTextColor(mAttrsBean.getColorChoose());
+                        lunarDay.setTextColor(mAttrsBean.getColorChoose());
+                    }
 //                    lunarDay.setText(R.string.attend_class);
                     break;
                 case 2:
-                    view.setBackgroundResource(mAttrsBean.getDayBg_2());
-                    solarDay.setTextColor(mAttrsBean.getColorChoose());
-                    lunarDay.setTextColor(mAttrsBean.getColorChoose());
+                    if (type == 0 || type == 2){
+                        view.setBackgroundResource(mAttrsBean.getDayBg_2());
+                        solarDay.setTextColor(mAttrsBean.getColorChoose());
+                        lunarDay.setTextColor(mAttrsBean.getColorChoose());
+                    }
 //                    lunarDay.setText(R.string.evaluate);
                     break;
                 case 3:
-                    view.setBackgroundResource(mAttrsBean.getDayBg_3());
-                    solarDay.setTextColor(mAttrsBean.getColorChoose());
-                    lunarDay.setTextColor(mAttrsBean.getColorChoose());
+                    if (type == 0 || type == 3){
+                        view.setBackgroundResource(mAttrsBean.getDayBg_3());
+                        solarDay.setTextColor(mAttrsBean.getColorChoose());
+                        lunarDay.setTextColor(mAttrsBean.getColorChoose());
+                    }
 //                    lunarDay.setText(R.string.evaluated);
                     break;
             }
