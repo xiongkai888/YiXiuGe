@@ -3,6 +3,7 @@ package com.lanmei.yixiu.ui.teacher.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -22,9 +23,8 @@ import com.lanmei.yixiu.bean.CourseClassifyBean;
 import com.lanmei.yixiu.event.AddCourseEvent;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.lanmei.yixiu.utils.UpdateFileTask;
+import com.lanmei.yixiu.utils.UriUtils;
 import com.lanmei.yixiu.webviewpage.FileUtils;
-import com.leon.lfilepickerlibrary.LFilePicker;
-import com.leon.lfilepickerlibrary.utils.Constant;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.NoPageListBean;
@@ -147,10 +147,10 @@ public class PublishCourseActivity extends BaseActivity {
         updateFileTask.setUploadingFileCallBack(new UpdateFileTask.UploadingFileCallBack() {
             @Override
             public void success(List<String> paths) {
-                if (isFinishing()){
+                if (isFinishing()) {
                     return;
                 }
-                if (!StringUtils.isEmpty(paths) && paths.size() == 2){
+                if (!StringUtils.isEmpty(paths) && paths.size() == 2) {
                     submitVideoCourse(paths);
                 }
             }
@@ -159,20 +159,21 @@ public class PublishCourseActivity extends BaseActivity {
 //        YiXiuGeApi api = new YiXiuGeApi("app/video_add");
 //        api.
     }
+
     private void submitVideoCourse(List<String> list) {
         YiXiuGeApi api = new YiXiuGeApi("app/video_add");
-        api.addParams("title",CommonUtils.getStringByEditText(videoTitleEt));
-        api.addParams("pic",list.get(0));
-        api.addParams("video",list.get(1));
-        api.addParams("cid",classifyBean.getCid());
-        api.addParams("uid",api.getUserId(this));
+        api.addParams("title", CommonUtils.getStringByEditText(videoTitleEt));
+        api.addParams("pic", list.get(0));
+        api.addParams("video", list.get(1));
+        api.addParams("cid", classifyBean.getCid());
+        api.addParams("uid", api.getUserId(this));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
-                if (isFinishing()){
+                if (isFinishing()) {
                     return;
                 }
-                UIHelper.ToastMessage(getContext(),"发布成功");
+                UIHelper.ToastMessage(getContext(), "发布成功");
                 EventBus.getDefault().post(new AddCourseEvent(classifyBean.getCid()));//刷新cid == classifyBean.getCid()的教程列表
                 finish();
             }
@@ -181,60 +182,75 @@ public class PublishCourseActivity extends BaseActivity {
 
     @OnClick(R.id.video_pic_tv)
     public void onViewClicked() {
-        new LFilePicker()
-                .withActivity(this)
-                .withRequestCode(100)
-                .withIconStyle(Constant.ICON_STYLE_YELLOW)
-                .withTitle("选择上传视频")//标题文字
-                .withStartPath("/sdcard")//指定初始显示路径
-                .withMutilyMode(false)//单选
-                .withFileFilter(new String[]{".mp4"})//过滤！
-                .withBackIcon(Constant.BACKICON_STYLEONE)
-                .withBackgroundColor("#1593f0")//标题背景颜色
-                .start();
+//        new LFilePicker()
+//                .withActivity(this)
+//                .withRequestCode(100)
+//                .withIconStyle(Constant.ICON_STYLE_YELLOW)
+//                .withTitle("选择上传视频")//标题文字
+//                .withStartPath("/sdcard")//指定初始显示路径
+//                .withMutilyMode(false)//单选
+//                .withFileFilter(new String[]{".mp4"})//过滤！
+//                .withBackIcon(Constant.BACKICON_STYLEONE)
+//                .withBackgroundColor("#1593f0")//标题背景颜色
+//                .start();
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("video/*");//选择视频 （mp4 3gp 是android支持的视频格式）
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(intent, 1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == 100) {
-                List<String> list = data.getStringArrayListExtra(Constant.RESULT_INFO);
-                if (!StringUtils.isEmpty(list)) {
-                    videoPath = list.get(0);
-                    //创建MediaMetadataRetriever对象
-                    MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+            if (requestCode == 1) {
+                Uri uri = data.getData();
+                videoPath = UriUtils.getPath(this, uri);
+                //创建MediaMetadataRetriever对象
+                MediaMetadataRetriever mmr = new MediaMetadataRetriever();
 //绑定资源
-                    mmr.setDataSource(videoPath);
+                mmr.setDataSource(videoPath);
 //获取第一帧图像的bitmap对象
-                    Bitmap bitmap = mmr.getFrameAtTime(500);
+                Bitmap bitmap = mmr.getFrameAtTime(500);
 //加载到ImageView控件上
-                    videoPicTv.setImageBitmap(bitmap);
+                videoPicTv.setImageBitmap(bitmap);
 
+                FileUtils.savePhoto(getContext(), bitmap, new FileUtils.SaveResultCallback() {
+                    @Override
+                    public void onSavedSuccess(String path) {
+                        videoPicPath = path;
+                    }
 
-                    FileUtils.savePhoto(getContext(), bitmap, new FileUtils.SaveResultCallback() {
-                        @Override
-                        public void onSavedSuccess(String path) {
-                            videoPicPath = path;
-                        }
+                    @Override
+                    public void onSavedFailed() {
 
-                        @Override
-                        public void onSavedFailed() {
-
-                        }
-                    });
-
-                    videoNameTv.setVisibility(View.VISIBLE);
-                    videoNameTv.setText(CommonUtils.getFileName(videoPath));
-                }
+                    }
+                });
+                videoNameTv.setVisibility(View.VISIBLE);
+                videoNameTv.setText(CommonUtils.getFileName(videoPath));
             }
         }
     }
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (resultCode == Activity.RESULT_OK) {//是否选择，没选择就不会继续
+//            Uri uri = data.getData();//得到uri，后面就是将uri转化成file的过程。
+//            String[] proj = {MediaStore.Images.Media.DATA};
+//            Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
+//            int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//            actualimagecursor.moveToFirst();
+//            String img_path = actualimagecursor.getString(actual_image_column_index);
+//            File file = new File(img_path);
+//            Toast.makeText(this, img_path+" 000", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (updateFileTask != null && updateFileTask.getStatus() == AsyncTask.Status.RUNNING){
+        if (updateFileTask != null && updateFileTask.getStatus() == AsyncTask.Status.RUNNING) {
             updateFileTask.cancel(true);
         }
         updateFileTask = null;
