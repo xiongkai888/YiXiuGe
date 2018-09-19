@@ -145,6 +145,9 @@
             android:name=".ui.home.activity.TeacherDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.home.activity.TeacherDetailsSubActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.home.activity.NewsActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -39,15 +39,13 @@
 
                     <TextView
                         android:id="@+id/realname_tv"
-                        style="@style/text14colorWhite"
-                        android:text="李菲菲" />
+                        style="@style/text14colorWhite" />
 
                     <TextView
                         android:id="@+id/teachingage_tv"
                         style="@style/text10colorWhite"
                         android:layout_marginLeft="@dimen/d_10dp"
-                        android:background="@drawable/teacher_button_sub_bg"
-                        android:text="五年教龄" />
+                        android:background="@drawable/teacher_button_sub_bg" />
 
                 </LinearLayout>
 
@@ -59,8 +57,7 @@
                     <TextView
                         android:id="@+id/info_tv"
                         style="@style/text12colorWhite"
-                        android:layout_centerHorizontal="true"
-                        android:text="女 | 30岁 | 广州" />
+                        android:layout_centerHorizontal="true" />
 
                     <ImageView
                         android:id="@+id/message_iv"
@@ -83,8 +80,7 @@
                 android:id="@+id/kec_tv"
                 style="@style/text12color666"
                 android:layout_marginBottom="@dimen/d_10dp"
-                android:layout_marginLeft="@dimen/d_10dp"
-                android:text="美肤 | 空腔" />
+                android:layout_marginLeft="@dimen/d_10dp" />
 
             <TextView style="@style/line_H10dp_on" />
 
@@ -104,9 +100,9 @@
             <TextView style="@style/line_H10dp_on" />
 
             <TextView
+                android:id="@+id/ta_publish_tv"
                 style="@style/text"
-                android:padding="@dimen/d_10dp"
-                android:text="TA的发布" />
+                android:padding="@dimen/d_10dp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
@@ -134,7 +130,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </ScrollView>

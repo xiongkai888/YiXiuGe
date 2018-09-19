@@ -119,5 +119,6 @@
     <string name="man">男</string>
     <string name="woman">女</string>
     <string name="all">全部</string>
+    <string name="ta_publish">TA的发布(%1$s)</string>
 
 </resources>

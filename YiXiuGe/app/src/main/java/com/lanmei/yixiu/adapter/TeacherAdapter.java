@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.bean.TeacherBean;
 import com.lanmei.yixiu.ui.home.activity.TeacherDetailsActivity;
+import com.lanmei.yixiu.ui.home.activity.TeacherDetailsSubActivity;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
@@ -48,7 +49,7 @@ public class TeacherAdapter extends SwipeRefreshAdapter<TeacherBean> {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentUtil.startActivity(context, TeacherDetailsActivity.class,bean.getId());
+                IntentUtil.startActivity(context, TeacherDetailsSubActivity.class,bean.getId());
             }
         });
     }

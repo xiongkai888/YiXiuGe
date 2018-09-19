@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
@@ -20,6 +22,7 @@ import com.lanmei.yixiu.adapter.TeacherDetailsPublishAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.TeacherDetailsBean;
 import com.lanmei.yixiu.utils.CommonUtils;
+import com.lanmei.yixiu.widget.SlideDetailsLayout;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.DataBean;
 import com.xson.common.helper.BeanRequest;
@@ -36,7 +39,7 @@ import butterknife.OnClick;
 /**
  * 老师详情
  */
-public class TeacherDetailsActivity extends BaseActivity {
+public class TeacherDetailsSubActivity extends BaseActivity implements SlideDetailsLayout.OnSlideDetailsListener{
 
     @InjectView(R.id.pic_iv)
     CircleImageView picIv;
@@ -53,6 +56,12 @@ public class TeacherDetailsActivity extends BaseActivity {
     @InjectView(R.id.ta_publish_tv)
     TextView taPublishTv;//TA的发布
 
+    @InjectView(R.id.slideDetailsLayout)
+    SlideDetailsLayout slideDetailsLayout;
+    @InjectView(R.id.fab_up)
+    FloatingActionButton fabUp;
+    @InjectView(R.id.scrollView)
+    ScrollView scrollView;
 
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -76,7 +85,7 @@ public class TeacherDetailsActivity extends BaseActivity {
 
     @Override
     public int getContentViewId() {
-        return R.layout.activity_teacher_details;
+        return R.layout.activity_teacher_details_sub;
     }
 
     @Override
@@ -90,14 +99,14 @@ public class TeacherDetailsActivity extends BaseActivity {
 //        textViews[0] = goodReputationTv;
 //        textViews[1] = middleReputationTv;
 //        textViews[2] = badReputationTv;
-
         fullScreen(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setNestedScrollingEnabled(false);
         loadTeacherDetails();
-
+        fabUp.hide();
+        slideDetailsLayout.setOnSlideDetailsListener(this);
 
         teacherDetailsCommentAdapter = new TeacherDetailsCommentAdapter(getSupportFragmentManager(),tid);
 //        mViewPager.setOffscreenPageLimit(3);
@@ -170,13 +179,20 @@ public class TeacherDetailsActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.back_iv, R.id.message_iv})
+    @OnClick({R.id.back_iv, R.id.message_iv,R.id.fab_up,R.id.pull_up_view})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_iv:
                 finish();
                 break;
             case R.id.message_iv:
+                break;
+            case R.id.fab_up://滚到顶部
+                scrollView.smoothScrollTo(0, 0);
+                slideDetailsLayout.smoothClose(true);
+                break;
+            case R.id.pull_up_view://上拉查看评论
+                slideDetailsLayout.smoothOpen(true);
                 break;
 //            case R.id.good_reputation_tv://好评
 //                setTextViewBg(goodReputationTv);
@@ -187,6 +203,17 @@ public class TeacherDetailsActivity extends BaseActivity {
 //            case R.id.bad_reputation_tv://差评
 //                setTextViewBg(badReputationTv);
 //                break;
+        }
+    }
+
+    @Override
+    public void onStatusChanged(SlideDetailsLayout.Status status) {
+        //当前为图文详情页
+        if (status == SlideDetailsLayout.Status.OPEN) {
+            fabUp.show();
+        } else {
+            //当前为商品详情页
+            fabUp.hide();
         }
     }
 

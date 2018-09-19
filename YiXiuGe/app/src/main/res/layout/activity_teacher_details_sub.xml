@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.activity.TeacherDetailsSubActivity">
+
+
+    <com.lanmei.yixiu.widget.SlideDetailsLayout
+        android:id="@+id/slideDetailsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout style="@style/v_all_match_parent">
+
+                <LinearLayout
+                    style="@style/v_match_parent"
+                    android:background="@drawable/teacher_details_bg">
+
+                    <ImageView
+                        android:id="@+id/back_iv"
+                        style="@style/text"
+                        android:layout_marginTop="@dimen/d_20dp"
+                        android:padding="@dimen/d_10dp"
+                        android:src="@drawable/back_w" />
+
+
+                    <com.xson.common.widget.CircleImageView
+                        android:id="@+id/pic_iv"
+                        android:layout_width="@dimen/d_50dp"
+                        android:layout_height="@dimen/d_50dp"
+                        android:layout_gravity="center_horizontal" />
+
+
+                    <LinearLayout
+                        style="@style/h_match_parent_no"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/d_5dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/realname_tv"
+                            style="@style/text14colorWhite" />
+
+                        <TextView
+                            android:id="@+id/teachingage_tv"
+                            style="@style/text10colorWhite"
+                            android:layout_marginLeft="@dimen/d_10dp"
+                            android:background="@drawable/teacher_button_sub_bg" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d_5dp">
+
+                        <TextView
+                            android:id="@+id/info_tv"
+                            style="@style/text12colorWhite"
+                            android:layout_centerHorizontal="true" />
+
+                        <ImageView
+                            android:id="@+id/message_iv"
+                            style="@style/text"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginBottom="@dimen/d_10dp"
+                            android:layout_marginRight="@dimen/d_10dp"
+                            android:src="@drawable/teacher_message" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/text"
+                    android:padding="@dimen/d_10dp"
+                    android:text="主教科目" />
+
+                <TextView
+                    android:id="@+id/kec_tv"
+                    style="@style/text12color666"
+                    android:layout_marginBottom="@dimen/d_10dp"
+                    android:layout_marginLeft="@dimen/d_10dp" />
+
+                <TextView style="@style/line_H10dp_on" />
+
+                <TextView
+                    style="@style/text"
+                    android:padding="@dimen/d_10dp"
+                    android:text="个人简介" />
+
+                <TextView
+                    android:id="@+id/intro_tv"
+                    style="@style/text12color666"
+                    android:layout_marginBottom="@dimen/d_10dp"
+                    android:layout_marginLeft="@dimen/d_10dp"
+                    android:layout_marginRight="@dimen/d_10dp"
+                    android:text="" />
+
+                <TextView style="@style/line_H10dp_on" />
+
+                <TextView
+                    android:id="@+id/ta_publish_tv"
+                    style="@style/text"
+                    android:padding="@dimen/d_10dp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/d_10dp"
+                    android:layout_marginLeft="@dimen/d_10dp"
+                    android:layout_marginRight="@dimen/d_10dp" />
+
+                <TextView style="@style/line_H10dp_on" />
+
+                <TextView style="@style/line_H1dp_divider" />
+
+                <!-- 上拉查看图文详情 -->
+                <TextView
+                    android:id="@+id/pull_up_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@drawable/top"
+                    android:drawablePadding="6dp"
+                    android:gravity="bottom"
+                    android:padding="10dp"
+                    android:text="上拉查看评论"
+                    android:textColor="#222222"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/d_20dp" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tabLayout_h"
+                android:background="@color/colorF4F4"
+                app:tabIndicatorColor="@color/colorPrimaryDark"
+                app:tabSelectedTextColor="@color/colorPrimaryDark"
+                app:tabTextAppearance="@style/TabLayoutAppearance" />
+
+            <View style="@style/line_H1dp_divider" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </com.lanmei.yixiu.widget.SlideDetailsLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="30dp"
+        android:src="@drawable/go_top"
+        app:backgroundTint="@color/white"
+        app:borderWidth="0dp"
+        app:fabSize="mini"
+        app:rippleColor="@color/white" />
+
+</android.support.design.widget.CoordinatorLayout>
