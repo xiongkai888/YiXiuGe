@@ -212,7 +212,7 @@ public class PublishCourseActivity extends BaseActivity {
 //绑定资源
                 mmr.setDataSource(videoPath);
 //获取第一帧图像的bitmap对象
-                Bitmap bitmap = mmr.getFrameAtTime(500);
+                Bitmap bitmap = mmr.getFrameAtTime();
 //加载到ImageView控件上
                 videoPicTv.setImageBitmap(bitmap);
 

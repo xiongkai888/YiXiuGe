@@ -120,5 +120,13 @@
     <string name="woman">女</string>
     <string name="all">全部</string>
     <string name="ta_publish">TA的发布(%1$s)</string>
+    <string name="edit">编辑</string>
+    <string name="done">完成</string>
+    <string name="all_pause">全部暂停</string>
+    <string name="all_cancel">全部取消</string>
+    <string name="all_delete">全部删除</string>
+    <string name="pause">暂停</string>
+    <string name="all_pitch_on">全部选中</string>
+    <string name="upload_video">上传视频</string>
 
 </resources>

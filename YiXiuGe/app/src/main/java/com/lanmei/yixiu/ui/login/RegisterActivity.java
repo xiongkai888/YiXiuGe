@@ -25,6 +25,7 @@ import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.DrawClickableEditText;
+import com.xson.common.widget.FormatTextView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -54,6 +55,8 @@ public class RegisterActivity extends BaseActivity implements Toolbar.OnMenuItem
     DrawClickableEditText pwdAgainEt;
     @InjectView(R.id.showPwd_again_iv)
     ImageView showPwdAgainIv;
+    @InjectView(R.id.agree_protocol_tv)
+    FormatTextView agreeProtocolTv;
     @InjectView(R.id.register_bt)
     Button button;
     @InjectView(R.id.ll_real_name)
@@ -90,6 +93,7 @@ public class RegisterActivity extends BaseActivity implements Toolbar.OnMenuItem
         if (isRegister) {//1是注册2是找回密码
             actionbar.setTitle(R.string.register);
             llRealName.setVisibility(View.VISIBLE);
+            agreeProtocolTv.setVisibility(View.VISIBLE);
         } else {
             actionbar.setTitle("找回密码");
             button.setText(R.string.sure);

@@ -84,7 +84,7 @@ public class MyCourseActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_course:
-                IntentUtil.startActivity(this, PublishCourseActivity.class);
+                IntentUtil.startActivity(this, UploadVideoListActivity.class);
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -19,9 +19,9 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="50dp">
 
-            <ImageView
+            <TextView
                 style="@style/text"
-                android:src="@drawable/icon_phone" />
+                android:text="手机"/>
 
 
             <com.xson.common.widget.DrawClickableEditText
@@ -41,9 +41,10 @@
             android:gravity="center_vertical"
             android:layout_marginLeft="15dp">
 
-            <ImageView
+
+            <TextView
                 style="@style/text"
-                android:src="@drawable/icon_pwd" />
+                android:text="密码"/>
 
 
             <LinearLayout

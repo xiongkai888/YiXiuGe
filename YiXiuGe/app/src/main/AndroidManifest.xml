@@ -173,6 +173,9 @@
             android:name=".ui.teacher.activity.TeachingAttachmentsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.teacher.activity.UploadVideoListActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.teacher.activity.EvaluateActivity"
             android:screenOrientation="portrait" />
         <activity

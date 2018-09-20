@@ -10,11 +10,8 @@ import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.bean.MyCourseBean;
-import com.lanmei.yixiu.utils.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
-
-import java.text.SimpleDateFormat;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -25,13 +22,13 @@ import butterknife.InjectView;
  */
 public class MyCourseAdapter extends SwipeRefreshAdapter<MyCourseBean> {
 
-    private FormatTime formatTime;
-    private SimpleDateFormat format;
+//    private FormatTime formatTime;
+//    private SimpleDateFormat format;
 
     public MyCourseAdapter(Context context) {
         super(context);
-        formatTime = new FormatTime();
-        format = formatTime.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        formatTime = new FormatTime();
+//        format = formatTime.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     }
 
 
@@ -69,8 +66,8 @@ public class MyCourseAdapter extends SwipeRefreshAdapter<MyCourseBean> {
             ImageHelper.load(context,bean.getPic(),picIv,null,true,R.drawable.default_pic,R.drawable.default_pic);
             titleTv.setText(bean.getTitle());
 
-            formatTime.setTime(bean.getAddtime());
-            timeTv.setText(formatTime.formatterTime(format));
+//            formatTime.setTime(bean.getAddtime());
+//            timeTv.setText(formatTime.formatterTime(format));
         }
     }
 

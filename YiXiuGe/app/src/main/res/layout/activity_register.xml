@@ -21,30 +21,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/d_50dp" />
+                android:layout_marginTop="@dimen/d_40dp" />
 
-            <LinearLayout
-                android:id="@+id/ll_real_name"
-                style="@style/h_match_parent_no"
-                android:layout_marginLeft="15dp"
-                android:gravity="center_vertical"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <ImageView
-                    style="@style/text"
-                    android:src="@drawable/icon_phone" />
-
-
-                <com.xson.common.widget.DrawClickableEditText
-                    android:id="@+id/realname_et"
-                    style="@style/editText_bottom_style"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="15dp"
-                    android:hint="@string/input_real_name"
-                    android:paddingRight="15dp" />
-
-            </LinearLayout>
 
             <LinearLayout
                 style="@style/h_match_parent_no"
@@ -52,9 +30,10 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
+
+                <TextView
                     style="@style/text"
-                    android:src="@drawable/icon_phone" />
+                    android:text="手机"/>
 
 
                 <com.xson.common.widget.DrawClickableEditText
@@ -75,9 +54,10 @@
                 android:layout_marginLeft="15dp"
                 android:gravity="center_vertical">
 
-                <ImageView
+
+                <TextView
                     style="@style/text"
-                    android:src="@drawable/icon_code" />
+                    android:text="验证码"/>
 
 
                 <LinearLayout
@@ -114,9 +94,9 @@
                 android:layout_marginLeft="15dp"
                 android:gravity="center_vertical">
 
-                <ImageView
+                <TextView
                     style="@style/text"
-                    android:src="@drawable/icon_pwd" />
+                    android:text="密码"/>
 
                 <LinearLayout
                     style="@style/ll_bottom_h"
@@ -150,9 +130,9 @@
                 android:layout_marginLeft="15dp"
                 android:gravity="center_vertical">
 
-                <ImageView
+                <TextView
                     style="@style/text"
-                    android:src="@drawable/icon_pwd" />
+                    android:text="密码"/>
 
 
                 <LinearLayout
@@ -179,6 +159,29 @@
 
 
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_real_name"
+                style="@style/h_match_parent_no"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text"
+                    android:text="姓名"/>
+
+
+                <com.xson.common.widget.DrawClickableEditText
+                    android:id="@+id/realname_et"
+                    style="@style/editText_bottom_style"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="15dp"
+                    android:hint="@string/input_real_name"
+                    android:paddingRight="15dp" />
 
             </LinearLayout>
 

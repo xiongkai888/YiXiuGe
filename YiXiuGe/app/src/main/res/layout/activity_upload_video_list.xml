@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent"
+    tools:context=".ui.teacher.activity.UploadVideoListActivity">
+
+    <include layout="@layout/include_centertitletoolbar"/>
+
+    <LinearLayout
+        android:id="@+id/ll_upload_video"
+        style="@style/ll_bottom_h"
+        android:padding="@dimen/d_10dp">
+
+        <TextView
+            style="@style/text_weight"
+            android:drawableLeft="@drawable/upload_video"
+            android:gravity="center_vertical"
+            android:text="@string/upload_video" />
+
+        <TextView
+            style="@style/text"
+            android:layout_marginLeft="@dimen/d_10dp"
+            android:drawableRight="@drawable/in_right"
+            android:gravity="center_vertical" />
+    </LinearLayout>
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d_0dp"
+        android:layout_weight="1"
+        layout="@layout/fragment_single_listview_no"/>
+
+    <TextView style="@style/line_H1dp_divider" />
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        style="@style/h_match_parent"
+        android:visibility="visible"
+        android:layout_height="@dimen/d_40dp"
+        android:layout_gravity="bottom">
+
+        <TextView
+            android:id="@+id/pause_tv"
+            style="@style/text_weight"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="暂停"
+            android:visibility="gone"
+            android:textColor="@color/color33cea6" />
+
+        <TextView style="@style/line_v1dp_divider" />
+
+        <TextView
+            android:id="@+id/all_pitch_on_tv"
+            style="@style/text_weight"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="全部选中"
+            android:textColor="@color/color33cea6" />
+
+        <TextView style="@style/line_v1dp_divider" />
+
+        <TextView
+            android:id="@+id/delete_tv"
+            style="@style/text_weight"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="删除"
+            android:textColor="@color/color33cea6" />
+
+    </LinearLayout>
+
+</LinearLayout>
