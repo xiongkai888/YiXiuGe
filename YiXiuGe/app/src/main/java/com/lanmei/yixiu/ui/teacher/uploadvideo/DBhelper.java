@@ -17,13 +17,6 @@ public class DBhelper extends SQLiteOpenHelper {
 
     private static String dbName="btcim.db";
     private static int dbVersion=2;
-    public static DBhelper dBhelper;
-
-    public static DBhelper newInstance(Context context){
-        if (dBhelper==null)
-            dBhelper=new DBhelper(context);
-        return dBhelper;
-    }
 
     public DBhelper(Context context) {
         super(context, dbName, null, dbVersion);

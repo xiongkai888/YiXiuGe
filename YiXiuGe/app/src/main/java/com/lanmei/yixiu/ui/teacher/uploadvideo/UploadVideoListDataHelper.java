@@ -17,11 +17,12 @@ public class UploadVideoListDataHelper {
     private List<UploadVideoBean> list;
 
     public List<UploadVideoBean> getList() {
+        list = dbUploadViewHelper.getUploadVideoList();
         return list;
     }
 
     public UploadVideoListDataHelper(Context context) {
-        dbUploadViewHelper = DBUploadViewHelper.getInstance(context);
+        dbUploadViewHelper = new DBUploadViewHelper(context);
         list = dbUploadViewHelper.getUploadVideoList();
     }
 
@@ -50,7 +51,7 @@ public class UploadVideoListDataHelper {
     //被选中的
     public List<UploadVideoBean> getListBySelected() {
         List<UploadVideoBean> beanList = new ArrayList<>();
-        if (isNull()){
+        if (isNull()) {
             return beanList;
         }
         for (UploadVideoBean bean : list) {
@@ -63,14 +64,14 @@ public class UploadVideoListDataHelper {
 
     //用于设置为已读
     public String getIdsBySelectedAndNoRead() {
-        if (isNull()){
+        if (isNull()) {
             return "";
         }
         StringBuffer buffer = new StringBuffer();
         for (UploadVideoBean bean : list) {
-//            if (bean.isEdit() && StringUtils.isSame(bean.getSee_state(), CommonUtils.isZero)) {
-//                buffer.append(bean.getId() + d);
-//            }
+            //            if (bean.isEdit() && StringUtils.isSame(bean.getSee_state(), CommonUtils.isZero)) {
+            //                buffer.append(bean.getId() + d);
+            //            }
         }
         return "";
     }
@@ -78,7 +79,7 @@ public class UploadVideoListDataHelper {
 
     //设置全选还是全不选
     public void setAllSelect(boolean isAllSelect) {
-        if (isNull()){
+        if (isNull()) {
             return;
         }
         for (UploadVideoBean bean : list) {
@@ -92,7 +93,7 @@ public class UploadVideoListDataHelper {
 
     //是否交易通知被选中
     public boolean isSelect() {
-        if (isNull()){
+        if (isNull()) {
             return false;
         }
         for (UploadVideoBean bean : list) {

@@ -15,13 +15,11 @@ import com.lanmei.yixiu.ui.teacher.uploadvideo.UploadVideoListContract;
 import com.lanmei.yixiu.ui.teacher.uploadvideo.UploadVideoListPresenter;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
-import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -34,8 +32,6 @@ public class UploadVideoListActivity extends BaseActivity implements Toolbar.OnM
 
     @InjectView(R.id.toolbar)
     CenterTitleToolbar toolbar;
-
-
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     @InjectView(R.id.pause_tv)
@@ -57,15 +53,6 @@ public class UploadVideoListActivity extends BaseActivity implements Toolbar.OnM
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-//        DBUploadViewHelper.getInstance(this).deleteDatabase();
-//        UploadVideoBean bean = new UploadVideoBean();
-//        bean.setPath("11111111111111");
-//        bean.setStatus("正在上传中....");
-//        bean.setTitle("测试");
-//        bean.setProgress(91);
-//        bean.setPic("http://www.ce.cn/newtravel/mjxj/mjtp/200607/08/W020060708336050196304.jpg");
-//        presenter.insertUploadVideoBean(bean);
-
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setTitle(getString(R.string.upload_video));
         toolbar.setNavigationIcon(R.drawable.back);
@@ -78,13 +65,7 @@ public class UploadVideoListActivity extends BaseActivity implements Toolbar.OnM
         presenter = new UploadVideoListPresenter(YiXiuApp.applicationContext, this);
         smartSwipeRefreshLayout.initWithLinearLayout();
         adapter = new UploadVideoListAdapter(this, presenter);
-        List<UploadVideoBean> list = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            UploadVideoBean bean = new UploadVideoBean();
-            list.add(bean);
-        }
-        adapter.setData(list);
-
+        adapter.setData(presenter.getUploadVideoList());
         smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NO_PAGE);
         smartSwipeRefreshLayout.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -105,11 +86,11 @@ public class UploadVideoListActivity extends BaseActivity implements Toolbar.OnM
         if (StringUtils.isEmpty(list)) {
             presenter.setEdit(false);
             showBottom(false);
+            showTextView(false);
             toolbar.getMenu().clear();
         } else {
             boolean isEdit = presenter.isEdit();
             if (isEdit) {
-                toolbar.inflateMenu(R.menu.menu_done);
                 showTextView(false);
             }
             toolbar.getMenu().clear();
@@ -125,7 +106,7 @@ public class UploadVideoListActivity extends BaseActivity implements Toolbar.OnM
         }
         boolean isEdit = false;//是否是编辑状态
         if (item.getItemId() == R.id.action_edit) {
-//            presenter.setList(adapter.getData());
+            //            presenter.setList(adapter.getData());
             toolbar.getMenu().clear();
             toolbar.inflateMenu(R.menu.menu_done);
             isEdit = true;
@@ -166,14 +147,24 @@ public class UploadVideoListActivity extends BaseActivity implements Toolbar.OnM
                 if (presenter.isAllSelect()) {//删除全部
                 } else {//删除部分
                 }
-                CommonUtils.developing(this);
-
-//                presenter.deleteBySelectBean();
-//                adapter.setData(presenter.getUploadVideoList());
-//                adapter.notifyDataSetChanged();
+                //                CommonUtils.developing(this);
+                presenter.deleteBySelectBean();
+                adapter.setData(presenter.getUploadVideoList());
+                adapter.notifyDataSetChanged();
+                setState();
                 break;
             case R.id.ll_upload_video://上传视频
-                IntentUtil.startActivity(this, PublishCourseActivity.class);
+                UploadVideoBean bean = new UploadVideoBean();
+                bean.setPath("11111111111111");
+                bean.setStatus("正在上传中....");
+                bean.setTitle("测试");
+                bean.setProgress(91);
+                bean.setPic("http://www.ce.cn/newtravel/mjxj/mjtp/200607/08/W020060708336050196304.jpg");
+                presenter.insertUploadVideoBean(bean);
+                adapter.setData(presenter.getUploadVideoList());
+                adapter.notifyDataSetChanged();
+                setState();
+                //                IntentUtil.startActivity(this, PublishCourseActivity.class);
                 break;
         }
 
@@ -182,13 +173,13 @@ public class UploadVideoListActivity extends BaseActivity implements Toolbar.OnM
 
     @Override
     public void showTextView(boolean isAllSelect) {
-        pauseTv.setText(isAllSelect?R.string.all_pause:R.string.pause);
-        allPitchOnTv.setText(isAllSelect?R.string.all_cancel:R.string.all_pitch_on);
-        deleteTv.setText(isAllSelect?R.string.all_delete:R.string.delete);
+        pauseTv.setText(isAllSelect ? R.string.all_pause : R.string.pause);
+        allPitchOnTv.setText(isAllSelect ? R.string.all_cancel : R.string.all_pitch_on);
+        deleteTv.setText(isAllSelect ? R.string.all_delete : R.string.delete);
     }
 
     @Override
     public void showBottom(boolean isShow) {
-        ll_bottom.setVisibility(isShow?View.VISIBLE:View.GONE);
+        ll_bottom.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
 }

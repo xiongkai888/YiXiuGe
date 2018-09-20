@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.lanmei.yixiu.utils.CommonUtils;
-import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 
@@ -44,22 +43,12 @@ public class DBUploadViewHelper {
             Video_progress + " INTEGER)";
 
     public static String uid;
-    public static double momey = 0;
-    public static int goodsCount = 0;
-    public static DBUploadViewHelper dbGoodsCartManager;
 
     public DBUploadViewHelper(Context context) {
         this.context = context;
         uid = CommonUtils.getUserId(context);
-        dBhelper = DBhelper.newInstance(context);
+        dBhelper = new DBhelper(context);
         db = dBhelper.getWritableDatabase();
-    }
-
-    public static DBUploadViewHelper getInstance(Context context) {
-        if (dbGoodsCartManager == null) {
-            dbGoodsCartManager = new DBUploadViewHelper(context);
-        }
-        return dbGoodsCartManager;
     }
 
     /**
@@ -69,8 +58,6 @@ public class DBUploadViewHelper {
         List<UploadVideoBean> shopCarBeanList = new ArrayList<>();
         String selection = Video_user_id + " = " + uid;
         Cursor c = db.query(Video, null, selection, null, null, null, null);
-        momey = 0;
-        goodsCount = 0;
         if (c.getCount() > 0) {
             UploadVideoBean videoBean;
             while (c.moveToNext()) {
@@ -83,16 +70,17 @@ public class DBUploadViewHelper {
                 shopCarBeanList.add(videoBean);
             }
         }
-        L.d(Video, "c.getCount():" + c.getCount());
         c.close();
         return shopCarBeanList;
     }
 
-    //获取购物车个数
-    public int getShopCarListCount() {
+    //获取要上传的视频个数
+    public int getUploadVideoCount() {
         String selection = Video_user_id + " = " + uid;
         Cursor c = db.query(Video, null, selection, null, null, null, null);
-        return c.getCount();
+        int count = c.getCount();
+        c.close();
+        return count;
     }
 
 
@@ -115,7 +103,6 @@ public class DBUploadViewHelper {
         values.put(Video_title,bean.getTitle());
         values.put(Video_status,bean.getStatus());
         values.put(Video_path,bean.getPath());
-//        values.put(Cart_goodsParams, bean.getSpec());
         values.put(Video_progress, bean.getProgress());
         long insC = db.insert(Video, Video_pic, values);
         if (insC > 0) {
@@ -126,11 +113,12 @@ public class DBUploadViewHelper {
         return insC;
     }
 
+    //
     public void deleteDatabase() {
         dBhelper.deleteDatabase(context);
     }
 
-
+    //删除选中的上传视频任务
     public void delete(List<UploadVideoBean> list) {
         String where = Video_path + "=?";
         int size = list.size();
@@ -152,19 +140,17 @@ public class DBUploadViewHelper {
     }
 
     /**
-     * 根据goodsId 更新商品个数、图片、商品名称，价格
+     * 根据上传的路径 更新商品进度
      *
-     * @param goodsId
-     * @param count
-     * @param imge
-     * @param goodsName
-     * @param sellPrice
+     * @param path
+     * @param progress
+     * @param status
      */
-    public void updateGoods(String goodsId, int count, String imge, String goodsName, double sellPrice) {
+    public void updateUploadVideoBean(String path, int progress, String status) {
         ContentValues cv = new ContentValues();
-        cv.put(Video_progress, count);
-//        values.put(Cart_goodsParams, bean.getSpec());
-        db.update(Video, cv, Video_pic + "=" + goodsId, null);
+        cv.put(Video_progress, progress);
+        cv.put(Video_status, status);
+        db.update(Video, cv, Video_path + "=" + path, null);
     }
 
 }
