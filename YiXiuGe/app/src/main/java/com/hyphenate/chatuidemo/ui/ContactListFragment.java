@@ -218,7 +218,7 @@ public class ContactListFragment extends EaseContactListFragment {
 	public boolean onContextItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.delete_contact) {
 			try {
-                // delete contact
+                // deleteBySelectBean contact
                 deleteContact(toBeProcessUser);
                 // remove invitation message
                 InviteMessgeDao dao = new InviteMessgeDao(getActivity());
@@ -236,7 +236,7 @@ public class ContactListFragment extends EaseContactListFragment {
 
 
 	/**
-	 * delete contact
+	 * deleteBySelectBean contact
 	 * 
 	 * @param tobeDeleteUser
 	 */

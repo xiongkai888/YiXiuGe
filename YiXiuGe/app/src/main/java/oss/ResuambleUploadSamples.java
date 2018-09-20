@@ -1,34 +1,28 @@
 package oss;
 
+import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 
 import com.alibaba.sdk.android.oss.ClientException;
-import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
 import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.ResumableUploadRequest;
 import com.alibaba.sdk.android.oss.model.ResumableUploadResult;
+import com.xson.common.utils.L;
 
 import java.io.File;
 
 /**
  * Created by zhouzhuo on 12/3/15.
  */
-public class ResuambleUploadSamples {
+public class ResuambleUploadSamples extends BaseOss{
 
-    private OSS oss;
-    private String testBucket;
-    private String testObject;
     private String uploadFilePath;
 
-    public ResuambleUploadSamples(OSS client, String testBucket, String testObject, String uploadFilePath) {
-        this.oss = client;
-        this.testBucket = testBucket;
-        this.testObject = testObject;
-        this.uploadFilePath = uploadFilePath;
+    public ResuambleUploadSamples(Context context) {
+        super(context);
     }
 
     // 异步断点上传，不设置记录保存路径，只在本次上传内做断点续传
@@ -39,14 +33,14 @@ public class ResuambleUploadSamples {
         request.setProgressCallback(new OSSProgressCallback<ResumableUploadRequest>() {
             @Override
             public void onProgress(ResumableUploadRequest request, long currentSize, long totalSize) {
-                Log.d("resumableUpload", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                L.d("resumableUpload", "currentSize: " + currentSize + " totalSize: " + totalSize);
             }
         });
         // 异步调用断点上传
         OSSAsyncTask resumableTask = oss.asyncResumableUpload(request, new OSSCompletedCallback<ResumableUploadRequest, ResumableUploadResult>() {
             @Override
             public void onSuccess(ResumableUploadRequest request, ResumableUploadResult result) {
-                Log.d("resumableUpload", "success!");
+                L.d("resumableUpload", "success!");
             }
 
             @Override
@@ -58,10 +52,10 @@ public class ResuambleUploadSamples {
                 }
                 if (serviceException != null) {
                     // 服务异常
-                    Log.e("ErrorCode", serviceException.getErrorCode());
-                    Log.e("RequestId", serviceException.getRequestId());
-                    Log.e("HostId", serviceException.getHostId());
-                    Log.e("RawMessage", serviceException.getRawMessage());
+                    L.e("ErrorCode", serviceException.getErrorCode());
+                    L.e("RequestId", serviceException.getRequestId());
+                    L.e("HostId", serviceException.getHostId());
+                    L.e("RawMessage", serviceException.getRawMessage());
                 }
             }
         });
@@ -70,7 +64,9 @@ public class ResuambleUploadSamples {
     }
 
     // 异步断点上传，设置记录保存路径，即使任务失败，下次启动仍能继续
-    public void resumableUploadWithRecordPathSetting() {
+    public void resumableUploadWithRecordPathSetting(String uploadFilePath,final SimUploadCallback uploadCallback) {
+
+        this.uploadFilePath = uploadFilePath;
 
         String recordDirectory = Environment.getExternalStorageDirectory().getAbsolutePath() + "/oss_record/";
 
@@ -87,7 +83,10 @@ public class ResuambleUploadSamples {
         request.setProgressCallback(new OSSProgressCallback<ResumableUploadRequest>() {
             @Override
             public void onProgress(ResumableUploadRequest request, long currentSize, long totalSize) {
-                Log.d("resumableUpload", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                L.d("resumableUpload", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                if (uploadCallback != null){
+                    uploadCallback.onProgress(request, currentSize, totalSize);
+                }
             }
         });
 
@@ -95,11 +94,17 @@ public class ResuambleUploadSamples {
         OSSAsyncTask resumableTask = oss.asyncResumableUpload(request, new OSSCompletedCallback<ResumableUploadRequest, ResumableUploadResult>() {
             @Override
             public void onSuccess(ResumableUploadRequest request, ResumableUploadResult result) {
-                Log.d("resumableUpload", "success!");
+                L.d("resumableUpload", "success!");
+                if (uploadCallback != null){
+                    uploadCallback.onSuccess(request, result);
+                }
             }
 
             @Override
             public void onFailure(ResumableUploadRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                if (uploadCallback != null){
+                    uploadCallback.onFailure(request, clientExcepion, serviceException);
+                }
                 // 请求异常
                 if (clientExcepion != null) {
                     // 本地异常如网络异常等
@@ -107,14 +112,13 @@ public class ResuambleUploadSamples {
                 }
                 if (serviceException != null) {
                     // 服务异常
-                    Log.e("ErrorCode", serviceException.getErrorCode());
-                    Log.e("RequestId", serviceException.getRequestId());
-                    Log.e("HostId", serviceException.getHostId());
-                    Log.e("RawMessage", serviceException.getRawMessage());
+                    L.e("ErrorCode", serviceException.getErrorCode());
+                    L.e("RequestId", serviceException.getRequestId());
+                    L.e("HostId", serviceException.getHostId());
+                    L.e("RawMessage", serviceException.getRawMessage());
                 }
             }
         });
-
         resumableTask.waitUntilFinished();
     }
 }

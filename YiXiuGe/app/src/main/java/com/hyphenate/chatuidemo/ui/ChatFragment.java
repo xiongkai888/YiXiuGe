@@ -162,10 +162,10 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                 clipboard.setPrimaryClip(ClipData.newPlainText(null, 
                         ((EMTextMessageBody) contextMenuMessage.getBody()).getMessage()));
                 break;
-            case ContextMenuActivity.RESULT_CODE_DELETE: // delete
+            case ContextMenuActivity.RESULT_CODE_DELETE: // deleteBySelectBean
                 conversation.removeMessage(contextMenuMessage.getMsgId());
                 messageList.refresh();
-                // To delete the ding-type message native stored acked users.
+                // To deleteBySelectBean the ding-type message native stored acked users.
                 EaseDingMessageHelper.get().delete(contextMenuMessage);
                 break;
 

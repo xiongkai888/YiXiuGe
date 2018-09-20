@@ -262,7 +262,7 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 		    ownerLeaveSwitch.closeSwitch();
 		}
 		
-		// delete messages when exit group?
+		// deleteBySelectBean messages when exit group?
 		if(settingsModel.isDeleteMessagesAsExitGroup()){
 		    switch_delete_msg_when_exit_group.openSwitch();
 		} else {

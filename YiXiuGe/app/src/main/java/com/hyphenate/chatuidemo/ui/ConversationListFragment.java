@@ -101,11 +101,11 @@ public class ConversationListFragment extends EaseConversationListFragment{
             EaseAtMessageHelper.get().removeAtMeGroup(tobeDeleteCons.conversationId());
         }
         try {
-            // delete conversation
+            // deleteBySelectBean conversation
             EMClient.getInstance().chatManager().deleteConversation(tobeDeleteCons.conversationId(), deleteMessage);
             InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(getActivity());
             inviteMessgeDao.deleteMessage(tobeDeleteCons.conversationId());
-            // To delete the native stored adked users in this conversation.
+            // To deleteBySelectBean the native stored adked users in this conversation.
             if (deleteMessage) {
                 EaseDingMessageHelper.get().delete(tobeDeleteCons);
             }

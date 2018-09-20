@@ -1,4 +1,4 @@
-package com.lanmei.yixiu.ui.teacher.presenter;
+package com.lanmei.yixiu.ui.teacher.uploadvideo;
 
 import java.util.List;
 
@@ -19,9 +19,11 @@ public class UploadVideoListContract {
         void setAllSelect(boolean isAllSelect);//设置全选或全部取消
         void showAllSelect(boolean isAllSelect);//点击item时设置是否为全部选中
         void setEdit(boolean isEdit);//是不是设置为编辑状态
-        String getIdBySelected();//获取选中的id，用，拼接
+        List<UploadVideoBean> getListBySelected();
         boolean isEdit();
-        void setList(List<UploadVideoListBean> list);
+        void insertUploadVideoBean(UploadVideoBean bean);
+        void deleteBySelectBean();//删除选中的上传视频、并停止上传
+        List<UploadVideoBean> getUploadVideoList();
         String getIdsBySelectedAndNoRead();//用于设置为已读
     }
 }

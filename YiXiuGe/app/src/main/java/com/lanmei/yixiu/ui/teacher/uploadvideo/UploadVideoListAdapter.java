@@ -1,4 +1,4 @@
-package com.lanmei.yixiu.ui.teacher.presenter;
+package com.lanmei.yixiu.ui.teacher.uploadvideo;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +20,7 @@ import butterknife.InjectView;
 /**
  * 上传视频
  */
-public class UploadVideoListAdapter extends SwipeRefreshAdapter<UploadVideoListBean> {
+public class UploadVideoListAdapter extends SwipeRefreshAdapter<UploadVideoBean> {
 
     FormatTime formatTime;
     UploadVideoListContract.Presenter presenter;
@@ -38,7 +38,7 @@ public class UploadVideoListAdapter extends SwipeRefreshAdapter<UploadVideoListB
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, final int position) {
-        final UploadVideoListBean bean = getItem(position);
+        final UploadVideoBean bean = getItem(position);
         if (bean == null) {
             return;
         }
@@ -77,7 +77,13 @@ public class UploadVideoListAdapter extends SwipeRefreshAdapter<UploadVideoListB
             ButterKnife.inject(this, view);
         }
 
-        public void setParameter(UploadVideoListBean bean) {
+        public void setParameter(UploadVideoBean bean) {
+//            progressBar.setProgress(bean.getProgress());
+//            ImageHelper.load(context,bean.getPic(),picIv,null,true,R.drawable.default_pic,R.drawable.default_pic);
+//            titleTv.setText(bean.getTitle());
+//            progressTv.setText(bean.getProgress()+"%");
+//            statusTv.setText(bean.getStatus());
+
             if (presenter.isEdit()) {
                 compileIv.setVisibility(View.VISIBLE);
                 if (bean.isEdit()) {

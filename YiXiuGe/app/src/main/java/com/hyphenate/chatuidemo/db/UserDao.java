@@ -60,7 +60,7 @@ public class UserDao {
 	}
 	
 	/**
-	 * delete a contact
+	 * deleteBySelectBean a contact
 	 * @param username
 	 */
 	public void deleteContact(String username){

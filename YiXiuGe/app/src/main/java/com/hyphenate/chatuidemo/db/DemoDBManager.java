@@ -88,7 +88,7 @@ public class DemoDBManager {
     }
     
     /**
-     * delete a contact
+     * deleteBySelectBean a contact
      * @param username
      */
     synchronized public void deleteContact(String username){
@@ -250,7 +250,7 @@ public class DemoDBManager {
     }
     
     /**
-     * delete invitation message
+     * deleteBySelectBean invitation message
      * @param from
      */
     synchronized public void deleteMessage(String from){
@@ -261,7 +261,7 @@ public class DemoDBManager {
     }
 
     /**
-     * delete invitation message
+     * deleteBySelectBean invitation message
      * @param groupId
      */
     synchronized public void deleteGroupMessage(String groupId){
@@ -272,7 +272,7 @@ public class DemoDBManager {
     }
 
     /**
-     * delete invitation message
+     * deleteBySelectBean invitation message
      * @param groupId
      */
     synchronized public void deleteGroupMessage(String groupId, String from){

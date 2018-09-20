@@ -1,7 +1,10 @@
-package com.lanmei.yixiu.ui.teacher.presenter;
+package com.lanmei.yixiu.ui.teacher.uploadvideo;
+
+import android.content.Context;
 
 import com.xson.common.utils.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,17 +13,28 @@ import java.util.List;
 
 public class UploadVideoListDataHelper {
 
-    private String d = ",";
+    private DBUploadViewHelper dbUploadViewHelper;
+    private List<UploadVideoBean> list;
 
-    public UploadVideoListDataHelper() {
+    public List<UploadVideoBean> getList() {
+        return list;
+    }
 
+    public UploadVideoListDataHelper(Context context) {
+        dbUploadViewHelper = DBUploadViewHelper.getInstance(context);
+        list = dbUploadViewHelper.getUploadVideoList();
+    }
+
+
+    public void deleteBySelectBean() {
+        dbUploadViewHelper.delete(getListBySelected());
     }
 
     public boolean isAllSelect() {//是否全部选中
         if (isNull()) {
             return false;
         }
-        for (UploadVideoListBean bean : list) {
+        for (UploadVideoBean bean : list) {
             if (!bean.isEdit()) {
                 return false;
             }
@@ -28,29 +42,23 @@ public class UploadVideoListDataHelper {
         return true;
     }
 
-    private List<UploadVideoListBean> list;
-
-    public void setList(List<UploadVideoListBean> list) {
-        this.list = list;
-    }
-
     private boolean isNull() {
         return StringUtils.isEmpty(list);
     }
 
 
-    //被选中的通知ids 用户删除通知
-    public String getIdBySelected() {
+    //被选中的
+    public List<UploadVideoBean> getListBySelected() {
+        List<UploadVideoBean> beanList = new ArrayList<>();
         if (isNull()){
-            return "";
+            return beanList;
         }
-        StringBuffer buffer = new StringBuffer();
-        for (UploadVideoListBean bean : list) {
-//            if (bean.isEdit()) {
-//                buffer.append(bean.getId() + d);
-//            }
+        for (UploadVideoBean bean : list) {
+            if (bean.isEdit()) {
+                beanList.add(bean);
+            }
         }
-        return "";
+        return beanList;
     }
 
     //用于设置为已读
@@ -59,7 +67,7 @@ public class UploadVideoListDataHelper {
             return "";
         }
         StringBuffer buffer = new StringBuffer();
-        for (UploadVideoListBean bean : list) {
+        for (UploadVideoBean bean : list) {
 //            if (bean.isEdit() && StringUtils.isSame(bean.getSee_state(), CommonUtils.isZero)) {
 //                buffer.append(bean.getId() + d);
 //            }
@@ -73,9 +81,13 @@ public class UploadVideoListDataHelper {
         if (isNull()){
             return;
         }
-        for (UploadVideoListBean bean : list) {
+        for (UploadVideoBean bean : list) {
             bean.setEdit(isAllSelect);
         }
+    }
+
+    public void insertUploadVideoBean(UploadVideoBean bean) {
+        dbUploadViewHelper.insertUploadVideoBean(bean);
     }
 
     //是否交易通知被选中
@@ -83,7 +95,7 @@ public class UploadVideoListDataHelper {
         if (isNull()){
             return false;
         }
-        for (UploadVideoListBean bean : list) {
+        for (UploadVideoBean bean : list) {
             if (bean.isEdit()) {
                 return true;
             }

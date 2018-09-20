@@ -1,14 +1,15 @@
-package com.lanmei.yixiu.ui.teacher.presenter;
+package com.lanmei.yixiu.ui.teacher.uploadvideo;
 
 /**
  * @author xkai
  *  上传视频
  */
-public class UploadVideoListBean {
+public class UploadVideoBean {
 
     private String title;//上传视频标题
     private String pic;//上传视频封面
-    private String status;//状态 正在上传、等待上传、暂停
+    private String path;//上传视频本地路径
+    private String status;//状态 正在上传、等待上传、暂停、完成
     private boolean isEdit;//是否选中
     private int progress;//进度
 
@@ -34,6 +35,14 @@ public class UploadVideoListBean {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getPath() {
+        return path;
     }
 
     public void setPic(String pic) {

@@ -1,4 +1,4 @@
-package com.lanmei.yixiu.ui.teacher.presenter;
+package com.lanmei.yixiu.ui.teacher.uploadvideo;
 
 import android.content.Context;
 
@@ -10,7 +10,6 @@ import java.util.List;
 
 public class UploadVideoListPresenter implements UploadVideoListContract.Presenter {
 
-    private Context content;
     private UploadVideoListContract.View view;
     private UploadVideoListDataHelper dataHelper;
     private boolean isEdit = false;//是否为编辑状态
@@ -21,8 +20,8 @@ public class UploadVideoListPresenter implements UploadVideoListContract.Present
     }
 
     @Override
-    public String getIdBySelected() {
-        return dataHelper.getIdBySelected();
+    public List<UploadVideoBean> getListBySelected() {
+        return dataHelper.getListBySelected();
     }
 
     @Override
@@ -30,10 +29,19 @@ public class UploadVideoListPresenter implements UploadVideoListContract.Present
         return isEdit;
     }
 
+    @Override
+    public void insertUploadVideoBean(UploadVideoBean bean) {
+        dataHelper.insertUploadVideoBean(bean);
+    }
 
     @Override
-    public void setList(List<UploadVideoListBean> list) {
-        dataHelper.setList(list);
+    public void deleteBySelectBean() {
+        dataHelper.deleteBySelectBean();
+    }
+
+    @Override
+    public List<UploadVideoBean> getUploadVideoList() {
+        return dataHelper.getList();
     }
 
     @Override
@@ -58,10 +66,9 @@ public class UploadVideoListPresenter implements UploadVideoListContract.Present
         return dataHelper.getIdsBySelectedAndNoRead();
     }
 
-    public UploadVideoListPresenter(Context content, UploadVideoListContract.View view) {
-        this.content = content;
+    public UploadVideoListPresenter(Context context, UploadVideoListContract.View view) {
         this.view = view;
-        dataHelper = new UploadVideoListDataHelper();
+        dataHelper = new UploadVideoListDataHelper(context);
     }
 
     @Override
