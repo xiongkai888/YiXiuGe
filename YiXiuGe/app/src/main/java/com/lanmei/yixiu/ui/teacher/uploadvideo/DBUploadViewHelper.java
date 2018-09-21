@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.utils.StringUtils;
-import com.xson.common.utils.UIHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +27,7 @@ public class DBUploadViewHelper {
     public static final String Video_user_id = "uid";
     public static final String Video_title = "title";
     public static final String Video_path = "path";
+    public static final String Video_cid = "cid";//分类
     public static final String Video_pic = "pic";
     public static final String Video_status = "status";
     public static final String Video_progress = "progress";
@@ -37,6 +37,7 @@ public class DBUploadViewHelper {
             "(" + Video_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             Video_user_id + " TEXT, " +
             Video_pic + " TEXT, " +
+            Video_cid + " TEXT, " +
             Video_path + " TEXT, " +
             Video_title + " TEXT, " +
             Video_status + " TEXT, " +
@@ -66,6 +67,7 @@ public class DBUploadViewHelper {
                 videoBean.setPic(c.getString(c.getColumnIndex(Video_pic)));
                 videoBean.setPath(c.getString(c.getColumnIndex(Video_path)));
                 videoBean.setTitle(c.getString(c.getColumnIndex(Video_title)));
+                videoBean.setCid(c.getString(c.getColumnIndex(Video_cid)));
                 videoBean.setStatus(c.getString(c.getColumnIndex(Video_status)));
                 shopCarBeanList.add(videoBean);
             }
@@ -88,10 +90,10 @@ public class DBUploadViewHelper {
     public long insertUploadVideoBean(UploadVideoBean bean) {
         String selection = Video_user_id + " = " + uid;
         Cursor c = db.query(Video, null, selection, null, null, null, null);
+        String path = bean.getPath();
         if (c.getCount() > 0) {
             while (c.moveToNext()) {
-                if (StringUtils.isSame(c.getString(c.getColumnIndex(Video_path)), bean.getPath())) {//已经插入的商品（根据id判断）
-                    UIHelper.ToastMessage(context, "该视频已经在上传视频列表中...");
+                if (StringUtils.isSame(c.getString(c.getColumnIndex(Video_path)), path)) {//已经插入的商品（根据id判断）
                     c.close();
                     return 0;
                 }
@@ -102,13 +104,12 @@ public class DBUploadViewHelper {
         values.put(Video_pic, bean.getPic());
         values.put(Video_title,bean.getTitle());
         values.put(Video_status,bean.getStatus());
-        values.put(Video_path,bean.getPath());
+        values.put(Video_cid,bean.getCid());
+        values.put(Video_path,path);
         values.put(Video_progress, bean.getProgress());
         long insC = db.insert(Video, Video_pic, values);
-        if (insC > 0) {
-            UIHelper.ToastMessage(context, "视频上传中...");
-//            EventBus.getDefault().post(new UploadVideoBean());
-        }
+//        if (insC > 0) {
+//        }
         c.close();
         return insC;
     }
@@ -120,11 +121,24 @@ public class DBUploadViewHelper {
 
     //删除选中的上传视频任务
     public void delete(List<UploadVideoBean> list) {
-        String where = Video_path + "=?";
+        if (StringUtils.isEmpty(list)){
+            return;
+        }
+        List<String> stringList = new ArrayList<>();
+        String where = Video_pic + "=?";
         int size = list.size();
         for (int i = 0; i < size; i++) {
-            db.delete(Video, where, new String[]{list.get(i).getPath()});
+            UploadVideoBean bean = list.get(i);
+            db.delete(Video, where, new String[]{bean.getPic()});
+            stringList.add(bean.getPic());
         }
+        CommonUtils.deleteOssObjectList(stringList);//删除阿里云上的图片
+    }
+
+    //删除某个数据
+    public void deleteUploadVideoBean(UploadVideoBean bean) {
+        String where = Video_path + "=?";
+        db.delete(Video, where, new String[]{bean.getPath()});
     }
 
     /**
@@ -140,7 +154,7 @@ public class DBUploadViewHelper {
     }
 
     /**
-     * 根据上传的路径 更新商品进度
+     * 根据上传的路径 更新进度
      *
      * @param path
      * @param progress
@@ -150,7 +164,7 @@ public class DBUploadViewHelper {
         ContentValues cv = new ContentValues();
         cv.put(Video_progress, progress);
         cv.put(Video_status, status);
-        db.update(Video, cv, Video_path + "=" + path, null);
+        db.update(Video, cv, Video_path + " = \"" + path+"\"", null);
     }
 
 }

@@ -128,5 +128,9 @@
     <string name="pause">暂停</string>
     <string name="all_pitch_on">全部选中</string>
     <string name="upload_video">上传视频</string>
+    <string name="uploading">正在上传</string>
+    <string name="uploading_succeed">上传成功</string>
+    <string name="uploading_failure">上传失败</string>
+    <string name="waiting">等待中</string>
 
 </resources>

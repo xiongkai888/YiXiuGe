@@ -21,6 +21,9 @@ import com.lanmei.yixiu.adapter.PublishCourseClassifyAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.CourseClassifyBean;
 import com.lanmei.yixiu.event.AddCourseEvent;
+import com.lanmei.yixiu.event.UpdateUploadEvent;
+import com.lanmei.yixiu.ui.teacher.uploadvideo.DBUploadViewHelper;
+import com.lanmei.yixiu.ui.teacher.uploadvideo.UploadVideoBean;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.lanmei.yixiu.utils.UpdateFileTask;
 import com.lanmei.yixiu.utils.UriUtils;
@@ -30,6 +33,7 @@ import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
@@ -67,6 +71,7 @@ public class PublishCourseActivity extends BaseActivity {
 
     private PublishCourseClassifyAdapter adapter;
     private UpdateFileTask updateFileTask;//上传视频和视频封面任务
+    private DBUploadViewHelper dbUploadViewHelper;
 
     @Override
     public int getContentViewId() {
@@ -81,6 +86,8 @@ public class PublishCourseActivity extends BaseActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(R.string.publish_course);
         actionbar.setHomeAsUpIndicator(R.drawable.back);
+        dbUploadViewHelper = new DBUploadViewHelper(this);//
+
 
         adapter = new PublishCourseClassifyAdapter(this);
         recyclerView.setNestedScrollingEnabled(false);
@@ -125,10 +132,21 @@ public class PublishCourseActivity extends BaseActivity {
     }
 
     private void loadVideoCourse() {
-        String videoTitle = CommonUtils.getStringByEditText(videoTitleEt);
+        final String videoTitle = CommonUtils.getStringByEditText(videoTitleEt);
         if (StringUtils.isEmpty(videoTitle)) {
             UIHelper.ToastMessage(this, R.string.input_video_title);
             return;
+        }
+        List<UploadVideoBean> uploadVideoList = dbUploadViewHelper.getUploadVideoList();
+        if (!StringUtils.isEmpty(uploadVideoList)) {
+            int size = uploadVideoList.size();
+            for (int i = 0; i < size; i++) {
+                UploadVideoBean bean = uploadVideoList.get(i);
+                if(StringUtils.isSame(bean.getPath(),videoPath)){
+                    UIHelper.ToastMessage(this, "该视频已在上传视频列表中...");
+                    return;
+                }
+            }
         }
         if (StringUtils.isEmpty(videoPath) || StringUtils.isEmpty(videoPicPath)) {
             UIHelper.ToastMessage(this, "请选择上传的教程视频");
@@ -140,24 +158,36 @@ public class PublishCourseActivity extends BaseActivity {
         }
         List<String> list = new ArrayList<>();
         list.add(videoPicPath);
-        list.add(videoPath);
+//        list.add(videoPath);
         updateFileTask = new UpdateFileTask(this);
         updateFileTask.setParameter(list, CommonUtils.isOne);
-        updateFileTask.setUploadingText("教程上传中...");
+        updateFileTask.setUploadingText("正在处理,请稍后...");
         updateFileTask.setUploadingFileCallBack(new UpdateFileTask.UploadingFileCallBack() {
             @Override
             public void success(List<String> paths) {
                 if (isFinishing()) {
                     return;
                 }
-                if (!StringUtils.isEmpty(paths) && paths.size() == 2) {
-                    submitVideoCourse(paths);
+                if (!StringUtils.isEmpty(paths) && paths.size() == 1) {
+                    L.d("AyncListObjects", "上传视频封面到阿里云返回的图片地址：" + paths.get(0));
+                    UploadVideoBean bean = new UploadVideoBean();
+                    bean.setPic(paths.get(0));
+                    bean.setStatus(getString(R.string.waiting));
+                    bean.setCid(classifyBean.getId());
+                    bean.setTitle(videoTitle);
+                    bean.setPath(videoPath);
+                    bean.setProgress(0);
+                    dbUploadViewHelper.insertUploadVideoBean(bean);
+
+                    UpdateUploadEvent event = new UpdateUploadEvent();
+                    event.setStatus(6);
+                    EventBus.getDefault().post(event);
+
+                    finish();
                 }
             }
         });
         updateFileTask.executeUpdateFileTask();
-//        YiXiuGeApi api = new YiXiuGeApi("app/video_add");
-//        api.
     }
 
     private void submitVideoCourse(List<String> list) {
@@ -165,7 +195,7 @@ public class PublishCourseActivity extends BaseActivity {
         api.addParams("title", CommonUtils.getStringByEditText(videoTitleEt));
         api.addParams("pic", list.get(0));
         api.addParams("video", list.get(1));
-        api.addParams("cid", classifyBean.getCid());
+        api.addParams("cid", classifyBean.getId());
         api.addParams("uid", api.getUserId(this));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
@@ -174,7 +204,7 @@ public class PublishCourseActivity extends BaseActivity {
                     return;
                 }
                 UIHelper.ToastMessage(getContext(), "发布成功");
-                EventBus.getDefault().post(new AddCourseEvent(classifyBean.getCid()));//刷新cid == classifyBean.getCid()的教程列表
+                EventBus.getDefault().post(new AddCourseEvent(classifyBean.getId()));//刷新cid == classifyBean.getCid()的教程列表
                 finish();
             }
         });
@@ -182,18 +212,6 @@ public class PublishCourseActivity extends BaseActivity {
 
     @OnClick(R.id.video_pic_tv)
     public void onViewClicked() {
-//        new LFilePicker()
-//                .withActivity(this)
-//                .withRequestCode(100)
-//                .withIconStyle(Constant.ICON_STYLE_YELLOW)
-//                .withTitle("选择上传视频")//标题文字
-//                .withStartPath("/sdcard")//指定初始显示路径
-//                .withMutilyMode(false)//单选
-//                .withFileFilter(new String[]{".mp4"})//过滤！
-//                .withBackIcon(Constant.BACKICON_STYLEONE)
-//                .withBackgroundColor("#1593f0")//标题背景颜色
-//                .start();
-
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("video/*");//选择视频 （mp4 3gp 是android支持的视频格式）
         intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -232,20 +250,6 @@ public class PublishCourseActivity extends BaseActivity {
             }
         }
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (resultCode == Activity.RESULT_OK) {//是否选择，没选择就不会继续
-//            Uri uri = data.getData();//得到uri，后面就是将uri转化成file的过程。
-//            String[] proj = {MediaStore.Images.Media.DATA};
-//            Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
-//            int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//            actualimagecursor.moveToFirst();
-//            String img_path = actualimagecursor.getString(actual_image_column_index);
-//            File file = new File(img_path);
-//            Toast.makeText(this, img_path+" 000", Toast.LENGTH_SHORT).show();
-//        }
-//    }
 
     @Override
     protected void onDestroy() {

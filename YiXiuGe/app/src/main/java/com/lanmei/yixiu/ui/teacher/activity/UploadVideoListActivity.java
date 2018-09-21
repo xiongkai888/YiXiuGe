@@ -1,5 +1,6 @@
 package com.lanmei.yixiu.ui.teacher.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -9,16 +10,24 @@ import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.YiXiuApp;
+import com.lanmei.yixiu.event.UpdateUploadEvent;
 import com.lanmei.yixiu.ui.teacher.uploadvideo.UploadVideoBean;
 import com.lanmei.yixiu.ui.teacher.uploadvideo.UploadVideoListAdapter;
 import com.lanmei.yixiu.ui.teacher.uploadvideo.UploadVideoListContract;
 import com.lanmei.yixiu.ui.teacher.uploadvideo.UploadVideoListPresenter;
+import com.lanmei.yixiu.ui.teacher.uploadvideo.UploadVideoService;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
+import com.xson.common.utils.IntentUtil;
+import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -53,6 +62,8 @@ public class UploadVideoListActivity extends BaseActivity implements Toolbar.OnM
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
+
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setTitle(getString(R.string.upload_video));
         toolbar.setNavigationIcon(R.drawable.back);
@@ -65,10 +76,10 @@ public class UploadVideoListActivity extends BaseActivity implements Toolbar.OnM
         presenter = new UploadVideoListPresenter(YiXiuApp.applicationContext, this);
         smartSwipeRefreshLayout.initWithLinearLayout();
         adapter = new UploadVideoListAdapter(this, presenter);
-        adapter.setData(presenter.getUploadVideoList());
         smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NO_PAGE);
         smartSwipeRefreshLayout.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        initService();
         setState();
     }
 
@@ -76,6 +87,51 @@ public class UploadVideoListActivity extends BaseActivity implements Toolbar.OnM
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    //
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updateUploadEvent(UpdateUploadEvent event) {
+        int status = event.getStatus();
+        switch (status) {
+            case 0:
+                L.d("AyncListObjects", "status：等待中：" + status);
+                adapter.getData().set(0, event.getBean());
+                adapter.notifyItemChanged(0);
+                break;
+            case 1:
+                L.d("AyncListObjects", "status：正在上传：" + status);
+                adapter.getData().set(0, event.getBean());
+                adapter.notifyItemChanged(0);
+                break;
+            case 2:
+                L.d("AyncListObjects", "status：上传视频阿里云成功：" + status);
+                adapter.getData().set(0, event.getBean());
+                adapter.notifyItemChanged(0);
+                break;
+            case 3:
+                L.d("AyncListObjects", "status：上传视频到阿里云失败：" + status);
+                adapter.getData().set(0, event.getBean());
+                adapter.notifyItemChanged(0);
+                break;
+            case 4://上传视频成功后提交视频资料到后台也成功
+                L.d("AyncListObjects", "status：上传视频成功后提交视频资料到后台也成功：" + status);
+                adapter.setData(presenter.getUploadVideoList());
+                adapter.notifyDataSetChanged();
+                setState();
+                break;
+            case 5://上传视频成功后提交视频资料到后台失败
+                L.d("AyncListObjects", "status：上传视频成功后提交视频资料到后台失败：" + status);
+                adapter.getData().set(0, event.getBean());
+                adapter.notifyItemChanged(0);
+                break;
+            case 6://启动发布视频
+                L.d("AyncListObjects", "status：启动发布视频：" + status);
+                initService();
+                setState();
+                break;
+        }
     }
 
     private void setState() {
@@ -151,25 +207,27 @@ public class UploadVideoListActivity extends BaseActivity implements Toolbar.OnM
                 presenter.deleteBySelectBean();
                 adapter.setData(presenter.getUploadVideoList());
                 adapter.notifyDataSetChanged();
+                initService();
                 setState();
                 break;
             case R.id.ll_upload_video://上传视频
-                UploadVideoBean bean = new UploadVideoBean();
-                bean.setPath("11111111111111");
-                bean.setStatus("正在上传中....");
-                bean.setTitle("测试");
-                bean.setProgress(91);
-                bean.setPic("http://www.ce.cn/newtravel/mjxj/mjtp/200607/08/W020060708336050196304.jpg");
-                presenter.insertUploadVideoBean(bean);
-                adapter.setData(presenter.getUploadVideoList());
-                adapter.notifyDataSetChanged();
-                setState();
-                //                IntentUtil.startActivity(this, PublishCourseActivity.class);
+                IntentUtil.startActivity(this, PublishCourseActivity.class);
                 break;
         }
 
     }
 
+
+    private void initService() {
+        //构建绑定服务的Intent对象
+        if (presenter.getUploadVideoCount() > 0) {
+            adapter.setData(presenter.getUploadVideoList());
+            adapter.notifyDataSetChanged();
+            Intent uploadVideoService = new Intent(this, UploadVideoService.class);
+            startService(uploadVideoService);
+        }
+
+    }
 
     @Override
     public void showTextView(boolean isAllSelect) {
@@ -178,8 +236,10 @@ public class UploadVideoListActivity extends BaseActivity implements Toolbar.OnM
         deleteTv.setText(isAllSelect ? R.string.all_delete : R.string.delete);
     }
 
+
     @Override
     public void showBottom(boolean isShow) {
         ll_bottom.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
+
 }

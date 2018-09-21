@@ -12,6 +12,15 @@ public class UploadVideoBean {
     private String status;//状态 正在上传、等待上传、暂停、完成
     private boolean isEdit;//是否选中
     private int progress;//进度
+    private String cid;//分类
+
+    public void setCid(String cid) {
+        this.cid = cid;
+    }
+
+    public String getCid() {
+        return cid;
+    }
 
     public String getTitle() {
         return title;

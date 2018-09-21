@@ -1,7 +1,6 @@
 package oss;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.sdk.android.oss.ClientConfiguration;
@@ -35,9 +34,7 @@ public class BaseOss {
 
     public BaseOss(Context context) {
         this.context = context;
-        this.userId = CommonUtils.getUserId(context);
-        if (TextUtils.isEmpty(userId))
-            userId="tourist";
+        userId = CommonUtils.getUserId(context);
         testBucket=OssUserInfo.testBucket;
         objectDir="android/"+userId;
         testObject=objectDir;

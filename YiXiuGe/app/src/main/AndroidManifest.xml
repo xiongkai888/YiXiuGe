@@ -138,6 +138,10 @@
         <activity
             android:name=".ui.home.activity.NoticeActivity"
             android:screenOrientation="portrait" />
+        <!--上传服务-->
+        <service
+            android:name=".ui.teacher.uploadvideo.UploadVideoService" />
+
         <activity
             android:name=".ui.home.activity.TeacherActivity"
             android:screenOrientation="portrait" />

@@ -35,6 +35,11 @@ public class UploadVideoListPresenter implements UploadVideoListContract.Present
     }
 
     @Override
+    public void deleteUploadVideoBean(UploadVideoBean bean) {
+        dataHelper.deleteUploadVideoBean(bean);
+    }
+
+    @Override
     public void deleteBySelectBean() {
         dataHelper.deleteBySelectBean();
     }
@@ -64,6 +69,11 @@ public class UploadVideoListPresenter implements UploadVideoListContract.Present
     @Override
     public String getIdsBySelectedAndNoRead() {
         return dataHelper.getIdsBySelectedAndNoRead();
+    }
+
+    @Override
+    public int getUploadVideoCount() {
+        return dataHelper.getUploadVideoCount();
     }
 
     public UploadVideoListPresenter(Context context, UploadVideoListContract.View view) {

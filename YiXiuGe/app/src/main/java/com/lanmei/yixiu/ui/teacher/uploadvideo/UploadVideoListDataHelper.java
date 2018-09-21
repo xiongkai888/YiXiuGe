@@ -26,6 +26,9 @@ public class UploadVideoListDataHelper {
         list = dbUploadViewHelper.getUploadVideoList();
     }
 
+    public void deleteUploadVideoBean(UploadVideoBean bean) {
+        dbUploadViewHelper.deleteUploadVideoBean(bean);
+    }
 
     public void deleteBySelectBean() {
         dbUploadViewHelper.delete(getListBySelected());
@@ -41,6 +44,10 @@ public class UploadVideoListDataHelper {
             }
         }
         return true;
+    }
+
+    public int getUploadVideoCount() {
+        return dbUploadViewHelper.getUploadVideoCount();
     }
 
     private boolean isNull() {

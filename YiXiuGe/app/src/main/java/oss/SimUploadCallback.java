@@ -13,18 +13,12 @@ import oss.callback.UploadCallback;
 public abstract class SimUploadCallback implements UploadCallback<ResumableUploadRequest, CompleteMultipartUploadResult> {
 
     public UploadVideoBean videoUpload = null;
-    public int position;
 
-    public SimUploadCallback() {
-    }
-
-    public SimUploadCallback(int position, UploadVideoBean videoUpload) {
-        this.position = position;
+    public SimUploadCallback(UploadVideoBean videoUpload) {
         this.videoUpload = videoUpload;
     }
 
     public void setData(int position, UploadVideoBean videoUpload) {
-        this.position = position;
         this.videoUpload = videoUpload;
     }
 
@@ -32,7 +26,4 @@ public abstract class SimUploadCallback implements UploadCallback<ResumableUploa
         this.videoUpload = videoUpload;
     }
 
-    public void setPosition(int position) {
-        this.position = position;
-    }
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.utils.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
+import com.xson.common.helper.ImageHelper;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -78,11 +79,18 @@ public class UploadVideoListAdapter extends SwipeRefreshAdapter<UploadVideoBean>
         }
 
         public void setParameter(UploadVideoBean bean) {
-//            progressBar.setProgress(bean.getProgress());
-//            ImageHelper.load(context,bean.getPic(),picIv,null,true,R.drawable.default_pic,R.drawable.default_pic);
-//            titleTv.setText(bean.getTitle());
-//            progressTv.setText(bean.getProgress()+"%");
-//            statusTv.setText(bean.getStatus());
+            progressBar.setProgress(bean.getProgress());
+            ImageHelper.load(context,bean.getPic(),picIv,null,true,R.drawable.default_pic,R.drawable.default_pic);
+            titleTv.setText(bean.getTitle());
+            progressTv.setText(bean.getProgress()+"%");
+            statusTv.setText(bean.getStatus());
+
+//            L.d("AyncListObjects", "bean.getProgress()：" + bean.getProgress());
+//            L.d("AyncListObjects", "bean.getTitle()：" + bean.getTitle());
+//            L.d("AyncListObjects", "bean.getStatus()：" + bean.getStatus());
+//            L.d("AyncListObjects", "bean.getPic()：" + bean.getPic());
+//            L.d("AyncListObjects", "bean.getCid()：" + bean.getCid());
+//            L.d("AyncListObjects", "bean.getPath()：" + bean.getPath());
 
             if (presenter.isEdit()) {
                 compileIv.setVisibility(View.VISIBLE);

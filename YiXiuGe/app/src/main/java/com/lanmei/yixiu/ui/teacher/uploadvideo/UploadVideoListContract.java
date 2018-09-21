@@ -21,9 +21,11 @@ public class UploadVideoListContract {
         void setEdit(boolean isEdit);//是不是设置为编辑状态
         List<UploadVideoBean> getListBySelected();
         boolean isEdit();
-        void insertUploadVideoBean(UploadVideoBean bean);
+        void insertUploadVideoBean(UploadVideoBean bean);//插入数据
+        void deleteUploadVideoBean(UploadVideoBean bean);//删除数据
         void deleteBySelectBean();//删除选中的上传视频、并停止上传
         List<UploadVideoBean> getUploadVideoList();
         String getIdsBySelectedAndNoRead();//用于设置为已读
+        int getUploadVideoCount();//获取上传视频数量
     }
 }
