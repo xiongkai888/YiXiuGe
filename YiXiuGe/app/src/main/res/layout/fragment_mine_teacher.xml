@@ -18,7 +18,7 @@
                 android:layout_width="@dimen/d_80dp"
                 android:layout_height="@dimen/d_80dp"
                 android:layout_marginLeft="@dimen/d_20dp"
-                android:src="@drawable/temp_pic" />
+                android:src="@drawable/default_pic" />
 
             <TextView
                 android:id="@+id/name_tv"

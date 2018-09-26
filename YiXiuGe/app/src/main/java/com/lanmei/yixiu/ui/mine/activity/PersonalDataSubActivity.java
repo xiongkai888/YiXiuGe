@@ -121,6 +121,8 @@ public class PersonalDataSubActivity extends BaseActivity {
     TextView learnSubjectTv;//要学
     @InjectView(R.id.technical_post_tv)
     TextView technicalPostTv;//职称
+    @InjectView(R.id.sex_tv)
+    TextView sexTv;//性别
 
     private CameraHelper cameraHelper;
     private UserBean bean;
@@ -186,11 +188,24 @@ public class PersonalDataSubActivity extends BaseActivity {
             unit = bean.getUnit();
             education = bean.getEducation();
             technicalPost = bean.getPosition();
-            if (!StringUtils.isEmpty(sex)) {
+            if (StringUtils.isSame(sex, CommonUtils.isZero)) {
+                mRadgroup.setVisibility(View.VISIBLE);
+                mRadgroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                        if (checkedId == R.id.btnMan) {
+                            sex = CommonUtils.isOne;
+                        } else if (checkedId == R.id.btnWoman) {
+                            sex = CommonUtils.isTwo;
+                        }
+                        dataIsChange();
+                    }
+                });
+            } else {
                 if (StringUtils.isSame(sex, CommonUtils.isOne)) {
-                    btnMan.setChecked(true);
+                    sexTv.setText(R.string.man);
                 } else if (StringUtils.isSame(sex, CommonUtils.isTwo)) {
-                    btnWoman.setChecked(true);
+                    sexTv.setText(R.string.woman);
                 }
             }
 
@@ -217,32 +232,16 @@ public class PersonalDataSubActivity extends BaseActivity {
             cameraHelper.setHeadPathStr(pic);
             ImageHelper.load(this, pic, mAvatarIv, null, true, R.drawable.default_pic, R.drawable.default_pic);
 
-            if (!StringUtils.isSame(CommonUtils.getUserType(this),CommonUtils.isZero)){//是教师隐藏
+            if (!StringUtils.isSame(CommonUtils.getUserType(this), CommonUtils.isZero)) {//是教师隐藏
                 llSchool.setVisibility(View.GONE);
                 llStudentType.setVisibility(View.GONE);
                 llStudentNature.setVisibility(View.GONE);
                 llLearnedSubject.setVisibility(View.GONE);
                 llLearnSubject.setVisibility(View.GONE);
             }
-
         }
         mSaveButton.setEnabled(false);
         mSaveButton.setBackgroundResource(R.drawable.button_unable);
-
-
-        mRadgroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                if (checkedId == R.id.btnMan) {
-                    sex = CommonUtils.isOne;
-                } else if (checkedId == R.id.btnWoman) {
-                    sex = CommonUtils.isTwo;
-                }
-                L.d("BeanRequest", sex + "");
-                dataIsChange();
-            }
-        });
-
         initEducationPicker();
     }
 
@@ -520,7 +519,7 @@ public class PersonalDataSubActivity extends BaseActivity {
         } else {
             api.addParams("pic", url);
         }
-        if (technicalPostIndex != -1 && !StringUtils.isEmpty(technicalPostList) ){//职称
+        if (technicalPostIndex != -1 && !StringUtils.isEmpty(technicalPostList)) {//职称
             api.addParams("position", technicalPostList.get(technicalPostIndex).getId());
         }
         api.addParams("weixin", CommonUtils.getStringByTextView(weixinTv));

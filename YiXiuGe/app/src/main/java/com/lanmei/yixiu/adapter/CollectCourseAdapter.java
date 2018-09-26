@@ -61,7 +61,7 @@ public class CollectCourseAdapter extends SwipeRefreshAdapter<CourseClassifyList
 
         @InjectView(R.id.thumb_iv)
         ImageView thumbIv;//视频封面
-        @InjectView(R.id.title_et)
+        @InjectView(R.id.title_tv)
         TextView titleTv;//
         @InjectView(R.id.pic_iv)
         CircleImageView picIv;//头像

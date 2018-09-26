@@ -29,11 +29,11 @@ public class FileUtils {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                File appDir = new File(sdDir, "yiXiaoBei");
+                File appDir = new File(sdDir, "zhongshanyiyuan");
                 if (!appDir.exists()) {
                     appDir.mkdir();
                 }
-                SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置以当前时间格式为图片名称
+                SimpleDateFormat df = new SimpleDateFormat("mmss");//设置以当前时间格式为图片名称
                 String fileName = df.format(new Date()) + ".png";
                 File file = new File(appDir, fileName);
                 try {

@@ -78,7 +78,7 @@ public class CourseDetailsActivity extends BaseActivity {
         controller = new SwipeRefreshController<NoPageListBean<NewsCommentBean>>(this, smartSwipeRefreshLayout, api, adapter) {
         };
         controller.loadFirstPage();
-        adapter.setCourseClassifyListBean(bean);
+//        adapter.setCourseClassifyListBean(bean);
         mJzvdStd.setUp(bean.getVideo(), bean.getTitle()
                 , JzvdStd.SCREEN_WINDOW_NORMAL);
         ImageHelper.load(this, bean.getPic(), mJzvdStd.thumbImageView, null, true, R.drawable.default_pic, R.drawable.default_pic);
@@ -102,6 +102,7 @@ public class CourseDetailsActivity extends BaseActivity {
                 }
                 bean = response.data;
                 adapter.setCourseClassifyListBean(bean);
+                adapter.notifyDataSetChanged();
                 EventBus.getDefault().post(new CourseOperationEvent(bean.getId(), bean.getLiked(), bean.getLike(),"" + (StringUtils.toInt(bean.getView(), 0) + 1), bean.getReviews(), bean.getFavoured(), bean.getFavour()));
             }
         });

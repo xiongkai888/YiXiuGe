@@ -18,14 +18,12 @@ import com.othershe.calendarview.bean.CalendarEvent;
 import com.othershe.calendarview.bean.DateBean;
 import com.othershe.calendarview.listener.OnPagerChangeListener;
 import com.othershe.calendarview.listener.OnSingleChooseListener;
-import com.othershe.calendarview.utils.SolarUtil;
 import com.othershe.calendarview.weiget.CalendarView;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.IntentUtil;
-import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.SysUtils;
 import com.xson.common.utils.UIBaseUtils;
@@ -71,15 +69,9 @@ public class MyClassScheduleActivity extends BaseActivity {
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
-//        setSupportActionBar(mToolbar);
-//        ActionBar actionbar = getSupportActionBar();
-//        actionbar.setDisplayShowTitleEnabled(true);
-//        actionbar.setDisplayHomeAsUpEnabled(true);
-//        actionbar.setTitle(R.string.my_class_schedule);
-//        actionbar.setHomeAsUpIndicator(R.drawable.back);
 
         toolbarNameTv.setText(R.string.my_class_schedule);
-        menuTv.setText("全部");
+        menuTv.setText(R.string.all);
 
         api.addParams("uid", api.getUserId(this));
         formatTime = new FormatTime();
@@ -110,7 +102,7 @@ public class MyClassScheduleActivity extends BaseActivity {
         calendarView.setOnPagerChangeListener(new OnPagerChangeListener() {
             @Override
             public void onPagerChanged(int[] date) {
-                L.d(L.TAG, date[0] + "年" + date[1] + "月一共" + SolarUtil.getMonthDays(date[0], date[1]) + "天");
+//                L.d(L.TAG, date[0] + "年" + date[1] + "月一共" + SolarUtil.getMonthDays(date[0], date[1]) + "天");
                 title.setText(getString(R.string.year_month, String.valueOf(date[0]), String.valueOf(date[1])));
             }
         });
