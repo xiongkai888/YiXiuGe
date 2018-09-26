@@ -467,11 +467,11 @@ public class StringUtils {
      */
     public static boolean isMobile(String mobile) {
         Pattern p_10086 = Pattern
-                .compile("^((13[4-9])|(147)|(15[0-2,7-9])|(178)|(18[2-4,7-8]))\\d{8}|(1705)\\d{7}$");
+                .compile("^((13[4-9])|(147)|(198)|(15[0-2,7-9])|(178)|(18[2-4,7-8]))\\d{8}|(1705)\\d{7}$");
         Pattern p_10010 = Pattern
-                .compile("^((13[0-2])|(145)|(15[5-6])|(176)|(18[5,6]))\\d{8}|(1709)\\d{7}$");
+                .compile("^((13[0-2])|(145)|(15[5-6])|(166)|(176)|(18[5,6]))\\d{8}|(1709)\\d{7}$");
         Pattern p_10001 = Pattern
-                .compile("^((133)|(153)|(177)|(173)|(18[0,1,9]))\\d{8}$");
+                .compile("^((133)|(153)|(177)|(199)|(173)|(18[0,1,9]))\\d{8}$");
         Matcher m_10086 = p_10086.matcher(mobile);
         Matcher m_10010 = p_10010.matcher(mobile);
         Matcher m_10001 = p_10001.matcher(mobile);

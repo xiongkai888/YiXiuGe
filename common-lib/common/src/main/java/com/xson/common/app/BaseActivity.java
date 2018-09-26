@@ -2,16 +2,12 @@ package com.xson.common.app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.Window;
 
 import com.umeng.analytics.MobclickAgent;
-import com.xson.common.R;
 import com.xson.common.utils.L;
 
 import java.util.ArrayList;
@@ -60,11 +56,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         initIntent(getIntent());
         ButterKnife.inject(this, this);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//6.0以上
-            Window window = getWindow();
-            window.setStatusBarColor(getResources().getColor(R.color.white_selectable_bg));
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//6.0以上
+//            Window window = getWindow();
+//            window.setStatusBarColor(getResources().getColor(R.color.white_selectable_bg));
+//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//        }
         initAllMembersView(savedInstanceState);
     }
 

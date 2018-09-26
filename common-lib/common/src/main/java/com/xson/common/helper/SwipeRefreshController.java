@@ -192,16 +192,4 @@ public abstract class SwipeRefreshController<T2 extends AbsListBean> implements 
         return page;
     }
 
-    IsFirstPageListener mIsFirstPageListener;//第一页监听
-
-    public interface IsFirstPageListener {
-        void isFirst();//获取第一页数据的时候
-
-        void isMore();//获取前n页数据的时候
-    }
-
-    public void setIsFirstPageListener(IsFirstPageListener isFirstPageListener) {
-        mIsFirstPageListener = isFirstPageListener;
-    }
-
 }

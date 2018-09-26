@@ -17,7 +17,7 @@ import butterknife.InjectView;
 
 
 /**
- * (最多显示三张图)
+ *
  */
 public class ItemImageAdapter extends SwipeRefreshAdapter<String> {
 

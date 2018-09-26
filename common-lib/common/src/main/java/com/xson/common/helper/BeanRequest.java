@@ -87,7 +87,7 @@ public class BeanRequest<T extends BaseBean> extends MultiPartRequest<T> {
 
     public BeanRequest(int method, String url, Map<String, Object> postParamMap, SuccessListener<T> successListener, Response.ErrorListener errorListener) {
         super(method, url, null, errorListener);
-        L.d("BeanRequest", "URL=" + url + " POST=" + postParamMap);
+        L.d(L.TAG, "URL=" + url + " POST=" + postParamMap);
         mSuccessListener = successListener;
         if (postParamMap != null) {
             Object value;
@@ -97,7 +97,8 @@ public class BeanRequest<T extends BaseBean> extends MultiPartRequest<T> {
                     File file = (File) value;
                     addFile(entry.getKey(), file.getAbsolutePath());
                 } else {
-                    addMultipartParam(entry.getKey(), "text/plain", String.valueOf(value));
+//                    addMultipartParam(entry.getKey(), "text/plain", String.valueOf(value));
+//                    L.d("AyncListObjects", "212121212");
                     mPostParamMap.put(entry.getKey(), String.valueOf(value));
                 }
             }

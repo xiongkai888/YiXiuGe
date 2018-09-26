@@ -185,6 +185,11 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
     public void initWithLinearLayout() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         setLayoutManager(layoutManager);
+        recyclerView.setNestedScrollingEnabled(false);
+    }
+
+    public void setNestedScrollingEnabled(boolean enabled) {
+        recyclerView.setNestedScrollingEnabled(enabled);
     }
 
     public void initGridLinearLayout(int spanCount) {
@@ -487,14 +492,6 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
         if(isLoading())
             hideLoadingLayout();
     }
-
-    // use: getAdapter().setEmptyView();
-//    public void setEmptyView(View view) {
-//        emptyParentLayout.removeAllViews();
-//        LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//        lp.gravity = Gravity.CENTER;
-//        emptyParentLayout.addView(view, lp);
-//    }
 
     public void scrollToPosition(int position) {
         recyclerView.scrollToPosition(position);

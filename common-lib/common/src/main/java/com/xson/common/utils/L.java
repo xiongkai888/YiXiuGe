@@ -12,14 +12,14 @@ import java.lang.reflect.Field;
  */
 public class L {
 
-    public static int limit = 20;//列表条数限制
+    public final static int limit = 20;//列表条数限制
 
     public static boolean debug = true;
     public final static String TAG = "BeanRequest";
     public final static String p = "p";
 
     public static int v(String tag, String msg) {
-        if (!debug)
+        if (!debug || StringUtils.isEmpty(msg))
             return 0;
         return Log.v(tag, msg);
     }
@@ -49,7 +49,7 @@ public class L {
     }
 
     public static int d(String tag, String msg, Throwable tr) {
-        if (!debug)
+        if (!debug || StringUtils.isEmpty(msg))
             return 0;
         return Log.d(tag, msg, tr);
     }
@@ -63,13 +63,13 @@ public class L {
     }
 
     public static int i(String tag, String msg) {
-        if (!debug)
+        if (!debug || StringUtils.isEmpty(msg))
             return 0;
         return Log.i(tag, msg);
     }
 
     public static int i(String tag, String msg, Throwable tr) {
-        if (!debug)
+        if (!debug || StringUtils.isEmpty(msg))
             return 0;
         return Log.i(tag, msg, tr);
     }
