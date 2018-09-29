@@ -135,6 +135,27 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_courseware"
+            style="@style/ll_bottom_h"
+            android:padding="@dimen/d_10dp">
+
+            <TextView
+                style="@style/text_weight"
+                android:drawableLeft="@drawable/mine_teacher_6"
+                android:drawablePadding="@dimen/d_10dp"
+                android:gravity="center_vertical"
+                android:text="@string/tutorial_courseware" />
+
+
+            <TextView
+                style="@style/text12color666"
+                android:layout_marginLeft="@dimen/d_10dp"
+                android:drawableRight="@drawable/in_right"
+                android:gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/ll_evaluate"
             style="@style/ll_bottom_h"
             android:padding="@dimen/d_10dp">

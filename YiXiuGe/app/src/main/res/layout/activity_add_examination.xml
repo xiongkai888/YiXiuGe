@@ -41,7 +41,7 @@
 
                 <ImageView
                     style="@style/text"
-                    android:src="@drawable/pay_off" />
+                    android:src="@drawable/pay_off_sub" />
 
                 <TextView
                     style="@style/text"
@@ -59,7 +59,7 @@
 
                 <ImageView
                     style="@style/text"
-                    android:src="@drawable/pay_off" />
+                    android:src="@drawable/pay_off_sub" />
 
                 <TextView
                     style="@style/text"
@@ -77,7 +77,7 @@
 
                 <ImageView
                     style="@style/text"
-                    android:src="@drawable/pay_off" />
+                    android:src="@drawable/pay_off_sub" />
 
                 <TextView
                     style="@style/text"
@@ -95,7 +95,7 @@
 
                 <ImageView
                     style="@style/text"
-                    android:src="@drawable/pay_off" />
+                    android:src="@drawable/pay_off_sub" />
 
                 <TextView
                     style="@style/text"

@@ -13,7 +13,7 @@
     <ImageView
         android:id="@+id/compile_iv"
         style="@style/text"
-        android:src="@drawable/pay_off" />
+        android:src="@drawable/pay_off_sub" />
 
     <ImageView
         android:id="@+id/pic_iv"

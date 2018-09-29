@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/v_all_match_parent_no"
-    tools:context=".ui.mine.activity.PublishNoteActivity">
+    tools:context=".ui.teacher.activity.PublishCoursewareActivity">
 
     <include layout="@layout/include_centertitletoolbar" />
 
@@ -23,7 +23,7 @@
                 android:layout_marginBottom="@dimen/d_10dp"
                 android:layout_marginTop="@dimen/d_10dp"
                 android:background="@drawable/border_bottom_top_divider"
-                android:hint="@string/input_note_title"
+                android:hint="@string/input_courseware_title"
                 android:lines="1"
                 android:padding="@dimen/d_10dp" />
 
@@ -39,7 +39,7 @@
                     style="@style/match_parent"
                     android:background="@null"
                     android:layout_marginBottom="@dimen/d_10dp"
-                    android:hint="@string/input_note_content" />
+                    android:hint="@string/input_courseware_content" />
 
                 <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                     android:id="@+id/snpl_moment_add_photos"
@@ -65,7 +65,7 @@
             <TextView
                 style="@style/text12color666"
                 android:layout_margin="@dimen/d_10dp"
-                android:text="上传附件 (PDF/JPG/XLSX/DOC/DOCX/PPT/PPTX/PNG/XLS)" />
+                android:text="上传课件 (PDF/JPG/XLSX/DOC/DOCX/PPT/PPTX/PNG/XLS)" />
 
             <LinearLayout
                 android:layout_width="match_parent"

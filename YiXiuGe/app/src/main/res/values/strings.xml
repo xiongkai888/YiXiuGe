@@ -30,11 +30,14 @@
     <string name="name">李菲菲</string>
     <string name="input_keyword">请输入关键字</string>
     <string name="my_checking_in">我的考勤</string>
+    <string name="tutorial_courseware">教程课件</string>
     <string name="checking_in_manage">考勤管理</string>
     <string name="my_note">我的笔记</string>
     <string name="my_examination">我的考试</string>
     <string name="uploading_note">上传笔记</string>
+    <string name="uploading_courseware">上传课件</string>
     <string name="publish_note">发笔记</string>
+    <string name="publish_courseware">发课件</string>
     <string name="publish">发布</string>
     <string name="my_class_schedule">我的课程表</string>
     <string name="class_details">课程详情</string>
@@ -90,8 +93,10 @@
     <string name="publish_course">发布教程</string>
     <string name="zero">0</string>
     <string name="search_course">搜索教程</string>
+    <string name="input_courseware_title">请输入课件标题</string>
     <string name="input_note_title">请输入笔记标题</string>
     <string name="input_note_content">请输入笔记内容</string>
+    <string name="input_courseware_content">请输入课件内容</string>
     <string name="please_select_picture">请选择图片</string>
     <string name="note_details">笔记详情</string>
     <string name="check">查看</string>

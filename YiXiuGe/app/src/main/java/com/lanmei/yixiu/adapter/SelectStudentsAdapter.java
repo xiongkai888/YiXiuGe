@@ -69,7 +69,7 @@ public class SelectStudentsAdapter extends SwipeRefreshAdapter<SelectStudentsBea
 
 
         public void setParameter(final SelectStudentsBean bean) {
-            selectIv.setImageResource(bean.isSelect()?R.drawable.pay_on:R.drawable.pay_off);
+            selectIv.setImageResource(bean.isSelect()?R.drawable.pay_on_sub :R.drawable.pay_off_sub);
 
             nameTv.setText(bean.getName());
 
