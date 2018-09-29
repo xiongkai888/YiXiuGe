@@ -471,7 +471,7 @@ public class StringUtils {
         Pattern p_10010 = Pattern
                 .compile("^((13[0-2])|(145)|(15[5-6])|(166)|(176)|(18[5,6]))\\d{8}|(1709)\\d{7}$");
         Pattern p_10001 = Pattern
-                .compile("^((133)|(153)|(177)|(199)|(173)|(18[0,1,9]))\\d{8}$");
+                .compile("^((133)|(153)|(177)|(199)|(173)|(18[0-1,9]))\\d{8}$");
         Matcher m_10086 = p_10086.matcher(mobile);
         Matcher m_10010 = p_10010.matcher(mobile);
         Matcher m_10001 = p_10001.matcher(mobile);
