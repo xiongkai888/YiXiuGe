@@ -398,6 +398,31 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/ll_politics_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom_divider"
+                android:paddingBottom="@dimen/d_12dp"
+                android:paddingLeft="@dimen/d_10dp"
+                android:paddingRight="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_12dp">
+
+                <TextView
+                    android:id="@+id/politics_status_u_tv"
+                    style="@style/text"
+                    android:text="政治面貌：" />
+
+
+                <TextView
+                    android:id="@+id/politics_status_tv"
+                    style="@style/text"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/politics_status_u_tv"
+                    android:gravity="right" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/ll_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

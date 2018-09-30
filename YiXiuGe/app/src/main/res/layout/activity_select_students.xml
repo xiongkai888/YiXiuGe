@@ -25,7 +25,7 @@
                 android:paddingLeft="@dimen/d_10dp"
                 android:paddingRight="@dimen/d_5dp"
                 android:paddingTop="@dimen/d_10dp"
-                android:src="@drawable/pay_off_sub" />
+                android:src="@drawable/pay_on" />
 
             <TextView
                 android:id="@+id/all_select_tv"
@@ -49,7 +49,7 @@
                 android:paddingLeft="@dimen/d_10dp"
                 android:paddingRight="@dimen/d_5dp"
                 android:paddingTop="@dimen/d_10dp"
-                android:src="@drawable/pay_off_sub" />
+                android:src="@drawable/pay_on" />
 
             <TextView
                 android:id="@+id/invert_select_tv"

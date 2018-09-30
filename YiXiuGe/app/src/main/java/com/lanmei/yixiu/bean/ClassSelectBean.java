@@ -14,7 +14,7 @@ public class ClassSelectBean implements Serializable{
      * id : 2
      * name : 2018级
      * parent_id : 0
-     * xiaji : [{"id":"36","name":"一班","parent_id":"2"}]
+     * xiaji : [{"id":"48","name":"A组","parent_id":"2","parent_name":"2018级"},{"id":"49","name":"B组","parent_id":"2","parent_name":"2018级"}]
      */
 
     private String id;
@@ -56,14 +56,25 @@ public class ClassSelectBean implements Serializable{
 
     public static class XiajiBean implements Serializable{
         /**
-         * id : 36
-         * name : 一班
+         * id : 48
+         * name : A组
          * parent_id : 2
+         * parent_name : 2018级
          */
 
         private String id;
         private String name;
         private String parent_id;
+        private String parent_name;
+        private boolean isChoose;
+
+        public void setChoose(boolean choose) {
+            isChoose = choose;
+        }
+
+        public boolean isChoose() {
+            return isChoose;
+        }
 
         public String getId() {
             return id;
@@ -87,6 +98,14 @@ public class ClassSelectBean implements Serializable{
 
         public void setParent_id(String parent_id) {
             this.parent_id = parent_id;
+        }
+
+        public String getParent_name() {
+            return parent_name;
+        }
+
+        public void setParent_name(String parent_name) {
+            this.parent_name = parent_name;
         }
     }
 }

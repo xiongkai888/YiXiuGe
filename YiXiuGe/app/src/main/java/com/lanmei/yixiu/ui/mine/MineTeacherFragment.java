@@ -13,6 +13,7 @@ import com.lanmei.yixiu.ui.mine.activity.SettingActivity;
 import com.lanmei.yixiu.ui.teacher.activity.ClassHourActivity;
 import com.lanmei.yixiu.ui.teacher.activity.EvaluateActivity;
 import com.lanmei.yixiu.ui.teacher.activity.MyCourseActivity;
+import com.lanmei.yixiu.ui.teacher.activity.MyTutorialCoursewareActivity;
 import com.lanmei.yixiu.ui.teacher.activity.TutorialCoursewareActivity;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
@@ -81,7 +82,7 @@ public class MineTeacherFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.ll_courseware,R.id.pic_iv,R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_evaluate, R.id.ll_setting, R.id.class_schedule_tv, R.id.kao_shi_tv, R.id.ll_mine_teacher1, R.id.ll_mine_teacher2, R.id.ll_mine_teacher3, R.id.ll_mine_teacher4, R.id.ll_mine_teacher5})
+    @OnClick({R.id.ll_courseware,R.id.ll_my_courseware,R.id.pic_iv,R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_evaluate, R.id.ll_setting, R.id.class_schedule_tv, R.id.kao_shi_tv, R.id.ll_mine_teacher1, R.id.ll_mine_teacher2, R.id.ll_mine_teacher3, R.id.ll_mine_teacher4, R.id.ll_mine_teacher5})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.pic_iv://个人资料
@@ -97,6 +98,9 @@ public class MineTeacherFragment extends BaseFragment {
                 break;
             case R.id.ll_courseware://教程课件
                 IntentUtil.startActivity(context, TutorialCoursewareActivity.class);
+                break;
+            case R.id.ll_my_courseware://我的课件
+                IntentUtil.startActivity(context, MyTutorialCoursewareActivity.class);
                 break;
             case R.id.ll_evaluate://我的评价
 //                CommonUtils.developing(context);

@@ -47,6 +47,13 @@
             android:gravity="center"
             android:text="@string/questionnaire" />
 
+        <TextView
+            android:id="@+id/kaoqin_tv"
+            style="@style/text_weight"
+            android:drawableTop="@drawable/home_5"
+            android:gravity="center"
+            android:text="@string/checking_in" />
+
     </LinearLayout>
 
 

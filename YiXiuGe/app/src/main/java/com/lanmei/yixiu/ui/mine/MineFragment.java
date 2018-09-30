@@ -8,7 +8,6 @@ import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.event.SetUserEvent;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
-import com.xson.common.utils.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -40,7 +39,7 @@ public class MineFragment extends BaseFragment {
 
     public void setUserType() {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.fl_content, StringUtils.isSame(CommonUtils.getUserType(context), CommonUtils.isZero) ? new MineStudentFragment() : new MineTeacherFragment());
+        transaction.replace(R.id.fl_content, CommonUtils.isStudent(context) ? new MineStudentFragment() : new MineTeacherFragment());
         transaction.commitAllowingStateLoss();
     }
 

@@ -34,7 +34,6 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.DateTimePicker;
@@ -72,7 +71,7 @@ public class PublishClassHourActivity extends BaseActivity {
     private ClassroomBean classroomBean;//
 
     private List<ClassSelectBean> classSelectBeans;//班级列表
-    private ClassSelectBean.XiajiBean xiajiBean;//班级
+    private List<ClassSelectBean.XiajiBean> xiajiBeanList;//选择的班级
 
     private DateTimePicker picker;
     private FormatTime time;
@@ -102,7 +101,7 @@ public class PublishClassHourActivity extends BaseActivity {
     private void initDatePicker() {
         picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
         time = new FormatTime();
-        time.setTime(System.currentTimeMillis()/1000 + 60);
+        time.setTime(System.currentTimeMillis() / 1000 + 60);
         int year = time.getYear();
         int month = time.getMonth();
         int day = time.getDay();
@@ -261,7 +260,7 @@ public class PublishClassHourActivity extends BaseActivity {
                 UIHelper.ToastMessage(this, "请选择科目");
                 return;
             }
-            if (StringUtils.isEmpty(xiajiBean)) {
+            if (StringUtils.isEmpty(xiajiBeanList)) {
                 UIHelper.ToastMessage(this, "请选择班级");
                 return;
             }
@@ -293,7 +292,7 @@ public class PublishClassHourActivity extends BaseActivity {
             api.addParams("end_time", time.dateToStampLong(endTime));
             api.addParams("remark", CommonUtils.getStringByEditText(remarkEt));
             api.addParams("room", classroomBean.getId());
-            api.addParams("cid", xiajiBean.getParent_id() + "," + xiajiBean.getId());
+            api.addParams("cid", getClassId());
             api.addParams("kid", subjectsBean.getId());
             api.addParams("title", title);
             api.addParams("type", teachingMethods);
@@ -356,10 +355,35 @@ public class PublishClassHourActivity extends BaseActivity {
     //选择班级的时候调用
     @Subscribe
     public void classSelectEvent(ClassSelectEvent event) {
-        ClassSelectBean bean = classSelectBeans.get(event.getFatherPosition());
-        xiajiBean = bean.getXiaji().get(event.getChildPosition());
-        classTv.setText(bean.getName() + xiajiBean.getName());
+        xiajiBeanList = event.getList();
+        classTv.setText(getName());
     }
+
+    private String getName() {
+        StringBuffer buffer = new StringBuffer();
+        for (ClassSelectBean.XiajiBean xiajiBean:xiajiBeanList){
+            buffer.append(xiajiBean.getParent_name()+xiajiBean.getName()+",");
+        }
+        String name = buffer.toString();
+        if (!StringUtils.isEmpty(name)){
+            name = name.substring(0,name.length()-1);
+        }
+        return name;
+    }
+
+    private String getClassId() {
+        StringBuffer buffer = new StringBuffer();
+        for (ClassSelectBean.XiajiBean xiajiBean:xiajiBeanList){
+            buffer.append(xiajiBean.getParent_id()+","+xiajiBean.getId()+"|");
+        }
+        String id = buffer.toString();
+        if (!StringUtils.isEmpty(id)){
+            id = id.substring(0,id.length()-1);
+        }
+        return id;
+    }
+
+
 
     @Override
     protected void onDestroy() {
@@ -370,11 +394,5 @@ public class PublishClassHourActivity extends BaseActivity {
         classroomPicker = null;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.inject(this);
-    }
 }
 

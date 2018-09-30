@@ -38,7 +38,7 @@ public class ClassSelectAdapter extends SwipeRefreshAdapter<ClassSelectBean> {
             return;
         }
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.setParameter(bean,position);
+        viewHolder.setParameter(bean);
     }
 
 
@@ -55,9 +55,9 @@ public class ClassSelectAdapter extends SwipeRefreshAdapter<ClassSelectBean> {
         }
 
 
-        public void setParameter(ClassSelectBean bean,int position) {
+        public void setParameter(ClassSelectBean bean) {
             gradeNameTv.setText(bean.getName());
-            ClassSelectSubAdapter adapter = new ClassSelectSubAdapter(context,position);
+            ClassSelectSubAdapter adapter = new ClassSelectSubAdapter(context);
             adapter.setData(bean.getXiaji());
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setNestedScrollingEnabled(false);

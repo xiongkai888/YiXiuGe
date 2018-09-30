@@ -113,13 +113,13 @@ public class SelectStudentsActivity extends BaseActivity implements SelectStuden
 
     @Override
     public void showAllSelect(boolean isAllSelect) {
-        allSelectIv.setImageResource(isAllSelect ? R.drawable.pay_on_sub : R.drawable.pay_off_sub);
+        allSelectIv.setImageResource(isAllSelect ? R.drawable.pay_off : R.drawable.pay_on);
         allSelectTv.setText(isAllSelect ? getString(R.string.select_all_no) : getString(R.string.select_all));
     }
 
     @Override
     public void showInvertSelect(boolean isInvertSelect) {
-        invertSelectIv.setImageResource(isInvertSelect ? R.drawable.pay_on_sub : R.drawable.pay_off_sub);
+        invertSelectIv.setImageResource(isInvertSelect ? R.drawable.pay_off : R.drawable.pay_on);
         invertSelectTv.setText(isInvertSelect ? getString(R.string.invert_all_no) : getString(R.string.invert_all));
     }
 

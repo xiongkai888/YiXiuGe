@@ -6,7 +6,7 @@
     <ImageView
         android:id="@+id/choose_iv"
         style="@style/text"
-        android:src="@drawable/pay_off_sub" />
+        android:src="@drawable/pay_off" />
 
     <TextView style="@style/text_weight" />
 

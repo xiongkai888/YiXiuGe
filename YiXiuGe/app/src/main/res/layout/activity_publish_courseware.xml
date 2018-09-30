@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:calendarview="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:calendarview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/v_all_match_parent_no"
     tools:context=".ui.teacher.activity.PublishCoursewareActivity">
 
     <include layout="@layout/include_centertitletoolbar" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            style="@style/v_all_match_parent_no"
             android:focusable="true"
-            android:focusableInTouchMode="true"
-            style="@style/v_all_match_parent_no">
+            android:focusableInTouchMode="true">
 
             <com.xson.common.widget.DrawClickableEditText
                 android:id="@+id/note_title_et"
@@ -37,8 +37,8 @@
                 <com.xson.common.widget.DrawClickableEditText
                     android:id="@+id/note_content_et"
                     style="@style/match_parent"
-                    android:background="@null"
                     android:layout_marginBottom="@dimen/d_10dp"
+                    android:background="@null"
                     android:hint="@string/input_courseware_content" />
 
                 <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
@@ -83,16 +83,43 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerView"
-                    android:layout_marginLeft="@dimen/d_5dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d_5dp" />
 
             </LinearLayout>
 
+            <RelativeLayout
+                style="@style/match_parent_has"
+                android:layout_marginTop="@dimen/d_10dp"
+                android:padding="@dimen/d_10dp">
 
+                <TextView
+                    android:id="@+id/classify_tv"
+                    style="@style/text"
+                    android:text="选择分类"
+                    android:textColor="@color/color666" />
+
+                <TextView
+                    android:id="@+id/name_tv"
+                    style="@style/text"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/d_5dp"
+                    android:layout_toRightOf="@id/classify_tv"
+                    android:gravity="right" />
+
+            </RelativeLayout>
+
+            <TextView style="@style/line_H1dp_divider" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_c"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </LinearLayout>
-    </ScrollView>
+
+    </android.support.v4.widget.NestedScrollView>
 
 
 </LinearLayout>

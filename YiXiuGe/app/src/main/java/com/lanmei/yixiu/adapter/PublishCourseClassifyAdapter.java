@@ -77,7 +77,7 @@ public class PublishCourseClassifyAdapter extends SwipeRefreshAdapter<CourseClas
 
         public void setParameter(CourseClassifyBean bean) {
             nameTv.setText(bean.getName());
-            chooseIv.setImageResource(bean.isChoose()?R.drawable.pay_on_sub :R.drawable.pay_off_sub);
+            chooseIv.setImageResource(bean.isChoose()?R.drawable.pay_on:R.drawable.pay_off);
         }
     }
 

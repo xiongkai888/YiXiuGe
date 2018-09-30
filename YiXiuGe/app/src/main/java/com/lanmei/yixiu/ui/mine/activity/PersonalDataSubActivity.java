@@ -79,15 +79,15 @@ public class PersonalDataSubActivity extends BaseActivity {
     RadioButton btnWoman;
 
     @InjectView(R.id.ll_school)
-    RelativeLayout llSchool;
+    RelativeLayout llSchool;//毕业院校
     @InjectView(R.id.ll_student_type)
-    RelativeLayout llStudentType;
+    RelativeLayout llStudentType;//学生类型
     @InjectView(R.id.ll_student_nature)
-    RelativeLayout llStudentNature;
+    RelativeLayout llStudentNature;//学员性质
     @InjectView(R.id.ll_learned_subject)
-    RelativeLayout llLearnedSubject;
+    RelativeLayout llLearnedSubject;//已学科室
     @InjectView(R.id.ll_learn_subject)
-    RelativeLayout llLearnSubject;
+    RelativeLayout llLearnSubject;//要学科室
 
     private String pic;//头像
     private String name;//姓名
@@ -102,6 +102,7 @@ public class PersonalDataSubActivity extends BaseActivity {
     private String school;//学校
     private String education;//学历
     private String technicalPost;//职称
+    private String political;//政治面貌
 
     @InjectView(R.id.weixin_tv)
     TextView weixinTv;
@@ -123,17 +124,21 @@ public class PersonalDataSubActivity extends BaseActivity {
     TextView technicalPostTv;//职称
     @InjectView(R.id.sex_tv)
     TextView sexTv;//性别
+    @InjectView(R.id.politics_status_tv)
+    TextView politicsStatusTv;//政治面貌
 
     private CameraHelper cameraHelper;
     private UserBean bean;
     private List<EducationBean> educationList;//学历列表
     private List<EducationBean> technicalPostList;//职称列表
-    private int educationIndex = -1;//学历下标
+    private List<EducationBean> politicalList;//政治面貌列表
     private int technicalPostIndex = -1;//职称下标
+    private int politicalIndex = -1;//政治面貌
 
     private AddressAsyncTask addressAsyncTask;
     private OptionPicker educationPicker;//学历选择器
     private OptionPicker technicalPostPicker;//职称选择器
+    private OptionPicker politicalPicker;//政治面貌选择器
 
 
     @Override
@@ -188,6 +193,7 @@ public class PersonalDataSubActivity extends BaseActivity {
             unit = bean.getUnit();
             education = bean.getEducation();
             technicalPost = bean.getPosition();
+            political = bean.getPolitical();
             if (StringUtils.isSame(sex, CommonUtils.isZero)) {
                 mRadgroup.setVisibility(View.VISIBLE);
                 mRadgroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -222,17 +228,24 @@ public class PersonalDataSubActivity extends BaseActivity {
             educationTv.setText(education);
             studentTypeTv.setText(bean.getStudent_type());
             studentNatureTv.setText(bean.getStudent_nature());
-            technicalPostTv.setText(technicalPost);
             initEducation(6);//学历
             if (StringUtils.isEmpty(technicalPost)) {//为空可以选择
                 initEducation(4);//职称
                 setCompoundDrawables(technicalPostTv, R.drawable.in_right);
+            }else {
+                technicalPostTv.setText(technicalPost);
+            }
+            if (StringUtils.isEmpty(political)) {//为空可以选择
+                initEducation(8);//政治面貌
+                setCompoundDrawables(politicsStatusTv, R.drawable.in_right);
+            }else {
+                politicsStatusTv.setText(political);
             }
             pic = bean.getPic();
             cameraHelper.setHeadPathStr(pic);
             ImageHelper.load(this, pic, mAvatarIv, null, true, R.drawable.default_pic, R.drawable.default_pic);
 
-            if (!StringUtils.isSame(CommonUtils.getUserType(this), CommonUtils.isZero)) {//是教师隐藏
+            if (!CommonUtils.isStudent(this)) {//是教师隐藏
                 llSchool.setVisibility(View.GONE);
                 llStudentType.setVisibility(View.GONE);
                 llStudentNature.setVisibility(View.GONE);
@@ -265,12 +278,19 @@ public class PersonalDataSubActivity extends BaseActivity {
                 if (isFinishing()) {
                     return;
                 }
-                if (type == 4) {
-                    technicalPostList = response.data;
-                    initPositionPicker();
-                } else {
-                    educationList = response.data;
-                    initEducationPicker();
+                switch (type){
+                    case 4:
+                        technicalPostList = response.data;
+                        initPositionPicker();
+                        break;
+                    case 6:
+                        educationList = response.data;
+                        initEducationPicker();
+                        break;
+                    case 8:
+                        politicalList = response.data;
+                        initPoliticalPicker();
+                        break;
                 }
             }
         });
@@ -311,7 +331,6 @@ public class PersonalDataSubActivity extends BaseActivity {
         educationPicker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(int index, String item) {
-                educationIndex = index;
                 educationTv.setText(item);
                 dataIsChange();
             }
@@ -342,6 +361,30 @@ public class PersonalDataSubActivity extends BaseActivity {
         });
     }
 
+    //政治面貌选择器
+    private void initPoliticalPicker() {
+        if (StringUtils.isEmpty(politicalList)) {
+            return;
+        }
+        int size = politicalList.size();
+        String[] strings = new String[size];
+        for (int i = 0; i < size; i++) {
+            strings[i] = politicalList.get(i).getName();
+        }
+        politicalPicker = new OptionPicker(this, strings);
+        politicalPicker.setOffset(3);
+        politicalPicker.setSelectedIndex(1);
+        politicalPicker.setTextSize(18);
+        politicalPicker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+            @Override
+            public void onOptionPicked(int index, String item) {
+                politicalIndex = index;
+                politicsStatusTv.setText(item);
+                dataIsChange();
+            }
+        });
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -350,7 +393,7 @@ public class PersonalDataSubActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.ll_personal_icons, R.id.ll_name, R.id.ll_address, R.id.ll_phone, R.id.save_bt, R.id.ll_email, R.id.ll_address_details
+    @OnClick({R.id.ll_personal_icons,R.id.ll_politics_status, R.id.ll_name, R.id.ll_address, R.id.ll_phone, R.id.save_bt, R.id.ll_email, R.id.ll_address_details
             , R.id.ll_weixin, R.id.ll_unit, R.id.ll_education, R.id.ll_school, R.id.ll_technical_post})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -386,6 +429,11 @@ public class PersonalDataSubActivity extends BaseActivity {
             case R.id.ll_education://学历
                 if (educationPicker != null) {
                     educationPicker.show();
+                }
+                break;
+            case R.id.ll_politics_status://政治面貌
+                if (politicalPicker != null) {
+                    politicalPicker.show();
                 }
                 break;
             case R.id.ll_school://毕业院校
@@ -470,6 +518,7 @@ public class PersonalDataSubActivity extends BaseActivity {
         String cSchool = CommonUtils.getStringByTextView(schoolTv);
         String cUnit = CommonUtils.getStringByTextView(unitTv);
         String cEducation = CommonUtils.getStringByTextView(educationTv);
+        String cPolitical = CommonUtils.getStringByTextView(politicsStatusTv);
         String cTechnicalPost = CommonUtils.getStringByTextView(technicalPostTv);
         String cAddress = CommonUtils.getStringByTextView(addressDetailsTv);
         if (!StringUtils.isSame(cName, name)
@@ -480,6 +529,7 @@ public class PersonalDataSubActivity extends BaseActivity {
                 || !StringUtils.isSame(sex, chooseSex)
                 || !StringUtils.isSame(cSchool, school)
                 || !StringUtils.isSame(cUnit, unit)
+                || !StringUtils.isSame(cPolitical, political)
                 || !StringUtils.isSame(cEducation, education)
                 || !StringUtils.isSame(cTechnicalPost, technicalPost)
                 || !StringUtils.isSame(cameraHelper.getHeadPathStr(), pic)
@@ -521,6 +571,9 @@ public class PersonalDataSubActivity extends BaseActivity {
         }
         if (technicalPostIndex != -1 && !StringUtils.isEmpty(technicalPostList)) {//职称
             api.addParams("position", technicalPostList.get(technicalPostIndex).getId());
+        }
+        if (politicalIndex != -1 && !StringUtils.isEmpty(politicalList)) {//政治面貌
+            api.addParams("political", politicalList.get(politicalIndex).getId());
         }
         api.addParams("weixin", CommonUtils.getStringByTextView(weixinTv));
         api.addParams("unit", CommonUtils.getStringByTextView(unitTv));

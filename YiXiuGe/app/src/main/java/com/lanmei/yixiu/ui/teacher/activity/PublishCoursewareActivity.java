@@ -11,13 +11,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.adapter.PublishCoursewareClassifyAdapter;
 import com.lanmei.yixiu.adapter.UploadingNotesAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
+import com.lanmei.yixiu.bean.CourseClassifyBean;
 import com.lanmei.yixiu.bean.NotesBean;
-import com.lanmei.yixiu.event.PublishNoteEvent;
+import com.lanmei.yixiu.event.PublishCoursewareEvent;
 import com.lanmei.yixiu.helper.BGASortableNinePhotoHelper;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.lanmei.yixiu.utils.CompressPhotoUtils;
@@ -26,6 +29,7 @@ import com.leon.lfilepickerlibrary.LFilePicker;
 import com.leon.lfilepickerlibrary.utils.Constant;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
+import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.StringUtils;
@@ -60,6 +64,10 @@ public class PublishCoursewareActivity extends BaseActivity implements BGASortab
     DrawClickableEditText noteContentEt;
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;//附件
+    @InjectView(R.id.recyclerView_c)
+    RecyclerView recyclerView_c;//选择的分类
+    @InjectView(R.id.name_tv)
+    TextView nameTv;
     private CompressPhotoUtils compressPhotoUtils;
     private UploadingNotesAdapter adapter;
     private UpdateFileTask updateFileTask;
@@ -67,6 +75,8 @@ public class PublishCoursewareActivity extends BaseActivity implements BGASortab
     private boolean isUpdateFileTask;
     public List<String> picList;//上传阿里云的图片地址
     public List<String> fileList;//上传阿里云的文件地址
+
+    private PublishCoursewareClassifyAdapter coursewareClassifyAdapter;
 
     @Override
     public int getContentViewId() {
@@ -83,8 +93,44 @@ public class PublishCoursewareActivity extends BaseActivity implements BGASortab
         actionbar.setHomeAsUpIndicator(R.drawable.back);
         initPhotoHelper();
         initRecyclerView();
+
+        coursewareClassifyAdapter = new PublishCoursewareClassifyAdapter(this);
+        recyclerView_c.setNestedScrollingEnabled(false);
+        recyclerView_c.setLayoutManager(new LinearLayoutManager(this));
+        coursewareClassifyAdapter.setChooseCoursewareClassifyListener(new PublishCoursewareClassifyAdapter.ChooseCoursewareClassifyListener() {
+            @Override
+            public void chooseCourseClassify(List<CourseClassifyBean> list) {
+                StringBuilder builder = new StringBuilder();
+                for (CourseClassifyBean bean:list){
+                    if (bean.isChoose()){
+                        builder.append(bean.getName()+",");
+                    }
+                }
+                String name = builder.toString();
+                if (!StringUtils.isEmpty(name)){
+                    name = name.substring(0,name.length()-1);
+                }
+                nameTv.setText(name);
+            }
+        });
+
+        loadCourseClassify();
     }
 
+
+    private void loadCourseClassify() {
+        YiXiuGeApi api = new YiXiuGeApi("app/course_list");
+        HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<CourseClassifyBean>>() {
+            @Override
+            public void onResponse(NoPageListBean<CourseClassifyBean> response) {
+                if (isFinishing()) {
+                    return;
+                }
+                coursewareClassifyAdapter.setData(response.data);
+                recyclerView_c.setAdapter(coursewareClassifyAdapter);
+            }
+        });
+    }
 
     private void initPhotoHelper() {
         mPhotosSnpl.setVisibility(View.VISIBLE);
@@ -129,58 +175,74 @@ public class PublishCoursewareActivity extends BaseActivity implements BGASortab
             UIHelper.ToastMessage(this, R.string.input_courseware_content);
             return;
         }
-        CommonUtils.developing(this);
-//        isCompressPhotoUtils = !StringUtils.isEmpty(mPhotoHelper.getData());
-//        isUpdateFileTask = !StringUtils.isEmpty(adapter.getData());
-//
-//        if (isCompressPhotoUtils) {
-//            compressPhotoUtils = new CompressPhotoUtils(this);
-//            compressPhotoUtils.compressPhoto(mPhotoHelper.getData(), new CompressPhotoUtils.CompressCallBack() {//压缩图片（可多张）
-//                @Override
-//                public void success(List<String> list) {
-//                    if (isFinishing()) {
-//                        return;
-//                    }
-//                    picList = list;
-//                    isCompressPhotoUtils = false;
-//                    if (!isUpdateFileTask) {
-//                        loadSubmitNote(title, content);
-//                    }
-//                }
-//            }, "1");
-//        }
-//        if (isUpdateFileTask) {//上传文件
-//            List<String> stringList = new ArrayList<>();
-//            List<NotesBean.EnclosureBean> list = adapter.getData();
-//            for (NotesBean.EnclosureBean bean : list){
-//                stringList.add(bean.getUrl());
-//            }
-//            updateFileTask = new UpdateFileTask(this);
-//            updateFileTask.setParameter(stringList, "2");
-//            updateFileTask.setUploadingFileCallBack(new UpdateFileTask.UploadingFileCallBack() {
-//                @Override
-//                public void success(List<String> paths) {
-//                    if (isFinishing()) {
-//                        return;
-//                    }
-//                    isUpdateFileTask = false;
-//                    fileList = paths;
-//                    if (!isCompressPhotoUtils) {
-//                        loadSubmitNote(title, content);
-//                    }
-//                }
-//            });
-//            updateFileTask.setUploadingText("附件上传中");
-//            updateFileTask.executeUpdateFileTask();
-//        }
+        final List<CourseClassifyBean> classifyBeanList = coursewareClassifyAdapter.getData();
+        if (StringUtils.isEmpty(classifyBeanList) || !isChoose(classifyBeanList)) {
+            UIHelper.ToastMessage(this, getString(R.string.selection_sort));
+            return;
+        }
+
+        isCompressPhotoUtils = !StringUtils.isEmpty(mPhotoHelper.getData());
+        isUpdateFileTask = !StringUtils.isEmpty(adapter.getData());
+
+        if (isCompressPhotoUtils) {
+            compressPhotoUtils = new CompressPhotoUtils(this);
+            compressPhotoUtils.compressPhoto(mPhotoHelper.getData(), new CompressPhotoUtils.CompressCallBack() {//压缩图片（可多张）
+                @Override
+                public void success(List<String> list) {
+                    if (isFinishing()) {
+                        return;
+                    }
+                    picList = list;
+                    isCompressPhotoUtils = false;
+                    if (!isUpdateFileTask) {
+                        loadSubmitNote(title, content,classifyBeanList);
+                    }
+                }
+            }, "1");
+        }
+        if (isUpdateFileTask) {//上传文件
+            List<String> stringList = new ArrayList<>();
+            List<NotesBean.EnclosureBean> list = adapter.getData();
+            for (NotesBean.EnclosureBean bean : list){
+                stringList.add(bean.getUrl());
+            }
+            updateFileTask = new UpdateFileTask(this);
+            updateFileTask.setParameter(stringList, "2");
+            updateFileTask.setUploadingFileCallBack(new UpdateFileTask.UploadingFileCallBack() {
+                @Override
+                public void success(List<String> paths) {
+                    if (isFinishing()) {
+                        return;
+                    }
+                    isUpdateFileTask = false;
+                    fileList = paths;
+                    if (!isCompressPhotoUtils) {
+                        loadSubmitNote(title, content,classifyBeanList);
+                    }
+                }
+            });
+            updateFileTask.setUploadingText("附件上传中");
+            updateFileTask.executeUpdateFileTask();
+        }
     }
 
-    private void loadSubmitNote(String title, String content) {
+    private boolean isChoose(List<CourseClassifyBean> list){
+        for (CourseClassifyBean bean:list){
+            if (bean.isChoose()){
+                return bean.isChoose();
+            }
+        }
+        return false;
+    }
+
+    private void loadSubmitNote(String title, String content,List<CourseClassifyBean> list) {
         YiXiuGeApi api = new YiXiuGeApi("app/add_note");
         api.addParams("uid", api.getUserId(this));
         api.addParams("title", title);
         api.addParams("enclosure", getEnclosure());
         api.addParams("content", content);
+        api.addParams("type", 2);
+        api.addParams("cid", getCid(list));
         api.addParams("pic", CommonUtils.getJSONArrayByList(picList));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
@@ -189,10 +251,24 @@ public class PublishCoursewareActivity extends BaseActivity implements BGASortab
                     return;
                 }
                 UIHelper.ToastMessage(getContext(), response.getMsg());
-                EventBus.getDefault().post(new PublishNoteEvent());//
+                EventBus.getDefault().post(new PublishCoursewareEvent());//
                 finish();
             }
         });
+    }
+
+    private String getCid(List<CourseClassifyBean> list){
+        StringBuilder builder = new StringBuilder();
+        for (CourseClassifyBean bean:list){
+            if (bean.isChoose()){
+                builder.append(bean.getId()+",");
+            }
+        }
+        String cid = builder.toString();
+        if (!StringUtils.isEmpty(cid)){
+            cid = cid.substring(0,cid.length()-1);
+        }
+        return cid;
     }
 
     public JSONArray getEnclosure() {

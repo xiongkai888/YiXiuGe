@@ -60,6 +60,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     RecyclerView recyclerView;
     @InjectView(R.id.kao_shi_tv)
     TextView kaoShiTv;//考试
+    @InjectView(R.id.kaoqin_tv)
+    TextView kaoQinTv;//考勤
     HomeAdapter mAdapter;
 
     @InjectView(R.id.banner)
@@ -193,7 +195,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     private void setUser() {
-        kaoShiTv.setVisibility(StringUtils.isSame(CommonUtils.getUserType(context), CommonUtils.isZero)?View.VISIBLE:View.GONE);
+        kaoShiTv.setVisibility(CommonUtils.isStudent(context)?View.VISIBLE:View.GONE);
+        kaoQinTv.setVisibility(CommonUtils.isStudent(context)?View.VISIBLE:View.GONE);
     }
 
     @Override
@@ -217,11 +220,11 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         return true;
     }
 
-    @OnClick({R.id.ke_cheng_tv, R.id.zi_xun_tv, R.id.jiao_cheng_tv, R.id.kao_shi_tv, R.id.questionnaire_tv})
+    @OnClick({R.id.ke_cheng_tv, R.id.zi_xun_tv, R.id.jiao_cheng_tv, R.id.kao_shi_tv, R.id.questionnaire_tv,R.id.kaoqin_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ke_cheng_tv://课程
-                if (StringUtils.isSame(CommonUtils.getUserType(context), CommonUtils.isZero)){//学生是跳到课程表，老师跳到我的课时
+                if (CommonUtils.isStudent(context)){//学生是跳到课程表，老师跳到我的课时
                     IntentUtil.startActivity(context, MyClassScheduleActivity.class);
                 }else {
                     IntentUtil.startActivity(context, ClassHourActivity.class);
@@ -241,6 +244,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             case R.id.questionnaire_tv://问卷
                 CommonUtils.developing(context);
 //                IntentUtil.startActivity(context, QuestionnaireActivity.class);
+                break;
+            case R.id.kaoqin_tv://考勤
+                CommonUtils.developing(context);
                 break;
         }
     }

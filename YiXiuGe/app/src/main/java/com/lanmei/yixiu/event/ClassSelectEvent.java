@@ -1,5 +1,9 @@
 package com.lanmei.yixiu.event;
 
+import com.lanmei.yixiu.bean.ClassSelectBean;
+
+import java.util.List;
+
 /**
  * Created by xkai on 2018/9/13.
  * 班级选择
@@ -7,20 +11,15 @@ package com.lanmei.yixiu.event;
 
 public class ClassSelectEvent {
 
-    private int fatherPosition;
-    private int childPosition;
+    private List<ClassSelectBean.XiajiBean> list;
 
-    public ClassSelectEvent(int fatherPosition, int childPosition) {
-        this.fatherPosition = fatherPosition;
-        this.childPosition = childPosition;
+    public List<ClassSelectBean.XiajiBean> getList() {
+        return list;
     }
 
-    public int getFatherPosition() {
-        return fatherPosition;
+    public ClassSelectEvent(List<ClassSelectBean.XiajiBean> list) {
+        this.list = list;
     }
 
-    public int getChildPosition() {
-        return childPosition;
-    }
 
 }

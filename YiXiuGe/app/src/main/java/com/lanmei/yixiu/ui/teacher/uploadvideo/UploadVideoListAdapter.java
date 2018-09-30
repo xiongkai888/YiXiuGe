@@ -95,9 +95,9 @@ public class UploadVideoListAdapter extends SwipeRefreshAdapter<UploadVideoBean>
             if (presenter.isEdit()) {
                 compileIv.setVisibility(View.VISIBLE);
                 if (bean.isEdit()) {
-                    compileIv.setImageResource(R.drawable.pay_on_sub);
+                    compileIv.setImageResource(R.drawable.pay_off);
                 } else {
-                    compileIv.setImageResource(R.drawable.pay_off_sub);
+                    compileIv.setImageResource(R.drawable.pay_on);
                 }
             } else {
                 compileIv.setVisibility(View.GONE);

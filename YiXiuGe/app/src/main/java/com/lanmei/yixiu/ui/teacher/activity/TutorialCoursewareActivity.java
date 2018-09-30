@@ -1,26 +1,24 @@
 package com.lanmei.yixiu.ui.teacher.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.adapter.TutoralCoursewareAdapter;
+import com.lanmei.yixiu.adapter.TutorialCoursewareAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
-import com.lanmei.yixiu.bean.NotesBean;
-import com.lanmei.yixiu.event.PublishNoteEvent;
+import com.lanmei.yixiu.bean.CourseClassifyBean;
+import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
-import com.xson.common.helper.SwipeRefreshController;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.widget.CenterTitleToolbar;
-import com.xson.common.widget.SmartSwipeRefreshLayout;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  *教程课件
@@ -29,19 +27,20 @@ public class TutorialCoursewareActivity extends BaseActivity {
 
     @InjectView(R.id.toolbar)
     CenterTitleToolbar mToolbar;
-    @InjectView(R.id.pull_refresh_rv)
-    SmartSwipeRefreshLayout smartSwipeRefreshLayout;
-    TutoralCoursewareAdapter mAdapter;
-    private SwipeRefreshController<NoPageListBean<NotesBean>> controller;
+
+    @InjectView(R.id.viewPager)
+    ViewPager mViewPager;
+    @InjectView(R.id.tabLayout)
+    TabLayout mTabLayout;
+    TutorialCoursewareAdapter mAdapter;
 
     @Override
     public int getContentViewId() {
-        return R.layout.activity_single_listview;
+        return R.layout.fragment_course;
     }
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        EventBus.getDefault().register(this);
         setSupportActionBar(mToolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayShowTitleEnabled(true);
@@ -49,43 +48,37 @@ public class TutorialCoursewareActivity extends BaseActivity {
         actionbar.setTitle(R.string.tutorial_courseware);
         actionbar.setHomeAsUpIndicator(R.drawable.back);
 
-        YiXiuGeApi api = new YiXiuGeApi("app/notelist");
-        api.addParams("uid", api.getUserId(this));
-        mAdapter = new TutoralCoursewareAdapter(this);
-        smartSwipeRefreshLayout.initWithLinearLayout();
-        smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<NotesBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
-        };
-//        controller.loadFirstPage();
-        mAdapter.notifyDataSetChanged();
-    }
+        mAdapter = new TutorialCoursewareAdapter(getSupportFragmentManager());
+//        mViewPager.setOffscreenPageLimit(3);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-    //发布笔记和删除笔记时候调用
-    @Subscribe
-    public void publishNoteEvent(PublishNoteEvent event){
-        if (controller != null){
-            controller.loadFirstPage();
-        }
+        loadCourseClassify();
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
+    private void loadCourseClassify() {
+        YiXiuGeApi api = new YiXiuGeApi("app/course_list");
+        HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<CourseClassifyBean>>() {
+            @Override
+            public void onResponse(NoPageListBean<CourseClassifyBean> response) {
+                if (isFinishing()) {
+                    return;
+                }
+                mAdapter.setList(getContext(),response.data);
+                mViewPager.setAdapter(mAdapter);
+                mTabLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        CommonUtils.setTabLayoutIndicator(mTabLayout, 5, 5);
+                    }
+                });
+            }
+        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_uploading_courseware,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_uploading_courseware){
-            IntentUtil.startActivity(this,PublishCoursewareActivity.class);
-        }
-        return super.onOptionsItemSelected(item);
+    @OnClick(R.id.keywordEditText)
+    public void onViewClicked() {
+        IntentUtil.startActivity(this, SearchCoursewareActivity.class);
     }
 }

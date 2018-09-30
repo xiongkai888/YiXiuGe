@@ -179,6 +179,27 @@
         <TextView style="@style/line_H10dp_on" />
 
         <LinearLayout
+            android:id="@+id/ll_my_courseware"
+            style="@style/ll_bottom_h"
+            android:padding="@dimen/d_10dp">
+
+            <TextView
+                style="@style/text_weight"
+                android:drawableLeft="@drawable/mine_teacher_7"
+                android:drawablePadding="@dimen/d_10dp"
+                android:gravity="center_vertical"
+                android:text="@string/my_courseware" />
+
+
+            <TextView
+                style="@style/text12color666"
+                android:layout_marginLeft="@dimen/d_10dp"
+                android:drawableRight="@drawable/in_right"
+                android:gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/ll_mine_teacher1"
             style="@style/ll_bottom_h"
             android:padding="@dimen/d_10dp">

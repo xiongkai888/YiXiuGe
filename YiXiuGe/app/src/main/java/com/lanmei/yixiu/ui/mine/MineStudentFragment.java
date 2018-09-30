@@ -13,6 +13,7 @@ import com.lanmei.yixiu.ui.mine.activity.MyEvaluateActivity;
 import com.lanmei.yixiu.ui.mine.activity.MyNoteActivity;
 import com.lanmei.yixiu.ui.mine.activity.PersonalDataSubActivity;
 import com.lanmei.yixiu.ui.mine.activity.SettingActivity;
+import com.lanmei.yixiu.ui.teacher.activity.TutorialCoursewareActivity;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.UserBean;
@@ -79,7 +80,7 @@ public class MineStudentFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.pic_iv,R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_notes, R.id.ll_evaluate, R.id.ll_setting,R.id.class_schedule_tv,R.id.kao_shi_tv})
+    @OnClick({R.id.pic_iv,R.id.ll_courseware,R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_notes, R.id.ll_evaluate, R.id.ll_setting,R.id.class_schedule_tv,R.id.kao_shi_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.pic_iv://个人资料
@@ -96,6 +97,9 @@ public class MineStudentFragment extends BaseFragment {
             case R.id.ll_notes://我的笔记
 //                CommonUtils.developing(context);
                 IntentUtil.startActivity(context, MyNoteActivity.class);
+                break;
+            case R.id.ll_courseware://教程课件
+                IntentUtil.startActivity(context, TutorialCoursewareActivity.class);
                 break;
             case R.id.ll_evaluate://我的评价
 //                CommonUtils.developing(context);

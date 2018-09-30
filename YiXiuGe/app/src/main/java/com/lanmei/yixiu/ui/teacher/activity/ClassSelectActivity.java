@@ -3,18 +3,21 @@ package com.lanmei.yixiu.ui.teacher.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.ClassSelectAdapter;
 import com.lanmei.yixiu.bean.ClassSelectBean;
 import com.lanmei.yixiu.event.ClassSelectEvent;
 import com.xson.common.app.BaseActivity;
+import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -52,7 +55,7 @@ public class ClassSelectActivity extends BaseActivity {
         actionbar.setTitle(R.string.class_select);
         actionbar.setHomeAsUpIndicator(R.drawable.back);
 
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
 
         ClassSelectAdapter adapter = new ClassSelectAdapter(this);
         adapter.setData(classSelectBeans);
@@ -62,15 +65,64 @@ public class ClassSelectActivity extends BaseActivity {
         adapter.notifyDataSetChanged();
     }
 
-    @Subscribe
-    public void classSelectEvent(ClassSelectEvent event){
-        finish();
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_sure, menu);
+        return true;
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_sure:
+                if (!isChoose()){
+                    UIHelper.ToastMessage(this,"请先选择班级");
+                    break;
+                }
+                EventBus.getDefault().post(new ClassSelectEvent(getList()));
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private boolean isChoose(){
+        for (ClassSelectBean bean : classSelectBeans){
+            List<ClassSelectBean.XiajiBean> xiajiBeanList = bean.getXiaji();
+            for (ClassSelectBean.XiajiBean xiajiBean:xiajiBeanList){
+                if (xiajiBean.isChoose()){
+                    return xiajiBean.isChoose();
+                }
+            }
+        }
+        return false;
+    }
+
+    private List<ClassSelectBean.XiajiBean> getList(){
+        List<ClassSelectBean.XiajiBean> list = new ArrayList<>();
+        for (ClassSelectBean bean : classSelectBeans){
+            List<ClassSelectBean.XiajiBean> xiajiBeanList = bean.getXiaji();
+            for (ClassSelectBean.XiajiBean xiajiBean:xiajiBeanList){
+                if (xiajiBean.isChoose()){
+                    list.add(xiajiBean);
+                }
+            }
+        }
+        return list;
+    }
+
+//    @Subscribe
+//    public void classSelectEvent(ClassSelectEvent event){
+//        finish();
+//    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
     }
 }
 

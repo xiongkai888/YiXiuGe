@@ -177,6 +177,9 @@
             android:name=".ui.teacher.activity.TeachingAttachmentsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.teacher.activity.MyTutorialCoursewareActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.teacher.activity.TutorialCoursewareActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -226,6 +229,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.teacher.activity.QuestionnaireManagementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.teacher.activity.SearchCoursewareActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.teacher.activity.ExaminationManagementActivity"

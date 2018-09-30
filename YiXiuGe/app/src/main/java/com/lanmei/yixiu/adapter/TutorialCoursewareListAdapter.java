@@ -22,13 +22,13 @@ import butterknife.InjectView;
 
 
 /**
- * 我的笔记
+ * 教程课件
  */
-public class MyNoteAdapter extends SwipeRefreshAdapter<NotesBean> {
+public class TutorialCoursewareListAdapter extends SwipeRefreshAdapter<NotesBean> {
 
     private FormatTime formatTime;
 
-    public MyNoteAdapter(Context context) {
+    public TutorialCoursewareListAdapter(Context context) {
         super(context);
         formatTime = new FormatTime();
     }
@@ -72,10 +72,8 @@ public class MyNoteAdapter extends SwipeRefreshAdapter<NotesBean> {
             sudokuView.setOnSingleClickListener(new SudokuView.SudokuViewClickListener() {
                 @Override
                 public void onClick(int positionSub) {
-//                    UIHelper.ToastMessage(context,""+positionSub);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("bean",bean);
-                    bundle.putString("type",CommonUtils.isOne);
                     IntentUtil.startActivity(context, NoteDetailsActivity.class,bundle);
                 }
 
@@ -89,7 +87,6 @@ public class MyNoteAdapter extends SwipeRefreshAdapter<NotesBean> {
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("bean",bean);
-                    bundle.putString("type",CommonUtils.isOne);
                     IntentUtil.startActivity(context, NoteDetailsActivity.class,bundle);
                 }
             });

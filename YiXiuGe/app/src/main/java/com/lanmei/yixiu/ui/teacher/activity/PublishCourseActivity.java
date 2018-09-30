@@ -153,7 +153,7 @@ public class PublishCourseActivity extends BaseActivity {
             return;
         }
         if (StringUtils.isEmpty(classifyBean)) {
-            UIHelper.ToastMessage(this, "请选择分类");
+            UIHelper.ToastMessage(this, getString(R.string.selection_sort));
             return;
         }
         List<String> list = new ArrayList<>();

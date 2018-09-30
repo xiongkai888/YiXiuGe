@@ -7,7 +7,8 @@
 
     <include layout="@layout/include_centertitletoolbar" />
 
-    <ScrollView style="@style/match_parent">
+    <android.support.v4.widget.NestedScrollView
+        style="@style/match_parent">
 
         <LinearLayout
             style="@style/v_match_parent">
@@ -58,7 +59,7 @@
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>
 
 

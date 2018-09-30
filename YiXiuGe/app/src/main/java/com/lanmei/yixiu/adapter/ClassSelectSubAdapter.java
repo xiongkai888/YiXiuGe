@@ -5,14 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.bean.ClassSelectBean;
-import com.lanmei.yixiu.event.ClassSelectEvent;
 import com.xson.common.adapter.SwipeRefreshAdapter;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -23,11 +21,8 @@ import butterknife.InjectView;
  */
 public class ClassSelectSubAdapter extends SwipeRefreshAdapter<ClassSelectBean.XiajiBean> {
 
-    private int fatherPosition;
-
-    public ClassSelectSubAdapter(Context context,int fatherPosition) {
+    public ClassSelectSubAdapter(Context context) {
         super(context);
-        this.fatherPosition = fatherPosition;
     }
 
 
@@ -43,11 +38,13 @@ public class ClassSelectSubAdapter extends SwipeRefreshAdapter<ClassSelectBean.X
             return;
         }
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.setParameter(bean,position);
+        viewHolder.setParameter(bean);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        @InjectView(R.id.choose_iv)
+        ImageView chooseIv;
         @InjectView(R.id.class_name_tv)
         TextView classNameTv;
 
@@ -56,12 +53,14 @@ public class ClassSelectSubAdapter extends SwipeRefreshAdapter<ClassSelectBean.X
             ButterKnife.inject(this, view);
         }
 
-        public void setParameter(ClassSelectBean.XiajiBean bean,final int position) {
+        public void setParameter(final ClassSelectBean.XiajiBean bean) {
+            chooseIv.setImageResource(bean.isChoose()?R.drawable.pay_on :R.drawable.pay_off);
             classNameTv.setText(bean.getName());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new ClassSelectEvent(fatherPosition,position));
+                    bean.setChoose(!bean.isChoose());
+                    notifyDataSetChanged();
                 }
             });
         }

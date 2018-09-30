@@ -8,16 +8,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.bean.CourseClassifyBean;
-import com.lanmei.yixiu.ui.course.fragment.CourseListFragment;
+import com.lanmei.yixiu.ui.teacher.fragment.TutorialCoursewareListFragment;
 import com.xson.common.utils.StringUtils;
 
 import java.util.List;
 
 
 /**
- * 教程
+ * 教程课件
  */
-public class CourseAdapter extends FragmentPagerAdapter {
+public class TutorialCoursewareAdapter extends FragmentPagerAdapter {
 
 
     private List<CourseClassifyBean> list;
@@ -32,13 +32,13 @@ public class CourseAdapter extends FragmentPagerAdapter {
         }
     }
 
-    public CourseAdapter(FragmentManager fm) {
+    public TutorialCoursewareAdapter(FragmentManager fm) {
         super(fm);
     }
 
     @Override
     public Fragment getItem(int position) {
-        CourseListFragment fragment = new CourseListFragment();
+        TutorialCoursewareListFragment fragment = new TutorialCoursewareListFragment();
         Bundle bundle = new Bundle();
         bundle.putString("cid", list.get(position).getId());
         fragment.setArguments(bundle);

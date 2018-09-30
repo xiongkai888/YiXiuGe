@@ -32,22 +32,28 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/ll_class"
-                style="@style/ll_bottom_h"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom_divider"
                 android:padding="@dimen/d_10dp">
 
                 <TextView
-                    style="@style/text_weight"
+                    android:id="@+id/class_u_tv"
                     android:text="@string/class_select"
-                    android:textColor="@color/color666" />
+                    style="@style/text14color666" />
+
 
                 <TextView
                     android:id="@+id/class_tv"
                     style="@style/text"
-                    android:drawableRight="@drawable/in_right" />
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/class_u_tv"
+                    android:drawableRight="@drawable/in_right"
+                    android:gravity="right" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"

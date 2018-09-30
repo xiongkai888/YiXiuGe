@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!--教程、教程课件  共享该布局文件-->
     <include layout="@layout/include_centertitletoolbar"/>
 
     <include layout="@layout/include_search"/>

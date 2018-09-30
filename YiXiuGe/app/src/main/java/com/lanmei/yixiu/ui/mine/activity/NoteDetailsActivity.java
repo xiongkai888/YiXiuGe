@@ -18,6 +18,7 @@ import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.NoteDetailsEnclosureAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.NotesBean;
+import com.lanmei.yixiu.event.PublishCoursewareEvent;
 import com.lanmei.yixiu.event.PublishNoteEvent;
 import com.lanmei.yixiu.utils.AKDialog;
 import com.lanmei.yixiu.utils.CommonUtils;
@@ -60,6 +61,7 @@ public class NoteDetailsActivity extends BaseActivity {
     @InjectView(R.id.recyclerViewEn)
     RecyclerView recyclerViewEn;
     private NotesBean bean;//笔记内容
+    private String type;//不为空是 笔记详情
 
     @Override
     public int getContentViewId() {
@@ -72,6 +74,7 @@ public class NoteDetailsActivity extends BaseActivity {
         Bundle bundle = intent.getBundleExtra("bundle");
         if (bundle != null) {
             bean = (NotesBean) bundle.getSerializable("bean");
+            type = bundle.getString("type");
         }
     }
 
@@ -81,7 +84,11 @@ public class NoteDetailsActivity extends BaseActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setTitle(R.string.note_details);
+        if (!StringUtils.isEmpty(type)){
+            actionbar.setTitle(R.string.note_details);
+        }else {
+            actionbar.setTitle(R.string.courseware_details);
+        }
         actionbar.setHomeAsUpIndicator(R.drawable.back);
 
         if (bean == null){
@@ -131,7 +138,13 @@ public class NoteDetailsActivity extends BaseActivity {
             @Override
             public void delete() {
                 window.dismiss();
-                AKDialog.getAlertDialog(getContext(), "确认要删除该笔记？", new DialogInterface.OnClickListener() {
+                String content;
+                if (!StringUtils.isEmpty(type)){
+                    content = "确认要删除该笔记？";
+                }else {
+                    content = "确认要删除该课件？";
+                }
+                AKDialog.getAlertDialog(getContext(), content, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         deleteNote();
@@ -159,7 +172,11 @@ public class NoteDetailsActivity extends BaseActivity {
                 if (isFinishing()){
                     return;
                 }
-                EventBus.getDefault().post(new PublishNoteEvent());//刷新笔记列表
+                if (!StringUtils.isEmpty(type)){
+                    EventBus.getDefault().post(new PublishNoteEvent());//刷新笔记列表
+                }else {
+                    EventBus.getDefault().post(new PublishCoursewareEvent());//刷新课件列表
+                }
                 UIHelper.ToastMessage(getContext(),response.getMsg());
                 List<String> list = new ArrayList<>();
                 if (!StringUtils.isEmpty(bean.getPic())){
@@ -193,8 +210,17 @@ public class NoteDetailsActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_more) {
-            popupWindow();
+        switch (item.getItemId()){
+            case R.id.action_more:
+                if (bean == null){
+                    break;
+                }
+                if (StringUtils.isSame(bean.getUid(),CommonUtils.getUserId(this))){
+                    popupWindow();
+                }else {
+                    CommonUtils.developing(this);
+                }
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

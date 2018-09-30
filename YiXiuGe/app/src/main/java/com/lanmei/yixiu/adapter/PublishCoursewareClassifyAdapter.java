@@ -9,37 +9,34 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.bean.SelectStudentsBean;
-import com.lanmei.yixiu.ui.teacher.presenter.SelectStudentsContract;
+import com.lanmei.yixiu.bean.CourseClassifyBean;
 import com.xson.common.adapter.SwipeRefreshAdapter;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
 /**
- * 选择考试学生
+ * 发布教程课时分类（多选）
  */
-public class SelectStudentsAdapter extends SwipeRefreshAdapter<SelectStudentsBean> {
+public class PublishCoursewareClassifyAdapter extends SwipeRefreshAdapter<CourseClassifyBean> {
 
-    private SelectStudentsContract.Presenter presenter;
 
-    public SelectStudentsAdapter(Context context) {
+    public PublishCoursewareClassifyAdapter(Context context) {
         super(context);
     }
 
-    public void setPresenter(SelectStudentsContract.Presenter presenter) {
-        this.presenter = presenter;
-    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder2(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_select_students, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_publish_course_classify, parent, false));
     }
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
-        final SelectStudentsBean bean = getItem(position);
+        final CourseClassifyBean bean = getItem(position);
         if (bean == null) {
             return;
         }
@@ -48,8 +45,10 @@ public class SelectStudentsAdapter extends SwipeRefreshAdapter<SelectStudentsBea
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bean.setSelect(!bean.isSelect());
-                presenter.onClickSingleItem();
+                bean.setChoose(!bean.isChoose());
+                if (l != null){
+                    l.chooseCourseClassify(getData());
+                }
                 notifyDataSetChanged();
             }
         });
@@ -57,10 +56,11 @@ public class SelectStudentsAdapter extends SwipeRefreshAdapter<SelectStudentsBea
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @InjectView(R.id.select_iv)
-        ImageView selectIv;
+        @InjectView(R.id.choose_iv)
+        ImageView chooseIv;
         @InjectView(R.id.name_tv)
         TextView nameTv;
+
 
         ViewHolder(View view) {
             super(view);
@@ -68,12 +68,21 @@ public class SelectStudentsAdapter extends SwipeRefreshAdapter<SelectStudentsBea
         }
 
 
-        public void setParameter(final SelectStudentsBean bean) {
-            selectIv.setImageResource(bean.isSelect()?R.drawable.pay_off :R.drawable.pay_on);
-
+        public void setParameter(CourseClassifyBean bean) {
             nameTv.setText(bean.getName());
-
+            chooseIv.setImageResource(bean.isChoose()?R.drawable.pay_on :R.drawable.pay_off);
         }
+    }
+
+    ChooseCoursewareClassifyListener l;
+
+
+    public void setChooseCoursewareClassifyListener(ChooseCoursewareClassifyListener l){
+        this.l = l;
+    }
+
+    public interface ChooseCoursewareClassifyListener{
+        void chooseCourseClassify(List<CourseClassifyBean> list);
     }
 
 }
