@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.lanmei.yixiu.R;
+import com.xson.common.utils.L;
 
 
 public class SlideDetailsLayout extends ViewGroup {
@@ -215,26 +216,28 @@ public class SlideDetailsLayout extends ViewGroup {
                 break;
             }
             case MotionEvent.ACTION_MOVE: {
-                if (mStatus == Status.OPEN) {
-                    shouldIntercept = false;
-                }else {
-                    shouldIntercept = true;
-                }
-//                final float x = ev.getX();
-//                final float y = ev.getY();
-//
-//                final float xDiff = x - mInitMotionX;
-//                final float yDiff = y - mInitMotionY;
-//
-//                if (canChildScrollVertically((int) yDiff)) {
+//                if (mStatus == Status.OPEN) {
 //                    shouldIntercept = false;
-//                } else {
-//                    final float xDiffabs = Math.abs(xDiff);
-//                    final float yDiffabs = Math.abs(yDiff);
-//                    if (yDiffabs > mTouchSlop && yDiffabs >= xDiffabs && !(mStatus == Status.CLOSE && yDiff > 0 || mStatus == Status.OPEN && yDiff < 0)) {
-//                        shouldIntercept = true;
-//                    }
+//                }else {
+//                    shouldIntercept = true;
 //                }
+                final float x = ev.getX();
+                final float y = ev.getY();
+
+                final float xDiff = x - mInitMotionX;
+                final float yDiff = y - mInitMotionY;
+
+                if (canChildScrollVertically((int) yDiff)) {
+                    shouldIntercept = false;
+                    L.d(L.TAG,"shouldIntercept = false");
+                } else {
+                    final float xDiffabs = Math.abs(xDiff);
+                    final float yDiffabs = Math.abs(yDiff);
+                    if (yDiffabs > mTouchSlop && yDiffabs >= xDiffabs && !(mStatus == Status.CLOSE && yDiff > 0 || mStatus == Status.OPEN && yDiff < 0)) {
+                        shouldIntercept = true;
+                        L.d(L.TAG,"shouldIntercept = true");
+                    }
+                }
                 break;
             }
             case MotionEvent.ACTION_UP:

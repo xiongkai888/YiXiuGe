@@ -99,7 +99,7 @@ public class TeacherDetailsSubActivity extends BaseActivity implements SlideDeta
 //        textViews[0] = goodReputationTv;
 //        textViews[1] = middleReputationTv;
 //        textViews[2] = badReputationTv;
-        fullScreen(this);
+//        fullScreen(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -109,7 +109,7 @@ public class TeacherDetailsSubActivity extends BaseActivity implements SlideDeta
         slideDetailsLayout.setOnSlideDetailsListener(this);
 
         teacherDetailsCommentAdapter = new TeacherDetailsCommentAdapter(getSupportFragmentManager(),tid);
-//        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setOffscreenPageLimit(2);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mViewPager.setAdapter(teacherDetailsCommentAdapter);

@@ -8,7 +8,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
-import android.util.Log;
 import android.view.Window;
 
 import java.util.Formatter;
@@ -19,7 +18,7 @@ import java.util.Locale;
  * On 2016/02/21 12:25
  */
 public class JZUtils {
-    public static final String TAG = "JiaoZiVideoPlayer";
+//    public static final String TAG = "JiaoZiVideoPlayer";
 
     public static String stringForTime(long timeMs) {
         if (timeMs <= 0 || timeMs >= 24 * 60 * 60 * 1000) {
@@ -109,7 +108,7 @@ public class JZUtils {
 
     public static void saveProgress(Context context, Object url, long progress) {
         if (!Jzvd.SAVE_PROGRESS) return;
-        Log.i(TAG, "saveProgress: " + progress);
+//        Log.i(TAG, "saveProgress: " + progress);
         if (progress < 5000) {
             progress = 0;
         }

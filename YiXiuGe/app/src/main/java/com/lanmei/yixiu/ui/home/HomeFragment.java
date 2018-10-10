@@ -21,6 +21,7 @@ import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.AdBean;
 import com.lanmei.yixiu.bean.CourseClassifyListBean;
 import com.lanmei.yixiu.event.CourseOperationEvent;
+import com.lanmei.yixiu.event.KaoQinEvent;
 import com.lanmei.yixiu.event.SetUserEvent;
 import com.lanmei.yixiu.ui.home.activity.NewsSubActivity;
 import com.lanmei.yixiu.ui.home.activity.TeacherActivity;
@@ -175,7 +176,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         int size = list.size();
         for (int i = 0; i < size; i++) {
             CourseClassifyListBean bean = list.get(i);
-            if (StringUtils.isSame(id,bean.getId())){
+            if (StringUtils.isSame(id, bean.getId())) {
                 bean.setLiked(event.getLiked());
                 bean.setView(event.getViewNum());
                 bean.setFavoured(event.getFavoured());
@@ -195,8 +196,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     private void setUser() {
-        kaoShiTv.setVisibility(CommonUtils.isStudent(context)?View.VISIBLE:View.GONE);
-        kaoQinTv.setVisibility(CommonUtils.isStudent(context)?View.VISIBLE:View.GONE);
+        kaoShiTv.setVisibility(CommonUtils.isStudent(context) ? View.VISIBLE : View.GONE);
+        kaoQinTv.setVisibility(CommonUtils.isStudent(context) ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -220,13 +221,13 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         return true;
     }
 
-    @OnClick({R.id.ke_cheng_tv, R.id.zi_xun_tv, R.id.jiao_cheng_tv, R.id.kao_shi_tv, R.id.questionnaire_tv,R.id.kaoqin_tv})
+    @OnClick({R.id.ke_cheng_tv, R.id.zi_xun_tv, R.id.jiao_cheng_tv, R.id.kao_shi_tv, R.id.questionnaire_tv, R.id.kaoqin_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ke_cheng_tv://课程
-                if (CommonUtils.isStudent(context)){//学生是跳到课程表，老师跳到我的课时
+                if (CommonUtils.isStudent(context)) {//学生是跳到课程表，老师跳到我的课时
                     IntentUtil.startActivity(context, MyClassScheduleActivity.class);
-                }else {
+                } else {
                     IntentUtil.startActivity(context, ClassHourActivity.class);
                 }
                 break;
@@ -246,8 +247,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 //                IntentUtil.startActivity(context, QuestionnaireActivity.class);
                 break;
             case R.id.kaoqin_tv://考勤
-                CommonUtils.developing(context);
+                EventBus.getDefault().post(new KaoQinEvent());
                 break;
         }
     }
+
 }

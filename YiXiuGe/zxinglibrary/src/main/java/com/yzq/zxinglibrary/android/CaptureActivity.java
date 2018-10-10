@@ -3,7 +3,6 @@ package com.yzq.zxinglibrary.android;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -174,19 +173,19 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
      * @param pm
      * @return 是否有闪光灯
      */
-    public static boolean isSupportCameraLedFlash(PackageManager pm) {
-        if (pm != null) {
-            FeatureInfo[] features = pm.getSystemAvailableFeatures();
-            if (features != null) {
-                for (FeatureInfo f : features) {
-                    if (f != null && PackageManager.FEATURE_CAMERA_FLASH.equals(f.name)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
+//    public static boolean isSupportCameraLedFlash(PackageManager pm) {
+//        if (pm != null) {
+//            FeatureInfo[] features = pm.getSystemAvailableFeatures();
+//            if (features != null) {
+//                for (FeatureInfo f : features) {
+//                    if (f != null && PackageManager.FEATURE_CAMERA_FLASH.equals(f.name)) {
+//                        return true;
+//                    }
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
     /**
      * @param flashState 切换闪光灯图片
@@ -254,17 +253,15 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
                 handler = new CaptureActivityHandler(this, cameraManager);
             }
         } catch (IOException ioe) {
-            Log.w(TAG, ioe);
             displayFrameworkBugMessageAndExit();
         } catch (RuntimeException e) {
-            Log.w(TAG, "Unexpected error initializing camera", e);
             displayFrameworkBugMessageAndExit();
         }
     }
 
     private void displayFrameworkBugMessageAndExit() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("扫一扫");
+        builder.setTitle(getString(R.string.flicking));
         builder.setMessage(getString(R.string.msg_camera_framework_bug));
         builder.setPositiveButton(R.string.button_ok, new FinishListener(this));
         builder.setOnCancelListener(new FinishListener(this));

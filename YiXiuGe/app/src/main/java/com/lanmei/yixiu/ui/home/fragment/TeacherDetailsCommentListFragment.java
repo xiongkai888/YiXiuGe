@@ -55,7 +55,7 @@ public class TeacherDetailsCommentListFragment extends BaseFragment {
         controller = new SwipeRefreshController<NoPageListBean<TeacherDetailsCommentBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
         };
 //        smartSwipeRefreshLayout.setNestedScrollingEnabled(false);
-//        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NONE);
+        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.ONLY_PULL_UP);
         controller.loadFirstPage();
     }
 
