@@ -140,8 +140,7 @@
             android:name=".ui.home.activity.NoticeActivity"
             android:screenOrientation="portrait" />
         <!--上传服务-->
-        <service
-            android:name=".ui.teacher.uploadvideo.UploadVideoService" />
+        <service android:name=".ui.teacher.uploadvideo.UploadVideoService" />
 
         <activity
             android:name=".ui.home.activity.TeacherActivity"
@@ -625,6 +624,21 @@
             android:value="4tK9DNq1dUmkVdgwaCH1QUScrpouEOcz" />
 
         <!--环信结束-->
+
+        <!--微信分享-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!--友盟 umeng appkey 注意: 新版本中即使已经在AndroidManifest.xml中配置appkey和channel值，也需要在App代码中调用初始化接口（如需要使用AndroidManifest.xml中配置好的appkey和channel值，UMConfigure.init调用中appkey和channel参数请置为null） -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5a41e782b27b0a525400001c" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="hyphenate" />
 
     </application>
 

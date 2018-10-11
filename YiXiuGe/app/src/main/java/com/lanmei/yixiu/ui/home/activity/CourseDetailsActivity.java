@@ -12,6 +12,8 @@ import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.CourseClassifyListBean;
 import com.lanmei.yixiu.bean.NewsCommentBean;
 import com.lanmei.yixiu.event.CourseOperationEvent;
+import com.lanmei.yixiu.helper.ShareHelper;
+import com.lanmei.yixiu.helper.ShareListener;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
@@ -45,7 +47,8 @@ public class CourseDetailsActivity extends BaseActivity {
     @InjectView(R.id.jz_video)
     JzvdStd mJzvdStd;
     private SwipeRefreshController<NoPageListBean<NewsCommentBean>> controller;
-    CourseClassifyListBean bean;
+    private CourseClassifyListBean bean;
+    private ShareHelper shareHelper;
 
     @Override
     public int getContentViewId() {
@@ -64,6 +67,9 @@ public class CourseDetailsActivity extends BaseActivity {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
+
+        shareHelper = new ShareHelper(this);
+
         YiXiuGeApi api = new YiXiuGeApi("app/post_reviews_list");
         if (bean != null) {
             api.addParams("id", bean.getId());
@@ -78,9 +84,14 @@ public class CourseDetailsActivity extends BaseActivity {
         controller = new SwipeRefreshController<NoPageListBean<NewsCommentBean>>(this, smartSwipeRefreshLayout, api, adapter) {
         };
         controller.loadFirstPage();
-//        adapter.setCourseClassifyListBean(bean);
-        mJzvdStd.setUp(bean.getVideo(), bean.getTitle()
-                , JzvdStd.SCREEN_WINDOW_NORMAL);
+        adapter.setShare(new ShareListener() {
+            @Override
+            public void share(String url) {
+                shareHelper.share(url);
+//                CommonUtils.developing(getContext());
+            }
+        });
+        mJzvdStd.setUp(bean.getVideo(), bean.getTitle(), JzvdStd.SCREEN_WINDOW_NORMAL);
         ImageHelper.load(this, bean.getPic(), mJzvdStd.thumbImageView, null, true, R.drawable.default_pic, R.drawable.default_pic);
         Jzvd.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
         Jzvd.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
@@ -129,6 +140,7 @@ public class CourseDetailsActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        shareHelper.onDestroy();
         mJzvdStd = null;
     }
 
@@ -189,5 +201,14 @@ public class CourseDetailsActivity extends BaseActivity {
         });
     }
 
+
+    /**
+     * 结果返回
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        shareHelper.onActivityResult(requestCode, resultCode, data);
+    }
 
 }

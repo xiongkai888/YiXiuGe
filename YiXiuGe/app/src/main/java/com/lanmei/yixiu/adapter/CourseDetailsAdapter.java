@@ -15,6 +15,7 @@ import com.lanmei.yixiu.bean.CourseClassifyListBean;
 import com.lanmei.yixiu.bean.NewsCommentBean;
 import com.lanmei.yixiu.event.CourseCollectEvent;
 import com.lanmei.yixiu.event.CourseOperationEvent;
+import com.lanmei.yixiu.helper.ShareListener;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.lanmei.yixiu.utils.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
@@ -165,13 +166,20 @@ public class CourseDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
             shareIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   CommonUtils.developing(context);
+                   if (listener != null){
+                       listener.share(courseClassifyListBean.getVideo());
+                   }
                 }
             });
         }
 
     }
 
+    private ShareListener listener;
+
+    public void setShare(ShareListener listener){
+        this.listener = listener;
+    }
 
     private void loadLiked() {
         YiXiuGeApi api = new YiXiuGeApi("app/post_like");
