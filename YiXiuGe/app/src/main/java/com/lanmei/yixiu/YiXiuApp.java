@@ -5,11 +5,17 @@ import android.support.multidex.MultiDex;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.hyphenate.chatuidemo.DemoHelper;
+import com.lanmei.yixiu.jpush.JiGuangReceiver;
 import com.lanmei.yixiu.update.UpdateAppConfig;
+import com.lanmei.yixiu.utils.CommonUtils;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.xson.common.app.BaseApp;
+import com.xson.common.utils.L;
+import com.xson.common.utils.UserHelper;
 import com.yzq.zxinglibrary.common.Constant;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by xkai on 2018/4/13.
@@ -29,6 +35,22 @@ public class YiXiuApp extends BaseApp {
         UpdateAppConfig.initUpdateApp(applicationContext);//app版本更新
         //友盟初始化设置
         initUM();
+        initJiGuang();
+    }
+
+    public void initJiGuang() {
+        if (!UserHelper.getInstance(this).hasLogin()){
+            JPushInterface.stopPush(this);//停止接收极光的推送
+            return;
+        }
+        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);    // 初始化 JPush
+        if (JPushInterface.isPushStopped(this)){
+            JPushInterface.setAlias(this, 0, CommonUtils.getUserId(this));
+            JPushInterface.resumePush(this);
+            L.d(JiGuangReceiver.TAG,"isPushStopped");
+            L.d(JiGuangReceiver.TAG, "极光推送设置别名:" + CommonUtils.getUserId(this));
+        }
     }
 
     public void initUM() {

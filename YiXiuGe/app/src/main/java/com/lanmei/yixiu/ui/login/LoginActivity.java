@@ -20,6 +20,7 @@ import com.hyphenate.chatuidemo.db.DemoDBManager;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.lanmei.yixiu.MainActivity;
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.YiXiuApp;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.event.RegisterEvent;
 import com.lanmei.yixiu.utils.CommonUtils;
@@ -220,6 +221,7 @@ public class LoginActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         UIHelper.ToastMessage(getContext(), "登录成功");
+                        YiXiuApp.getInstance().initJiGuang();
                     }
                 });
                 SharedAccount.getInstance(getContext()).saveMobile(phone);

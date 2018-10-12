@@ -17,9 +17,23 @@ android {
         buildConfigField "String", "API_URL", "\"http://47.107.59.111/api/\""
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
         multiDexEnabled true
+
+//        ndk {
+//            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86'
+//        }
+
         ndk {
-            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86'
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'arm64-v8a', 'armeabi-v7a', 'x86','arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "f11427346c236ce73f92f70f", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
+
     }
     buildTypes {
         release {
@@ -154,4 +168,7 @@ dependencies {
     //    implementation 'com.aliyun.dpa:oss-android-sdk:2.4.5'
     implementation files('libs/umeng-share-wechat-simplify-6.9.3.jar')
     implementation files('libs/umeng-common-1.5.3.jar')
+    //极光
+    implementation 'cn.jiguang.sdk:jpush:3.1.6'
+    implementation 'cn.jiguang.sdk:jcore:1.2.5'
 }

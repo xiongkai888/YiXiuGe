@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.YiXiuApp;
 import com.lanmei.yixiu.event.LogoutEvent;
 import com.lanmei.yixiu.ui.login.LoginActivity;
 import com.lanmei.yixiu.update.UpdateAppConfig;
@@ -28,6 +29,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 
 
 /**
@@ -142,6 +144,7 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void logout() {
+        JPushInterface.stopPush(YiXiuApp.applicationContext);//停止接收极光的推送
         UserHelper.getInstance(getContext()).cleanLogin();//再清空数据
         IntentUtil.startActivity(getContext(), LoginActivity.class);
         EventBus.getDefault().post(new LogoutEvent());//通知MainActivity退出
