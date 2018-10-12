@@ -13,8 +13,7 @@
     <TextView
         android:id="@+id/name_tv"
         style="@style/text_weight"
-        android:layout_marginLeft="@dimen/d_5dp"
-        android:text="我们不一样" />
+        android:layout_marginLeft="@dimen/d_5dp" />
 
     <TextView
         android:id="@+id/check_tv"

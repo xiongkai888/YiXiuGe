@@ -143,5 +143,8 @@
     <string name="waiting">等待中</string>
     <string name="selection_sort">请选择分类</string>
     <string name="in_attendance">正在考勤请稍后...</string>
+    <string name="delete_note">确认要删除该笔记？</string>
+    <string name="delete_courseware">确认要删除该课件？</string>
+    <string name="user_protocol">用户协议</string>
 
 </resources>

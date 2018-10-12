@@ -21,6 +21,7 @@ import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.CodeCountDownTimer;
+import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
@@ -172,7 +173,7 @@ public class RegisterActivity extends BaseActivity implements Toolbar.OnMenuItem
     }
 
 
-    @OnClick({R.id.showPwd_iv, R.id.register_bt, R.id.obtainCode_bt})
+    @OnClick({R.id.showPwd_iv, R.id.register_bt, R.id.obtainCode_bt,R.id.agree_protocol_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.showPwd_iv:
@@ -187,6 +188,10 @@ public class RegisterActivity extends BaseActivity implements Toolbar.OnMenuItem
                 break;
             case R.id.register_bt://注册
                 loadRegister();
+                break;
+            case R.id.agree_protocol_tv://用户协议
+//                loadRegister();
+                IntentUtil.startActivity(this,ProtocolActivity.class);
                 break;
             case R.id.obtainCode_bt://获取验证码
                 phone = CommonUtils.getStringByEditText(phoneEt);//电话号码

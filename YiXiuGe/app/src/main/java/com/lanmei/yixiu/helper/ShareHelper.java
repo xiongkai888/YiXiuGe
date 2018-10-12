@@ -13,6 +13,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.shareboard.ShareBoardConfig;
+import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 
 /**
@@ -24,7 +25,7 @@ public class ShareHelper {
 
     private UMShareAPI mShareAPI;
     private Context context;
-    String shareUrl = "https://www.baidu.com/";
+//    String shareUrl = "https://www.baidu.com/";
 
     public ShareHelper(Context context) {
         this.context = context;
@@ -33,9 +34,13 @@ public class ShareHelper {
     }
 
     public void share(String shareUrl) {
+        if (StringUtils.isEmpty(shareUrl)){
+            UIHelper.ToastMessage(context,"分享的内容为空，分享失败");
+            return;
+        }
         Config.isJumptoAppStore = true;//其中qq 微信会跳转到下载界面进行下载，其他应用会跳到应用商店进行下载
         UMImage thumb = new UMImage(context, R.drawable.logo);//资源文件  SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,, SHARE_MEDIA.QZONE
-        UMWeb web = new UMWeb(this.shareUrl);
+        UMWeb web = new UMWeb(shareUrl);
         web.setTitle(context.getString(R.string.app_name));//标题
         web.setThumb(thumb);  //缩略图
         web.setDescription(context.getString(R.string.app_name));//描述

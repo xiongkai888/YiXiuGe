@@ -245,9 +245,12 @@ public class OSSRequestTask<T extends OSSResult> implements Callable<T> {
         } else if (exception == null) {
             try {
                 T result = responseParser.parse(response);
+//                String url=request.url()+"";
                 String url=request.url()+"";
+                url=url.substring(url.indexOf("/lanmei"));
+                url="http://images.yxg-medu.com"+url;
                 result.setUrl(url);
-                OSSLog.logD("图片上传：getCompletedCallback:" +context.getCompletedCallback());
+                OSSLog.logD("图片上传：getCompletedCallback:" +context.getCompletedCallback()+":"+url);
                 if (context.getCompletedCallback() != null) {
 
                     OSSLog.logD("图片上传：" +url);

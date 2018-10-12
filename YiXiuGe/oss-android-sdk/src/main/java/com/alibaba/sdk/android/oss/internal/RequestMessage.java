@@ -198,8 +198,12 @@ public class RequestMessage {
         String urlHost = null;
         if (isHttpdnsEnable) {
             urlHost = HttpdnsMini.getInstance().getIpByHostAsync(originHost);
+            OSSLog.logD("[buildCannonicalURL] - isHttpdnsEnable：1"+urlHost);
+            urlHost = "images.yxg-medu.com";
+            OSSLog.logD("[buildCannonicalURL] - isHttpdnsEnable：2"+urlHost);
         } else {
             OSSLog.logD("[buildCannonicalURL] - proxy exist, disable httpdns");
+
         }
 
         // 异步调用HTTPDNS解析IP，如果还没解析到结果，也是返回null
@@ -215,6 +219,7 @@ public class RequestMessage {
         headers.put(OSSHeaders.HOST, headerHost);
 
         baseURL = scheme + "://" + urlHost;
+
         if (objectKey != null) {
             baseURL += "/" + HttpUtil.urlEncode(objectKey, OSSConstants.DEFAULT_CHARSET_NAME);
         }

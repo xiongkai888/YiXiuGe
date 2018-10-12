@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.bean.NotesBean;
+import com.lanmei.yixiu.helper.ShareListener;
 import com.lanmei.yixiu.ui.mine.activity.ShowEnclosureActivity;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.utils.IntentUtil;
@@ -46,6 +47,21 @@ public class NoteDetailsEnclosureAdapter extends SwipeRefreshAdapter<NotesBean.E
                 IntentUtil.startActivity(context, ShowEnclosureActivity.class,bean.getUrl());
             }
         });
+        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (listener != null){
+                    listener.share(bean.getUrl());
+                }
+                return false;
+            }
+        });
+    }
+
+    private ShareListener listener;
+
+    public void setShareListener(ShareListener listener){
+        this.listener = listener;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -20,6 +20,8 @@ import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.NotesBean;
 import com.lanmei.yixiu.event.PublishCoursewareEvent;
 import com.lanmei.yixiu.event.PublishNoteEvent;
+import com.lanmei.yixiu.helper.ShareHelper;
+import com.lanmei.yixiu.helper.ShareListener;
 import com.lanmei.yixiu.utils.AKDialog;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.lanmei.yixiu.utils.FormatTime;
@@ -62,6 +64,7 @@ public class NoteDetailsActivity extends BaseActivity {
     RecyclerView recyclerViewEn;
     private NotesBean bean;//笔记内容
     private String type;//不为空是 笔记详情
+    private ShareHelper shareHelper;
 
     @Override
     public int getContentViewId() {
@@ -80,6 +83,9 @@ public class NoteDetailsActivity extends BaseActivity {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
+
+        shareHelper = new ShareHelper(this);
+
         setSupportActionBar(mToolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayShowTitleEnabled(true);
@@ -117,6 +123,12 @@ public class NoteDetailsActivity extends BaseActivity {
         recyclerViewEn.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewEn.setNestedScrollingEnabled(false);
         recyclerViewEn.setAdapter(adapter);
+        adapter.setShareListener(new ShareListener() {
+            @Override
+            public void share(String url) {
+                shareHelper.share(url);
+            }
+        });
     }
 
 
@@ -138,12 +150,7 @@ public class NoteDetailsActivity extends BaseActivity {
             @Override
             public void delete() {
                 window.dismiss();
-                String content;
-                if (!StringUtils.isEmpty(type)){
-                    content = "确认要删除该笔记？";
-                }else {
-                    content = "确认要删除该课件？";
-                }
+                String content = !StringUtils.isEmpty(type)?getString(R.string.delete_note):getString(R.string.delete_courseware);
                 AKDialog.getAlertDialog(getContext(), content, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -200,7 +207,9 @@ public class NoteDetailsActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
 //        EventBus.getDefault().unregister(this);
+        shareHelper.onDestroy();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -223,5 +232,14 @@ public class NoteDetailsActivity extends BaseActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 结果返回
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        shareHelper.onActivityResult(requestCode, resultCode, data);
     }
 }

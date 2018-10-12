@@ -7,6 +7,7 @@ package oss;
 
 public class OssUserInfo {
     // 运行sample前需要配置以下字段为有效的值
+//    public static final String endpoint = "oss-cn-shenzhen.aliyuncs.com";
     public static final String endpoint = "oss-cn-shenzhen.aliyuncs.com";
     public static final String accessKeyId = "LTAIygXXFYDbdgSW";
     public static final String accessKeySecret = "h5sx8rn7YEt38eM1x8kjSLx0MWIRxK";
