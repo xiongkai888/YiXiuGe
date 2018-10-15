@@ -173,7 +173,7 @@ public class ManageObjectSamples {
         OSSAsyncTask deleteTask = oss.asyncDeleteObject(delete, new OSSCompletedCallback<DeleteObjectRequest, DeleteObjectResult>() {
             @Override
             public void onSuccess(DeleteObjectRequest request, DeleteObjectResult result) {
-                Log.d("异步删除", "success!："+result.getUrl());
+//                Log.d("异步删除", "success!："+result.getUrl());
                 asyncDel=true;
 
             }
@@ -206,7 +206,7 @@ public class ManageObjectSamples {
         DeleteObjectRequest delete = new DeleteObjectRequest(testBucket, key);
         DeleteObjectResult deleteResult = oss.deleteObject(delete);
         if (deleteResult.getStatusCode() == 204) {
-            Log.d("同步删除", "Success："+deleteResult.getUrl());
+//            Log.d("同步删除", "Success："+deleteResult.getUrl());
             syncDel=true;
         }
         return syncDel;

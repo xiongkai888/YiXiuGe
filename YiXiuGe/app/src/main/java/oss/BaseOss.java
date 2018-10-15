@@ -11,6 +11,7 @@ import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
+import com.alibaba.sdk.android.oss.common.utils.OssUserInfo;
 import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.DeleteObjectRequest;
 import com.alibaba.sdk.android.oss.model.DeleteObjectResult;
@@ -35,7 +36,7 @@ public class BaseOss {
     public BaseOss(Context context) {
         this.context = context;
         userId = CommonUtils.getUserId(context);
-        testBucket=OssUserInfo.testBucket;
+        testBucket= OssUserInfo.testBucket;
         objectDir="android/"+userId;
         testObject=objectDir;
         initOss();

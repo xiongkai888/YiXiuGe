@@ -30,6 +30,8 @@ public class YiXiuApp extends BaseApp {
     protected void installMonitor() {
         applicationContext = this;
         instance = this;
+//        L.debug  = false;
+//        OSSLog.disableLog();
 //        LeakCanary.install(this);//LeakCanary内存泄漏监控
         DemoHelper.getInstance().init(this);
         UpdateAppConfig.initUpdateApp(applicationContext);//app版本更新

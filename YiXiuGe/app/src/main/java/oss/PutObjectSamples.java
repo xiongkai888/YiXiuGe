@@ -44,16 +44,16 @@ public class PutObjectSamples {
     public String putObjectFromLocalFile() {
         // 构造上传请求
         PutObjectRequest put = new PutObjectRequest(testBucket, testObject, uploadFilePath);
-        String url=null;
+        String url = null;
 
         try {
             PutObjectResult putResult = oss.putObject(put);
 
-            L.d("PutObject", "UploadSuccess:"+"testBucket:"+testBucket+":"+testObject+":"+ uploadFilePath);
+            L.d("PutObject", "UploadSuccess:" + "testBucket:" + testBucket + ":" + testObject + ":" + uploadFilePath);
             L.d("Url", putResult.getUrl());
             L.d("ETag", putResult.getETag());
             L.d("RequestId", putResult.getRequestId());
-            url=putResult.getUrl();
+            url = putResult.getUrl();
         } catch (ClientException e) {
             // 本地异常如网络异常等
             e.printStackTrace();
@@ -63,7 +63,7 @@ public class PutObjectSamples {
             Log.e("ErrorCode", e.getErrorCode());
             Log.e("HostId", e.getHostId());
             Log.e("RawMessage", e.getRawMessage());
-        }finally {
+        } finally {
             return url;
         }
     }
@@ -73,7 +73,7 @@ public class PutObjectSamples {
     public void asyncPutObjectFromLocalFile(final OssUploadListener ossUploadListener) {
         // 构造上传请求
         PutObjectRequest put = new PutObjectRequest(testBucket, testObject, uploadFilePath);
-        final String url=null;
+        final String url = null;
 
         // 异步上传时可以设置进度回调
         put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
@@ -91,20 +91,20 @@ public class PutObjectSamples {
                 L.d("ETag", result.getETag());
                 L.d("RequestId", result.getRequestId());
                 L.d("上传图片：", uploadFilePath);
-                File fileImg=new File(uploadFilePath);
-                if (fileImg.exists()){
+                File fileImg = new File(uploadFilePath);
+                if (fileImg.exists()) {
                     fileImg.delete();
                 }
-               if (ossUploadListener!=null){
-                   ossUploadListener.onUpLoadListener(true,result.getUrl());
-               }
+                if (ossUploadListener != null) {
+                    ossUploadListener.onUpLoadListener(true, result.getUrl());
+                }
             }
 
             @Override
             public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
                 // 请求异常
-                if (ossUploadListener!=null){
-                    ossUploadListener.onUpLoadListener(false,uploadFilePath);
+                if (ossUploadListener != null) {
+                    ossUploadListener.onUpLoadListener(false, uploadFilePath);
                 }
                 if (clientExcepion != null) {
                     // 本地异常如网络异常等
@@ -309,11 +309,9 @@ public class PutObjectSamples {
         try {
             DeleteObjectRequest delete = new DeleteObjectRequest(testBucket, testObject);
             DeleteObjectResult result = oss.deleteObject(delete);
-        }
-        catch (ClientException clientException) {
+        } catch (ClientException clientException) {
             clientException.printStackTrace();
-        }
-        catch (ServiceException serviceException) {
+        } catch (ServiceException serviceException) {
             Log.e("ErrorCode", serviceException.getErrorCode());
             Log.e("RequestId", serviceException.getRequestId());
             Log.e("HostId", serviceException.getHostId());

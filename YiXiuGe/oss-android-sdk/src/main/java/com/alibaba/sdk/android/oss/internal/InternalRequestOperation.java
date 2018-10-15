@@ -903,7 +903,7 @@ public class InternalRequestOperation {
         }
 
         // When the HTTP proxy is set, httpDNS is not enabled.
-        message.setHttpDnsEnable(checkIfHttpDnsAvailable(conf.isHttpDnsEnable()));
+//        message.setHttpDnsEnable(checkIfHttpDnsAvailable(conf.isHttpDnsEnable()));
         message.setCredentialProvider(credentialProvider);
 
         message.getHeaders().put(HttpHeaders.USER_AGENT, VersionInfoUtils.getUserAgent(conf.getCustomUserMark()));

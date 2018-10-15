@@ -185,7 +185,7 @@ public class UploadVideoListActivity extends BaseActivity implements Toolbar.OnM
                     UIHelper.ToastMessage(this, "请先选择");
                     break;
                 }
-                if (presenter.isAllSelect()) {//全部为已读
+                if (presenter.isAllSelect()) {//
                     CommonUtils.developing(this);
                 } else {//设置部分为已读
                     CommonUtils.developing(this);

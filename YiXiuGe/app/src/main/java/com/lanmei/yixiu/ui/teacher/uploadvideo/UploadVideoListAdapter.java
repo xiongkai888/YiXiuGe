@@ -84,20 +84,12 @@ public class UploadVideoListAdapter extends SwipeRefreshAdapter<UploadVideoBean>
             titleTv.setText(bean.getTitle());
             progressTv.setText(bean.getProgress()+"%");
             statusTv.setText(bean.getStatus());
-
-//            L.d("AyncListObjects", "bean.getProgress()：" + bean.getProgress());
-//            L.d("AyncListObjects", "bean.getTitle()：" + bean.getTitle());
-//            L.d("AyncListObjects", "bean.getStatus()：" + bean.getStatus());
-//            L.d("AyncListObjects", "bean.getPic()：" + bean.getPic());
-//            L.d("AyncListObjects", "bean.getCid()：" + bean.getCid());
-//            L.d("AyncListObjects", "bean.getPath()：" + bean.getPath());
-
             if (presenter.isEdit()) {
                 compileIv.setVisibility(View.VISIBLE);
                 if (bean.isEdit()) {
-                    compileIv.setImageResource(R.drawable.pay_off);
-                } else {
                     compileIv.setImageResource(R.drawable.pay_on);
+                } else {
+                    compileIv.setImageResource(R.drawable.pay_off);
                 }
             } else {
                 compileIv.setVisibility(View.GONE);
