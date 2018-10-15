@@ -13,19 +13,25 @@
         android:padding="@dimen/d_10dp">
 
         <com.xson.common.widget.CircleImageView
-            android:id="@+id/pic_iv"
+            android:id="@+id/icon_iv"
             android:layout_width="@dimen/d_50dp"
             android:layout_height="@dimen/d_50dp"
             android:src="@drawable/temp_teacher" />
 
         <TextView
+            android:id="@+id/name_tv"
             android:layout_marginLeft="@dimen/d_10dp"
             style="@style/text_weight"
             android:text="教室1" />
 
         <TextView
+            android:id="@+id/status_tv"
             style="@style/text10color41E8B6"
             android:layout_marginLeft="@dimen/d_10dp"
+            android:paddingTop="@dimen/d_2dp"
+            android:paddingBottom="@dimen/d_2dp"
+            android:paddingLeft="@dimen/d_10dp"
+            android:paddingRight="@dimen/d_10dp"
             android:background="@drawable/teacher_button_bg"
             android:text="使用中" />
 

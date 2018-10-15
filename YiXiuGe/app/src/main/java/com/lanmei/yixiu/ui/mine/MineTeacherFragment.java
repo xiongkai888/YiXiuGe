@@ -14,6 +14,7 @@ import com.lanmei.yixiu.ui.teacher.activity.ClassHourActivity;
 import com.lanmei.yixiu.ui.teacher.activity.EvaluateActivity;
 import com.lanmei.yixiu.ui.teacher.activity.MyCourseActivity;
 import com.lanmei.yixiu.ui.teacher.activity.MyTutorialCoursewareActivity;
+import com.lanmei.yixiu.ui.teacher.activity.TeachingAttachmentsActivity;
 import com.lanmei.yixiu.ui.teacher.activity.TutorialCoursewareActivity;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
@@ -132,8 +133,8 @@ public class MineTeacherFragment extends BaseFragment {
                 CommonUtils.developing(context);
                 break;
             case R.id.ll_mine_teacher5://教学设备
-//                IntentUtil.startActivity(context, TeachingAttachmentsActivity.class);
-                CommonUtils.developing(context);
+                IntentUtil.startActivity(context, TeachingAttachmentsActivity.class);
+//                CommonUtils.developing(context);
                 break;
         }
     }

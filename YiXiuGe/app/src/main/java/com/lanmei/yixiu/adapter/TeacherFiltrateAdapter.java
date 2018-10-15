@@ -18,7 +18,7 @@ import butterknife.InjectView;
 
 
 /**
- * 老师(下拉筛选)
+ * 老师(下拉筛选) (和教学设备公用)
  */
 public class TeacherFiltrateAdapter extends SwipeRefreshAdapter<TeacherFiltrateBean> {
 

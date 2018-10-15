@@ -4,11 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/v_all_match_parent_no"
     tools:context=".ui.home.activity.TeacherActivity">
-
+<!--老师、教学设备-->
     <include layout="@layout/include_examination_tablayout" />
+
 
     <TextView
         android:id="@+id/line_tv"
+        style="@style/line_H1dp_divider" />
+
+    <include layout="@layout/include_search"/>
+
+    <TextView
         style="@style/line_H1dp_divider" />
 
     <include layout="@layout/fragment_single_listview_no"/>

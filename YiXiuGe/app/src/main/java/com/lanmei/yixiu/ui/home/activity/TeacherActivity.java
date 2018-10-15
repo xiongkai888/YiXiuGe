@@ -5,8 +5,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import com.lanmei.yixiu.adapter.TeacherFiltrateAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.TeacherBean;
 import com.lanmei.yixiu.bean.TeacherFiltrateBean;
+import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
@@ -23,6 +26,8 @@ import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.SwipeRefreshController;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.SysUtils;
+import com.xson.common.utils.UIHelper;
+import com.xson.common.widget.DrawClickableEditText;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
 import java.util.List;
@@ -33,10 +38,12 @@ import butterknife.OnClick;
 /**
  * 老师
  */
-public class TeacherActivity extends BaseActivity {
+public class TeacherActivity extends BaseActivity  implements TextView.OnEditorActionListener {
 
     @InjectView(R.id.toolbar_name_tv)
     TextView toolbarNameTv;
+    @InjectView(R.id.keywordEditText)
+    DrawClickableEditText keywordEditText;//搜索老师
     @InjectView(R.id.line_tv)
     TextView lineTv;
     @InjectView(R.id.pull_refresh_rv)
@@ -53,9 +60,11 @@ public class TeacherActivity extends BaseActivity {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        toolbarNameTv.setText("全部");
+        toolbarNameTv.setText(R.string.all);
         setCompoundDrawables(R.color.color666, R.drawable.common_filter_arrow_down);
-
+//        keywordEditText.setFocusable(true);
+        keywordEditText.setFocusableInTouchMode(true);
+        keywordEditText.setOnEditorActionListener(this);
         api = new YiXiuGeApi("app/teacher_list");
 
         mAdapter = new TeacherAdapter(this);
@@ -65,6 +74,25 @@ public class TeacherActivity extends BaseActivity {
         };
         controller.loadFirstPage();
         loadTeacherType();
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            String key = CommonUtils.getStringByTextView(v);
+            if (StringUtils.isEmpty(key)) {
+                UIHelper.ToastMessage(this, R.string.input_keyword);
+                return false;
+            }
+            loadSearch(key);
+            return true;
+        }
+        return false;
+    }
+
+    private void loadSearch(String key) {
+        api.addParams("keyword",key);
+        controller.loadFirstPage();
     }
 
     //老师类型
@@ -123,6 +151,8 @@ public class TeacherActivity extends BaseActivity {
                 toolbarNameTv.setText(bean.getName());
                 window.dismiss();
                 api.addParams("type",bean.getId());
+                api.addParams("keyword","");
+                keywordEditText.setText("");
                 controller.loadFirstPage();
             }
         });

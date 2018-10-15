@@ -146,5 +146,8 @@
     <string name="delete_note">确认要删除该笔记？</string>
     <string name="delete_courseware">确认要删除该课件？</string>
     <string name="user_protocol">用户协议</string>
+    <string name="in_maintenance">在维修</string>
+    <string name="in_use">使用中</string>
+    <string name="unused">未使用</string>
 
 </resources>

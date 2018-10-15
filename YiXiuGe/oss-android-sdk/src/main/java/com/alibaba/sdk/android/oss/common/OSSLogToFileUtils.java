@@ -238,7 +238,7 @@ public class OSSLogToFileUtils {
     }
 
     public synchronized void write(Object str) {
-        if (OSSLog.isEnableLog()) {
+        if (OSSLog.enableLog) {
             // 判断是否初始化或者初始化是否成功
             if (null == sContext || null == instance || null == sLogFile) {
                 return;

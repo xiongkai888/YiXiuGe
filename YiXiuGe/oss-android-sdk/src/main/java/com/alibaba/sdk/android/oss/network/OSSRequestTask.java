@@ -174,7 +174,7 @@ public class OSSRequestTask<T extends OSSResult> implements Callable<T> {
             // send sync request
             Response response = call.execute();
 
-            if (OSSLog.isEnableLog()) {
+            if (OSSLog.enableLog) {
                 // response log
                 Map<String, List<String>> headerMap = response.headers().toMultimap();
                 StringBuilder printRsp = new StringBuilder();
@@ -192,7 +192,7 @@ public class OSSRequestTask<T extends OSSResult> implements Callable<T> {
 
         } catch (Exception e) {
             OSSLog.logError("Encounter local execpiton: " + e.toString());
-            if (OSSLog.isEnableLog()) {
+            if (OSSLog.enableLog) {
                 e.printStackTrace();
             }
             exception = new ClientException(e.getMessage(), e);

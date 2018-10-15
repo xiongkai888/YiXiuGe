@@ -8,7 +8,7 @@ import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.CourseAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.CourseClassifyBean;
-import com.lanmei.yixiu.ui.course.activity.SearchCourseActivity;
+import com.lanmei.yixiu.search.SearchCourseActivity;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;

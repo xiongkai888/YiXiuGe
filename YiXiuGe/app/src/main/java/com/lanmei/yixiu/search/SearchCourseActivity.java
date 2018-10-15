@@ -1,4 +1,4 @@
-package com.lanmei.yixiu.ui.course.activity;
+package com.lanmei.yixiu.search;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;

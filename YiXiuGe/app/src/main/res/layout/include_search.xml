@@ -4,6 +4,8 @@
     android:paddingBottom="@dimen/d_6dp"
     android:paddingLeft="@dimen/d_10dp"
     android:paddingRight="@dimen/d_10dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:paddingTop="@dimen/d_6dp">
 
     <com.xson.common.widget.DrawClickableEditText

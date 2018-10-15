@@ -97,7 +97,7 @@ public class OSSFederationToken {
             Date date = sdf.parse(expirationInGMTFormat);
             this.expiration = date.getTime() / 1000;
         } catch (ParseException e) {
-            if (OSSLog.isEnableLog()) {
+            if (OSSLog.enableLog) {
                 e.printStackTrace();
             }
             this.expiration = DateUtil.getFixedSkewedTimeMillis() / 1000 + 30;

@@ -175,7 +175,7 @@ public class HttpdnsMini {
                     }
                 }
             } catch (Exception e) {
-                if (OSSLog.isEnableLog()) {
+                if (OSSLog.enableLog) {
                     e.printStackTrace();
                     OSSLog.logThrowable2Local(e);
                 }
