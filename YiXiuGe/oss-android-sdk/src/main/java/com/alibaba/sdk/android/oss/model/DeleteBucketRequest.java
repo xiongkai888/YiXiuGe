@@ -8,27 +8,30 @@ public class DeleteBucketRequest extends OSSRequest {
     private String bucketName;
 
     /**
-     * 构造bucket删除请求
+     * Creates the request to delete the specified bucket
+     *
      * @param bucketName
      */
     public DeleteBucketRequest(String bucketName) {
-        this.bucketName = bucketName;
+        setBucketName(bucketName);
     }
 
     /**
-     * 设置要删除的bucketName
-     * @param bucketName
-     */
-    public void setBucketName(String bucketName) {
-        this.bucketName = bucketName;
-    }
-
-    /**
-     * 返回要删除的bucketName
+     * Gets the bucket name to delete
+     *
      * @return
      */
     public String getBucketName() {
         return bucketName;
+    }
+
+    /**
+     * Sets the bucket name to delete
+     *
+     * @param bucketName
+     */
+    public void setBucketName(String bucketName) {
+        this.bucketName = bucketName;
     }
 
 }

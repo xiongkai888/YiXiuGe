@@ -8,71 +8,118 @@ import android.util.Log;
 public class OSSLog {
 
     private static final String TAG = "OSS-Android-SDK";
-    private static boolean enableLog;
+    private static boolean enableLog = false;
 
     /**
-     * 打开log观察调试信息
+     * enable log
      */
     public static void enableLog() {
         enableLog = true;
     }
 
     /**
-     * 打开log观察调试信息
+     * disable log
      */
     public static void disableLog() {
         enableLog = false;
     }
 
     /**
-     * @return 是否打开了log
+     * @return return log flag
      */
     public static boolean isEnableLog() {
         return enableLog;
     }
 
     /**
-     * info级别log
+     * info level log
      *
      * @param msg
      */
-    public static void logI(String msg) {
+    public static void logInfo(String msg) {
+        logInfo(msg, true);
+    }
+
+    public static void logInfo(String msg, boolean write2local) {
         if (enableLog) {
-            Log.i(TAG, msg);
+            Log.i(TAG, "[INFO]: ".concat(msg));
+            log2Local(msg, write2local);
         }
     }
 
     /**
-     * verbose级别log
+     * verbose level log
      *
      * @param msg
      */
-    public static void logV(String msg) {
+    public static void logVerbose(String msg) {
+        logVerbose(msg, true);
+    }
+
+    public static void logVerbose(String msg, boolean write2local) {
         if (enableLog) {
-            Log.v(TAG, msg);
+            Log.v(TAG, "[Verbose]: ".concat(msg));
+            log2Local(msg, write2local);
         }
     }
 
     /**
-     * warning级别log
+     * warning level log
      *
      * @param msg
      */
-    public static void logW(String msg) {
+    public static void logWarn(String msg) {
+        logWarn(msg, true);
+    }
+
+    public static void logWarn(String msg, boolean write2local) {
         if (enableLog) {
-            Log.w(TAG, msg);
+            Log.w(TAG, "[Warn]: ".concat(msg));
+            log2Local(msg, write2local);
         }
+    }
+
+    /**
+     * debug level log
+     *
+     * @param msg
+     */
+    public static void logDebug(String msg) {
+        logDebug(TAG, msg);
+    }
+
+    public static void logDebug(String tag, String msg) {
+        logDebug(tag, msg, true);
     }
 
     /**
      * debug级别log
      *
+     * @param write2local 是否需要写入本地
      * @param msg
      */
-    public static void logD(String msg) {
+    public static void logDebug(String msg, boolean write2local) {
+        logDebug(TAG, msg, write2local);
+    }
+
+    public static void logDebug(String tag, String msg, boolean write2local) {
         if (enableLog) {
-            Log.d(TAG, msg);
+            Log.d(tag, "[Debug]: ".concat(msg));
+            log2Local(msg, write2local);
         }
+    }
+
+    /**
+     * error level log
+     *
+     * @param msg
+     */
+    public static void logError(String msg) {
+        logError(TAG, msg);
+    }
+
+    public static void logError(String tag, String msg) {
+        logDebug(tag, msg, true);
     }
 
     /**
@@ -80,9 +127,27 @@ public class OSSLog {
      *
      * @param msg
      */
-    public static void logE(String msg) {
+    public static void logError(String msg, boolean write2local) {
+        logError(TAG, msg, write2local);
+    }
+
+    public static void logError(String tag, String msg, boolean write2local) {
         if (enableLog) {
-            Log.e(TAG, msg);
+            Log.d(tag, "[Error]: ".concat(msg));
+            log2Local(msg, write2local);
         }
     }
+
+    public static void logThrowable2Local(Throwable throwable) {
+        if (enableLog) {
+            OSSLogToFileUtils.getInstance().write(throwable);
+        }
+    }
+
+    private static void log2Local(String msg, boolean write2local) {
+        if (write2local) {
+            OSSLogToFileUtils.getInstance().write(msg);
+        }
+    }
+
 }

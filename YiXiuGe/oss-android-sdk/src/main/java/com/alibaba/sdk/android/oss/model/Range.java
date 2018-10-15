@@ -7,26 +7,25 @@ package com.alibaba.sdk.android.oss.model;
  */
 public class Range {
 
+    public static final long INFINITE = -1;
     /**
-     * 下载范围的起点
+     * The start point of the download range
      */
     private long begin;
-
     /**
-     * 下载范围的终点
+     * The end point of the download range
      */
     private long end;
 
-    public static final long INFINITE = -1;
-
     /**
-     *  构造新的下载范围
-     * @param begin 下载范围起点
-     * @param end 下载范围终点
+     * Constructor
+     *
+     * @param begin The start index
+     * @param end   The end index
      */
     public Range(long begin, long end) {
-        this.begin = begin;
-        this.end = end;
+        setBegin(begin);
+        setEnd(end);
     }
 
     public long getEnd() {

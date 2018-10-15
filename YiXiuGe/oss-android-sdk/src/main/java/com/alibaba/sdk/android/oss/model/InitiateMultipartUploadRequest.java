@@ -20,90 +20,87 @@
 package com.alibaba.sdk.android.oss.model;
 
 /**
- * 包含初始化一个Multipart上传事件的请求参数。
- *
+ * The request class to initiate a multipart upload
  */
 public class InitiateMultipartUploadRequest extends OSSRequest {
 
+    public boolean isSequential;
     private String bucketName;
-
     private String objectKey;
-
     private ObjectMetadata metadata;
 
     /**
-     * 构造函数。
-     * @param bucketName
-     *          用来创建Multipart上传的Bucket的名称。
-     * @param objectKey
-     *          用来创建的Multipart的Object（也就是Multipart上传完成后新生成的Object）的key。
+     * Constructor
+     *
+     * @param bucketName Bucket name
+     * @param objectKey  Object key
      */
     public InitiateMultipartUploadRequest(String bucketName, String objectKey) {
         this(bucketName, objectKey, null);
     }
 
     /**
-     * 构造函数。
-     * @param bucketName
-     *          用来创建Multipart上传的Bucket的名称。
-     * @param objectKey
-     *          用来创建的Multipart的Object（也就是Multipart上传完成后新生成的Object）的key。
-     * @param metadata
-     *          将创建的Object的附加信息。
+     * Constructor
+     *
+     * @param bucketName Bucket name
+     * @param objectKey  Object key
+     * @param metadata   Object metadata
      */
     public InitiateMultipartUploadRequest(String bucketName, String objectKey, ObjectMetadata metadata) {
-        this.bucketName = bucketName;
-        this.objectKey = objectKey;
-        this.metadata = metadata;
+        setBucketName(bucketName);
+        setObjectKey(objectKey);
+        setMetadata(metadata);
     }
-    
+
     /**
-     * 返回用来创建Multipart上传的Bucket的名称。
-     * @return 用来创建Multipart上传的Bucket的名称。
+     * Gets the bucket name
+     *
+     * @return The bucket name for a multipart upload
      */
     public String getBucketName() {
         return bucketName;
     }
 
     /**
-     * 设置用来创建Multipart上传的Bucket的名称。
-     * @param bucketName
-     *          用来创建Multipart上传的Bucket的名称。
+     * Sets the bucket name
+     *
+     * @param bucketName Bucket name
      */
     public void setBucketName(String bucketName) {
         this.bucketName = bucketName;
     }
 
     /**
-     * 返回用来创建的Multipart的Object（也就是Multipart上传完成后新生成的Object）的key。
-     * @return
-     *      用来创建的Multipart的Object（也就是Multipart上传完成后新生成的Object）的key。
+     * Gets the target object key
+     *
+     * @return The target object key which is the final object after the multipart uplaod finishes.
      */
     public String getObjectKey() {
         return objectKey;
     }
 
     /**
-     * 设置用来创建的Multipart的Object（也就是Multipart上传完成后新生成的Object）的key。
-     * @param objectKey
-     *          用来创建的Multipart的Object（也就是Multipart上传完成后新生成的Object）的key。
+     * Sets the target object key
+     *
+     * @param objectKey The target object key
      */
     public void setObjectKey(String objectKey) {
         this.objectKey = objectKey;
     }
 
     /**
-     * 返回将创建的Object的附加信息。
-     * @return 将创建的Object的附加信息。
+     * Gets the object's metadata.
+     *
+     * @return The object's metadata
      */
     public ObjectMetadata getMetadata() {
         return metadata;
     }
 
     /**
-     * 设置将创建的Object的附加信息。
-     * @param metadata
-     *          将创建的Object的附加信息。
+     * Sets the metadata
+     *
+     * @param metadata The object's metadata
      */
     public void setMetadata(ObjectMetadata metadata) {
         this.metadata = metadata;

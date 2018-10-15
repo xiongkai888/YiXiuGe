@@ -5,7 +5,7 @@ package com.alibaba.sdk.android.oss.common;
  */
 public final class OSSConstants {
 
-    public static final String SDK_VERSION = "2.3.0";
+    public static final String SDK_VERSION = "2.9.1";
     public static final String DEFAULT_OSS_ENDPOINT = "http://oss-cn-hangzhou.aliyuncs.com";
 
     public static final String DEFAULT_CHARSET_NAME = "utf-8";
@@ -19,7 +19,6 @@ public final class OSSConstants {
 
     public static final int DEFAULT_RETRY_COUNT = 2;
     public static final int DEFAULT_BASE_THREAD_POOL_SIZE = 5;
-    public static final int DEFAULT_EXTEND_THREAD_POOL_SIZE = 3;
 
     public static final long DEFAULT_FILE_SIZE_LIMIT = 5 * 1024 * 1024 * 1024L;
 
@@ -30,7 +29,13 @@ public final class OSSConstants {
 
     public static final int OBJECT_NAME_MAX_LENGTH = 1024;
 
-    public static final String[] DEFAULT_CNAME_EXCLUDE_LIST = new String[] {
+    public static final String[] DEFAULT_CNAME_EXCLUDE_LIST = new String[]{
+            "aliyuncs.com",
+            "aliyun-inc.com",
+            "aliyun.com"
+    };
+
+    public static final String[] OSS_ORIGN_HOST = new String[]{
             "aliyuncs.com",
             "aliyun-inc.com",
             "aliyun.com"

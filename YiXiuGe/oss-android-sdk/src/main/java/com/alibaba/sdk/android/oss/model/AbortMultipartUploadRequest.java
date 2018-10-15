@@ -5,49 +5,55 @@ package com.alibaba.sdk.android.oss.model;
  */
 public class AbortMultipartUploadRequest extends OSSRequest {
 
-    /** The name of the bucket containing the multipart upload to abort */
+    /**
+     * The name of the bucket containing the multipart upload to abort
+     */
     private String bucketName;
 
-    /** The objectKey of the multipart upload to abort */
+    /**
+     * The objectKey of the multipart upload to abort
+     */
     private String objectKey;
 
-    /** The ID of the multipart upload to abort */
+    /**
+     * The ID of the multipart upload to abort
+     */
     private String uploadId;
 
     /**
-     * 构造函数。
-     * @param bucketName
-     *          Bucket名称。
-     * @param objectKey
-     *          Object objectKey。
-     * @param uploadId
-     *          标识Multipart上传事件的Upload ID。
+     * The constructor of AbortMultipartUploadRequest
+     *
+     * @param bucketName Bucket name
+     * @param objectKey  Object object key
+     * @param uploadId   Upload id of a Multipart upload
      */
     public AbortMultipartUploadRequest(String bucketName, String objectKey, String uploadId) {
-        this.bucketName = bucketName;
-        this.objectKey = objectKey;
-        this.uploadId = uploadId;
+        setBucketName(bucketName);
+        setObjectKey(objectKey);
+        setUploadId(uploadId);
     }
 
     /**
-     * 返回Bucket名称。
-     * @return Bucket名称。
+     * Gets Bucket name
+     *
+     * @return Bucket name
      */
     public String getBucketName() {
         return this.bucketName;
     }
 
     /**
-     * 设置Bucket名称。
-     * @param bucketName
-     *          Bucket名称。
+     * Sets bucket name
+     *
+     * @param bucketName Bucket name
      */
     public void setBucketName(String bucketName) {
         this.bucketName = bucketName;
     }
 
     /**
-     * 返回OSSObject objectKey。
+     * Gets OSSObject objectKey。
+     *
      * @return Object objectKey。
      */
     public String getObjectKey() {
@@ -55,26 +61,27 @@ public class AbortMultipartUploadRequest extends OSSRequest {
     }
 
     /**
-     * 设置OSSObject objectKey。
-     * @param objectKey
-     *          Object objectKey。
+     * Sets OSSObject objectKey。
+     *
+     * @param objectKey Object objectKey。
      */
     public void setObjectKey(String objectKey) {
         this.objectKey = objectKey;
     }
 
     /**
-     * 返回标识Multipart上传事件的Upload ID。
-     * @return 标识Multipart上传事件的Upload ID。
+     * Gets the upload Id of a Multipart upload
+     *
+     * @return The upload Id of a multipart upload
      */
     public String getUploadId() {
         return uploadId;
     }
 
     /**
-     * 设置标识Multipart上传事件的Upload ID。
-     * @param uploadId
-     *          标识Multipart上传事件的Upload ID。
+     * Sets the upload Id of a Multipart upload
+     *
+     * @param uploadId The upload Id of a multipart upload
      */
     public void setUploadId(String uploadId) {
         this.uploadId = uploadId;

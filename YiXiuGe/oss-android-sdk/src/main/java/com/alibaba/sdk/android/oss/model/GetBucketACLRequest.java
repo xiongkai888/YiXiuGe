@@ -6,27 +6,31 @@ package com.alibaba.sdk.android.oss.model;
 public class GetBucketACLRequest extends OSSRequest {
 
     private String bucketName;
+
     /**
-     * 构造bucket删除请求
+     * Creates the request to get the bucket ACL
+     *
      * @param bucketName
      */
     public GetBucketACLRequest(String bucketName) {
-        this.bucketName = bucketName;
+        setBucketName(bucketName);
     }
 
     /**
-     * 设置要删除的bucketName
-     * @param bucketName
-     */
-    public void setBucketName(String bucketName) {
-        this.bucketName = bucketName;
-    }
-
-    /**
-     * 返回要删除的bucketName
+     * Gets the bucket name
+     *
      * @return
      */
     public String getBucketName() {
         return bucketName;
+    }
+
+    /**
+     * Sets the bucket name
+     *
+     * @param bucketName
+     */
+    public void setBucketName(String bucketName) {
+        this.bucketName = bucketName;
     }
 }

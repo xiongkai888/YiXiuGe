@@ -20,8 +20,7 @@
 package com.alibaba.sdk.android.oss.model;
 
 /**
- * 包含Multipart上传的Part的返回结果信息。
- *
+ * The wrapper class of a part's part number and its ETag
  */
 public class PartETag {
 
@@ -29,50 +28,70 @@ public class PartETag {
 
     private String eTag;
 
+    private long partSize;
+
+    private long crc64;
+
     /**
-     * 构造函数。
-     * @param partNumber
-     *          Part标识号码。
-     * @param eTag
-     *          Part的ETag值。
+     * Constructor
+     *
+     * @param partNumber Part number
+     * @param eTag       Part ETag
      */
     public PartETag(int partNumber, String eTag) {
-        this.partNumber = partNumber;
-        this.eTag = eTag;
+        setPartNumber(partNumber);
+        setETag(eTag);
     }
 
     /**
-     * 返回Part标识号码。
-     * @return Part标识号码。
+     * Gets the Part number
+     *
+     * @return Part number
      */
     public int getPartNumber() {
         return partNumber;
     }
 
     /**
-     * 设置Part标识号码。
-     * @param partNumber
-     *          Part标识号码。
+     * Sets the Part number
+     *
+     * @param partNumber Part number
      */
     public void setPartNumber(int partNumber) {
         this.partNumber = partNumber;
     }
 
     /**
-     * 返回Part的ETag值。
-     * @return Part的ETag值。
+     * Gets Part ETag
+     *
+     * @return Part ETag
      */
     public String getETag() {
         return eTag;
     }
 
     /**
-     * 设置Part的ETag值。
-     * @param eTag
-     *          Part的ETag值。
+     * Sets Part ETag
+     *
+     * @param eTag Part ETag
      */
     public void setETag(String eTag) {
         this.eTag = eTag;
     }
 
+    public long getPartSize() {
+        return partSize;
+    }
+
+    public void setPartSize(long partSize) {
+        this.partSize = partSize;
+    }
+
+    public long getCRC64() {
+        return crc64;
+    }
+
+    public void setCRC64(long crc64) {
+        this.crc64 = crc64;
+    }
 }

@@ -1,26 +1,41 @@
 package com.alibaba.sdk.android.oss.model;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 /**
  * Created by zhouzhuo on 11/23/15.
  */
 public class OSSRequest {
 
-    // 可以显式强制该次请求是否需要鉴权
+    // Flag of explicitly requiring authorization.
     private boolean isAuthorizationRequired = true;
+    // crc64
+    private Enum CRC64 = CRC64Config.NULL;
 
     public boolean isAuthorizationRequired() {
         return isAuthorizationRequired;
     }
 
     /**
-     * 可以通过这个函数指定本次请求是否鉴权
-     * 如，如果Bucket的权限是公共读，那么GetObjectRequest设置false后，请求不走鉴权逻辑
-     * @param isAuthorizationRequired 是否鉴权
+     * Sets the flag of explicitly requiring authorization.
+     * For example if the bucket's permission setting is public-ready, then call this method with parameter
+     * isAuthorizationRequired:false will skip the authorization.
+     *
+     * @param isAuthorizationRequired flag of requiring authorization.
      */
     public void setIsAuthorizationRequired(boolean isAuthorizationRequired) {
         this.isAuthorizationRequired = isAuthorizationRequired;
+    }
+
+    public Enum getCRC64() {
+        return CRC64;
+    }
+
+    public void setCRC64(Enum CRC64) {
+        this.CRC64 = CRC64;
+    }
+
+    public enum CRC64Config {
+        NULL,
+        YES,
+        NO
     }
 }

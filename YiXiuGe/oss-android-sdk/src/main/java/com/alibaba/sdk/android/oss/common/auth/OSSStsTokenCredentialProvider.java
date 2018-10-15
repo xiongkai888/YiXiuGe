@@ -3,23 +3,31 @@ package com.alibaba.sdk.android.oss.common.auth;
 /**
  * Created by zhouzhuo on 1/22/16.
  */
-public class OSSStsTokenCredentialProvider extends OSSCredentialProvider {
+public class OSSStsTokenCredentialProvider implements OSSCredentialProvider {
 
     private String accessKeyId;
     private String secretKeyId;
     private String securityToken;
 
     /**
-     * 用预先向RAM获取到的STS Token构造一个凭证提供器，STS Token通常包含4个字段：AccessKey、SecretKeyId、SecurityToken、Expiration
-     * 使用OSSStsTokenCredeProvider鉴权方式，SDK将不会管理Token的过期时间
+     * Creates an instance of StsTokenCredentialProvider with the STS token got from RAM.
+     * STS token has four entities: AccessKey, SecretKeyId, SecurityToken, Expiration.
+     * If the authentication is in this way, SDK will not refresh the token once it's expired.
+     *
      * @param accessKeyId
      * @param secretKeyId
      * @param securityToken
      */
     public OSSStsTokenCredentialProvider(String accessKeyId, String secretKeyId, String securityToken) {
-        this.accessKeyId = accessKeyId.trim();
-        this.secretKeyId = secretKeyId.trim();
-        this.securityToken = securityToken.trim();
+        setAccessKeyId(accessKeyId.trim());
+        setSecretKeyId(secretKeyId.trim());
+        setSecurityToken(securityToken.trim());
+    }
+
+    public OSSStsTokenCredentialProvider(OSSFederationToken token) {
+        setAccessKeyId(token.getTempAK().trim());
+        setSecretKeyId(token.getTempSK().trim());
+        setSecurityToken(token.getSecurityToken().trim());
     }
 
     public String getAccessKeyId() {

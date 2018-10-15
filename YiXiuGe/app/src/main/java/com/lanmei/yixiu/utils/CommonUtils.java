@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.sdk.android.oss.common.utils.OssUserInfo;
 import com.alibaba.sdk.android.oss.model.DeleteObjectRequest;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
@@ -40,7 +41,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import oss.ManageOssUpload;
-import oss.OssUserInfo;
 
 public class CommonUtils {
 

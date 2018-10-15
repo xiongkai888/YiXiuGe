@@ -6,46 +6,44 @@ package com.alibaba.sdk.android.oss.model;
 public class ListObjectsRequest extends OSSRequest {
     private static final int MAX_RETURNED_KEYS_LIMIT = 1000;
 
-    // bucket 名称。
+    // bucket name
     private String bucketName;
 
-    // prefix限定返回的object key必须以prefix作为前缀。
+    // prefix filter
     private String prefix;
 
-    // maker用户设定结果从marker之后按字母排序的第一个开始返回。
+    // maker filter--the returned objects' keys must be greater than this value in lexicographic order.
     private String marker;
 
-    // 用于限定此次返回object的最大数，如果不设定，默认为100。
+    // the max keys to return--by default it's 100
     private Integer maxKeys;
 
-    // delimiter是一个用于对Object名字进行分组的字符。
+    // delimiter for grouping object keys.
     private String delimiter;
 
     /**
-     * 该可选参数表示请求响应体中Object名称采用的编码方式，目前Object名称允许包含任意Unicode字符，
-     * 然而XML 1.0不能解析某些Unicode字符，例如ASCII字符0~10。对于XML 1.0不支持的字符集，可通过
-     * 添加该参数指示OSS对响应体中的Object名称进行编码。
+     * The encoding type of the object name in the response body. For now object name could have any unicode character.
+     * However the XML1.0 cannot handle some unicode characters such as ASCII 0 to 10.
+     * For these unsupported characters, they could be encoded by the the specified encoding type.
      */
     private String encodingType;
 
-    public ListObjectsRequest() { }
+    public ListObjectsRequest() {
+        this(null);
+    }
 
     public ListObjectsRequest(String bucketName) {
         this(bucketName, null, null, null, null);
     }
 
     /**
-     * 构造函数。
-     * @param bucketName
-     *          bucket 名称。
-     * @param prefix
-     *          prefix限定返回的object key必须以prefix作为前缀。
-     * @param marker
-     *          maker用户设定结果从marker之后按字母排序的第一个开始返回。
-     * @param maxKeys
-     *          用于限定此次返回object的最大数，如果不设定，默认为100。
-     * @param delimiter
-     *          delimiter是一个用于对Object名字进行分组的字符。
+     * Constructor
+     *
+     * @param bucketName bucket name
+     * @param prefix     prefix filter
+     * @param marker     maker filter
+     * @param maxKeys    Max keys to return, by default it's 100.
+     * @param delimiter  delimiter character to group object name
      */
     public ListObjectsRequest(String bucketName, String prefix, String marker, String delimiter, Integer maxKeys) {
         setBucketName(bucketName);
@@ -58,71 +56,72 @@ public class ListObjectsRequest extends OSSRequest {
     }
 
     /**
-     * 返回bucket名称。
-     * @return bucket名称。
+     * Gets bucket name
+     *
+     * @return bucket name
      */
     public String getBucketName() {
         return bucketName;
     }
 
     /**
-     * 设置bucket名称。
-     * @param bucketName
-     *          bucket名称。
+     * Sets bucket name
+     *
+     * @param bucketName bucket name
      */
     public void setBucketName(String bucketName) {
         this.bucketName = bucketName;
     }
 
     /**
-     * 返回prefix，限定返回的object key必须以prefix作为前缀。
-     * @return
-     *      prefix
+     * Gets prefix filter.
+     *
+     * @return prefix
      */
     public String getPrefix() {
         return prefix;
     }
 
     /**
-     * 设置prefix，限定返回的object key必须以prefix作为前缀。
-     * @param prefix
-     *          前缀prefix。
+     * Sets prefix filter.
+     *
+     * @param prefix prefix filter.
      */
     public void setPrefix(String prefix) {
         this.prefix = prefix;
     }
 
     /**
-     * 返回marker，用户设定结果从marker之后按字母排序的第一个开始返回。
-     * @return
-     *          marker
+     * Gets the marker filter.
+     *
+     * @return marker filter
      */
     public String getMarker() {
         return marker;
     }
 
     /**
-     * 设置marker, 用户设定结果从marker之后按字母排序的第一个开始返回。
-     * @param marker
-     *          marker
+     * Sets the marker filter.
+     *
+     * @param marker marker filter
      */
     public void setMarker(String marker) {
         this.marker = marker;
     }
 
     /**
-     * 返回用于限定此次返回object的最大数，如果不设定，默认为100。
-     * @return
-     *      用于限定此次返回object的最大数。
+     * Gets the max keys to return, by default it's 100.
+     *
+     * @return The max keys to return
      */
     public Integer getMaxKeys() {
         return maxKeys;
     }
 
     /**
-     * 设置用于限定此次返回object的最大数，如果不设定，默认为100。最大值为1000。
-     * @param maxKeys
-     *      用于限定此次返回object的最大数。最大值为1000。
+     * Sets the max keys to return. By default it's 100 and max value is 1000.
+     *
+     * @param maxKeys The max keys to return.
      */
     public void setMaxKeys(Integer maxKeys) {
         if (maxKeys < 0 || maxKeys > MAX_RETURNED_KEYS_LIMIT) {
@@ -133,15 +132,17 @@ public class ListObjectsRequest extends OSSRequest {
     }
 
     /**
-     * 获取一个用于对Object名字进行分组的字符。
-     * @return the delimiter
+     * Gets the delimiter character for grouping object keys.
+     *
+     * @return the delimiter character.
      */
     public String getDelimiter() {
         return delimiter;
     }
 
     /**
-     * 设置一个用于对Object名字进行分组的字符。
+     * Sets the object key's delimiter character
+     *
      * @param delimiter the delimiter to set
      */
     public void setDelimiter(String delimiter) {
@@ -149,20 +150,19 @@ public class ListObjectsRequest extends OSSRequest {
     }
 
     /**
-     * 获取应用于请求响应体中Object名称的编码方式。
-
-     * @return 请求响应体中Object名称的编码方式。
+     * Gets the encoding type of the object
+     *
+     * @return the encoding type of the object
      */
     public String getEncodingType() {
         return encodingType;
     }
 
     /**
-     * 设置应用于请求响应体中Object名称的编码方式。
+     * Sets the encoding type
      *
-     * @param encodingType
-     *            请求响应体中Object名称的编码方式。
-     *            有效值: null (不进行编码处理) 或 "url".
+     * @param encodingType Encoding type
+     *                     Valid values: null (no encoding) or "url".
      */
     public void setEncodingType(String encodingType) {
         this.encodingType = encodingType;

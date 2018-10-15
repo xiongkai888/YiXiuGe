@@ -6,7 +6,6 @@ import java.util.Map;
  * Created by zhouzhuo on 11/23/15.
  */
 public class OSSResult {
-    private String url;
 
     private int statusCode;
 
@@ -14,9 +13,17 @@ public class OSSResult {
 
     private String requestId;
 
+    private String url;
+
+    //client crc64
+    private Long clientCRC;
+    //server crc64
+    private Long serverCRC;
+
     /**
-     * 响应结果的HTTP响应码
-     * @return HTTP响应码
+     * The HTTP status code
+     *
+     * @return HTTP status code
      */
     public int getStatusCode() {
         return statusCode;
@@ -26,9 +33,18 @@ public class OSSResult {
         this.statusCode = statusCode;
     }
 
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
     /**
-     * 响应结果的HTTP响应头部
-     * @return 所有HTTP响应头
+     * The response header
+     *
+     * @return ALl headers in the response
      */
     public Map<String, String> getResponseHeader() {
         return responseHeader;
@@ -39,8 +55,9 @@ public class OSSResult {
     }
 
     /**
-     * 成功请求的RequestId
-     * @return 标识唯一OSS请求的RequestId
+     * The request Id---it's generated from OSS server side.
+     *
+     * @return The globally unique request Id
      */
     public String getRequestId() {
         return requestId;
@@ -50,21 +67,29 @@ public class OSSResult {
         this.requestId = requestId;
     }
 
-    public String getUrl() {
-        return url;
+    public Long getClientCRC() {
+        return clientCRC;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setClientCRC(Long clientCRC) {
+        if (clientCRC != null && clientCRC != 0) {
+            this.clientCRC = clientCRC;
+        }
+    }
+
+    public Long getServerCRC() {
+        return serverCRC;
+    }
+
+    public void setServerCRC(Long serverCRC) {
+        if (serverCRC != null && serverCRC != 0) {
+            this.serverCRC = serverCRC;
+        }
     }
 
     @Override
     public String toString() {
-        return "OSSResult{" +
-                "url='" + url + '\'' +
-                ", statusCode=" + statusCode +
-                ", responseHeader=" + responseHeader +
-                ", requestId='" + requestId + '\'' +
-                '}';
+        String desc = String.format("OSSResult<%s>: \nstatusCode:%d,\nresponseHeader:%s,\nrequestId:%s", super.toString(), statusCode, responseHeader.toString(), requestId);
+        return desc;
     }
 }

@@ -9,16 +9,24 @@ import java.util.Map;
  */
 public class CompleteMultipartUploadRequest extends OSSRequest {
 
-    /** The name of the bucket containing the multipart upload to complete */
+    /**
+     * The name of the bucket containing the multipart upload to complete
+     */
     private String bucketName;
 
-    /** The objectKey of the multipart upload to complete */
+    /**
+     * The objectKey of the multipart upload to complete
+     */
     private String objectKey;
 
-    /** The ID of the multipart upload to complete */
+    /**
+     * The ID of the multipart upload to complete
+     */
     private String uploadId;
 
-    /** The list of part numbers and ETags to use when completing the multipart upload */
+    /**
+     * The list of part numbers and ETags to use when completing the multipart upload
+     */
     private List<PartETag> partETags = new ArrayList<PartETag>();
 
     private Map<String, String> callbackParam;
@@ -28,42 +36,41 @@ public class CompleteMultipartUploadRequest extends OSSRequest {
     private ObjectMetadata metadata;
 
     /**
-     * 构造函数。
-     * @param bucketName
-     *          Bucket名称。
-     * @param objectKey
-     *          Object objectKey。
-     * @param uploadId
-     *          Mutlipart上传事件的Upload ID。
-     * @param partETags
-     *          标识上传Part结果的{@link PartETag}列表。
+     * Constructor of CompleteMultipartUploadRequest
+     *
+     * @param bucketName bucket name
+     * @param objectKey  Object objectKey.
+     * @param uploadId   Mutlipart upload ID.
+     * @param partETags  The list of PartETag instances
      */
     public CompleteMultipartUploadRequest(String bucketName, String objectKey, String uploadId, List<PartETag> partETags) {
-        this.bucketName = bucketName;
-        this.objectKey = objectKey;
-        this.uploadId = uploadId;
-        this.partETags = partETags;
+        setBucketName(bucketName);
+        setObjectKey(objectKey);
+        setUploadId(uploadId);
+        setPartETags(partETags);
     }
 
     /**
-     * 返回Bucket名称。
-     * @return Bucket名称。
+     * Gets bucket name
+     *
+     * @return bucket name
      */
     public String getBucketName() {
         return bucketName;
     }
 
     /**
-     * 设置Bucket名称。
-     * @param bucketName
-     *          Bucket名称。
+     * Sets bucket name
+     *
+     * @param bucketName bucket name
      */
     public void setBucketName(String bucketName) {
         this.bucketName = bucketName;
     }
 
     /**
-     * 返回OSSObject。
+     * Gets OSSObject.
+     *
      * @return Object objectKey。
      */
     public String getObjectKey() {
@@ -71,43 +78,45 @@ public class CompleteMultipartUploadRequest extends OSSRequest {
     }
 
     /**
-     * 设置objectKey。
-     * @param objectKey
-     *          Object objectKey。
+     * Sets objectKey.
+     *
+     * @param objectKey Object objectKey。
      */
     public void setObjectKey(String objectKey) {
         this.objectKey = objectKey;
     }
 
     /**
-     * 返回标识Multipart上传事件的Upload ID。
-     * @return 标识Multipart上传事件的Upload ID。
+     * Gets the multipart upload Id
+     *
+     * @return the multipart upload Id
      */
     public String getUploadId() {
         return uploadId;
     }
 
     /**
-     * 设置标识Multipart上传事件的Upload ID。
-     * @param uploadId
-     *          标识Multipart上传事件的Upload ID。
+     * Sets the multipart upload Id
+     *
+     * @param uploadId the multipart upload Id
      */
     public void setUploadId(String uploadId) {
         this.uploadId = uploadId;
     }
 
     /**
-     * 返回标识上传Part结果的{@link PartETag}列表。
-     * @return 标识上传Part结果的{@link PartETag}列表。
+     * Gets the list of PartETag instances
+     *
+     * @return The list of PartETag instances
      */
     public List<PartETag> getPartETags() {
         return partETags;
     }
 
     /**
-     * 设置标识上传Part结果的{@link PartETag}列表。
-     * @param partETags
-     *          标识上传Part结果的{@link PartETag}列表。
+     * Sets the list of PartETag instances
+     *
+     * @param partETags The list of PartETag instances
      */
     public void setPartETags(List<PartETag> partETags) {
         this.partETags = partETags;
@@ -118,7 +127,7 @@ public class CompleteMultipartUploadRequest extends OSSRequest {
     }
 
     /**
-     * 设置servercallback参数
+     * Sets the servercallback parameters
      */
     public void setCallbackParam(Map<String, String> callbackParam) {
         this.callbackParam = callbackParam;
@@ -129,21 +138,21 @@ public class CompleteMultipartUploadRequest extends OSSRequest {
     }
 
     /**
-     * 设置servercallback自定义变量
+     * Sets the servercallback custom variables
      */
     public void setCallbackVars(Map<String, String> callbackVars) {
         this.callbackVars = callbackVars;
     }
 
     /**
-     * 设置上传的metadata
+     * Sets the medatadata
      */
     public ObjectMetadata getMetadata() {
         return metadata;
     }
 
     /**
-     * 获取上传设置的metadata
+     * Gets the metadata
      */
     public void setMetadata(ObjectMetadata metadata) {
         this.metadata = metadata;

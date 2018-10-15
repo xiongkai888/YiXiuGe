@@ -34,37 +34,39 @@ public class AppendObjectRequest extends OSSRequest {
 
     private OSSProgressCallback<AppendObjectRequest> progressCallback;
 
-	private long position;
+    private long position;
 
-	public AppendObjectRequest(String bucketName, String objectKey, String uploadFilePath) {
-        this.bucketName = bucketName;
-        this.objectKey = objectKey;
-        this.uploadFilePath = uploadFilePath;
-	}
+    private Long initCRC64;
 
-	public AppendObjectRequest(String bucketName, String objectKey, String uploadFilePath, ObjectMetadata metadata) {
-        this.bucketName = bucketName;
-        this.objectKey = objectKey;
-        this.uploadFilePath = uploadFilePath;
-        this.metadata = metadata;
-	}
+    public AppendObjectRequest(String bucketName, String objectKey, String uploadFilePath) {
+        this(bucketName, objectKey, uploadFilePath, null);
+    }
 
-	public AppendObjectRequest(String bucketName, String objectKey, byte[] uploadData) {
-        this.bucketName = bucketName;
-        this.objectKey = objectKey;
-        this.uploadData = uploadData;
-	}
+    public AppendObjectRequest(String bucketName, String objectKey, String uploadFilePath, ObjectMetadata metadata) {
+        setBucketName(bucketName);
+        setObjectKey(objectKey);
+        setUploadFilePath(uploadFilePath);
+        setMetadata(metadata);
+    }
 
-	public AppendObjectRequest(String bucketName, String objectKey, byte[] uploadData, ObjectMetadata metadata) {
-        this.bucketName = bucketName;
-        this.objectKey = objectKey;
-        this.uploadData = uploadData;
-        this.metadata = metadata;
-	}
+    public AppendObjectRequest(String bucketName, String objectKey, byte[] uploadData) {
+        this(bucketName, objectKey, uploadData, null);
+    }
 
-	public long getPosition() {
-		return position;
-	}
+    public AppendObjectRequest(String bucketName, String objectKey, byte[] uploadData, ObjectMetadata metadata) {
+        setBucketName(bucketName);
+        setObjectKey(objectKey);
+        setUploadData(uploadData);
+        setMetadata(metadata);
+    }
+
+    public long getPosition() {
+        return position;
+    }
+
+    public void setPosition(long position) {
+        this.position = position;
+    }
 
     public String getBucketName() {
         return bucketName;
@@ -114,7 +116,11 @@ public class AppendObjectRequest extends OSSRequest {
         this.progressCallback = progressCallback;
     }
 
-    public void setPosition(long position) {
-        this.position = position;
+    public Long getInitCRC64() {
+        return initCRC64;
+    }
+
+    public void setInitCRC64(Long initCRC64) {
+        this.initCRC64 = initCRC64;
     }
 }

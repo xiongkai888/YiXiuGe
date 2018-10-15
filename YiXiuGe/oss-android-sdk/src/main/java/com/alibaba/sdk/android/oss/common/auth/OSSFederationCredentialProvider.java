@@ -1,31 +1,39 @@
 package com.alibaba.sdk.android.oss.common.auth;
 
+import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.alibaba.sdk.android.oss.common.utils.DateUtil;
 
 /**
  * Created by zhouzhuo on 11/4/15.
  */
-public abstract class OSSFederationCredentialProvider extends OSSCredentialProvider {
+public abstract class OSSFederationCredentialProvider implements OSSCredentialProvider {
 
     private volatile OSSFederationToken cachedToken;
 
     /**
-     * 需要实现这个回调函数，返回一个可用的STS Token
-     * @return 有效的STS Token
+     * Gets the valid STS token. The subclass needs to implement this function.
+     *
+     * @return The valid STS Token
      */
-    public abstract OSSFederationToken getFederationToken();
+    public abstract OSSFederationToken getFederationToken() throws ClientException;
 
-    public synchronized OSSFederationToken getValidFederationToken() {
+    public synchronized OSSFederationToken getValidFederationToken() throws ClientException {
+        // Checks if the STS token is expired. To avoid returning staled data, here we pre-fetch the token 5 minutes a head of the real expiration.
+        // The minimal expiration time is 15 minutes
         if (cachedToken == null
-                || DateUtil.getFixedSkewedTimeMillis() / 1000 > cachedToken.getExpiration() - 15) {
+                || DateUtil.getFixedSkewedTimeMillis() / 1000 > cachedToken.getExpiration() - 5 * 60) {
 
             if (cachedToken != null) {
-                OSSLog.logD("token expired! current time: " + DateUtil.getFixedSkewedTimeMillis() / 1000 + " token expired: " + cachedToken.getExpiration());
+                OSSLog.logDebug("token expired! current time: " + DateUtil.getFixedSkewedTimeMillis() / 1000 + " token expired: " + cachedToken.getExpiration());
             }
             cachedToken = getFederationToken();
         }
 
+        return cachedToken;
+    }
+
+    public OSSFederationToken getCachedToken() {
         return cachedToken;
     }
 }

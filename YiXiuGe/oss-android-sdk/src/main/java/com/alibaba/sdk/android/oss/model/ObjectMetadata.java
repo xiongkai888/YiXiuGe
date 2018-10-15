@@ -2,6 +2,7 @@ package com.alibaba.sdk.android.oss.model;
 
 import com.alibaba.sdk.android.oss.common.OSSConstants;
 import com.alibaba.sdk.android.oss.common.OSSHeaders;
+import com.alibaba.sdk.android.oss.common.utils.CaseInsensitiveHashMap;
 import com.alibaba.sdk.android.oss.common.utils.DateUtil;
 
 import java.text.ParseException;
@@ -11,40 +12,39 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * OSS中Object的元数据。
- * 包含了用户自定义的元数据，也包含了OSS发送的标准HTTP头(如Content-Length, ETag等）。
+ * OSS object metadata class definition.
+ * It includes user's custom metadata as well as standard HTTP headers (such as Content-Length, ETag, etc)
  */
 public class ObjectMetadata {
 
-    // 用户自定义的元数据，表示以x-oss-meta-为前缀的请求头。
-    private Map<String, String> userMetadata = new HashMap<String, String>();
-
-    // 非用户自定义的元数据。
-    private Map<String, Object> metadata = new HashMap<String, Object>();
-
     public static final String AES_256_SERVER_SIDE_ENCRYPTION = "AES256";
+    // User's custom metadata dictionary. All keys  will be prefixed with x-oss-meta-in the HTTP headers.
+    // But the keys in this dictionary does not include x-oss-meta-in.
+    private Map<String, String> userMetadata = new CaseInsensitiveHashMap<String, String>();
+    // Standard metadata
+    private Map<String, Object> metadata = new CaseInsensitiveHashMap<String, Object>();
 
     /**
      * <p>
-     * 获取用户自定义的元数据。
+     * Gets the user's custom metadata.
      * </p>
      * <p>
-     * OSS内部保存用户自定义的元数据时，会以x-oss-meta-为请求头的前缀。
-     * 但用户通过该接口处理用户自定义元数据里，不需要加上前缀“x-oss-meta-”。
-     * 同时，元数据字典的键名是不区分大小写的，并且在从服务器端返回时会全部以小写形式返回，
-     * 即使在设置时给定了大写字母。比如键名为：MyUserMeta，通过getObjectMetadata接口
-     * 返回时键名会变为：myusermeta。
+     * OSS SDK will append x-oss-meta- as the header prefix for all custom metadata.
+     * But users do not need to specify this prefix through any API of this class.
+     * Meanwhile the metadata's key is case insensitive and all metadata keys returned from OSS is
+     * in lowercase.
      * </p>
-     * @return 用户自定义的元数据。
+     *
+     * @return User's custom metadata.
      */
     public Map<String, String> getUserMetadata() {
         return userMetadata;
     }
 
     /**
-     * 设置用户自定义的元数据，表示以x-oss-meta-为前缀的请求头。
-     * @param userMetadata
-     *          用户自定义的元数据。
+     * Sets user's custom metadata.
+     *
+     * @param userMetadata User's custom metadata
      */
     public void setUserMetadata(Map<String, String> userMetadata) {
         this.userMetadata.clear();
@@ -54,212 +54,254 @@ public class ObjectMetadata {
     }
 
     /**
-     * 设置请求头（内部使用）。
-     * @param key
-     *          请求头的Key。
-     * @param value
-     *          请求头的Value。
+     * Sets header (SDK internal usage only).
+     *
+     * @param key   Request Key.
+     * @param value Request Value.
      */
     public void setHeader(String key, Object value) {
         metadata.put(key, value);
     }
 
     /**
-     * 添加一个用户自定义的元数据。
-     * @param key
-     *          请求头的Key。
-     *          这个Key不需要包含OSS要求的前缀，即不需要加入“x-oss-meta-”。
-     * @param value
-     *          请求头的Value。
+     * Adds a custom metadata.
+     *
+     * @param key   metadata key
+     *              This key should not include the prefix "x-oss-meta-" as the OSS SDK will add it automatically.
+     * @param value metadata value
      */
     public void addUserMetadata(String key, String value) {
         this.userMetadata.put(key, value);
     }
 
     /**
-     * 获取Last-Modified请求头的值，表示Object最后一次修改的时间。
-     * @return Object最后一次修改的时间。
+     * Gets the Last-Modified value, which is the time of the object's last update.
+     *
+     * @return The object's last modified time.
      */
     public Date getLastModified() {
-        return (Date)metadata.get(OSSHeaders.LAST_MODIFIED);
+        return (Date) metadata.get(OSSHeaders.LAST_MODIFIED);
     }
 
     /**
-     * 设置Last-Modified请求头的值，表示Object最后一次修改的时间（内部使用）。
-     * @param lastModified
-     *          Object最后一次修改的时间。
+     * Sets the Last-Modified value, which is the time of the object's last update(SDK internal only).
+     *
+     * @param lastModified The object's last modified time.
      */
     public void setLastModified(Date lastModified) {
         metadata.put(OSSHeaders.LAST_MODIFIED, lastModified);
     }
 
     /**
-     * 获取Expires响应头，返回其Rfc822日期表示形式。
-     * 如果Object没有定义过期时间，则返回null。
-     * @return Expires响应头的Rfc822日期表示形式。
-     * @throws ParseException 无法将Expires解析为Rfc822格式，抛出该异常。
+     * Gets Expires header value in Rfc822 format (EEE, dd MMM yyyy HH:mm:ss 'GMT'")
+     * If the 'expires' header was not assigned with value, returns null.
+     *
+     * @return Expires header value in Rfc822 format.
+     * @throws ParseException unable to parse the Expires value into Rfc822 format
      */
     public Date getExpirationTime() throws ParseException {
         return DateUtil.parseRfc822Date((String) metadata.get(OSSHeaders.EXPIRES));
     }
 
     /**
-     * 获取原始的Expires响应头，不对其进行日期格式解析，返回其字符串表示形式。
-     * 如果Object没有定义过期时间，则返回null。
-     * @return 原始的Expires响应头。
-     */
-    public String getRawExpiresValue() {
-        return (String) metadata.get(OSSHeaders.EXPIRES);
-    }
-
-    /**
-     * 设置Expires请求头。
-     * @param expirationTime
-     *          过期时间。
+     * Sets Expires header value
+     *
+     * @param expirationTime Expires time
      */
     public void setExpirationTime(Date expirationTime) {
         metadata.put(OSSHeaders.EXPIRES, DateUtil.formatRfc822Date(expirationTime));
     }
 
     /**
-     * 获取Content-Length请求头，表示Object内容的大小。
-     * @return Object内容的大小。
+     * Gets the raw expires header value without parsing it.
+     * If the 'expires' header was not assigned with value, returns null.
+     *
+     * @return The raw expires header value
+     */
+    public String getRawExpiresValue() {
+        return (String) metadata.get(OSSHeaders.EXPIRES);
+    }
+
+    /**
+     * Gets Content-Length header value which means the object content's size.
+     *
+     * @return The value of Content-Length header.
      */
     public long getContentLength() {
-        Long contentLength = (Long)metadata.get(OSSHeaders.CONTENT_LENGTH);
+        Long contentLength = (Long) metadata.get(OSSHeaders.CONTENT_LENGTH);
 
         if (contentLength == null) return 0;
         return contentLength.longValue();
     }
 
     /**
-     * 设置Content-Length请求头，表示Object内容的大小。
-     * 当上传Object到OSS时，请总是指定正确的content length。
-     * @param contentLength
-     *          Object内容的大小。
-     * @throws IllegalArgumentException
-     *          Object内容的长度大小大于最大限定值：5G字节。
+     * Sets Content-Length header value which means the object content's size.
+     * The Content-Length header must be specified correctly when uploading an object.
+     *
+     * @param contentLength Object content length
+     * @throws IllegalArgumentException Object content length is more than 5GB or less than 0.
      */
     public void setContentLength(long contentLength) {
         if (contentLength > OSSConstants.DEFAULT_FILE_SIZE_LIMIT) {
-            throw new IllegalArgumentException("内容长度不能超过5G字节。");
+            throw new IllegalArgumentException("The content length could not be more than 5GB.");
         }
 
         metadata.put(OSSHeaders.CONTENT_LENGTH, contentLength);
     }
 
     /**
-     * 获取Content-Type请求头，表示Object内容的类型，为标准的MIME类型。
-     * @return Object内容的类型，为标准的MIME类型。
+     * Gets Content-Type header value in MIME types, which means the object's type.
+     *
+     * @return The object Content-Type value in MIME types.
      */
     public String getContentType() {
-        return (String)metadata.get(OSSHeaders.CONTENT_TYPE);
+        return (String) metadata.get(OSSHeaders.CONTENT_TYPE);
     }
 
     /**
-     * 获取Content-Type请求头，表示Object内容的类型，为标准的MIME类型。
-     * @param contentType
-     *          Object内容的类型，为标准的MIME类型。
+     * Sets Content-Type header value in MIME types, which means the object's type.
+     *
+     * @param contentType The object Content-Type value in MIME types.
      */
     public void setContentType(String contentType) {
         metadata.put(OSSHeaders.CONTENT_TYPE, contentType);
     }
 
     public String getContentMD5() {
-        return (String)metadata.get(OSSHeaders.CONTENT_MD5);
+        return (String) metadata.get(OSSHeaders.CONTENT_MD5);
     }
 
     public void setContentMD5(String contentMD5) {
         metadata.put(OSSHeaders.CONTENT_MD5, contentMD5);
     }
 
-    /**
-     * 获取Content-Encoding请求头，表示Object内容的编码方式。
-     * @return Object内容的编码方式。
-     */
-    public String getContentEncoding() {
-        return (String)metadata.get(OSSHeaders.CONTENT_ENCODING);
+    public String getSHA1() {
+        return (String) metadata.get(OSSHeaders.OSS_HASH_SHA1);
+    }
+
+    public void setSHA1(String value) {
+        metadata.put(OSSHeaders.OSS_HASH_SHA1, value);
     }
 
     /**
-     * 设置Content-Encoding请求头，表示Object内容的编码方式。
-     * @param encoding
-     *          表示Object内容的编码方式。
+     * Gets Content-Encoding header value which means the object content's encoding method.
+     *
+     * @return The object content's encoding
+     */
+    public String getContentEncoding() {
+        return (String) metadata.get(OSSHeaders.CONTENT_ENCODING);
+    }
+
+    /**
+     * Gets Content-Encoding header value which means the object content's encoding method.
+     *
+     * @param encoding The object content's encoding.
      */
     public void setContentEncoding(String encoding) {
         metadata.put(OSSHeaders.CONTENT_ENCODING, encoding);
     }
 
     /**
-     * 获取Cache-Control请求头，表示用户指定的HTTP请求/回复链的缓存行为。
-     * @return Cache-Control请求头。
+     * Gets Cache-Control header value, which specifies the cache behavior of accessing the object.
+     *
+     * @return Cache-Control header value
      */
     public String getCacheControl() {
-        return (String)metadata.get(OSSHeaders.CACHE_CONTROL);
+        return (String) metadata.get(OSSHeaders.CACHE_CONTROL);
     }
 
     /**
-     * 设置Cache-Control请求头，表示用户指定的HTTP请求/回复链的缓存行为。
-     * @param cacheControl
-     *          Cache-Control请求头。
+     * Sets Cache-Control header value, which specifies the cache behavior of accessing the object.
+     *
+     * @param cacheControl Cache-Control header value
      */
     public void setCacheControl(String cacheControl) {
         metadata.put(OSSHeaders.CACHE_CONTROL, cacheControl);
     }
 
     /**
-     * 获取Content-Disposition请求头，表示MIME用户代理如何显示附加的文件。
-     * @return Content-Disposition请求头
+     * Gets Content-Disposition header value, which specifies how MIME agent is going to handle
+     * attachments.
+     *
+     * @return Content-Disposition header value
      */
     public String getContentDisposition() {
-        return (String)metadata.get(OSSHeaders.CONTENT_DISPOSITION);
+        return (String) metadata.get(OSSHeaders.CONTENT_DISPOSITION);
     }
 
     /**
-     * 设置Content-Disposition请求头，表示MIME用户代理如何显示附加的文件。
-     * @param disposition
-     *          Content-Disposition请求头
+     * Gets Content-Disposition header value, which specifies how MIME agent is going to handle
+     * attachments.
+     *
+     * @param disposition Content-Disposition header value
      */
     public void setContentDisposition(String disposition) {
         metadata.put(OSSHeaders.CONTENT_DISPOSITION, disposition);
     }
 
     /**
-     * 获取一个值表示与Object相关的hex编码的128位MD5摘要。
-     * @return 与Object相关的hex编码的128位MD5摘要。
+     * Gets the ETag value which is the 128bit MD5 digest in HEX encoding.
+     *
+     * @return The ETag value.
      */
     public String getETag() {
-        return (String)metadata.get(OSSHeaders.ETAG);
+        return (String) metadata.get(OSSHeaders.ETAG);
     }
 
     /**
-     * 获取一个值表示Object的服务器加密的熵编码
-     * @return 服务器端加密的熵编码，null表示没有进行加密
+     * Gets the server side encryption algorithm.
+     *
+     * @return The server side encryption algorithm. No encryption if it returns null.
      */
     public String getServerSideEncryption() {
-        return (String)metadata.get(OSSHeaders.OSS_SERVER_SIDE_ENCRYPTION);
+        return (String) metadata.get(OSSHeaders.OSS_SERVER_SIDE_ENCRYPTION);
     }
 
     /**
-     * 设置Object服务器端熵编码的类型
+     * Sets the server side encryption algorithm.
      */
     public void setServerSideEncryption(String serverSideEncryption) {
         metadata.put(OSSHeaders.OSS_SERVER_SIDE_ENCRYPTION, serverSideEncryption);
     }
 
     /**
-     * 获取Object存储类型，目前支持Normal、Appendable两类。
-     * @return Object存储类型。
+     * Gets Object type---Normal or Appendable
+     *
+     * @return Object type
      */
     public String getObjectType() {
-        return (String)metadata.get(OSSHeaders.OSS_OBJECT_TYPE);
+        return (String) metadata.get(OSSHeaders.OSS_OBJECT_TYPE);
     }
 
     /**
-     * 返回内部保存的请求头的元数据（内部使用）。
-     * @return 内部保存的请求头的元数据（内部使用）。
+     * Gets the raw metadata dictionary (SDK internal only)
+     *
+     * @return The raw metadata (SDK internal only)
      */
     public Map<String, Object> getRawMetadata() {
         return Collections.unmodifiableMap(metadata);
+    }
+
+    @Override
+    public String toString() {
+        String s;
+        String expirationTimeStr = "";
+        try {
+            Date expirationTime = getExpirationTime();
+            expirationTimeStr = expirationTime.toString();
+        } catch (Exception e) {
+        }
+        s = OSSHeaders.LAST_MODIFIED + ":" + getLastModified() + "\n"
+                + OSSHeaders.EXPIRES + ":" + expirationTimeStr + "\n"
+                + "rawExpires" + ":" + getRawExpiresValue() + "\n"
+                + OSSHeaders.CONTENT_MD5 + ":" + getContentMD5() + "\n"
+                + OSSHeaders.OSS_OBJECT_TYPE + ":" + getObjectType() + "\n"
+                + OSSHeaders.OSS_SERVER_SIDE_ENCRYPTION + ":" + getServerSideEncryption() + "\n"
+                + OSSHeaders.CONTENT_DISPOSITION + ":" + getContentDisposition() + "\n"
+                + OSSHeaders.CONTENT_ENCODING + ":" + getContentEncoding() + "\n"
+                + OSSHeaders.CACHE_CONTROL + ":" + getCacheControl() + "\n"
+                + OSSHeaders.ETAG + ":" + getETag() + "\n";
+
+        return s;
     }
 }

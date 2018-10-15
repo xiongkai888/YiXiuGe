@@ -1,29 +1,48 @@
 package com.alibaba.sdk.android.oss.model;
 
+import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
+
+import java.util.Map;
+
 /**
  * Created by zhouzhuo on 11/23/15.
  */
 public class GetObjectRequest extends OSSRequest {
-    // Object所在的Bucket的名称
+    //  Object bucket's name
     private String bucketName;
 
     // Object Key
     private String objectKey;
 
-    // 指定返回Object内容的字节范围。
+    // Gets the range of the object to return (starting from 0 to the object length -1)
     private Range range;
 
-    // 处理图片的参数
+    // image processing parameters
     private String xOssProcess;
 
+    // progress callback run with not ui thread
+    private OSSProgressCallback progressListener;
+
+    // request headers
+    private Map<String, String> requestHeaders;
+
+    public Map<String, String> getRequestHeaders() {
+        return requestHeaders;
+    }
+
+    public void setRequestHeaders(Map<String, String> requestHeaders) {
+        this.requestHeaders = requestHeaders;
+    }
+
     /**
-     * 构造新的Object下载请求
-     * @param bucketName Bucket名字
-     * @param objectKey Object名字
+     * Creates the new request to get the specified object
+     *
+     * @param bucketName Bucket name
+     * @param objectKey  Object key
      */
     public GetObjectRequest(String bucketName, String objectKey) {
-        this.bucketName = bucketName;
-        this.objectKey = objectKey;
+        setBucketName(bucketName);
+        setObjectKey(objectKey);
     }
 
     public String getBucketName() {
@@ -31,8 +50,9 @@ public class GetObjectRequest extends OSSRequest {
     }
 
     /**
-     * 设置需要下载的Object所在的Bucket
-     * @param bucketName Bucket名字
+     * Sets the bucket name
+     *
+     * @param bucketName Bucket name
      */
     public void setBucketName(String bucketName) {
         this.bucketName = bucketName;
@@ -43,8 +63,9 @@ public class GetObjectRequest extends OSSRequest {
     }
 
     /**
-     * 设置需要下载的Object的名字
-     * @param objectKey Object名
+     * Sets the object to download
+     *
+     * @param objectKey Object key
      */
     public void setObjectKey(String objectKey) {
         this.objectKey = objectKey;
@@ -55,8 +76,9 @@ public class GetObjectRequest extends OSSRequest {
     }
 
     /**
-     * 范围下载
-     * @param range 指定下载范围
+     * Sets the range to download
+     *
+     * @param range The range to download (starting from 0 to the length -1)
      */
     public void setRange(Range range) {
         this.range = range;
@@ -68,5 +90,13 @@ public class GetObjectRequest extends OSSRequest {
 
     public void setxOssProcess(String xOssProcess) {
         this.xOssProcess = xOssProcess;
+    }
+
+    public OSSProgressCallback getProgressListener() {
+        return progressListener;
+    }
+
+    public void setProgressListener(OSSProgressCallback<GetObjectRequest> progressListener) {
+        this.progressListener = progressListener;
     }
 }

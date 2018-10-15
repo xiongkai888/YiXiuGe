@@ -2,8 +2,12 @@ package com.alibaba.sdk.android.oss.common.auth;
 
 /**
  * Created by zhouzhuo on 11/4/15.
+ * Edited by zhuoqin on 7/12/17.
+ * Mobile devices are not the trusted environment. It's very risky to save the AccessKeyId and AccessKeySecret in mobile devices for accessing OSS.
+ * We recommend to use STS authentication or custom authentication.
  */
-public class OSSPlainTextAKSKCredentialProvider extends OSSCredentialProvider {
+@Deprecated
+public class OSSPlainTextAKSKCredentialProvider implements OSSCredentialProvider {
     private String accessKeyId;
     private String accessKeySecret;
 
@@ -14,8 +18,8 @@ public class OSSPlainTextAKSKCredentialProvider extends OSSCredentialProvider {
      * @param accessKeySecret
      */
     public OSSPlainTextAKSKCredentialProvider(String accessKeyId, String accessKeySecret) {
-        this.accessKeyId = accessKeyId.trim();
-        this.accessKeySecret = accessKeySecret.trim();
+        setAccessKeyId(accessKeyId.trim());
+        setAccessKeySecret(accessKeySecret.trim());
     }
 
     public String getAccessKeyId() {
@@ -32,5 +36,10 @@ public class OSSPlainTextAKSKCredentialProvider extends OSSCredentialProvider {
 
     public void setAccessKeySecret(String accessKeySecret) {
         this.accessKeySecret = accessKeySecret;
+    }
+
+    @Override
+    public OSSFederationToken getFederationToken() {
+        return null;
     }
 }

@@ -22,8 +22,7 @@ package com.alibaba.sdk.android.oss.model;
 import java.io.Serializable;
 
 /**
- * 表示OSS Bucket的所有者。
- *
+ * OSS Bucket owner class definition
  */
 public class Owner implements Serializable {
 
@@ -32,17 +31,17 @@ public class Owner implements Serializable {
     private String id;
 
     /**
-     * 构造函数。
+     * Constructor
      */
     public Owner() {
+        this(null, null);
     }
 
     /**
-     * 构造函数。
-     * @param id
-     *          所有者ID。
-     * @param displayName
-     *          显示名称。
+     * Constructor
+     *
+     * @param id          Owner Id
+     * @param displayName Display name
      */
     public Owner(String id, String displayName) {
         this.id = id;
@@ -50,7 +49,7 @@ public class Owner implements Serializable {
     }
 
     /**
-     * 返回该对象的字符串表示。
+     * Returns the serialization string.
      */
     @Override
     public String toString() {
@@ -58,41 +57,43 @@ public class Owner implements Serializable {
     }
 
     /**
-     * 返回所有者的ID。
-     * @return 所有者的ID。
+     * Gets the owner Id
+     *
+     * @return The owner Id
      */
     public String getId() {
         return id;
     }
 
     /**
-     * 设置所有者的ID。
-     * @param id
-     *          所有者的ID。
+     * Sets the owner Id
+     *
+     * @param id The owner Id
      */
     public void setId(String id) {
         this.id = id;
     }
 
     /**
-     * 返回所有者的显示名称。
-     * @return 所有者的显示名称。
+     * Gets the owner's display name
+     *
+     * @return The owner's display name
      */
     public String getDisplayName() {
         return displayName;
     }
 
     /**
-     * 设置所有者的显示名称。
-     * @param name
-     *          所有者的显示名称。
+     * Sets the owner's display name
+     *
+     * @param name The owner's display name
      */
     public void setDisplayName(String name) {
         this.displayName = name;
     }
 
     /**
-     * 判断该对象与指定对象是否相等。
+     * Checks if 'this' object is same as the specified one.
      */
     @Override
     public boolean equals(Object obj) {
@@ -100,7 +101,7 @@ public class Owner implements Serializable {
             return false;
         }
 
-        Owner otherOwner = (Owner)obj;
+        Owner otherOwner = (Owner) obj;
 
         String otherOwnerId = otherOwner.getId();
         String otherOwnerName = otherOwner.getDisplayName();
@@ -117,7 +118,7 @@ public class Owner implements Serializable {
     }
 
     /**
-     * 返回该实例的哈布值。
+     * Gets the hash code of the 'this' object
      */
     @Override
     public int hashCode() {

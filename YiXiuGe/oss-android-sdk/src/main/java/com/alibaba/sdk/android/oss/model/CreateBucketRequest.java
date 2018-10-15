@@ -5,30 +5,25 @@ package com.alibaba.sdk.android.oss.model;
  */
 public class CreateBucketRequest extends OSSRequest {
 
+    public static final String TAB_LOCATIONCONSTRAINT = "LocationConstraint";
+    public static final String TAB_STORAGECLASS = "StorageClass";
     private String bucketName;
     private CannedAccessControlList bucketACL;
     private String locationConstraint;
-
+    private StorageClass bucketStorageClass = StorageClass.Standard;
 
     /**
-     * 构造bucket创建请求
+     * The constructor of CreateBucketRequest
+     *
      * @param bucketName
      */
     public CreateBucketRequest(String bucketName) {
-        this.bucketName = bucketName;
+        setBucketName(bucketName);
     }
 
     /**
-     * 设置要创建的bucketName
-     * bucketName在全局是唯一的，与其他用户设置的bucektName也不能重名，否则会返回409 Conflict错误
-     * @param bucketName
-     */
-    public void setBucketName(String bucketName) {
-        this.bucketName = bucketName;
-    }
-
-    /**
-     * 返回要创建的bucketName
+     * Gets the bucket name
+     *
      * @return
      */
     public String getBucketName() {
@@ -36,27 +31,51 @@ public class CreateBucketRequest extends OSSRequest {
     }
 
     /**
-     * 设置bucket所在的数据中心
-     * 合法值：oss-cn-hangzhou、oss-cn-qingdao、oss-cn-beijing、oss-cn-hongkong、oss-cn-shenzhen、
-     *        oss-cn-shanghai、oss-us-west-1 、oss-ap-southeast-1
-     * 如果不指定，默认值为：oss-cn-hangzhou
-     * @param locationConstraint
+     * Sets the bucket name
+     * bucketName is globally unique cross all OSS users in all regions. Otherwise returns 409.
+     *
+     * @param bucketName
      */
-    public void setLocationConstraint(String locationConstraint) {
-        this.locationConstraint = locationConstraint;
+    public void setBucketName(String bucketName) {
+        this.bucketName = bucketName;
     }
 
     /**
-     * 返回bucket所在数据中心
+     * Gets the bucket location's constraint.
+     *
      * @return
      */
+    @Deprecated
     public String getLocationConstraint() {
         return locationConstraint;
     }
 
     /**
-     * 设置bucket ACL
-     * 目前Bucket有三种访问权限：private、public-read、public-read-write
+     * Sets the location constraint.
+     * Valid values：oss-cn-hangzhou、oss-cn-qingdao、oss-cn-beijing、oss-cn-hongkong、oss-cn-shenzhen、
+     * oss-cn-shanghai、oss-us-west-1 、oss-ap-southeast-1
+     * If it's not specified，the default value is oss-cn-hangzhou
+     *
+     * @param locationConstraint
+     */
+    @Deprecated
+    public void setLocationConstraint(String locationConstraint) {
+        this.locationConstraint = locationConstraint;
+    }
+
+    /**
+     * Gets bucket ACL
+     *
+     * @return
+     */
+    public CannedAccessControlList getBucketACL() {
+        return bucketACL;
+    }
+
+    /**
+     * Sets bucket ACL
+     * For now there're three permissions of Bucket: private、public-read、public-read-write
+     *
      * @param bucketACL
      */
     public void setBucketACL(CannedAccessControlList bucketACL) {
@@ -64,11 +83,20 @@ public class CreateBucketRequest extends OSSRequest {
     }
 
     /**
-     * 返回bucket ACL
+     * Get bucket storage class
+     *
      * @return
      */
-    public CannedAccessControlList getBucketACL() {
-        return bucketACL;
+    public StorageClass getBucketStorageClass() {
+        return bucketStorageClass;
     }
 
+    /**
+     * Set bucket storage class
+     *
+     * @param storageClass
+     */
+    public void setBucketStorageClass(StorageClass storageClass) {
+        this.bucketStorageClass = storageClass;
+    }
 }

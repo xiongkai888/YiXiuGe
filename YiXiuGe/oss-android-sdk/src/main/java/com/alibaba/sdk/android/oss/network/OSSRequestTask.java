@@ -2,36 +2,42 @@ package com.alibaba.sdk.android.oss.network;
 
 import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.ServiceException;
-import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
 import com.alibaba.sdk.android.oss.common.OSSHeaders;
 import com.alibaba.sdk.android.oss.common.OSSLog;
+import com.alibaba.sdk.android.oss.common.utils.CRC64;
 import com.alibaba.sdk.android.oss.common.utils.DateUtil;
 import com.alibaba.sdk.android.oss.common.utils.OSSUtils;
+import com.alibaba.sdk.android.oss.common.utils.OssUserInfo;
 import com.alibaba.sdk.android.oss.internal.OSSRetryHandler;
 import com.alibaba.sdk.android.oss.internal.OSSRetryType;
 import com.alibaba.sdk.android.oss.internal.RequestMessage;
+import com.alibaba.sdk.android.oss.internal.ResponseMessage;
 import com.alibaba.sdk.android.oss.internal.ResponseParser;
 import com.alibaba.sdk.android.oss.internal.ResponseParsers;
+import com.alibaba.sdk.android.oss.model.GetObjectRequest;
+import com.alibaba.sdk.android.oss.model.ListBucketsRequest;
+import com.alibaba.sdk.android.oss.model.OSSRequest;
 import com.alibaba.sdk.android.oss.model.OSSResult;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InterruptedIOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.zip.CheckedInputStream;
 
 import okhttp3.Call;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okio.BufferedSink;
-import okio.Okio;
-import okio.Source;
 
 /**
  * Created by zhouzhuo on 11/22/15.
@@ -50,84 +56,6 @@ public class OSSRequestTask<T extends OSSResult> implements Callable<T> {
 
     private int currentRetryCount = 0;
 
-    class ProgressTouchableRequestBody extends RequestBody {
-
-        private static final int SEGMENT_SIZE = 2048; // okio.Segment.SIZE
-
-        private byte[] data;
-        private File file;
-        private InputStream inputStream;
-        private String contentType;
-        private long contentLength;
-        private OSSProgressCallback callback;
-        private BufferedSink bufferedSink;
-
-        public ProgressTouchableRequestBody(File file, String contentType, OSSProgressCallback callback) {
-            this.file = file;
-            this.contentType = contentType;
-            this.contentLength = file.length();
-            this.callback = callback;
-        }
-
-        public ProgressTouchableRequestBody(byte[] data, String contentType, OSSProgressCallback callback) {
-            this.data = data;
-            this.contentType = contentType;
-            this.contentLength = data.length;
-            this.callback = callback;
-        }
-
-        public ProgressTouchableRequestBody(InputStream input, long contentLength, String contentType, OSSProgressCallback callback) {
-            this.inputStream = input;
-            this.contentType = contentType;
-            this.contentLength = contentLength;
-            this.callback = callback;
-        }
-
-        @Override
-        public MediaType contentType() {
-            return MediaType.parse(this.contentType);
-        }
-
-        @Override
-        public long contentLength() throws IOException {
-            return this.contentLength;
-        }
-
-        @Override
-        public void writeTo(BufferedSink sink) throws IOException {
-            Source source = null;
-            if (this.file != null) {
-                source = Okio.source(this.file);
-            } else if (this.data != null) {
-                source = Okio.source(new ByteArrayInputStream(this.data));
-            } else if (this.inputStream != null) {
-                source = Okio.source(this.inputStream);
-            }
-            long total = 0;
-            long read, toRead, remain;
-
-            while (total < contentLength) {
-                remain = contentLength - total;
-                toRead = Math.min(remain, SEGMENT_SIZE);
-
-                read = source.read(sink.buffer(), toRead);
-                if (read == -1) {
-                    break;
-                }
-
-                total += read;
-                sink.flush();
-
-                if (callback != null) {
-                    callback.onProgress(OSSRequestTask.this.context.getRequest(), total, contentLength);
-                }
-            }
-            if(source != null){
-                source.close();
-            }
-        }
-    }
-
     public OSSRequestTask(RequestMessage message, ResponseParser parser, ExecutionContext context, int maxRetry) {
         this.responseParser = parser;
         this.message = message;
@@ -140,15 +68,21 @@ public class OSSRequestTask<T extends OSSResult> implements Callable<T> {
     public T call() throws Exception {
 
         Request request = null;
-        Response response = null;
+        ResponseMessage responseMessage = null;
         Exception exception = null;
         Call call = null;
 
         try {
-            OSSLog.logD("[call] - ");
+            if (context.getApplicationContext() != null) {
+                OSSLog.logInfo(OSSUtils.buildBaseLogInfo(context.getApplicationContext()));
+            }
+
+            OSSLog.logDebug("[call] - ");
+
+            OSSRequest ossRequest = context.getRequest();
 
             // validate request
-            OSSUtils.ensureRequestValid(context.getRequest(), message);
+            OSSUtils.ensureRequestValid(ossRequest, message);
             // signing
             OSSUtils.signRequest(message);
 
@@ -159,7 +93,13 @@ public class OSSRequestTask<T extends OSSResult> implements Callable<T> {
             Request.Builder requestBuilder = new Request.Builder();
 
             // build request url
-            String url = message.buildCanonicalURL();
+            String url;
+            //区分是否按Endpoint进行URL初始化
+            if (ossRequest instanceof ListBucketsRequest) {
+                url = message.buildOSSServiceURL();
+            } else {
+                url = message.buildCanonicalURL();
+            }
             requestBuilder = requestBuilder.url(url);
 
             // set request headers
@@ -168,28 +108,43 @@ public class OSSRequestTask<T extends OSSResult> implements Callable<T> {
             }
 
             String contentType = message.getHeaders().get(OSSHeaders.CONTENT_TYPE);
-
+            OSSLog.logDebug("request method = " + message.getMethod());
             // set request body
             switch (message.getMethod()) {
                 case POST:
                 case PUT:
                     OSSUtils.assertTrue(contentType != null, "Content type can't be null when upload!");
-
+                    InputStream inputStream = null;
+                    String stringBody = null;
+                    long length = 0;
                     if (message.getUploadData() != null) {
-                        requestBuilder = requestBuilder.method(message.getMethod().toString(),
-                                new ProgressTouchableRequestBody(message.getUploadData(), contentType,
-                                        context.getProgressCallback()));
+                        inputStream = new ByteArrayInputStream(message.getUploadData());
+                        length = message.getUploadData().length;
                     } else if (message.getUploadFilePath() != null) {
-                        requestBuilder = requestBuilder.method(message.getMethod().toString(),
-                                new ProgressTouchableRequestBody(new File(message.getUploadFilePath()), contentType,
-                                        context.getProgressCallback()));
-                    } else if (message.getUploadInputStream() != null) {
-                        requestBuilder = requestBuilder.method(message.getMethod().toString(),
-                                new ProgressTouchableRequestBody(message.getUploadInputStream(),
-                                        message.getReadStreamLength(), contentType,
-                                        context.getProgressCallback()));
+                        File file = new File(message.getUploadFilePath());
+                        inputStream = new FileInputStream(file);
+                        length = file.length();
+                    } else if (message.getContent() != null) {
+                        inputStream = message.getContent();
+                        length = message.getContentLength();
                     } else {
-                        requestBuilder = requestBuilder.method(message.getMethod().toString(), RequestBody.create(null, new byte[0]));
+                        stringBody = message.getStringBody();
+                    }
+
+                    if (inputStream != null) {
+                        if (message.isCheckCRC64()) {
+                            inputStream = new CheckedInputStream(inputStream, new CRC64());
+                        }
+                        message.setContent(inputStream);
+                        message.setContentLength(length);
+                        requestBuilder = requestBuilder.method(message.getMethod().toString(),
+                                NetworkProgressHelper.addProgressRequestBody(inputStream, length, contentType, context));
+                    } else if (stringBody != null) {
+                        requestBuilder = requestBuilder.method(message.getMethod().toString()
+                                , RequestBody.create(MediaType.parse(contentType), stringBody.getBytes("UTF-8")));
+                    } else {
+                        requestBuilder = requestBuilder.method(message.getMethod().toString()
+                                , RequestBody.create(null, new byte[0]));
                     }
                     break;
                 case GET:
@@ -207,55 +162,57 @@ public class OSSRequestTask<T extends OSSResult> implements Callable<T> {
 
             request = requestBuilder.build();
 
-            if (OSSLog.isEnableLog()) {
-                OSSLog.logD("request url: " + request.url());
-                Map<String, List<String>> headerMap = request.headers().toMultimap();
-                for (String key : headerMap.keySet()) {
-                    OSSLog.logD("requestHeader " + key + ": " + headerMap.get(key).get(0));
-                }
+            if (ossRequest instanceof GetObjectRequest) {
+                client = NetworkProgressHelper.addProgressResponseListener(client, context);
+                OSSLog.logDebug("getObject");
             }
 
             call = client.newCall(request);
+
             context.getCancellationHandler().setCall(call);
 
-            // send request
-            response = call.execute();
+            // send sync request
+            Response response = call.execute();
 
             if (OSSLog.isEnableLog()) {
-                OSSLog.logD("response code: " + response.code() + " for url: " + request.url());
+                // response log
                 Map<String, List<String>> headerMap = response.headers().toMultimap();
+                StringBuilder printRsp = new StringBuilder();
+                printRsp.append("response:---------------------\n");
+                printRsp.append("response code: " + response.code() + " for url: " + request.url() + "\n");
+//                printRsp.append("response body: " + response.body().string() + "\n");
                 for (String key : headerMap.keySet()) {
-                    OSSLog.logD("responseHeader " + key + ": " + headerMap.get(key).get(0));
+                    printRsp.append("responseHeader [" + key + "]: ").append(headerMap.get(key).get(0) + "\n");
                 }
+                OSSLog.logDebug(printRsp.toString());
             }
+
+            // create response message
+            responseMessage = buildResponseMessage(message, response);
+
         } catch (Exception e) {
-            OSSLog.logE("Encounter local execpiton: " + e.toString());
+            OSSLog.logError("Encounter local execpiton: " + e.toString());
             if (OSSLog.isEnableLog()) {
                 e.printStackTrace();
             }
             exception = new ClientException(e.getMessage(), e);
         }
 
-        if (exception == null && (response.code() == 203 || response.code() >= 300)) {
-            try {
-                exception = ResponseParsers.parseResponseErrorXML(response, request.method().equals("HEAD"));
-            } catch (IOException e) {
-                exception = new ClientException(e.getMessage(), e);
-            }
+        if (exception == null && (responseMessage.getStatusCode() == 203 || responseMessage.getStatusCode() >= 300)) {
+            exception = ResponseParsers.parseResponseErrorXML(responseMessage, request.method().equals("HEAD"));
         } else if (exception == null) {
             try {
-                T result = responseParser.parse(response);
-//                String url=request.url()+"";
-                String url=request.url()+"";
-                url=url.substring(url.indexOf("/lanmei"));
-                url="http://images.yxg-medu.com"+url;
+                T result = responseParser.parse(responseMessage);
+                String url = request.url() + "";
+                url = url.replace(OssUserInfo.aliyuncs, OssUserInfo.newHostId);
                 result.setUrl(url);
-                OSSLog.logD("图片上传：getCompletedCallback:" +context.getCompletedCallback()+":"+url);
+                OSSLog.logDebug("图片上传：getCompletedCallback:" + context.getCompletedCallback() + ":" + url);
                 if (context.getCompletedCallback() != null) {
-
-                    OSSLog.logD("图片上传：" +url);
-
-                    context.getCompletedCallback().onSuccess(context.getRequest(), result);
+                    try {
+                        context.getCompletedCallback().onSuccess(context.getRequest(), result);
+                    } catch (Exception ignore) {
+                        // The callback throws the exception, ignore it
+                    }
                 }
                 return result;
             } catch (IOException e) {
@@ -270,20 +227,32 @@ public class OSSRequestTask<T extends OSSResult> implements Callable<T> {
         }
 
         OSSRetryType retryType = retryHandler.shouldRetry(exception, currentRetryCount);
-        OSSLog.logE("[run] - retry, retry type: " + retryType);
+        OSSLog.logError("[run] - retry, retry type: " + retryType);
         if (retryType == OSSRetryType.OSSRetryTypeShouldRetry) {
             this.currentRetryCount++;
+            if (context.getRetryCallback() != null) {
+                context.getRetryCallback().onRetryCallback();
+            }
             return call();
         } else if (retryType == OSSRetryType.OSSRetryTypeShouldFixedTimeSkewedAndRetry) {
-            String responseDateString = response.header(OSSHeaders.DATE);
-
-            // update this request date
-            message.getHeaders().put(OSSHeaders.DATE, responseDateString);
-
-            long serverTime = DateUtil.parseRfc822Date(responseDateString).getTime();
-            DateUtil.setCurrentServerTime(serverTime);
+            // Updates the DATE header value and try again
+            if (responseMessage != null) {
+                String responseDateString = responseMessage.getHeaders().get(OSSHeaders.DATE);
+                try {
+                    // update the server time after every response
+                    long serverTime = DateUtil.parseRfc822Date(responseDateString).getTime();
+                    DateUtil.setCurrentServerTime(serverTime);
+                    message.getHeaders().put(OSSHeaders.DATE, responseDateString);
+                } catch (Exception ignore) {
+                    // Fail to parse the time, ignore it
+                    OSSLog.logError("[error] - synchronize time, reponseDate:" + responseDateString);
+                }
+            }
 
             this.currentRetryCount++;
+            if (context.getRetryCallback() != null) {
+                context.getRetryCallback().onRetryCallback();
+            }
             return call();
         } else {
             if (exception instanceof ClientException) {
@@ -297,5 +266,21 @@ public class OSSRequestTask<T extends OSSResult> implements Callable<T> {
             }
             throw exception;
         }
+    }
+
+    private ResponseMessage buildResponseMessage(RequestMessage request, Response response) {
+        ResponseMessage responseMessage = new ResponseMessage();
+        responseMessage.setRequest(request);
+        responseMessage.setResponse(response);
+        Map<String, String> headers = new HashMap<String, String>();
+        Headers responseHeaders = response.headers();
+        for (int i = 0; i < responseHeaders.size(); i++) {
+            headers.put(responseHeaders.name(i), responseHeaders.value(i));
+        }
+        responseMessage.setHeaders(headers);
+        responseMessage.setStatusCode(response.code());
+        responseMessage.setContentLength(response.body().contentLength());
+        responseMessage.setContent(response.body().byteStream());
+        return responseMessage;
     }
 }

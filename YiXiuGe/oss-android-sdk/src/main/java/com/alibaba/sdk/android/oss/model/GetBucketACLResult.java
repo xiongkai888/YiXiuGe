@@ -5,26 +5,23 @@ package com.alibaba.sdk.android.oss.model;
  */
 public class GetBucketACLResult extends OSSResult {
 
-    // bucket拥有者
+    // bucket owner
     private Owner bucketOwner;
 
-    // bucket的ACL权限
+    // bucket's ACL
     private CannedAccessControlList bucketACL;
 
     public GetBucketACLResult() {
         bucketOwner = new Owner();
     }
 
-    /**
-     * 设置bucket拥有者名称
-     * @param ownerName
-     */
-    public void setBucketOwner(String ownerName) {
-        this.bucketOwner.setDisplayName(ownerName);
+    public Owner getOwner() {
+        return bucketOwner;
     }
 
     /**
-     * 返回bucket拥有者名称
+     * Gets the bucket owner
+     *
      * @return
      */
     public String getBucketOwner() {
@@ -32,15 +29,17 @@ public class GetBucketACLResult extends OSSResult {
     }
 
     /**
-     * 设置bucket拥有者ID
-     * @param id
+     * Sets the bucket owner
+     *
+     * @param ownerName
      */
-    public void setBucketOwnerID(String id) {
-        this.bucketOwner.setId(id);
+    public void setBucketOwner(String ownerName) {
+        this.bucketOwner.setDisplayName(ownerName);
     }
 
     /**
-     * 返回bucket拥有者ID
+     * Gets bucket owner Id
+     *
      * @return
      */
     public String getBucketOwnerID() {
@@ -48,18 +47,33 @@ public class GetBucketACLResult extends OSSResult {
     }
 
     /**
-     * 设置bucket ACL权限
+     * Sets the bucket owner Id
+     *
+     * @param id
+     */
+    public void setBucketOwnerID(String id) {
+        this.bucketOwner.setId(id);
+    }
+
+    /**
+     * Gets bucket ACL
+     *
+     * @return
+     */
+    public String getBucketACL() {
+        String acl = null;
+        if (bucketACL != null) {
+            acl = bucketACL.toString();
+        }
+        return acl;
+    }
+
+    /**
+     * Sets bucket ACL
+     *
      * @param bucketACL
      */
     public void setBucketACL(String bucketACL) {
         this.bucketACL = CannedAccessControlList.parseACL(bucketACL);
-    }
-
-    /**
-     * 返回bucket ACL权限
-     * @return
-     */
-    public String getBucketACL() {
-        return bucketACL.toString();
     }
 }

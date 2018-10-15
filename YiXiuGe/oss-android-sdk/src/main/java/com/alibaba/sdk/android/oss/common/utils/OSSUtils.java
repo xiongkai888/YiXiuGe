@@ -1,10 +1,15 @@
 package com.alibaba.sdk.android.oss.common.utils;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Pair;
+import android.util.Log;
 import android.webkit.MimeTypeMap;
 
-import com.alibaba.sdk.android.oss.ClientConfiguration;
 import com.alibaba.sdk.android.oss.common.OSSConstants;
 import com.alibaba.sdk.android.oss.common.OSSHeaders;
 import com.alibaba.sdk.android.oss.common.OSSLog;
@@ -15,46 +20,87 @@ import com.alibaba.sdk.android.oss.common.auth.OSSFederationCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
+import com.alibaba.sdk.android.oss.exception.InconsistentException;
 import com.alibaba.sdk.android.oss.internal.RequestMessage;
 import com.alibaba.sdk.android.oss.model.CopyObjectRequest;
+import com.alibaba.sdk.android.oss.model.CreateBucketRequest;
 import com.alibaba.sdk.android.oss.model.DeleteBucketRequest;
+import com.alibaba.sdk.android.oss.model.GetBucketInfoRequest;
+import com.alibaba.sdk.android.oss.model.DeleteMultipleObjectRequest;
 import com.alibaba.sdk.android.oss.model.GetBucketACLRequest;
+import com.alibaba.sdk.android.oss.model.ListBucketsRequest;
+import com.alibaba.sdk.android.oss.model.ListMultipartUploadsRequest;
 import com.alibaba.sdk.android.oss.model.ListObjectsRequest;
 import com.alibaba.sdk.android.oss.model.OSSRequest;
-import com.alibaba.sdk.android.oss.model.OSSResult;
 import com.alibaba.sdk.android.oss.model.ObjectMetadata;
 import com.alibaba.sdk.android.oss.model.PartETag;
-import okhttp3.Request;
-import com.alibaba.sdk.android.oss.model.CreateBucketRequest;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-
-import static com.alibaba.sdk.android.oss.common.RequestParameters.*;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static com.alibaba.sdk.android.oss.common.RequestParameters.DELIMITER;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.ENCODING_TYPE;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.KEY_MARKER;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.MARKER;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.MAX_KEYS;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.MAX_UPLOADS;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.PART_NUMBER;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.POSITION;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.PREFIX;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.RESPONSE_HEADER_CACHE_CONTROL;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.RESPONSE_HEADER_CONTENT_DISPOSITION;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.RESPONSE_HEADER_CONTENT_ENCODING;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.RESPONSE_HEADER_CONTENT_LANGUAGE;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.RESPONSE_HEADER_CONTENT_TYPE;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.RESPONSE_HEADER_EXPIRES;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.SECURITY_TOKEN;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.SUBRESOURCE_BUCKETINFO;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.SUBRESOURCE_ACL;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.SUBRESOURCE_APPEND;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.SUBRESOURCE_CORS;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.SUBRESOURCE_DELETE;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.SUBRESOURCE_LIFECYCLE;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.SUBRESOURCE_LOCATION;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.SUBRESOURCE_LOGGING;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.SUBRESOURCE_REFERER;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.SUBRESOURCE_SEQUENTIAL;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.SUBRESOURCE_UPLOADS;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.SUBRESOURCE_WEBSITE;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.UPLOAD_ID;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.UPLOAD_ID_MARKER;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.X_OSS_PROCESS;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.X_OSS_RESTORE;
+import static com.alibaba.sdk.android.oss.common.RequestParameters.X_OSS_SYMLINK;
 
 /**
  * Created by zhouzhuo on 11/22/15.
  */
 public class OSSUtils {
 
+    private static final String NEW_LINE = "\n";
+
     private static final List<String> SIGNED_PARAMTERS = Arrays.asList(new String[]{
-            SUBRESOURCE_ACL, SUBRESOURCE_UPLOADS, SUBRESOURCE_LOCATION,
+            SUBRESOURCE_BUCKETINFO, SUBRESOURCE_ACL, SUBRESOURCE_UPLOADS, SUBRESOURCE_LOCATION,
             SUBRESOURCE_CORS, SUBRESOURCE_LOGGING, SUBRESOURCE_WEBSITE,
             SUBRESOURCE_REFERER, SUBRESOURCE_LIFECYCLE, SUBRESOURCE_DELETE,
             SUBRESOURCE_APPEND, UPLOAD_ID, PART_NUMBER, SECURITY_TOKEN, POSITION,
             RESPONSE_HEADER_CACHE_CONTROL, RESPONSE_HEADER_CONTENT_DISPOSITION,
             RESPONSE_HEADER_CONTENT_ENCODING, RESPONSE_HEADER_CONTENT_LANGUAGE,
-            RESPONSE_HEADER_CONTENT_TYPE, RESPONSE_HEADER_EXPIRES, X_OSS_PROCESS
+            RESPONSE_HEADER_CONTENT_TYPE, RESPONSE_HEADER_EXPIRES, X_OSS_PROCESS,
+            SUBRESOURCE_SEQUENTIAL, X_OSS_SYMLINK, X_OSS_RESTORE
     });
 
     /**
@@ -84,9 +130,23 @@ public class OSSUtils {
         }
     }
 
+    public static void populateListBucketRequestParameters(ListBucketsRequest listBucketsRequest,
+                                                           Map<String, String> params) {
+        if (listBucketsRequest.getPrefix() != null) {
+            params.put(PREFIX, listBucketsRequest.getPrefix());
+        }
+
+        if (listBucketsRequest.getMarker() != null) {
+            params.put(MARKER, listBucketsRequest.getMarker());
+        }
+
+        if (listBucketsRequest.getMaxKeys() != null) {
+            params.put(MAX_KEYS, Integer.toString(listBucketsRequest.getMaxKeys()));
+        }
+    }
 
     public static void populateListObjectsRequestParameters(ListObjectsRequest listObjectsRequest,
-                                                             Map<String, String> params) {
+                                                            Map<String, String> params) {
 
         if (listObjectsRequest.getPrefix() != null) {
             params.put(PREFIX, listObjectsRequest.getPrefix());
@@ -109,28 +169,65 @@ public class OSSUtils {
         }
     }
 
-    private static enum MetadataDirective {
+    public static void populateListMultipartUploadsRequestParameters(ListMultipartUploadsRequest request,
+                                                                     Map<String, String> params) {
 
-        /* Copy metadata from source object */
-        COPY("COPY"),
-
-        /* Replace metadata with newly metadata */
-        REPLACE("REPLACE");
-
-        private final String directiveAsString;
-
-        private MetadataDirective(String directiveAsString) {
-            this.directiveAsString = directiveAsString;
+        if (request.getDelimiter() != null) {
+            params.put(DELIMITER, request.getDelimiter());
         }
 
-        @Override
-        public String toString() {
-            return this.directiveAsString;
+        if (request.getMaxUploads() != null) {
+            params.put(MAX_UPLOADS, Integer.toString(request.getMaxUploads()));
+        }
+
+        if (request.getKeyMarker() != null) {
+            params.put(KEY_MARKER, request.getKeyMarker());
+        }
+
+        if (request.getPrefix() != null) {
+            params.put(PREFIX, request.getPrefix());
+        }
+
+        if (request.getUploadIdMarker() != null) {
+            params.put(UPLOAD_ID_MARKER, request.getUploadIdMarker());
+        }
+
+        if (request.getEncodingType() != null) {
+            params.put(ENCODING_TYPE, request.getEncodingType());
+        }
+    }
+
+    public static boolean checkParamRange(long param, long from, boolean leftInclusive,
+                                          long to, boolean rightInclusive) {
+        if (leftInclusive && rightInclusive) {    // [from, to]
+            if (from <= param && param <= to) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (leftInclusive && !rightInclusive) {  // [from, to)
+            if (from <= param && param < to) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (!leftInclusive && !rightInclusive) {    // (from, to)
+            if (from < param && param < to) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {     // (from, to]
+            if (from < param && param <= to) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
     public static void populateCopyObjectHeaders(CopyObjectRequest copyObjectRequest,
-                                                  Map<String, String> headers) {
+                                                 Map<String, String> headers) {
         String copySourceHeader = "/" + copyObjectRequest.getSourceBucketName() + "/"
                 + HttpUtil.urlEncode(copyObjectRequest.getSourceKey(), OSSConstants.DEFAULT_CHARSET_NAME);
         headers.put(OSSHeaders.COPY_OBJECT_SOURCE, copySourceHeader);
@@ -222,11 +319,62 @@ public class OSSUtils {
      * @return
      */
     public static boolean isEmptyString(String str) {
-        return str == null || str.length() == 0;
+        return TextUtils.isEmpty(str);
+
+    }
+
+    public static String buildCanonicalString(RequestMessage request) {
+
+        StringBuilder canonicalString = new StringBuilder();
+        canonicalString.append(request.getMethod().toString() + NEW_LINE);
+
+        Map<String, String> headers = request.getHeaders();
+        TreeMap<String, String> headersToSign = new TreeMap<String, String>();
+
+        if (headers != null) {
+            for (Map.Entry<String, String> header : headers.entrySet()) {
+                if (header.getKey() == null) {
+                    continue;
+                }
+
+                String lowerKey = header.getKey().toLowerCase();
+                if (lowerKey.equals(HttpHeaders.CONTENT_TYPE.toLowerCase()) ||
+                        lowerKey.equals(HttpHeaders.CONTENT_MD5.toLowerCase()) ||
+                        lowerKey.equals(HttpHeaders.DATE.toLowerCase()) ||
+                        lowerKey.startsWith(OSSHeaders.OSS_PREFIX)) {
+                    headersToSign.put(lowerKey, header.getValue().trim());
+                }
+            }
+        }
+
+        if (!headersToSign.containsKey(HttpHeaders.CONTENT_TYPE.toLowerCase())) {
+            headersToSign.put(HttpHeaders.CONTENT_TYPE.toLowerCase(), "");
+        }
+        if (!headersToSign.containsKey(HttpHeaders.CONTENT_MD5.toLowerCase())) {
+            headersToSign.put(HttpHeaders.CONTENT_MD5.toLowerCase(), "");
+        }
+
+        // Append all headers to sign to canonical string
+        for (Map.Entry<String, String> entry : headersToSign.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key.startsWith(OSSHeaders.OSS_PREFIX)) {
+                canonicalString.append(key).append(':').append(value);
+            } else {
+                canonicalString.append(value);
+            }
+
+            canonicalString.append(NEW_LINE);
+        }
+
+        // Append canonical resource to canonical string
+        canonicalString.append(buildCanonicalizedResource(request.getBucketName(), request.getObjectKey(), request.getParameters()));
+
+        return canonicalString.toString();
     }
 
     public static String buildCanonicalizedResource(String bucketName, String objectKey, Map<String, String> parameters) {
-
         String resourcePath;
         if (bucketName == null && objectKey == null) {
             resourcePath = "/";
@@ -235,6 +383,11 @@ public class OSSUtils {
         } else {
             resourcePath = "/" + bucketName + "/" + objectKey;
         }
+
+        return buildCanonicalizedResource(resourcePath, parameters);
+    }
+
+    public static String buildCanonicalizedResource(String resourcePath, Map<String, String> parameters) {
 
         StringBuilder builder = new StringBuilder();
         builder.append(resourcePath);
@@ -245,7 +398,7 @@ public class OSSUtils {
             Arrays.sort(parameterNames);
 
             char separater = '?';
-            for(String paramName : parameterNames) {
+            for (String paramName : parameterNames) {
                 if (!SIGNED_PARAMTERS.contains(paramName)) {
                     continue;
                 }
@@ -275,7 +428,7 @@ public class OSSUtils {
 
         StringBuilder paramString = new StringBuilder();
         boolean first = true;
-        for(Map.Entry<String, String> p : params.entrySet()) {
+        for (Map.Entry<String, String> p : params.entrySet()) {
             String key = p.getKey();
             String value = p.getValue();
 
@@ -310,7 +463,7 @@ public class OSSUtils {
      */
     public static String sign(String accessKey, String screctKey, String content) {
 
-        String signature = null;
+        String signature;
 
         try {
             signature = new HmacSHA1Signature().computeSignature(screctKey, content);
@@ -323,8 +476,22 @@ public class OSSUtils {
     }
 
     /**
-     * 判断一个域名是否是cname
      *
+     */
+    public static boolean isOssOriginHost(String host){
+        if (TextUtils.isEmpty(host)){
+            return false;
+        }
+        for (String suffix : OSSConstants.OSS_ORIGN_HOST) {
+            if (host.toLowerCase().endsWith(suffix)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 判断一个域名是否是cname
      */
     public static boolean isCname(String host) {
         for (String suffix : OSSConstants.DEFAULT_CNAME_EXCLUDE_LIST) {
@@ -351,11 +518,6 @@ public class OSSUtils {
         if (!condition) {
             throw new IllegalArgumentException(message);
         }
-    }
-
-
-    public static boolean isNullOrEmpty(String value) {
-        return value == null || value.length() == 0;
     }
 
     /**
@@ -392,7 +554,7 @@ public class OSSUtils {
         if (objectKey == null) {
             return false;
         }
-        if (objectKey.length() <=0 || objectKey.length() > 1023) {
+        if (objectKey.length() <= 0 || objectKey.length() > 1023) {
             return false;
         }
         byte[] keyBytes;
@@ -415,20 +577,32 @@ public class OSSUtils {
     }
 
     public static void ensureObjectKeyValid(String objectKey) {
-            if (!validateObjectKey(objectKey)) {
-                throw new IllegalArgumentException("The object key is invalid. \n" +
-                        "An object name should be: \n" +
-                        "1) between 1 - 1023 bytes long when encoded as UTF-8 \n" +
-                        "2) cannot contain LF or CR or unsupported chars in XML1.0, \n" +
-                        "3) cannot begin with \"/\" or \"\\\".");
-            }
+        if (!validateObjectKey(objectKey)) {
+            throw new IllegalArgumentException("The object key is invalid. \n" +
+                    "An object name should be: \n" +
+                    "1) between 1 - 1023 bytes long when encoded as UTF-8 \n" +
+                    "2) cannot contain LF or CR or unsupported chars in XML1.0, \n" +
+                    "3) cannot begin with \"/\" or \"\\\".");
+        }
     }
 
     public static boolean doesRequestNeedObjectKey(OSSRequest request) {
         if (request instanceof ListObjectsRequest
+                || request instanceof ListBucketsRequest
                 || request instanceof CreateBucketRequest
                 || request instanceof DeleteBucketRequest
-                || request instanceof GetBucketACLRequest) {
+                || request instanceof GetBucketInfoRequest
+                || request instanceof GetBucketACLRequest
+                || request instanceof DeleteMultipleObjectRequest
+                || request instanceof ListMultipartUploadsRequest) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public static boolean doesBucketNameValid(OSSRequest request) {
+        if (request instanceof ListBucketsRequest) {
             return false;
         } else {
             return true;
@@ -436,7 +610,9 @@ public class OSSUtils {
     }
 
     public static void ensureRequestValid(OSSRequest request, RequestMessage message) {
-        ensureBucketNameValid(message.getBucketName());
+        if (doesBucketNameValid(request)) {
+            ensureBucketNameValid(message.getBucketName());
+        }
         if (doesRequestNeedObjectKey(request)) {
             ensureObjectKeyValid(message.getObjectKey());
         }
@@ -471,7 +647,7 @@ public class OSSUtils {
         return "application/octet-stream";
     }
 
-    public static void signRequest(RequestMessage message) throws IOException {
+    public static void signRequest(RequestMessage message) throws Exception {
         if (!message.isAuthorizationRequired()) {
             return;
         } else {
@@ -487,70 +663,16 @@ public class OSSUtils {
         if (credentialProvider instanceof OSSFederationCredentialProvider) {
             federationToken = ((OSSFederationCredentialProvider) credentialProvider).getValidFederationToken();
             if (federationToken == null) {
-                OSSLog.logE("Can't get a federation token");
+                OSSLog.logError("Can't get a federation token");
                 throw new IOException("Can't get a federation token");
             }
             message.getHeaders().put(OSSHeaders.OSS_SECURITY_TOKEN, federationToken.getSecurityToken());
         } else if (credentialProvider instanceof OSSStsTokenCredentialProvider) {
-            federationToken = ((OSSStsTokenCredentialProvider) credentialProvider).getFederationToken();
+            federationToken = credentialProvider.getFederationToken();
             message.getHeaders().put(OSSHeaders.OSS_SECURITY_TOKEN, federationToken.getSecurityToken());
         }
 
-        String method = message.getMethod().toString();
-        String contentMD5 = message.getHeaders().get(OSSHeaders.CONTENT_MD5);
-        if (contentMD5 == null) {
-            contentMD5 = "";
-        }
-        String contentType = message.getHeaders().get(OSSHeaders.CONTENT_TYPE);
-        if (contentType == null) {
-            contentType = "";
-        }
-        String dateString = message.getHeaders().get(OSSHeaders.DATE);
-
-        List<Pair<String, String>> list = new ArrayList<Pair<String, String>>();
-        for (String key: message.getHeaders().keySet()) {
-            if (key.toLowerCase().startsWith("x-oss-")) {
-                list.add(new Pair<String, String>(key.toLowerCase(), message.getHeaders().get(key)));
-            }
-        }
-        Collections.sort(list, new Comparator<Pair<String, String>>() {
-
-            @Override
-            public int compare(Pair<String, String> lhs, Pair<String, String> rhs) {
-                String k1 = lhs.first;
-                String k2 = rhs.first;
-                return k1.compareTo(k2);
-            }
-        });
-
-        StringBuilder sb = new StringBuilder();
-        Pair<String, String> previous = null;
-        for (Pair<String, String> curr : list) {
-            if (previous == null) {
-                sb.append(curr.first + ":" + curr.second);
-            } else {
-                if (previous.first.equals(curr.first)) {
-                    sb.append("," + curr.second);
-                } else {
-                    sb.append("\n" + curr.first + ":" + curr.second);
-                }
-            }
-            previous = curr;
-        }
-        String canonicalizedHeader = sb.toString();
-        if (!OSSUtils.isEmptyString(canonicalizedHeader)) {
-            canonicalizedHeader = canonicalizedHeader.trim();
-            canonicalizedHeader += "\n";
-        }
-
-        String canonicalizedResource = OSSUtils.buildCanonicalizedResource(
-                message.getBucketName(),
-                message.getObjectKey(),
-                message.getParameters());
-
-        String contentToSign = String.format("%s\n%s\n%s\n%s\n%s%s",
-                method, contentMD5, contentType, dateString, canonicalizedHeader, canonicalizedResource);
-
+        String contentToSign = OSSUtils.buildCanonicalString(message);
         String signature = "---initValue---";
 
         if (credentialProvider instanceof OSSFederationCredentialProvider ||
@@ -563,8 +685,173 @@ public class OSSUtils {
             signature = ((OSSCustomSignerCredentialProvider) credentialProvider).signContent(contentToSign);
         }
 
-        OSSLog.logD("signed content: " + contentToSign.replaceAll("\n", "@") + "   ---------   signature: " + signature);
+//        OSSLog.logDebug("signed content: " + contentToSign.replaceAll("\n", "@") + "   ---------   signature: " + signature);
+        OSSLog.logDebug("signed content: " + contentToSign + "   \n ---------   signature: " + signature, false);
+
 
         message.getHeaders().put(OSSHeaders.AUTHORIZATION, signature);
     }
+
+    public static String buildBaseLogInfo(Context context) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("=====[device info]=====\n");
+        sb.append("[INFO]: android_version：" + Build.VERSION.RELEASE + "\n");
+        sb.append("[INFO]: mobile_model：" + Build.MODEL + "\n");
+        String operatorName = getOperatorName(context);
+        if (!TextUtils.isEmpty(operatorName)) {
+            sb.append("[INFO]: operator_name：" + operatorName + "\n");
+        }
+        // 获取手机所有连接管理对象（包括对wi-fi,net等连接的管理）
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        String networkState = "unconnected";
+        String netType = "unknown";
+        if (activeNetworkInfo != null && activeNetworkInfo.getState() == NetworkInfo.State.CONNECTED) {
+            netType = activeNetworkInfo.getTypeName() + " ";
+            networkState = "connected";
+        }
+        sb.append("[INFO]: network_state：" + networkState + "\n");//网络状况
+        sb.append("[INFO]: network_type：" + netType);//当前网络类型 如 wifi 2g 3g 4g
+        return sb.toString();
+    }
+
+    /**
+     * 获取运营商名字,需要sim卡
+     */
+    private static String getOperatorName(Context context) {
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        String operator = telephonyManager.getSimOperator();
+        String operatorName = "";
+        if (operator != null) {
+            if (operator.equals("46000") || operator.equals("46002")) {
+                operatorName = "CMCC";
+            } else if (operator.equals("46001")) {
+                operatorName = "CUCC";
+            } else if (operator.equals("46003")) {
+                operatorName = "CTCC";
+            } else {
+                operatorName = operator;
+            }
+        }
+        return operatorName;
+    }
+
+    /**
+     * Checks if OSS and SDK's checksum is same. If not, throws InconsistentException.
+     */
+    public static void checkChecksum(Long clientChecksum, Long serverChecksum, String requestId) throws InconsistentException {
+        if (clientChecksum != null && serverChecksum != null &&
+                !clientChecksum.equals(serverChecksum)) {
+            throw new InconsistentException(clientChecksum, serverChecksum, requestId);
+        }
+    }
+
+    /*
+     * check is standard ip
+
+    public static boolean isValidateIP(String addr) {
+        if (addr.length() < 7 || addr.length() > 15 || "".equals(addr)) {
+            return false;
+        }
+
+        //判断IP格式和范围
+        String rexp = "([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3}";
+
+        Pattern pat = Pattern.compile(rexp);
+
+        Matcher mat = pat.matcher(addr);
+
+        boolean ipAddress = mat.find();
+
+        return ipAddress;
+    }
+    */
+
+    /***
+     * @param host
+     * @return
+     */
+    public static boolean isValidateIP(String host) throws Exception {
+        if (host == null) {
+            throw new Exception("host is null");
+        }
+
+        InetAddress ia;
+        try {
+            ia = InetAddress.getByName(host);
+        } catch (UnknownHostException e) {
+            return false;
+        }
+
+        if (host.equals(ia.getHostAddress())) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public static String buildTriggerCallbackBody(Map<String, String> callbackParams, Map<String, String> callbackVars) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("x-oss-process=trigger/callback,callback_");
+
+        if (callbackParams != null && callbackParams.size() > 0) {
+            JSONObject jsonObj = new JSONObject(callbackParams);
+            String paramsJsonString = Base64.encodeToString(jsonObj.toString().getBytes(), Base64.NO_WRAP);
+            builder.append(paramsJsonString);
+        }
+        builder.append("," + "callback-var_");
+
+        if (callbackVars != null && callbackVars.size() > 0) {
+            JSONObject jsonObj = new JSONObject(callbackVars);
+            String varsJsonString = Base64.encodeToString(jsonObj.toString().getBytes(), Base64.NO_WRAP);
+            builder.append(varsJsonString);
+        }
+
+        return builder.toString();
+    }
+
+    public static String buildImagePersistentBody(String toBucketName, String toObjectKey, String action) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("x-oss-process=");
+        if (action.startsWith("image/")) {
+            builder.append(action);
+        } else {
+            builder.append("image/");
+            builder.append(action);
+        }
+        builder.append("|sys/");
+        if (!TextUtils.isEmpty(toBucketName) && !TextUtils.isEmpty(toObjectKey)) {
+            String bucketName_base64 = Base64.encodeToString(toBucketName.getBytes(), Base64.NO_WRAP);
+            String objectkey_base64 = Base64.encodeToString(toObjectKey.getBytes(), Base64.NO_WRAP);
+            builder.append("saveas,o_");
+            builder.append(objectkey_base64);
+            builder.append(",b_");
+            builder.append(bucketName_base64);
+        }
+        String body = builder.toString();
+        OSSLog.logDebug("ImagePersistent body : " + body);
+        return body;
+    }
+
+    private enum MetadataDirective {
+
+        /* Copy metadata from source object */
+        COPY("COPY"),
+
+        /* Replace metadata with newly metadata */
+        REPLACE("REPLACE");
+
+        private final String directiveAsString;
+
+        MetadataDirective(String directiveAsString) {
+            this.directiveAsString = directiveAsString;
+        }
+
+        @Override
+        public String toString() {
+            return this.directiveAsString;
+        }
+    }
+
 }
