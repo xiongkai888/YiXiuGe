@@ -27,12 +27,13 @@
         <TextView
             android:id="@+id/status_tv"
             style="@style/text10color41E8B6"
+            android:textColor="@color/color1593f0"
             android:layout_marginLeft="@dimen/d_10dp"
             android:paddingTop="@dimen/d_2dp"
             android:paddingBottom="@dimen/d_2dp"
             android:paddingLeft="@dimen/d_10dp"
             android:paddingRight="@dimen/d_10dp"
-            android:background="@drawable/teacher_button_bg"
+            android:background="@drawable/teacher_button_bg1"
             android:text="使用中" />
 
 

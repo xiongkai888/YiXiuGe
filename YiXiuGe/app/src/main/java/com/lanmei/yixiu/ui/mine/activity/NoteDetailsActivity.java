@@ -101,7 +101,7 @@ public class NoteDetailsActivity extends BaseActivity {
             return;
         }
         titleTv.setText(bean.getTitle());
-        FormatTime time = new FormatTime(bean.getAddtime());
+        FormatTime time = new FormatTime(this,bean.getAddtime());
         timeTv.setText(time.formatterTime());
         contentTv.setText(bean.getContent());
 

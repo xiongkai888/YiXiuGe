@@ -33,7 +33,7 @@ public class ClassHourListAdapter extends SwipeRefreshAdapter<ClassHourBean> {
 
     public ClassHourListAdapter(Context context) {
         super(context);
-        formatTime = new FormatTime();
+        formatTime = new FormatTime(context);
     }
 
     @Override

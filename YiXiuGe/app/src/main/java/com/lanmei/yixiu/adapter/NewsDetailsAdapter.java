@@ -49,7 +49,7 @@ public class NewsDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
 
     public NewsDetailsAdapter(Context context) {
         super(context);
-        time = new FormatTime();
+        time = new FormatTime(context);
     }
 
 
@@ -151,7 +151,7 @@ public class NewsDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
         WebViewPhotoBrowserUtil.photoBrowser(context, viewHolder.mWebView, newsBean.getContent());
         viewHolder.titleTv.setText(newsBean.getTitle());
         time.setTime(newsBean.getAddtime());
-        viewHolder.timeTv.setText(time.getAgoDateFomat());
+        viewHolder.timeTv.setText(time.getAgoDateFormat());
 
         viewHolder.favouredIv.setImageResource(StringUtils.isSame(newsBean.getFavoured(), CommonUtils.isZero)?R.drawable.favoured_off:R.drawable.favoured_on);
         viewHolder.favouredIv.setOnClickListener(new View.OnClickListener() {

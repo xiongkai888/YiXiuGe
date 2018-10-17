@@ -32,7 +32,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +57,6 @@ public class MyClassScheduleActivity extends BaseActivity {
     TextView lineTv;
     private FormatTime formatTime;
     private int filtrate = 0;//筛选0|1|2|3=>全部上课|评价|已评
-    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     private YiXiuGeApi api = new YiXiuGeApi("app/syllabuslist");//课程表
 
     @Override
@@ -74,7 +72,9 @@ public class MyClassScheduleActivity extends BaseActivity {
         menuTv.setText(R.string.all);
 
         api.addParams("uid", api.getUserId(this));
-        formatTime = new FormatTime();
+        formatTime = new FormatTime(this);
+        formatTime.setApplyToTimeYearMonthDay();
+
         int year = formatTime.getYear();
         int month = formatTime.getMonth();
 
@@ -110,8 +110,8 @@ public class MyClassScheduleActivity extends BaseActivity {
 
     private void loadClassSchedule(final int year, final int month, final int monthDays, final int position) {
         try {
-            api.addParams("start_time", formatTime.dateToStampLong(year + "-" + month + "-" + 1, format));
-            api.addParams("end_time", formatTime.dateToStampLong(year + "-" + month + "-" + monthDays, format) + 86400);
+            api.addParams("start_time", formatTime.dateToStampLongSub(year + "-" + month + "-" + 1));
+            api.addParams("end_time", formatTime.dateToStampLongSub(year + "-" + month + "-" + monthDays) + 86400);
             api.addParams("screen", filtrate);//筛选0|1|2|3=>全部|上课|评价|已评
             HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<Integer>>() {
                 @Override

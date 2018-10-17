@@ -47,7 +47,7 @@ public class CourseDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
 
     public CourseDetailsAdapter(Context context) {
         super(context);
-        time = new FormatTime();
+        time = new FormatTime(context);
     }
 
 
@@ -144,8 +144,8 @@ public class CourseDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
             nameTv.setText(courseClassifyListBean.getNickname());
             titleTv.setText(courseClassifyListBean.getTitle());
             viewTv.setText(courseClassifyListBean.getView());
-            FormatTime time = new FormatTime(courseClassifyListBean.getAddtime());
-            addtimeTv.setText(time.getAgoDateFomat());
+            FormatTime time = new FormatTime(context,courseClassifyListBean.getAddtime());
+            addtimeTv.setText(time.getAgoDateFormat());
             reviewsTv.setText(courseClassifyListBean.getReviews());
             likeTv.setText(courseClassifyListBean.getLike());
             setCompoundDrawables(likeTv,courseClassifyListBean.getLiked());

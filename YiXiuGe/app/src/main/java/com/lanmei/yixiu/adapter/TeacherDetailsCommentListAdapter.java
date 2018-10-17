@@ -22,8 +22,6 @@ import com.xson.common.helper.ImageHelper;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.CircleImageView;
 
-import java.text.SimpleDateFormat;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -35,12 +33,11 @@ public class TeacherDetailsCommentListAdapter extends SwipeRefreshAdapter<Teache
 
 
     private FormatTime formatTime;
-    private SimpleDateFormat format ;
 
     public TeacherDetailsCommentListAdapter(Context context) {
         super(context);
-        formatTime = new FormatTime();
-        format = formatTime.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        formatTime = new FormatTime(context);
+        formatTime.setApplyToAllTime();
     }
 
 
@@ -90,7 +87,7 @@ public class TeacherDetailsCommentListAdapter extends SwipeRefreshAdapter<Teache
             likeTv.setText(bean.getLike());
             setCompoundDrawables(likeTv,bean.getLiked());
             formatTime.setTime(bean.getAddtime());
-            timeTv.setText(formatTime.formatterTime(format));
+            timeTv.setText(formatTime.formatterTime());
             likeTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -125,7 +122,7 @@ public class TeacherDetailsCommentListAdapter extends SwipeRefreshAdapter<Teache
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
-                if (format == null) {
+                if (formatTime == null) {
                     return;
                 }
                 bean.setLiked(StringUtils.isSame(bean.getLiked(), CommonUtils.isOne)?CommonUtils.isZero:(CommonUtils.isOne));

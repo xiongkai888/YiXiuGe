@@ -62,7 +62,7 @@ public class AddExaminationActivity extends BaseActivity {
 
     private void initDatePicker() {
         picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
-        time = new FormatTime();
+        time = new FormatTime(this);
         int year = time.getYear();
         int month = time.getMonth();
         int day = time.getDay();

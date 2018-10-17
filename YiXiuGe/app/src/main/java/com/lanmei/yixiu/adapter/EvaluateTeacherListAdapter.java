@@ -15,8 +15,6 @@ import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
 import com.xson.common.widget.CircleImageView;
 
-import java.text.SimpleDateFormat;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -27,12 +25,11 @@ import butterknife.InjectView;
 public class EvaluateTeacherListAdapter extends SwipeRefreshAdapter<EvaluateListBean> {
 
     private FormatTime formatTime;
-    private SimpleDateFormat format;
 
     public EvaluateTeacherListAdapter(Context context) {
         super(context);
-        formatTime = new FormatTime();
-        format = formatTime.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        formatTime = new FormatTime(context);
+        formatTime.setApplyToAllTime();
     }
 
 
@@ -81,7 +78,7 @@ public class EvaluateTeacherListAdapter extends SwipeRefreshAdapter<EvaluateList
             gradeTv.setText(String.format(context.getString(R.string.grade),bean.getGrade()));
             contentTv.setText(bean.getContent());
             formatTime.setTime(bean.getAddtime());
-            timeTv.setText(formatTime.formatterTime(format));
+            timeTv.setText(formatTime.formatterTime());
         }
     }
 

@@ -61,11 +61,12 @@ public class ClassDetailsActivity extends BaseActivity {
         if (date == null){
             return;
         }
-        FormatTime formatTime = new FormatTime();
+        FormatTime formatTime = new FormatTime(this);
+        formatTime.setApplyToTimeYearMonthDay();
         YiXiuGeApi api = new YiXiuGeApi("app/syllabus");
         api.addParams("uid", api.getUserId(this));
         try {
-            api.addParams("start_time", formatTime.dateToStampLong(date.getSolar()[0]+"-"+date.getSolar()[1]+"-"+date.getSolar()[2],formatTime.getSimpleDateFormat("yyyy-MM-dd")));
+            api.addParams("start_time", formatTime.dateToStampLongSub(date.getSolar()[0]+"-"+date.getSolar()[1]+"-"+date.getSolar()[2]));
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -30,7 +30,7 @@ public class TutorialCoursewareListAdapter extends SwipeRefreshAdapter<NotesBean
 
     public TutorialCoursewareListAdapter(Context context) {
         super(context);
-        formatTime = new FormatTime();
+        formatTime = new FormatTime(context);
     }
 
 

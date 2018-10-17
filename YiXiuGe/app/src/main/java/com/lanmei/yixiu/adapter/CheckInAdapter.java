@@ -12,8 +12,6 @@ import com.lanmei.yixiu.bean.MyCheckingBean;
 import com.lanmei.yixiu.utils.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 
-import java.text.SimpleDateFormat;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -24,12 +22,11 @@ import butterknife.InjectView;
 public class CheckInAdapter extends SwipeRefreshAdapter<MyCheckingBean> {
 
     private FormatTime formatTime;
-    private SimpleDateFormat format;
 
     public CheckInAdapter(Context context) {
         super(context);
-        formatTime = new FormatTime();
-        format = formatTime.getSimpleDateFormat("MM/dd");
+        formatTime = new FormatTime(context);
+        formatTime.setApplyPattern("MM/dd");
     }
 
 
@@ -66,7 +63,7 @@ public class CheckInAdapter extends SwipeRefreshAdapter<MyCheckingBean> {
 
         public void setParameter(MyCheckingBean bean) {
             formatTime.setTime(bean.getAddtime());
-            dateTv.setText(formatTime.getTimeForWeek(format));
+            dateTv.setText(formatTime.getTimeForWeek());
 
             formatTime.setTime(bean.getAttend_time());
             attendTimeTv.setText(formatTime.formatterTime());

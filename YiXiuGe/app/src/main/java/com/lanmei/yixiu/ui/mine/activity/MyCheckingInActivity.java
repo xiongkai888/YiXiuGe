@@ -18,8 +18,6 @@ import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
-import java.text.SimpleDateFormat;
-
 import butterknife.InjectView;
 import butterknife.OnClick;
 
@@ -38,7 +36,6 @@ public class MyCheckingInActivity extends BaseActivity {
     private int month;
     private String currentTime;//
     private int monthDays;
-    private SimpleDateFormat format;
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     CheckInAdapter mAdapter;
@@ -58,8 +55,8 @@ public class MyCheckingInActivity extends BaseActivity {
         actionbar.setTitle(R.string.my_checking_in);
         actionbar.setHomeAsUpIndicator(R.drawable.back);
 
-        formatTime = new FormatTime();
-        format = formatTime.getSimpleDateFormat("yyyy-MM-dd");
+        formatTime = new FormatTime(this);
+        formatTime.setApplyToTimeYearMonthDay();
         year = formatTime.getYear();
         month = formatTime.getMonth();
 
@@ -73,8 +70,8 @@ public class MyCheckingInActivity extends BaseActivity {
         api.addParams("uid", api.getUserId(this));
 
         try {
-            api.addParams("start_time", formatTime.dateToStampLong(year + "-" + month + "-" + 1, format));
-            api.addParams("end_time", formatTime.dateToStampLong(year + "-" + month + "-" + monthDays, format) + 86400);
+            api.addParams("start_time", formatTime.dateToStampLongSub(year + "-" + month + "-" + 1));
+            api.addParams("end_time", formatTime.dateToStampLongSub(year + "-" + month + "-" + monthDays) + 86400);
             mAdapter = new CheckInAdapter(this);
             smartSwipeRefreshLayout.initWithLinearLayout();
             smartSwipeRefreshLayout.setAdapter(mAdapter);
@@ -116,8 +113,8 @@ public class MyCheckingInActivity extends BaseActivity {
         monthDays = SolarUtil.getMonthDays(year, month);
         timeTv.setText(getString(R.string.year_month,String.valueOf(year),String.valueOf(month)));
         try {
-            api.addParams("start_time", formatTime.dateToStampLong(year + "-" + month + "-" + 1, format));
-            api.addParams("end_time", formatTime.dateToStampLong(year + "-" + month + "-" + monthDays, format) + 86400);
+            api.addParams("start_time", formatTime.dateToStampLongSub(year + "-" + month + "-" + 1));
+            api.addParams("end_time", formatTime.dateToStampLongSub(year + "-" + month + "-" + monthDays) + 86400);
             controller.loadFirstPage();
         } catch (Exception e) {
             e.printStackTrace();

@@ -52,7 +52,7 @@ public class NoticeDetailsActivity extends BaseActivity {
         if (bean == null) {
             return;
         }
-        FormatTime time = new FormatTime(bean.getAddtime());
+        FormatTime time = new FormatTime(this,bean.getAddtime());
         titleTv.setText(bean.getTitle());
         timeTv.setText(time.formatterTime());
         WebViewPhotoBrowserUtil.photoBrowser(this, webView, bean.getContent());

@@ -100,7 +100,7 @@ public class PublishClassHourActivity extends BaseActivity {
 
     private void initDatePicker() {
         picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
-        time = new FormatTime();
+        time = new FormatTime(this);
         time.setTime(System.currentTimeMillis() / 1000 + 60);
         int year = time.getYear();
         int month = time.getMonth();

@@ -43,7 +43,7 @@ public class ClassDetailsAdapter extends SwipeRefreshAdapter<ClassDetailsBean> {
 
     public ClassDetailsAdapter(Context context, DateBean date,int currentPosition) {
         super(context);
-        formatTime = new FormatTime();
+        formatTime = new FormatTime(context);
         this.date = date;
         this.currentPosition = currentPosition;
     }

@@ -29,7 +29,7 @@ public class UploadVideoListAdapter extends SwipeRefreshAdapter<UploadVideoBean>
     public UploadVideoListAdapter(Context context, UploadVideoListContract.Presenter presenter) {
         super(context);
         this.presenter = presenter;
-        formatTime = new FormatTime();
+        formatTime = new FormatTime(context);
     }
 
     @Override

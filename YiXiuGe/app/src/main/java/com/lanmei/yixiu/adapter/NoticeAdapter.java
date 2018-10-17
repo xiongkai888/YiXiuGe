@@ -29,7 +29,7 @@ public class NoticeAdapter extends SwipeRefreshAdapter<NoticeBean> {
 
     public NoticeAdapter(Context context) {
         super(context);
-        time = new FormatTime();
+        time = new FormatTime(context);
     }
 
 

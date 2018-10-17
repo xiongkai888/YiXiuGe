@@ -15,8 +15,6 @@ import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
 import com.xson.common.widget.CircleImageView;
 
-import java.text.SimpleDateFormat;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -28,12 +26,11 @@ public class EvaluateListAdapter extends SwipeRefreshAdapter<EvaluateListBean> {
 
 
     private FormatTime formatTime;
-    private SimpleDateFormat format;
 
     public EvaluateListAdapter(Context context) {
         super(context);
-        formatTime = new FormatTime();
-        format = formatTime.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        formatTime = new FormatTime(context);
+        formatTime.setApplyToAllTime();
     }
 
 
@@ -77,7 +74,7 @@ public class EvaluateListAdapter extends SwipeRefreshAdapter<EvaluateListBean> {
             realnameTv.setText(bean.getRealname());
             contentTv.setText(bean.getContent());
             formatTime.setTime(bean.getAddtime());
-            timeTv.setText(formatTime.formatterTime(format));
+            timeTv.setText(formatTime.formatterTime());
 
             float grade = Float.parseFloat(bean.getGrade());
             ratingbar.setRating(grade);
