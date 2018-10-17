@@ -42,12 +42,11 @@ public class TeachingAttachmentsActivity extends BaseActivity implements TextVie
     @InjectView(R.id.toolbar_name_tv)
     TextView toolbarNameTv;
     @InjectView(R.id.keywordEditText)
-    DrawClickableEditText keywordEditText;//搜索老师
+    DrawClickableEditText keywordEditText;//搜索教学设备
     @InjectView(R.id.line_tv)
     TextView lineTv;
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
-    TeachingAttachmentsAdapter mAdapter;
     private SwipeRefreshController<NoPageListBean<TeachingAttachmentsBean>> controller;
     private YiXiuGeApi api;
 
@@ -65,10 +64,10 @@ public class TeachingAttachmentsActivity extends BaseActivity implements TextVie
         keywordEditText.setOnEditorActionListener(this);
         api = new YiXiuGeApi("app/devicelist");
         api.addParams("status",CommonUtils.isZero);
-        mAdapter = new TeachingAttachmentsAdapter(this);
+        TeachingAttachmentsAdapter adapter = new TeachingAttachmentsAdapter(this);
         smartSwipeRefreshLayout.initWithLinearLayout();
-        smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<TeachingAttachmentsBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
+        smartSwipeRefreshLayout.setAdapter(adapter);
+        controller = new SwipeRefreshController<NoPageListBean<TeachingAttachmentsBean>>(this, smartSwipeRefreshLayout, api, adapter) {
         };
         controller.loadFirstPage();
     }

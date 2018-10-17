@@ -40,7 +40,6 @@ import com.xson.common.widget.CenterTitleToolbar;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -156,11 +155,7 @@ public class PublishCourseActivity extends BaseActivity {
             UIHelper.ToastMessage(this, getString(R.string.selection_sort));
             return;
         }
-        List<String> list = new ArrayList<>();
-        list.add(videoPicPath);
-//        list.add(videoPath);
-        updateFileTask = new UpdateFileTask(this);
-        updateFileTask.setParameter(list, CommonUtils.isOne);
+        updateFileTask = new UpdateFileTask(this,CommonUtils.isOne);
         updateFileTask.setUploadingText("正在处理,请稍后...");
         updateFileTask.setUploadingFileCallBack(new UpdateFileTask.UploadingFileCallBack() {
             @Override
@@ -187,7 +182,7 @@ public class PublishCourseActivity extends BaseActivity {
                 }
             }
         });
-        updateFileTask.executeUpdateFileTask();
+        updateFileTask.execute(videoPicPath);
     }
 
     private void submitVideoCourse(List<String> list) {

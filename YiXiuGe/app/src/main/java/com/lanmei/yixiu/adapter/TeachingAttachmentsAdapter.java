@@ -62,17 +62,22 @@ public class TeachingAttachmentsAdapter extends SwipeRefreshAdapter<TeachingAtta
             nameTv.setText(bean.getName());
             switch (bean.getStatus()) {
                 case "1":
-                    statusTv.setText(R.string.unused);
+                    setTextViewAttribute(statusTv,R.string.unused,R.color.color2E9EF2,R.drawable.attachments_button_bg1);
                     break;
                 case "2":
-                    statusTv.setText(R.string.in_use);
+                    setTextViewAttribute(statusTv,R.string.in_use,R.color.color41E8B6,R.drawable.attachments_button_bg2);
                     break;
                 case "3":
-                    statusTv.setText(R.string.in_maintenance);
+                    setTextViewAttribute(statusTv,R.string.in_maintenance,R.color.red,R.drawable.attachments_button_bg3);
                     break;
             }
         }
+    }
 
+    private void setTextViewAttribute(TextView view,int textId,int color,int resid){
+        view.setText(textId);
+        view.setTextColor(context.getResources().getColor(color));
+        view.setBackgroundResource(resid);
     }
 
 }

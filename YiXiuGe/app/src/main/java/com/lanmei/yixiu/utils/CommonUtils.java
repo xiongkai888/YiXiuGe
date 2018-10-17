@@ -120,6 +120,14 @@ public class CommonUtils {
         }
         return array;
     }
+    /**
+     *
+     * @param list
+     * @return
+     */
+    public static String[] toArray(List<String> list) {
+        return list.toArray(new String[list.size()]);
+    }
 
     /**
      * 获取年月日

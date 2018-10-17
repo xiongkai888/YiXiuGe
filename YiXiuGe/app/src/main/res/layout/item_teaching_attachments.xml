@@ -14,15 +14,14 @@
 
         <com.xson.common.widget.CircleImageView
             android:id="@+id/icon_iv"
-            android:layout_width="@dimen/d_50dp"
-            android:layout_height="@dimen/d_50dp"
+            android:layout_width="@dimen/d_55dp"
+            android:layout_height="@dimen/d_55dp"
             android:src="@drawable/temp_teacher" />
 
         <TextView
             android:id="@+id/name_tv"
             android:layout_marginLeft="@dimen/d_10dp"
-            style="@style/text_weight"
-            android:text="教室1" />
+            style="@style/text_weight" />
 
         <TextView
             android:id="@+id/status_tv"
@@ -33,8 +32,7 @@
             android:paddingBottom="@dimen/d_2dp"
             android:paddingLeft="@dimen/d_10dp"
             android:paddingRight="@dimen/d_10dp"
-            android:background="@drawable/teacher_button_bg1"
-            android:text="使用中" />
+            android:background="@drawable/attachments_button_bg1" />
 
 
     </LinearLayout>

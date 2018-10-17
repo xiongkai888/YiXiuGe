@@ -44,20 +44,19 @@ public class TeacherFiltrateAdapter extends SwipeRefreshAdapter<TeacherFiltrateB
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bean.isSelect()){
-                    return;
-                }
-                List<TeacherFiltrateBean> list = getData();
-                int size = list.size();
-                for (int i = 0; i < size; i++) {
-                    TeacherFiltrateBean examinationTopicBean = list.get(i);
-                    if (examinationTopicBean.isSelect()) {
-                        examinationTopicBean.setSelect(false);
+                if (!bean.isSelect()) {
+                    List<TeacherFiltrateBean> list = getData();
+                    int size = list.size();
+                    for (int i = 0; i < size; i++) {
+                        TeacherFiltrateBean examinationTopicBean = list.get(i);
+                        if (examinationTopicBean.isSelect()) {
+                            examinationTopicBean.setSelect(false);
+                        }
                     }
+                    bean.setSelect(!bean.isSelect());
+                    notifyDataSetChanged();
                 }
-                bean.setSelect(!bean.isSelect());
-                notifyDataSetChanged();
-                if (teacherFiltrateListener != null){
+                if (teacherFiltrateListener != null) {
                     teacherFiltrateListener.onFiltrate(bean);
                 }
             }
@@ -76,18 +75,18 @@ public class TeacherFiltrateAdapter extends SwipeRefreshAdapter<TeacherFiltrateB
 
 
         public void setParameter(TeacherFiltrateBean bean) {
-            nameTv.setTextColor(bean.isSelect()?context.getResources().getColor(R.color.color1593f0):context.getResources().getColor(R.color.color666));
+            nameTv.setTextColor(bean.isSelect() ? context.getResources().getColor(R.color.color1593f0) : context.getResources().getColor(R.color.color666));
             nameTv.setText(bean.getName());
         }
     }
 
     private TeacherFiltrateListener teacherFiltrateListener;
 
-    public void setTeacherFiltrateListener(TeacherFiltrateListener teacherFiltrateListener){
+    public void setTeacherFiltrateListener(TeacherFiltrateListener teacherFiltrateListener) {
         this.teacherFiltrateListener = teacherFiltrateListener;
     }
 
-    public interface TeacherFiltrateListener{
+    public interface TeacherFiltrateListener {
         void onFiltrate(TeacherFiltrateBean bean);
     }
 

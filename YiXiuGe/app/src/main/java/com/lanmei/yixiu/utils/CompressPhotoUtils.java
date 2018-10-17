@@ -28,7 +28,6 @@ import oss.ManageOssUpload;
 
 public class CompressPhotoUtils {
 
-    private List<String> fileList = new ArrayList<>();
     //    private ProgressDialog progressDialog;
     private String type;
     private Context context;
@@ -36,42 +35,37 @@ public class CompressPhotoUtils {
     private CompressTask compressTask;
     private UpdateImageViewTask updateImageViewTask;
     private String uploadingText = "照片上传中...";
+    private ProgressHUD mProgressHUD;
 
     public void setUploadingText(String uploadingText) {
         this.uploadingText = uploadingText;
     }
 
-    public CompressPhotoUtils(Context context){
+    public CompressPhotoUtils(Context context) {
         this.context = context;
     }
 
-    public void compressPhoto(List<String> list, CompressCallBack callBack, String type) {
-        this.type = type;
-        this.callBack = callBack;
-        compressTask = new CompressTask(list);
-        compressTask.execute();
+    public void compressPhoto(String[] urls, CompressCallBack callBack, String type) {
+        compressPhoto(callBack, type);
+        compressTask.execute(urls);
     }
 
-    public void compressPhoto( String path, CompressCallBack callBack, String type) {
-        this.type = type;
-        this.callBack = callBack;
-
-        compressTask = new CompressTask(path);
-        compressTask.execute();
+    public void compressPhoto(String path, CompressCallBack callBack, String type) {
+        compressPhoto(callBack, type);
+        compressTask.execute(path);
     }
 
-    public class CompressTask extends AsyncTask<Void, Integer, Integer> {
+    public void compressPhoto(CompressCallBack callBack, String type) {
+        this.type = type;
+        this.callBack = callBack;
+        compressTask = new CompressTask();
+        mProgressHUD = ProgressHUD.show(context, uploadingText, true, false, null);
+    }
 
-        private List<String> list;
-        private String path;
+    public class CompressTask extends AsyncTask<String, Integer, List<String>> {
 
-        public CompressTask(List<String> list) {
-            this.list = list;
-        }
-        public CompressTask(String path) {
-            this.path = path;
-        }
-
+        private int num = 0;
+        private List<String> fileList = new ArrayList<>();
         /**
          * 运行在UI线程中，在调用doInBackground()之前执行
          */
@@ -84,21 +78,18 @@ public class CompressPhotoUtils {
          * 后台运行的方法，可以运行非UI线程，可以执行耗时的方法
          */
         @Override
-        protected Integer doInBackground(Void... params) {
-            if (!StringUtils.isEmpty(path)){
-                setList(path,0);
-                return null;
+        protected List<String> doInBackground(String... params) {
+            for (String s : params) {
+                setList(s, num);
+                num += 1;
             }
-            for (int i = 0; i < list.size(); i++) {
-                setList(list.get(i),i);
-            }
-            return null;
+            return fileList;
         }
 
-        public void setList(String nativePath,int num){
+        public void setList(String nativePath, int num) {
             Bitmap bitmap = getBitmap(nativePath);
             String path = saveBitmap(bitmap, num);
-            L.d("AyncListObjects","压缩后的图片地址："+path);
+            L.d("AyncListObjects", "压缩后的图片地址：" + path);
             fileList.add(path);
         }
 
@@ -106,11 +97,13 @@ public class CompressPhotoUtils {
          * 运行在ui线程中，在doInBackground()执行完毕后执行
          */
         @Override
-        protected void onPostExecute(Integer integer) {
-            if (!StringUtils.isEmpty(fileList)) {
+        protected void onPostExecute(List<String> result) {
+            if (!StringUtils.isEmpty(result)) {
                 L.d("CompressPhotoUtils", "图片压缩成功");
-                updateImageViewTask = new UpdateImageViewTask(fileList);
-                updateImageViewTask.execute();
+                updateImageViewTask = new UpdateImageViewTask();
+                updateImageViewTask.execute(CommonUtils.toArray(result));
+            } else {
+                mProgressHUD.cancel();
             }
         }
 
@@ -125,7 +118,7 @@ public class CompressPhotoUtils {
     /**
      * 从sd卡获取压缩图片bitmap
      */
-    public static Bitmap getBitmap(String srcPath) {
+    public Bitmap getBitmap(String srcPath) {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         newOpts.inJustDecodeBounds = true;
         Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
@@ -177,15 +170,8 @@ public class CompressPhotoUtils {
      * Created by xkai on 2018/5/30.
      */
 
-    public class UpdateImageViewTask extends AsyncTask<Void, Integer, List<String>> {
+    public class UpdateImageViewTask extends AsyncTask<String, Integer, List<String>> {
 
-        ProgressHUD mProgressHUD;
-        List<String> list;
-
-        public UpdateImageViewTask(List<String> list) {
-            this.list = list;
-            mProgressHUD = ProgressHUD.show(context, uploadingText, true, false, null);
-        }
 
         /**
          * 运行在UI线程中，在调用doInBackground()之前执行
@@ -198,21 +184,15 @@ public class CompressPhotoUtils {
          * 后台运行的方法，可以运行非UI线程，可以执行耗时的方法
          */
         @Override
-        protected List<String> doInBackground(Void... params) {
-            if (StringUtils.isEmpty(list) || StringUtils.isEmpty(context)) {
-                return null;
-            }
+        protected List<String> doInBackground(String... params) {
             List<String> successPath = new ArrayList<>();
             ManageOssUpload manageOssUpload = new ManageOssUpload(context);//图片上传类
-            int size = list.size();
-            for (int i = 0; i < size; i++) {
-                String picPath = list.get(i);
+            for (String picPath : params) {
                 String urlPic = manageOssUpload.uploadFile_img(picPath, type);
                 if (StringUtils.isEmpty(urlPic)) {
                     //写上传失败逻辑
                     Message msg = mHandler.obtainMessage();
                     msg.what = 1;
-                    msg.arg1 = i;
                     msg.obj = picPath;
                     mHandler.sendMessage(msg);
                 } else {
@@ -231,11 +211,9 @@ public class CompressPhotoUtils {
             //            mProgressDialog.cancel();
             mProgressHUD.cancel();
             if (StringUtils.isEmpty(list)) {
-                L.d("CompressPhotoUtils", "isEmpty");
                 return;
             }
             if (callBack != null) {
-                L.d("CompressPhotoUtils", "callBack.success:");
                 callBack.success(list);
             }
             mProgressHUD = null;
@@ -251,11 +229,11 @@ public class CompressPhotoUtils {
 
     }
 
-    public void cancelled(){
-        if (compressTask != null && compressTask.getStatus() == AsyncTask.Status.RUNNING){
+    public void cancelled() {
+        if (compressTask != null && compressTask.getStatus() == AsyncTask.Status.RUNNING) {
             compressTask.cancel(true);
         }
-        if (updateImageViewTask != null && updateImageViewTask.getStatus() == AsyncTask.Status.RUNNING){
+        if (updateImageViewTask != null && updateImageViewTask.getStatus() == AsyncTask.Status.RUNNING) {
             updateImageViewTask.cancel(true);
         }
     }
@@ -271,8 +249,5 @@ public class CompressPhotoUtils {
             }
         }
     };
-
-
-
 
 }

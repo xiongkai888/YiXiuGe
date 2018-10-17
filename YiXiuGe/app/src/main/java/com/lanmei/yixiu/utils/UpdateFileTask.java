@@ -20,12 +20,11 @@ import oss.ManageOssUpload;
  * 没有压缩，单单上传文件
  */
 
-public class UpdateFileTask extends AsyncTask<Void, Integer, List<String>> {
+public class UpdateFileTask extends AsyncTask<String, Integer, List<String>> {
 
     private ProgressHUD mProgressHUD;
     private String type;
     private Context context;
-    private List<String> paths;
     private UploadingFileCallBack callBack;
     private String uploadingText = "文件上传中...";
 
@@ -33,25 +32,13 @@ public class UpdateFileTask extends AsyncTask<Void, Integer, List<String>> {
         this.uploadingText = uploadingText;
     }
 
-    public UpdateFileTask(Context context){
+    public UpdateFileTask(Context context,String type){
         this.context = context;
+        this.type = type;
     }
 
     public void setUploadingFileCallBack(UploadingFileCallBack callBack){
         this.callBack = callBack;
-    }
-
-    public void setParameter(String path, String type) {
-        this.type = type;
-
-        paths = new ArrayList<>();
-        paths.add(path);
-    }
-
-
-    public void setParameter(List<String> paths, String type) {
-        this.paths = paths;
-        this.type = type;
     }
 
     /**
@@ -59,11 +46,6 @@ public class UpdateFileTask extends AsyncTask<Void, Integer, List<String>> {
      */
     @Override
     protected void onPreExecute() {
-
-    }
-
-    public void executeUpdateFileTask(){
-        execute();
         mProgressHUD = ProgressHUD.show(context, uploadingText, true, false, null);
     }
 
@@ -71,22 +53,16 @@ public class UpdateFileTask extends AsyncTask<Void, Integer, List<String>> {
      * 后台运行的方法，可以运行非UI线程，可以执行耗时的方法
      */
     @Override
-    protected List<String> doInBackground(Void... params) {
-        if (StringUtils.isEmpty(paths) || StringUtils.isEmpty(context)) {
-            return null;
-        }
+    protected List<String> doInBackground(String... params) {
         List<String> successPath = new ArrayList<>();
         ManageOssUpload manageOssUpload = new ManageOssUpload(context);//图片上传类
         manageOssUpload.setTimeStamp(true);
-        int size = paths.size();
-        for (int i = 0; i < size; i++) {
-            String picPath = paths.get(i);
+        for (String picPath:params) {
             String urlPic = manageOssUpload.uploadFile_img(picPath, type);
             if (StringUtils.isEmpty(urlPic)) {
                 //写上传失败逻辑
                 Message msg = mHandler.obtainMessage();
                 msg.what = 1;
-                msg.arg1 = i;
                 msg.obj = picPath;
                 mHandler.sendMessage(msg);
             } else {

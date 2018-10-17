@@ -133,30 +133,14 @@ public class PublishNoteActivity extends BaseActivity implements BGASortableNine
         isCompressPhotoUtils = !StringUtils.isEmpty(mPhotoHelper.getData());
         isUpdateFileTask = !StringUtils.isEmpty(adapter.getData());
 
-        if (isCompressPhotoUtils) {
-            compressPhotoUtils = new CompressPhotoUtils(this);
-            compressPhotoUtils.compressPhoto(mPhotoHelper.getData(), new CompressPhotoUtils.CompressCallBack() {//压缩图片（可多张）
-                @Override
-                public void success(List<String> list) {
-                    if (isFinishing()) {
-                        return;
-                    }
-                    picList = list;
-                    isCompressPhotoUtils = false;
-                    if (!isUpdateFileTask) {
-                        loadSubmitNote(title, content);
-                    }
-                }
-            }, "1");
-        }
-        if (isUpdateFileTask) {//上传文件
-            List<String> stringList = new ArrayList<>();
+        if (isUpdateFileTask) {//上传文件(附件)
             List<NotesBean.EnclosureBean> list = adapter.getData();
-            for (NotesBean.EnclosureBean bean : list){
-                stringList.add(bean.getUrl());
+            int size = list.size();
+            String[] strings = new String[size];
+            for (int i = 0; i < size; i++) {
+                strings[i] = list.get(i).getUrl();
             }
-            updateFileTask = new UpdateFileTask(this);
-            updateFileTask.setParameter(stringList, "2");
+            updateFileTask = new UpdateFileTask(this, CommonUtils.isTwo);
             updateFileTask.setUploadingFileCallBack(new UpdateFileTask.UploadingFileCallBack() {
                 @Override
                 public void success(List<String> paths) {
@@ -171,7 +155,25 @@ public class PublishNoteActivity extends BaseActivity implements BGASortableNine
                 }
             });
             updateFileTask.setUploadingText("附件上传中");
-            updateFileTask.executeUpdateFileTask();
+            updateFileTask.execute(strings);
+        }
+
+
+        if (isCompressPhotoUtils) {
+            compressPhotoUtils = new CompressPhotoUtils(this);
+            compressPhotoUtils.compressPhoto(CommonUtils.toArray(mPhotoHelper.getData()), new CompressPhotoUtils.CompressCallBack() {//压缩图片（可多张）
+                @Override
+                public void success(List<String> list) {
+                    if (isFinishing()) {
+                        return;
+                    }
+                    picList = list;
+                    isCompressPhotoUtils = false;
+                    if (!isUpdateFileTask) {
+                        loadSubmitNote(title, content);
+                    }
+                }
+            }, "1");
         }
     }
 
@@ -202,10 +204,10 @@ public class PublishNoteActivity extends BaseActivity implements BGASortableNine
         }
         List<NotesBean.EnclosureBean> list = adapter.getData();
         int size = fileList.size();
-        if (list.size() != size){
+        if (list.size() != size) {
             return array;
         }
-        for (int i = 0;i<size;i++) {
+        for (int i = 0; i < size; i++) {
             NotesBean.EnclosureBean bean = list.get(i);
             bean.setUrl(fileList.get(i));
             array.add(bean);
@@ -216,7 +218,7 @@ public class PublishNoteActivity extends BaseActivity implements BGASortableNine
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (compressPhotoUtils != null){
+        if (compressPhotoUtils != null) {
             compressPhotoUtils.cancelled();
         }
         if (updateFileTask != null && updateFileTask.getStatus() == AsyncTask.Status.RUNNING) {

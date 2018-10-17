@@ -184,30 +184,14 @@ public class PublishCoursewareActivity extends BaseActivity implements BGASortab
         isCompressPhotoUtils = !StringUtils.isEmpty(mPhotoHelper.getData());
         isUpdateFileTask = !StringUtils.isEmpty(adapter.getData());
 
-        if (isCompressPhotoUtils) {
-            compressPhotoUtils = new CompressPhotoUtils(this);
-            compressPhotoUtils.compressPhoto(mPhotoHelper.getData(), new CompressPhotoUtils.CompressCallBack() {//压缩图片（可多张）
-                @Override
-                public void success(List<String> list) {
-                    if (isFinishing()) {
-                        return;
-                    }
-                    picList = list;
-                    isCompressPhotoUtils = false;
-                    if (!isUpdateFileTask) {
-                        loadSubmitNote(title, content,classifyBeanList);
-                    }
-                }
-            }, "1");
-        }
         if (isUpdateFileTask) {//上传文件
-            List<String> stringList = new ArrayList<>();
             List<NotesBean.EnclosureBean> list = adapter.getData();
-            for (NotesBean.EnclosureBean bean : list){
-                stringList.add(bean.getUrl());
+            int size = list.size();
+            String[] strings = new String[size];
+            for (int i = 0; i < size; i++) {
+                strings[i] = list.get(i).getUrl();
             }
-            updateFileTask = new UpdateFileTask(this);
-            updateFileTask.setParameter(stringList, "2");
+            updateFileTask = new UpdateFileTask(this,CommonUtils.isTwo);
             updateFileTask.setUploadingFileCallBack(new UpdateFileTask.UploadingFileCallBack() {
                 @Override
                 public void success(List<String> paths) {
@@ -222,7 +206,24 @@ public class PublishCoursewareActivity extends BaseActivity implements BGASortab
                 }
             });
             updateFileTask.setUploadingText("附件上传中");
-            updateFileTask.executeUpdateFileTask();
+            updateFileTask.execute(strings);
+        }
+
+        if (isCompressPhotoUtils) {
+            compressPhotoUtils = new CompressPhotoUtils(this);
+            compressPhotoUtils.compressPhoto(CommonUtils.toArray(mPhotoHelper.getData()), new CompressPhotoUtils.CompressCallBack() {//压缩图片（可多张）
+                @Override
+                public void success(List<String> list) {
+                    if (isFinishing()) {
+                        return;
+                    }
+                    picList = list;
+                    isCompressPhotoUtils = false;
+                    if (!isUpdateFileTask) {
+                        loadSubmitNote(title, content,classifyBeanList);
+                    }
+                }
+            }, CommonUtils.isOne);
         }
     }
 
