@@ -52,6 +52,8 @@ public class UserBean {
     private String position;
     private String learned;
     private String nolearned;
+    private String political;//政治面貌
+
     private List<String> department;
 
     public String getId() {
@@ -212,5 +214,13 @@ public class UserBean {
 
     public void setDepartment(List<String> department) {
         this.department = department;
+    }
+
+    public void setPolitical(String political) {
+        this.political = political;
+    }
+
+    public String getPolitical() {
+        return political;
     }
 }

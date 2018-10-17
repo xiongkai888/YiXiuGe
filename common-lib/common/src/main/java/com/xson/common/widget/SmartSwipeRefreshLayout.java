@@ -90,8 +90,8 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
         a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SmartSwipeRefreshLayout, defStyleAttr, defStyleRes);
         int leftDividerMargin = a.getDimensionPixelOffset(R.styleable.SmartSwipeRefreshLayout_dividerLeftMargin, 0);
         int rightDividerMargin = a.getDimensionPixelOffset(R.styleable.SmartSwipeRefreshLayout_dividerRightMargin, 0);
-        int topDividerMargin = a.getDimensionPixelOffset(R.styleable.SmartSwipeRefreshLayout_dividerTopMargin, 0);
-        int bottomDividerMargin = a.getDimensionPixelOffset(R.styleable.SmartSwipeRefreshLayout_dividerBottomMargin, 0);
+//        int topDividerMargin = a.getDimensionPixelOffset(R.styleable.SmartSwipeRefreshLayout_dividerTopMargin, 0);
+//        int bottomDividerMargin = a.getDimensionPixelOffset(R.styleable.SmartSwipeRefreshLayout_dividerBottomMargin, 0);
         a.recycle();
 
         inflate(context, R.layout.ssrl_swipe_refresh_layout, this);

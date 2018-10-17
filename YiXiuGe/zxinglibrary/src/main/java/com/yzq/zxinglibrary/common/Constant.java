@@ -21,8 +21,8 @@ public class Constant {
     public static final String CODED_BITMAP = "codedBitmap";
 
     // 微信
-    public static final String WEIXIN_APP_ID = "wx9ee4b521fe68e12c";
-    public static final String WEIXIN_APP_SECRET = "11816b8b0c185c1840068a570f537c7c";
+    public static final String WEIXIN_APP_ID = "wx82f4f50cbde82e46";
+    public static final String WEIXIN_APP_SECRET = "9da7042ef605e705e241873e22c5604c";
 
     /*传递的zxingconfing*/
     public static final String INTENT_ZXING_CONFIG = "zxingConfig";
