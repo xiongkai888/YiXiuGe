@@ -9,8 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.bean.SelectStudentsBean;
-import com.lanmei.yixiu.ui.teacher.presenter.SelectStudentsContract;
+import com.lanmei.yixiu.bean.SelectQuestionStudentsBean;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 
 import butterknife.ButterKnife;
@@ -18,18 +17,13 @@ import butterknife.InjectView;
 
 
 /**
- * 选择考试学生
+ * 选择问卷学生学生
  */
-public class SelectStudentsAdapter extends SwipeRefreshAdapter<SelectStudentsBean> {
+public class SelectQuestionStudentsSubAdapter extends SwipeRefreshAdapter<SelectQuestionStudentsBean.StudentBean> {
 
-    private SelectStudentsContract.Presenter presenter;
 
-    public SelectStudentsAdapter(Context context) {
+    public SelectQuestionStudentsSubAdapter(Context context) {
         super(context);
-    }
-
-    public void setPresenter(SelectStudentsContract.Presenter presenter) {
-        this.presenter = presenter;
     }
 
     @Override
@@ -39,7 +33,7 @@ public class SelectStudentsAdapter extends SwipeRefreshAdapter<SelectStudentsBea
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
-        final SelectStudentsBean bean = getItem(position);
+        final SelectQuestionStudentsBean.StudentBean bean = getItem(position);
         if (bean == null) {
             return;
         }
@@ -49,7 +43,6 @@ public class SelectStudentsAdapter extends SwipeRefreshAdapter<SelectStudentsBea
             @Override
             public void onClick(View v) {
                 bean.setSelect(!bean.isSelect());
-                presenter.onClickSingleItem();
                 notifyDataSetChanged();
             }
         });
@@ -68,10 +61,9 @@ public class SelectStudentsAdapter extends SwipeRefreshAdapter<SelectStudentsBea
         }
 
 
-        public void setParameter(final SelectStudentsBean bean) {
+        public void setParameter(final SelectQuestionStudentsBean.StudentBean bean) {
             selectIv.setImageResource(bean.isSelect()?R.drawable.pay_on :R.drawable.pay_off);
-
-            nameTv.setText(bean.getName());
+            nameTv.setText(bean.getRealname());
 
         }
     }

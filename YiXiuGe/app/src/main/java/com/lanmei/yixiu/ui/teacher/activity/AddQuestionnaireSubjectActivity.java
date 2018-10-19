@@ -9,10 +9,18 @@ import android.view.View;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.QuestionnaireSubjectAdapter;
+import com.lanmei.yixiu.bean.QuestionnaireSubjectBean;
+import com.lanmei.yixiu.event.QuestionnaireSubjectEvent;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.EmptyRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.InjectView;
 
@@ -28,6 +36,8 @@ public class AddQuestionnaireSubjectActivity extends BaseActivity {
     EmptyRecyclerView mRecyclerView;
     @InjectView(R.id.empty_view)
     View mEmptyView;
+    private List<QuestionnaireSubjectBean> list;
+    private QuestionnaireSubjectAdapter adapter;
 
     @Override
     public int getContentViewId() {
@@ -43,10 +53,21 @@ public class AddQuestionnaireSubjectActivity extends BaseActivity {
         actionbar.setTitle(R.string.add_questionnaire_subject);
         actionbar.setHomeAsUpIndicator(R.drawable.back);
 
-        QuestionnaireSubjectAdapter adapter = new QuestionnaireSubjectAdapter(this);
+        EventBus.getDefault().register(this);
+
+        list = new ArrayList<>();
+
+        adapter = new QuestionnaireSubjectAdapter(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setEmptyView(mEmptyView);
         mRecyclerView.setAdapter(adapter);
+    }
+
+    @Subscribe
+    public void questionnaireSubjectEvent(QuestionnaireSubjectEvent event){
+        list.add(event.getBean());
+        adapter.setData(list);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -66,4 +87,9 @@ public class AddQuestionnaireSubjectActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

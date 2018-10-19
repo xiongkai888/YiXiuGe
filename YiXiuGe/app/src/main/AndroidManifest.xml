@@ -188,6 +188,9 @@
             android:name=".ui.teacher.activity.SelectStudentsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.teacher.activity.SelectQuestionStudentsActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".search.SearchCourseActivity"
             android:screenOrientation="portrait" />
         <activity

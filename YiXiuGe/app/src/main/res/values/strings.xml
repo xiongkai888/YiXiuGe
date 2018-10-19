@@ -76,7 +76,7 @@
     <string name="invert_all">反选</string>
     <string name="select_all_no">全不选</string>
     <string name="invert_all_no">取消反选</string>
-    <string name="frist_select_students">请先选择考试的学生</string>
+    <string name="first_select_students">请先选择学生</string>
     <string name="my_evaluate">我的评价</string>
     <string name="questionnaire_management">问题调查管理</string>
     <string name="add_questionnaire">添加问卷</string>

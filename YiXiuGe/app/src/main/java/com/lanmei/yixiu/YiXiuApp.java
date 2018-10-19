@@ -9,7 +9,6 @@ import com.hyphenate.chatuidemo.DemoHelper;
 import com.lanmei.yixiu.jpush.JiGuangReceiver;
 import com.lanmei.yixiu.update.UpdateAppConfig;
 import com.lanmei.yixiu.utils.CommonUtils;
-import com.squareup.leakcanary.LeakCanary;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.xson.common.app.BaseApp;
@@ -32,9 +31,9 @@ public class YiXiuApp extends BaseApp {
     protected void installMonitor() {
         applicationContext = this;
         instance = this;
-        L.debug = OSSLog.enableLog = true;
+        L.debug = OSSLog.enableLog = false;
         if (L.debug) {
-            LeakCanary.install(this);//LeakCanary内存泄漏监控
+//            LeakCanary.install(this);//LeakCanary内存泄漏监控
         }
         DemoHelper.getInstance().init(this);
         UpdateAppConfig.initUpdateApp(applicationContext);//app版本更新

@@ -163,11 +163,6 @@ public class PersonalDataSubActivity extends BaseActivity {
         });
         addressAsyncTask.execute();
 
-//        List<String> list = new ArrayList<>();
-//        list.add("http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/2018-09-11%2010%3A34%3A39-0.jpg");
-//        list.add("http://gzyxg.oss-cn-shenzhen.aliyuncs.com/lanmei/yixiuge/img1/2018-09-11%2010%3A34%3A39-1.jpg");
-//        CommonUtils.deleteOssObjectList(list);
-
         cameraHelper = new CameraHelper(this);
         cameraHelper.setHeadUrlListener(new CameraHelper.HeadUrlListener() {
             @Override
@@ -386,8 +381,7 @@ public class PersonalDataSubActivity extends BaseActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         cameraHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }

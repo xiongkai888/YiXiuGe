@@ -7,15 +7,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.SelectStudentsAdapter;
+import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.SelectStudentsBean;
 import com.lanmei.yixiu.ui.teacher.presenter.SelectStudentsContract;
 import com.lanmei.yixiu.ui.teacher.presenter.SelectStudentsPresenter;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
+import com.xson.common.bean.BaseBean;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.EmptyRecyclerView;
@@ -33,6 +38,8 @@ public class SelectStudentsActivity extends BaseActivity implements SelectStuden
 
     @InjectView(R.id.toolbar)
     CenterTitleToolbar toolbar;
+    @InjectView(R.id.ll_choose)
+    LinearLayout llChoose;
 
     @InjectView(R.id.recyclerView)
     EmptyRecyclerView mRecyclerView;
@@ -67,7 +74,7 @@ public class SelectStudentsActivity extends BaseActivity implements SelectStuden
         actionbar.setHomeAsUpIndicator(R.drawable.back);
 
         presenter = new SelectStudentsPresenter(this);
-
+        llChoose.setVisibility(View.VISIBLE);
         adapter = new SelectStudentsAdapter(this);
         adapter.setData(getSelectStudentsBeanList());
         presenter.setList(adapter.getData());
@@ -76,6 +83,15 @@ public class SelectStudentsActivity extends BaseActivity implements SelectStuden
         mRecyclerView.setEmptyView(mEmptyView);
         mRecyclerView.setAdapter(adapter);
 
+        YiXiuGeApi api = new YiXiuGeApi("app/getclassuser");
+        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+            @Override
+            public void onResponse(BaseBean response) {
+                if (isFinishing()){
+                    return;
+                }
+            }
+        });
 
     }
 
@@ -89,6 +105,7 @@ public class SelectStudentsActivity extends BaseActivity implements SelectStuden
         return list;
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_sure, menu);
@@ -101,7 +118,7 @@ public class SelectStudentsActivity extends BaseActivity implements SelectStuden
         switch (item.getItemId()) {
             case R.id.action_sure:
                 if (!presenter.isSelect()) {
-                    UIHelper.ToastMessage(this, getString(R.string.frist_select_students));
+                    UIHelper.ToastMessage(this, getString(R.string.first_select_students));
                     break;
                 }
                 CommonUtils.developing(this);
@@ -113,14 +130,14 @@ public class SelectStudentsActivity extends BaseActivity implements SelectStuden
 
     @Override
     public void showAllSelect(boolean isAllSelect) {
-        allSelectIv.setImageResource(isAllSelect ? R.drawable.pay_off : R.drawable.pay_on);
-        allSelectTv.setText(isAllSelect ? getString(R.string.select_all_no) : getString(R.string.select_all));
+        allSelectIv.setImageResource(isAllSelect ? R.drawable.pay_on : R.drawable.pay_off);
+        allSelectTv.setText(isAllSelect ? getString(R.string.select_all) : getString(R.string.select_all_no));
     }
 
     @Override
     public void showInvertSelect(boolean isInvertSelect) {
-        invertSelectIv.setImageResource(isInvertSelect ? R.drawable.pay_off : R.drawable.pay_on);
-        invertSelectTv.setText(isInvertSelect ? getString(R.string.invert_all_no) : getString(R.string.invert_all));
+        invertSelectIv.setImageResource(isInvertSelect ? R.drawable.pay_on : R.drawable.pay_off);
+        invertSelectTv.setText(isInvertSelect ? getString(R.string.invert_all) : getString(R.string.invert_all_no));
     }
 
     @OnClick({R.id.ll_all_select, R.id.ll_invert_select})

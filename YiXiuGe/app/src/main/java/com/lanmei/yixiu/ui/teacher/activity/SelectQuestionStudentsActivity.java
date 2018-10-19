@@ -6,29 +6,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.adapter.QuestionnaireManagementAdapter;
+import com.lanmei.yixiu.adapter.SelectQuestionStudentsAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
-import com.lanmei.yixiu.bean.QuestionnaireManagementBean;
+import com.lanmei.yixiu.bean.SelectQuestionStudentsBean;
+import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
-import com.xson.common.utils.IntentUtil;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
 import butterknife.InjectView;
 
 /**
- * 问题调查管理
+ * 选择问卷学生
  */
-public class QuestionnaireManagementActivity extends BaseActivity {
+public class SelectQuestionStudentsActivity extends BaseActivity {
 
     @InjectView(R.id.toolbar)
-    CenterTitleToolbar mToolbar;
+    CenterTitleToolbar toolbar;
+    SelectQuestionStudentsAdapter adapter;
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
-    QuestionnaireManagementAdapter mAdapter;
-    private SwipeRefreshController<NoPageListBean<QuestionnaireManagementBean>> controller;
+    private SwipeRefreshController<NoPageListBean<SelectQuestionStudentsBean>> controller;
 
     @Override
     public int getContentViewId() {
@@ -37,28 +37,30 @@ public class QuestionnaireManagementActivity extends BaseActivity {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayShowTitleEnabled(true);
+        actionbar.setTitle("选择问卷学生");
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setTitle(R.string.questionnaire_management);
         actionbar.setHomeAsUpIndicator(R.drawable.back);
 
-        YiXiuGeApi api = new YiXiuGeApi("app/questions_list");
-        api.addParams("uid", api.getUserId(this));
+        adapter = new SelectQuestionStudentsAdapter(this);
 
-        mAdapter = new QuestionnaireManagementAdapter(this);
+        YiXiuGeApi api = new YiXiuGeApi("app/getclassuser");
+
+        adapter = new SelectQuestionStudentsAdapter(this);
         smartSwipeRefreshLayout.initWithLinearLayout();
-        smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<QuestionnaireManagementBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
+        smartSwipeRefreshLayout.setAdapter(adapter);
+        controller = new SwipeRefreshController<NoPageListBean<SelectQuestionStudentsBean>>(this, smartSwipeRefreshLayout, api, adapter) {
         };
-        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NONE);
+        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NO_PAGE);
         controller.loadFirstPage();
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add_questionnaire, menu);
+        getMenuInflater().inflate(R.menu.menu_sure, menu);
         return true;
     }
 
@@ -66,11 +68,13 @@ public class QuestionnaireManagementActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_add_questionnaire:
-                IntentUtil.startActivity(this,AddQuestionnaireActivity.class);
+            case R.id.action_sure:
+                CommonUtils.developing(this);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
 }

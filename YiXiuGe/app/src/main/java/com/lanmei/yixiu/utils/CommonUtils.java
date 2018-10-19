@@ -126,7 +126,7 @@ public class CommonUtils {
      * @return
      */
     public static String[] toArray(List<String> list) {
-        return list.toArray(new String[list.size()]);
+        return list.toArray(new String[StringUtils.isEmpty(list)?0:list.size()]);
     }
 
     /**

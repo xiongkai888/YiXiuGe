@@ -29,6 +29,11 @@ public class AddQuestionnaireOptionHelper {
     private Context context;
     LinearLayout root;
     List<AddQuestionnaireOptionBean> list;
+
+    public List<AddQuestionnaireOptionBean> getList() {
+        return list;
+    }
+
     private int size;
 
     public AddQuestionnaireOptionHelper(Context context, LinearLayout root) {

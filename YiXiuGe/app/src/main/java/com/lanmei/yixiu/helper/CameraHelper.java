@@ -37,12 +37,16 @@ import oss.ManageOssUpload;
 
 public class CameraHelper {
 
-
+    public static final int REQUEST_PERMISSIONS = 1;
+    public static final int CHOOSE_FROM_CAMERA = 2;
+    public static final int RESULT_FROM_CROP = 3;
+    public static final int CHOOSE_FROM_GALLAY = 4;
     private File tempImage;
     private File croppedImage;
     private Context context;
     private boolean isCamera = false;
     private String headPathStr;//选择头像剪切后的路径()
+    private   String mHeadUrl;//上传阿里云返回的头像地址
 
     public void setHeadPathStr(String headPathStr) {
         this.headPathStr = headPathStr;
@@ -68,11 +72,6 @@ public class CameraHelper {
         return headPathStr;
     }
 
-    public static final int CHOOSE_FROM_GALLAY = 4;
-    public static final int CHOOSE_FROM_CAMERA = 2;
-    public static final int RESULT_FROM_CROP = 3;
-
-
     public boolean isCamera() {
         return isCamera;
     }
@@ -91,30 +90,27 @@ public class CameraHelper {
         if (isCamera) {
             permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         }
-
         if (Build.VERSION.SDK_INT >= 23) {
             int check = ContextCompat.checkSelfPermission(context, permissions[0]);
             // 权限是否已经 授权 GRANTED---授权  DINIED---拒绝
             if (check == PackageManager.PERMISSION_GRANTED) {
                 //调用相机
-                if (isCamera) {
-                    startActionCamera();
-                } else {
-                    startImagePick();
-                }
-
+                start();
             } else {
-                ((BaseActivity) context).requestPermissions(permissions, 1);
+                ((BaseActivity) context).requestPermissions(permissions, REQUEST_PERMISSIONS);
             }
         } else {
-            if (isCamera) {
-                startActionCamera();
-            } else {
-                startImagePick();
-            }
+            start();
         }
     }
 
+    private void start(){
+        if (isCamera) {
+            startActionCamera();
+        } else {
+            startImagePick();
+        }
+    }
 
     /**
      * 相机拍照
@@ -203,8 +199,6 @@ public class CameraHelper {
             mAvatarIv.setImageBitmap(bitmap);
         }
     }
-
-    String mHeadUrl;//上传阿里云返回的头像地址
 
     public class UpdateHeadViewTask extends AsyncTask<String, Integer, String> {
 
