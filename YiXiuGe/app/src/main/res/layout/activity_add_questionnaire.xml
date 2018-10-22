@@ -25,7 +25,7 @@
                 android:id="@+id/title_et"
                 style="@style/match_parent"
                 android:background="@drawable/border_bottom_divider"
-                android:hint="请输入问卷标题"
+                android:hint="@string/input_questionnaire_option"
                 android:paddingBottom="@dimen/d_10dp"
                 android:paddingLeft="@dimen/d_5dp"
                 android:paddingRight="@dimen/d_10dp"
@@ -64,6 +64,7 @@
                     android:id="@+id/end_time_tv"
                     android:layout_width="150dp"
                     style="@style/text"
+                    android:gravity="center"
                     android:hint="结束时间" />
 
             </LinearLayout>
@@ -92,7 +93,7 @@
                 <TextView
                     android:id="@+id/student_num_tv"
                     style="@style/text_weight"
-                    android:hint="请选择学生" />
+                    android:hint="@string/choose_students" />
 
                 <ImageView
 
@@ -161,7 +162,6 @@
                     android:hint="请选择题目" />
 
                 <ImageView
-
                     style="@style/text"
                     android:src="@drawable/in_right" />
 

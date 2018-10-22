@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/v_match_parent"
+    android:layout_marginBottom="@dimen/d_5dp"
+    android:layout_marginTop="@dimen/d_5dp">
+
+
+    <TextView
+        android:id="@+id/title_tv"
+        style="@style/text"
+        android:drawableLeft="@drawable/class_name"
+        android:gravity="center"
+        android:padding="@dimen/d_10dp"
+        android:paddingBottom="@dimen/d_3dp" />
+
+    <TextView style="@style/line_H1dp_divider" />
+
+
+    <FrameLayout
+        android:id="@+id/ll_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/text"
+                android:padding="@dimen/d_10dp"
+                android:text="@string/answer" />
+
+            <EditText
+                android:id="@+id/content_et"
+                style="@style/text12color666"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d_80dp"
+                android:layout_marginBottom="@dimen/d_10dp"
+                android:layout_marginRight="@dimen/d_10dp"
+                android:background="@drawable/class_details"
+                android:gravity="top" />
+
+        </LinearLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/d_15dp"
+            android:visibility="gone" />
+
+    </FrameLayout>
+</LinearLayout>

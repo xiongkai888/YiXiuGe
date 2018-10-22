@@ -10,9 +10,12 @@ import android.view.View;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.QuestionnaireSubjectAdapter;
 import com.lanmei.yixiu.bean.QuestionnaireSubjectBean;
+import com.lanmei.yixiu.event.AddQuestionnaireSubjectEvent;
 import com.lanmei.yixiu.event.QuestionnaireSubjectEvent;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.utils.IntentUtil;
+import com.xson.common.utils.StringUtils;
+import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.EmptyRecyclerView;
 
@@ -52,17 +55,24 @@ public class AddQuestionnaireSubjectActivity extends BaseActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(R.string.add_questionnaire_subject);
         actionbar.setHomeAsUpIndicator(R.drawable.back);
-
         EventBus.getDefault().register(this);
-
-        list = new ArrayList<>();
-
         adapter = new QuestionnaireSubjectAdapter(this);
+        Bundle bundle = getIntent().getBundleExtra("bundle");
+        if (bundle == null){
+            list = new ArrayList<>();
+        }else {
+            list = (List<QuestionnaireSubjectBean>)bundle.getSerializable("list");
+            if (StringUtils.isEmpty(list)){
+                list = new ArrayList<>();
+            }
+        }
+        adapter.setData(list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setEmptyView(mEmptyView);
         mRecyclerView.setAdapter(adapter);
     }
 
+    //添加问卷题目的时候调用
     @Subscribe
     public void questionnaireSubjectEvent(QuestionnaireSubjectEvent event){
         list.add(event.getBean());
@@ -82,6 +92,14 @@ public class AddQuestionnaireSubjectActivity extends BaseActivity {
         switch (item.getItemId()) {
             case R.id.action_add_option:
                 IntentUtil.startActivity(this,AddQuestionnaireOptionActivity.class);
+                break;
+            case R.id.action_sure:
+                if (StringUtils.isEmpty(list)){
+                    UIHelper.ToastMessage(this,"请先添加问卷题目");
+                    break;
+                }
+                EventBus.getDefault().post(new AddQuestionnaireSubjectEvent(list));
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

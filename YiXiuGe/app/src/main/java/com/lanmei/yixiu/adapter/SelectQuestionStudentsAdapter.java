@@ -7,11 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.bean.SelectQuestionStudentsBean;
 import com.xson.common.adapter.SwipeRefreshAdapter;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -55,6 +58,8 @@ public class SelectQuestionStudentsAdapter extends SwipeRefreshAdapter<SelectQue
         TextView nameTv;
         @InjectView(R.id.select_iv)
         ImageView selectIv;
+        @InjectView(R.id.ll_unfold)
+        LinearLayout llUnfold;
         @InjectView(R.id.recyclerView)
         RecyclerView recyclerView;
 
@@ -67,14 +72,40 @@ public class SelectQuestionStudentsAdapter extends SwipeRefreshAdapter<SelectQue
         public void setParameter(final SelectQuestionStudentsBean bean) {
 //            selectIv.setImageResource(bean.isSelect()?R.drawable.pay_on :R.drawable.pay_off);
             nameTv.setText(bean.getParent_name()+bean.getName());
-            SelectQuestionStudentsSubAdapter adapter = new SelectQuestionStudentsSubAdapter(context);
+            final SelectQuestionStudentsSubAdapter adapter = new SelectQuestionStudentsSubAdapter(context);
             recyclerView.setNestedScrollingEnabled(false);
             adapter.setData(bean.getStudent());
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(adapter);
+            adapter.setAllSelectListener(new SelectQuestionStudentsSubAdapter.AllSelectListener() {
+                @Override
+                public void setAll(boolean isAll) {
+                    selectIv.setImageResource(isAll?R.drawable.pay_on:R.drawable.pay_off);
+                    bean.setAll(isAll);
+                }
+            });
             selectIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    List<SelectQuestionStudentsBean.StudentBean> list = bean.getStudent();
+                    if (com.xson.common.utils.StringUtils.isEmpty(list)){
+                        return;
+                    }
+                    boolean isAll = !bean.isAll();
+                    for (SelectQuestionStudentsBean.StudentBean studentBean:list){
+                        studentBean.setSelect(isAll);
+                    }
+                    bean.setAll(isAll);
+                    selectIv.setImageResource(isAll?R.drawable.pay_on:R.drawable.pay_off);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+            llUnfold.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    boolean isUnfold = bean.isUnfold();
+                    recyclerView.setVisibility(isUnfold?View.GONE:View.VISIBLE);
+                    bean.setUnfold(!isUnfold);
                 }
             });
         }

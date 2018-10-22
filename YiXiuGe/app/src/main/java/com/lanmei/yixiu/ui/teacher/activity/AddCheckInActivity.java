@@ -217,7 +217,7 @@ public class AddCheckInActivity extends BaseActivity {
     private void submitPublish() {
         try {
             if (StringUtils.isEmpty(studentsBean)) {
-                UIHelper.ToastMessage(this, "请选择学生");
+                UIHelper.ToastMessage(this, R.string.choose_students);
                 return;
             }
             if (StringUtils.isEmpty(checkTypeBean)) {

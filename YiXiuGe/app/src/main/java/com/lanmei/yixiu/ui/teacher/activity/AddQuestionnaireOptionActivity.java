@@ -52,7 +52,7 @@ public class AddQuestionnaireOptionActivity extends BaseActivity {
     TextView lineTv;
     @InjectView(R.id.toolbar_name_tv)
     TextView toolbarNameTv;
-    private String type = "1";
+    private String type = CommonUtils.isOne;
 
     @Override
     public int getContentViewId() {
@@ -67,7 +67,6 @@ public class AddQuestionnaireOptionActivity extends BaseActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(R.string.add_questionnaire_option);
         actionbar.setHomeAsUpIndicator(R.drawable.back);
-
         helper = new AddQuestionnaireOptionHelper(this, llRoot);
     }
 
@@ -90,10 +89,11 @@ public class AddQuestionnaireOptionActivity extends BaseActivity {
     private List<TeacherFiltrateBean> getList(){
         List<TeacherFiltrateBean> list = new ArrayList<>();
         TeacherFiltrateBean bean1 = new TeacherFiltrateBean();
-        bean1.setId("1");
+        bean1.setId(CommonUtils.isOne);
+        bean1.setSelect(true);
         bean1.setName("选择题");
         TeacherFiltrateBean bean2 = new TeacherFiltrateBean();
-        bean2.setId("2");
+        bean2.setId(CommonUtils.isTwo);
         bean2.setName("主观题");
         list.add(bean1);
         list.add(bean2);
@@ -176,7 +176,7 @@ public class AddQuestionnaireOptionActivity extends BaseActivity {
                 QuestionnaireSubjectBean bean = new QuestionnaireSubjectBean();
                 bean.setTitle(CommonUtils.getStringByEditText(questionnaireTitleTv));
                 bean.setType(type);
-                bean.setList(helper.getList());
+                bean.setSelect(helper.getList());
                 EventBus.getDefault().post(new QuestionnaireSubjectEvent(bean));
                 finish();
                 break;

@@ -20,7 +20,16 @@ public class SelectQuestionStudentsBean {
     private String name;
     private String parent_id;
     private String parent_name;
-    private boolean isAll;
+    private boolean isAll;//全选
+    private boolean isUnfold;//展开
+
+    public void setUnfold(boolean unfold) {
+        isUnfold = unfold;
+    }
+
+    public boolean isUnfold() {
+        return isUnfold;
+    }
 
     public void setAll(boolean all) {
         isAll = all;

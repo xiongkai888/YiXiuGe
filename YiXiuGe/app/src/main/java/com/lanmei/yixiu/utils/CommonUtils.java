@@ -292,7 +292,7 @@ public class CommonUtils {
         if (StringUtils.isEmpty(url) || !url.contains(OssUserInfo.endpoint)) {
             return "";
         }
-        return url.substring(url.indexOf("/", 40) + 1, url.length());
+        return url.substring(url.indexOf("/", 35) + 1, url.length());
     }
 
     /**

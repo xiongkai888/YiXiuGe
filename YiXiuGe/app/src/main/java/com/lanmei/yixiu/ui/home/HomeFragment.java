@@ -28,6 +28,7 @@ import com.lanmei.yixiu.ui.home.activity.TeacherActivity;
 import com.lanmei.yixiu.ui.mine.activity.MyClassScheduleActivity;
 import com.lanmei.yixiu.ui.scan.ScanActivity;
 import com.lanmei.yixiu.ui.teacher.activity.ClassHourActivity;
+import com.lanmei.yixiu.ui.teacher.activity.QuestionnaireManagementActivity;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
@@ -63,6 +64,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     TextView kaoShiTv;//考试
     @InjectView(R.id.kaoqin_tv)
     TextView kaoQinTv;//考勤
+    @InjectView(R.id.questionnaire_tv)
+    TextView questionnaireTv;//问卷
     HomeAdapter mAdapter;
 
     @InjectView(R.id.banner)
@@ -196,8 +199,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     private void setUser() {
-        kaoShiTv.setVisibility(CommonUtils.isStudent(context) ? View.VISIBLE : View.GONE);
-        kaoQinTv.setVisibility(CommonUtils.isStudent(context) ? View.VISIBLE : View.GONE);
+        boolean isStudent = CommonUtils.isStudent(context);
+        kaoShiTv.setVisibility(isStudent ? View.VISIBLE : View.GONE);
+        kaoQinTv.setVisibility(isStudent ? View.VISIBLE : View.GONE);
+        questionnaireTv.setVisibility(isStudent ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -243,8 +248,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 //                IntentUtil.startActivity(context, ExaminationActivity.class);
                 break;
             case R.id.questionnaire_tv://问卷
-                CommonUtils.developing(context);
+//                CommonUtils.developing(context);
 //                IntentUtil.startActivity(context, QuestionnaireActivity.class);
+                IntentUtil.startActivity(context, QuestionnaireManagementActivity.class,CommonUtils.isZero);
                 break;
             case R.id.kaoqin_tv://考勤
                 EventBus.getDefault().post(new KaoQinEvent());

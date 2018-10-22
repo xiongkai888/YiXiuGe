@@ -63,6 +63,7 @@
     <string name="evaluate">评价</string>
     <string name="num_120">%1$s/120</string>
     <string name="num_person">%1$s人</string>
+    <string name="num_question">%1$s题</string>
     <string name="start_end_time">%1$s - %2$s</string>
     <string name="questionnaire">问卷</string>
     <string name="check_questionnaire">调查问卷</string>
@@ -78,10 +79,11 @@
     <string name="invert_all_no">取消反选</string>
     <string name="first_select_students">请先选择学生</string>
     <string name="my_evaluate">我的评价</string>
-    <string name="questionnaire_management">问题调查管理</string>
+    <string name="questionnaire_management">问卷调查管理</string>
     <string name="add_questionnaire">添加问卷</string>
     <string name="add_questionnaire_option">添加问卷选项</string>
     <string name="add_option">添加选项</string>
+    <string name="add">添加</string>
     <string name="examination_management">考试管理</string>
     <string name="add_examination">添加考试</string>
     <string name="examination_details">考试详情</string>
@@ -167,5 +169,7 @@
     <string name="friday">周五</string>
     <string name="saturday">周六</string>
     <string name="sunday">周日</string>
+    <string name="choose_students">请选择学生</string>
+    <string name="answer_sub">答</string>
 
 </resources>

@@ -4,15 +4,18 @@
 
 
     <LinearLayout
-        android:padding="@dimen/d_10dp" style="@style/ll_bottom_h">
+        android:id="@+id/ll_unfold"
+        style="@style/ll_bottom_h">
 
         <TextView
             android:id="@+id/name_tv"
+            android:paddingLeft="@dimen/d_10dp"
             style="@style/text_weight" />
 
         <ImageView
             android:id="@+id/select_iv"
             style="@style/text"
+            android:padding="@dimen/d_10dp"
             android:src="@drawable/pay_off" />
 
     </LinearLayout>
@@ -20,6 +23,7 @@
     <android.support.v7.widget.RecyclerView
         android:paddingLeft="@dimen/d_20dp"
         android:id="@+id/recyclerView"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

@@ -68,13 +68,14 @@ public class AddQuestionnaireOptionHelper {
         ViewHolder(View view, int position) {
             ButterKnife.inject(this, view);
             bean = list.get(position);
+            bean.setId(position+1);
             this.position = position;
             setListener();
             setParameter();
         }
 
         public void setParameter() {
-            optionEt.setText(bean.getOption());
+            optionEt.setText(bean.getText());
             L.d(L.TAG, size - 1 + "," + position);
             if (size - 1 == position) {
                 optionPlusTv.setVisibility(View.VISIBLE);
@@ -87,7 +88,7 @@ public class AddQuestionnaireOptionHelper {
             optionEt.addTextChangedListener(new SimpleTextWatcher() {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    bean.setOption(s + "");
+                    bean.setText(s + "");
                 }
             });
             optionPlusTv.setOnClickListener(new View.OnClickListener() {//加
@@ -135,7 +136,7 @@ public class AddQuestionnaireOptionHelper {
     public boolean isComplete() {
         for (int i = 0; i < size; i++) {
             AddQuestionnaireOptionBean bean = list.get(i);
-            if (StringUtils.isEmpty(bean.getOption())){
+            if (StringUtils.isEmpty(bean.getText())){
                 return false;
             }
         }

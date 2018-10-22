@@ -1,12 +1,14 @@
 package com.lanmei.yixiu.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by xkai on 2018/10/19.
  */
 
-public class QuestionnaireSubjectBean {
+public class QuestionnaireSubjectBean implements Serializable{
+
     public String getType() {
         return type;
     }
@@ -15,9 +17,6 @@ public class QuestionnaireSubjectBean {
         return title;
     }
 
-    public List<AddQuestionnaireOptionBean> getList() {
-        return list;
-    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -27,12 +26,17 @@ public class QuestionnaireSubjectBean {
         this.type = type;
     }
 
-    public void setList(List<AddQuestionnaireOptionBean> list) {
-        this.list = list;
-    }
-
     private String title;
 
     private String type;
-    private List<AddQuestionnaireOptionBean> list;
+
+    private List<AddQuestionnaireOptionBean> select;
+
+    public void setSelect(List<AddQuestionnaireOptionBean> select) {
+        this.select = select;
+    }
+
+    public List<AddQuestionnaireOptionBean> getSelect() {
+        return select;
+    }
 }

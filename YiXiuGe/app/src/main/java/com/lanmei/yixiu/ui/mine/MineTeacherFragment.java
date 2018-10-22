@@ -126,7 +126,7 @@ public class MineTeacherFragment extends BaseFragment {
                 IntentUtil.startActivity(context, ClassHourActivity.class);
                 break;
             case R.id.ll_mine_teacher3://调查问卷
-                IntentUtil.startActivity(context, QuestionnaireManagementActivity.class);
+                IntentUtil.startActivity(context, QuestionnaireManagementActivity.class,CommonUtils.isOne);
 //                CommonUtils.developing(context);
                 break;
             case R.id.ll_mine_teacher4://发布题库

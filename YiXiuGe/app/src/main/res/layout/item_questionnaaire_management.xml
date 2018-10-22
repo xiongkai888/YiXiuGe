@@ -1,40 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/v_match_parent"
-    android:layout_marginTop="@dimen/d_5dp"
     android:layout_marginBottom="@dimen/d_5dp"
+    android:layout_marginTop="@dimen/d_5dp"
     android:padding="@dimen/d_20dp">
 
 
     <TextView
         android:id="@+id/title_tv"
+        style="@style/text14color666"
         android:drawableLeft="@drawable/class_name"
-        android:text="开学调查问卷"
         android:drawablePadding="@dimen/d_5dp"
-        style="@style/text14color666" />
+        android:text="开学调查问卷" />
 
     <TextView
         android:id="@+id/time_tv"
+        style="@style/text14color666"
         android:layout_marginTop="@dimen/d_5dp"
         android:drawableLeft="@drawable/class_time"
-        android:text="@string/time"
         android:drawablePadding="@dimen/d_5dp"
-        style="@style/text14color666" />
+        android:text="@string/time" />
 
     <TextView
         android:id="@+id/status_tv"
+        style="@style/text14color666"
         android:layout_marginTop="@dimen/d_5dp"
         android:drawableLeft="@drawable/teacher_underway"
-        android:text="正在进行"
         android:drawablePadding="@dimen/d_5dp"
-        style="@style/text14color666" />
+        android:text="正在进行" />
+
     <TextView
         android:id="@+id/number_tv"
+        style="@style/text14color666"
         android:layout_marginTop="@dimen/d_5dp"
         android:drawableLeft="@drawable/teacher_num"
-        android:text="25人/30人"
         android:drawablePadding="@dimen/d_5dp"
-        style="@style/text14color666" />
+        android:text="25人/30人" />
+
+    <LinearLayout
+        android:id="@+id/ll_remark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/d_5dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            style="@style/text"
+            android:text="@string/remark" />
+
+        <TextView
+            android:id="@+id/remark_tv"
+            style="@style/text14color666"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/d_5dp"
+            android:background="@drawable/class_details" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

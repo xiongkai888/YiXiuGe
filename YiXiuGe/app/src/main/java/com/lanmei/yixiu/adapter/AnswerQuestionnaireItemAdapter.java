@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.bean.SelectQuestionStudentsBean;
+import com.lanmei.yixiu.bean.QuestionnaireManagementBean;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 
 import java.util.List;
@@ -19,12 +19,12 @@ import butterknife.InjectView;
 
 
 /**
- * 选择问卷学生
+ * 回答问卷问题选项
  */
-public class SelectQuestionStudentsSubAdapter extends SwipeRefreshAdapter<SelectQuestionStudentsBean.StudentBean> {
+public class AnswerQuestionnaireItemAdapter extends SwipeRefreshAdapter<QuestionnaireManagementBean.QuestBean.SelectBean> {
 
 
-    public SelectQuestionStudentsSubAdapter(Context context) {
+    public AnswerQuestionnaireItemAdapter(Context context) {
         super(context);
     }
 
@@ -35,7 +35,7 @@ public class SelectQuestionStudentsSubAdapter extends SwipeRefreshAdapter<Select
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
-        final SelectQuestionStudentsBean.StudentBean bean = getItem(position);
+        final QuestionnaireManagementBean.QuestBean.SelectBean bean = getItem(position);
         if (bean == null) {
             return;
         }
@@ -44,26 +44,17 @@ public class SelectQuestionStudentsSubAdapter extends SwipeRefreshAdapter<Select
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bean.setSelect(!bean.isSelect());
-                notifyDataSetChanged();
-                if (listener != null) {
-                    if (!bean.isSelect()){
-                        listener.setAll(bean.isSelect());
-                    }else {
-                        listener.setAll(isAll(getData()));
-                    }
+                if (bean.isSelect()){
+                    return;
                 }
+                List<QuestionnaireManagementBean.QuestBean.SelectBean> list = getData();
+                for (QuestionnaireManagementBean.QuestBean.SelectBean selectBean:list){
+                    selectBean.setSelect(false);
+                }
+                bean.setSelect(true);
+                notifyDataSetChanged();
             }
         });
-    }
-
-    private boolean isAll(List<SelectQuestionStudentsBean.StudentBean> list){
-        for (SelectQuestionStudentsBean.StudentBean bean:list){
-            if (!bean.isSelect()){
-                return false;
-            }
-        }
-        return true;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -79,21 +70,10 @@ public class SelectQuestionStudentsSubAdapter extends SwipeRefreshAdapter<Select
         }
 
 
-        public void setParameter(final SelectQuestionStudentsBean.StudentBean bean) {
-            selectIv.setImageResource(bean.isSelect() ? R.drawable.pay_on : R.drawable.pay_off);
-            nameTv.setText(bean.getRealname());
-
+        public void setParameter(QuestionnaireManagementBean.QuestBean.SelectBean bean) {
+            nameTv.setText(bean.getText());
+            selectIv.setImageResource(bean.isSelect()?R.drawable.pay_on:R.drawable.pay_off);
         }
-    }
-
-    public AllSelectListener listener;
-
-    public interface AllSelectListener {
-        void setAll(boolean isAll);
-    }
-
-    public void setAllSelectListener(AllSelectListener listener) {
-        this.listener = listener;
     }
 
 }

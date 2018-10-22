@@ -1,42 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/h_match_parent"
+    style="@style/v_match_parent"
     android:layout_marginBottom="@dimen/d_5dp"
-    android:layout_marginTop="@dimen/d_5dp"
-    android:padding="@dimen/d_10dp">
+    android:layout_marginTop="@dimen/d_5dp">
 
-    <ImageView
+
+    <TextView
+        android:id="@+id/title_tv"
         style="@style/text"
-        android:src="@drawable/class_name" />
+        android:gravity="center"
+        android:paddingBottom="@dimen/d_3dp"
+        android:padding="@dimen/d_10dp"
+        android:drawableLeft="@drawable/class_name" />
 
-    <LinearLayout
-        style="@style/v_match_parent_no"
-        android:layout_marginLeft="@dimen/d_5dp">
-
-        <TextView
-            android:id="@+id/title_tv"
-            style="@style/text" />
+    <TextView style="@style/line_H1dp_divider" />
 
 
-        <LinearLayout
-            android:id="@+id/ll_question"
-            style="@style/h_match_parent_no"
-            android:layout_marginTop="@dimen/d_5dp"
-            android:background="@drawable/class_details">
-
-            <ImageView
-                style="@style/text"
-                android:src="@drawable/teacher_answer" />
-
-
-            <LinearLayout
-                android:id="@+id/root"
-                style="@style/v_match_parent_no"
-                android:layout_marginLeft="@dimen/d_10dp"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:paddingLeft="@dimen/d_15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

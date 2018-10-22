@@ -6,10 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.bean.QuestionnaireSubjectBean;
+import com.lanmei.yixiu.bean.QuestionnaireManagementBean;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.utils.StringUtils;
@@ -19,24 +21,24 @@ import butterknife.InjectView;
 
 
 /**
- * 添加问卷题目
+ * 学生回答调查问卷
  */
-public class QuestionnaireSubjectAdapter extends SwipeRefreshAdapter<QuestionnaireSubjectBean> {
+public class AnswerQuestionnaireAdapter extends SwipeRefreshAdapter<QuestionnaireManagementBean.QuestBean> {
 
-    public QuestionnaireSubjectAdapter(Context context) {
+    public AnswerQuestionnaireAdapter(Context context) {
         super(context);
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder2(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_questionnaaire_subject, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_answer_questionnaaire, parent, false));
     }
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
-        QuestionnaireSubjectBean bean = getItem(position);
-        if (bean == null){
+        QuestionnaireManagementBean.QuestBean bean = getItem(position);
+        if (bean == null) {
             return;
         }
         ViewHolder viewHolder = (ViewHolder) holder;
@@ -51,24 +53,31 @@ public class QuestionnaireSubjectAdapter extends SwipeRefreshAdapter<Questionnai
         @InjectView(R.id.recyclerView)
         RecyclerView recyclerView;
 
+        @InjectView(R.id.content_et)
+        EditText contentEt;
+        @InjectView(R.id.ll_answer)
+        FrameLayout llAnswer;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.inject(this, view);
         }
 
 
-        public void setParameter(QuestionnaireSubjectBean bean) {
+        public void setParameter(QuestionnaireManagementBean.QuestBean bean) {
 
             titleTv.setText(bean.getTitle());
-            if (StringUtils.isSame(bean.getType(), CommonUtils.isOne)){
+            if (StringUtils.isSame(bean.getType(), CommonUtils.isOne)) {
                 recyclerView.setVisibility(View.VISIBLE);
-                SelectQuestionItemAdapter adapter = new SelectQuestionItemAdapter(context);
+                llAnswer.setVisibility(View.GONE);
+                AnswerQuestionnaireItemAdapter adapter = new AnswerQuestionnaireItemAdapter(context);
                 recyclerView.setNestedScrollingEnabled(false);
                 adapter.setData(bean.getSelect());
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
                 recyclerView.setAdapter(adapter);
-            }else {
+            } else {
                 recyclerView.setVisibility(View.GONE);
+                llAnswer.setVisibility(View.VISIBLE);
             }
 
         }

@@ -90,18 +90,18 @@ public class NoteDetailsActivity extends BaseActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        if (!StringUtils.isEmpty(type)){
+        if (!StringUtils.isEmpty(type)) {
             actionbar.setTitle(R.string.note_details);
-        }else {
+        } else {
             actionbar.setTitle(R.string.courseware_details);
         }
         actionbar.setHomeAsUpIndicator(R.drawable.back);
 
-        if (bean == null){
+        if (bean == null) {
             return;
         }
         titleTv.setText(bean.getTitle());
-        FormatTime time = new FormatTime(this,bean.getAddtime());
+        FormatTime time = new FormatTime(this, bean.getAddtime());
         timeTv.setText(time.formatterTime());
         contentTv.setText(bean.getContent());
 
@@ -118,7 +118,7 @@ public class NoteDetailsActivity extends BaseActivity {
             }
         });
 
-        NoteDetailsEnclosureAdapter adapter= new NoteDetailsEnclosureAdapter(this);
+        NoteDetailsEnclosureAdapter adapter = new NoteDetailsEnclosureAdapter(this);
         adapter.setData(bean.getEnclosure());
         recyclerViewEn.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewEn.setNestedScrollingEnabled(false);
@@ -133,7 +133,7 @@ public class NoteDetailsActivity extends BaseActivity {
 
 
     private void popupWindow() {
-        if (bean == null){
+        if (bean == null) {
             return;
         }
         DetailsMoreView view = (DetailsMoreView) View.inflate(this, R.layout.view_details_more, null);
@@ -150,7 +150,7 @@ public class NoteDetailsActivity extends BaseActivity {
             @Override
             public void delete() {
                 window.dismiss();
-                String content = !StringUtils.isEmpty(type)?getString(R.string.delete_note):getString(R.string.delete_courseware);
+                String content = !StringUtils.isEmpty(type) ? getString(R.string.delete_note) : getString(R.string.delete_courseware);
                 AKDialog.getAlertDialog(getContext(), content, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -171,31 +171,31 @@ public class NoteDetailsActivity extends BaseActivity {
         ManageOssUpload manageOssUpload = new ManageOssUpload(this);
         manageOssUpload.logAyncListObjects();
         YiXiuGeApi api = new YiXiuGeApi("app/del_note");
-        api.addParams("id",bean.getId());
-        api.addParams("uid",api.getUserId(this));
+        api.addParams("id", bean.getId());
+        api.addParams("uid", api.getUserId(this));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
-                if (isFinishing()){
+                if (isFinishing()) {
                     return;
                 }
-                if (!StringUtils.isEmpty(type)){
+                if (!StringUtils.isEmpty(type)) {
                     EventBus.getDefault().post(new PublishNoteEvent());//刷新笔记列表
-                }else {
+                } else {
                     EventBus.getDefault().post(new PublishCoursewareEvent());//刷新课件列表
                 }
-                UIHelper.ToastMessage(getContext(),response.getMsg());
+                UIHelper.ToastMessage(getContext(), response.getMsg());
                 List<String> list = new ArrayList<>();
-                if (!StringUtils.isEmpty(bean.getPic())){
+                if (!StringUtils.isEmpty(bean.getPic())) {
                     list.addAll(bean.getPic());
                 }
                 List<NotesBean.EnclosureBean> enclosureBeanList = bean.getEnclosure();
-                if (!StringUtils.isEmpty(enclosureBeanList)){
-                    for (NotesBean.EnclosureBean bean:enclosureBeanList){
+                if (!StringUtils.isEmpty(enclosureBeanList)) {
+                    for (NotesBean.EnclosureBean bean : enclosureBeanList) {
                         list.add(bean.getUrl());
                     }
                 }
-                if (!StringUtils.isEmpty(list)){
+                if (!StringUtils.isEmpty(list)) {
                     CommonUtils.deleteOssObjectList(list);//
                 }
                 finish();
@@ -219,14 +219,14 @@ public class NoteDetailsActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_more:
-                if (bean == null){
+                if (bean == null) {
                     break;
                 }
-                if (StringUtils.isSame(bean.getUid(),CommonUtils.getUserId(this))){
+                if (StringUtils.isSame(bean.getUid(), CommonUtils.getUserId(this))) {
                     popupWindow();
-                }else {
+                } else {
                     CommonUtils.developing(this);
                 }
                 break;
