@@ -7,11 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.bean.QuestionnaireManagementBean;
+import com.lanmei.yixiu.helper.SimpleTextWatcher;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.utils.StringUtils;
@@ -56,7 +57,7 @@ public class AnswerQuestionnaireAdapter extends SwipeRefreshAdapter<Questionnair
         @InjectView(R.id.content_et)
         EditText contentEt;
         @InjectView(R.id.ll_answer)
-        FrameLayout llAnswer;
+        LinearLayout llAnswer;
 
         ViewHolder(View view) {
             super(view);
@@ -64,7 +65,7 @@ public class AnswerQuestionnaireAdapter extends SwipeRefreshAdapter<Questionnair
         }
 
 
-        public void setParameter(QuestionnaireManagementBean.QuestBean bean) {
+        public void setParameter(final QuestionnaireManagementBean.QuestBean bean) {
 
             titleTv.setText(bean.getTitle());
             if (StringUtils.isSame(bean.getType(), CommonUtils.isOne)) {
@@ -78,6 +79,12 @@ public class AnswerQuestionnaireAdapter extends SwipeRefreshAdapter<Questionnair
             } else {
                 recyclerView.setVisibility(View.GONE);
                 llAnswer.setVisibility(View.VISIBLE);
+                contentEt.addTextChangedListener(new SimpleTextWatcher() {
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        bean.setAnswer(String.valueOf(s));
+                    }
+                });
             }
 
         }

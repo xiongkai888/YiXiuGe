@@ -11,6 +11,7 @@ import com.lanmei.yixiu.adapter.QuestionnaireManagementAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.QuestionnaireManagementBean;
 import com.lanmei.yixiu.event.AddQuestionnaireEvent;
+import com.lanmei.yixiu.event.AnswerQuestionnaireEvent;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
@@ -92,6 +93,12 @@ public class QuestionnaireManagementActivity extends BaseActivity  {
     //添加问卷成功调用
     @Subscribe
     public void addQuestionnaireEvent(AddQuestionnaireEvent event){
+        controller.loadFirstPage();
+    }
+
+    //学生回答问卷完成事件
+    @Subscribe
+    public void answerQuestionnaireEvent(AnswerQuestionnaireEvent event){
         controller.loadFirstPage();
     }
 

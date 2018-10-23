@@ -44,6 +44,16 @@ public class QuestionnaireManagementBean implements Serializable{
     private String endtime;
     private String is_del;
     private String submit_num;
+    private String submittime;
+
+    public void setSubmittime(String submittime) {
+        this.submittime = submittime;
+    }
+
+    public String getSubmittime() {
+        return submittime;
+    }
+
     private List<QuestBean> quest;
 
     public String getId() {
@@ -173,6 +183,7 @@ public class QuestionnaireManagementBean implements Serializable{
     public void setQuest(List<QuestBean> quest) {
         this.quest = quest;
     }
+
 
     public static class QuestBean implements Serializable{
         /**

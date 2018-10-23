@@ -17,11 +17,11 @@
 
 
     <FrameLayout
-        android:id="@+id/ll_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/ll_answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -29,7 +29,7 @@
             <TextView
                 style="@style/text"
                 android:padding="@dimen/d_10dp"
-                android:text="@string/answer" />
+                android:text="@string/answer_sub" />
 
             <EditText
                 android:id="@+id/content_et"

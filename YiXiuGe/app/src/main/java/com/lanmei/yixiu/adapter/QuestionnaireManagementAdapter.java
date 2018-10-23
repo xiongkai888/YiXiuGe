@@ -1,6 +1,7 @@
 package com.lanmei.yixiu.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,11 @@ import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.bean.QuestionnaireManagementBean;
+import com.lanmei.yixiu.ui.teacher.activity.AnswerQuestionnaireActivity;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.lanmei.yixiu.utils.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
+import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 
 import butterknife.ButterKnife;
@@ -48,20 +51,17 @@ public class QuestionnaireManagementAdapter extends SwipeRefreshAdapter<Question
         if (bean == null) {
             return;
         }
-        ViewHolder viewHolder = (ViewHolder) holder;
+        final ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.setParameter(bean);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (!isStudent){
-//                    return;
-//                }
-//                if (!StringUtils.isSame(CommonUtils.isOne,bean.getStatus())){
-//                    return;
-//                }
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("bean", bean);
-//                IntentUtil.startActivity(context, AnswerQuestionnaireActivity.class,bundle);
+                if (!isStudent || !StringUtils.isSame(CommonUtils.isOne, bean.getState()) || !StringUtils.isSame(context.getString(R.string.in_progress), CommonUtils.getStringByTextView(viewHolder.statusTv))) {
+                    return;
+                }
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("bean", bean);
+                IntentUtil.startActivity(context, AnswerQuestionnaireActivity.class, bundle);
             }
         });
     }
@@ -90,26 +90,37 @@ public class QuestionnaireManagementAdapter extends SwipeRefreshAdapter<Question
 
         public void setParameter(QuestionnaireManagementBean bean) {
             titleTv.setText(bean.getTitle());
-            timeTv.setText(formatTime.formatterTime(bean.getStarttime()) + " -- " + formatTime.formatterTime(bean.getEndtime()));
-            String status = bean.getStatus();
-            if (StringUtils.isEmpty(status)) {
-                status = CommonUtils.isZero;
-            }
-            switch (status) {
-                case CommonUtils.isZero:
-                    statusTv.setText("未开始");
-                    break;
-                case CommonUtils.isOne:
-                    statusTv.setText("正在进行");
-                    break;
-                case CommonUtils.isTwo:
-                    statusTv.setText("未开始");
-                    break;
+            timeTv.setText(String.format(context.getString(R.string.start_end_time),formatTime.formatterTime(bean.getStarttime()),formatTime.formatterTime(bean.getEndtime())));
+
+            if (StringUtils.isSame(bean.getState(), CommonUtils.isZero)) {
+                statusTv.setText(R.string.unreviewed);
+            } else {
+                if (StringUtils.isEmpty(bean.getSubmittime()) || StringUtils.isSame(bean.getSubmittime(), CommonUtils.isZero)) {
+                    String status = bean.getStatus();
+                    if (StringUtils.isEmpty(status)) {
+                        status = CommonUtils.isZero;
+                    }
+                    switch (status) {
+                        case CommonUtils.isZero:
+                            statusTv.setText(R.string.not_started);
+                            break;
+                        case CommonUtils.isOne:
+                            statusTv.setText(R.string.in_progress);
+                            break;
+                        case CommonUtils.isTwo:
+                            statusTv.setText(R.string.finished);
+                            break;
+                    }
+                } else {
+                    if (isStudent) {
+                        statusTv.setText(R.string.submitted);
+                    }
+                }
             }
             if (isStudent) {
                 numberTv.setVisibility(View.GONE);
             } else {
-                numberTv.setText(bean.getSubmit_num() + "人/" + bean.getNumber() + "人");
+                numberTv.setText(String.format(context.getString(R.string.submit_num),bean.getSubmit_num(),bean.getNumber()));
             }
             if (StringUtils.isEmpty(bean.getContent())) {
                 llRemark.setVisibility(View.GONE);

@@ -31,7 +31,7 @@ public class YiXiuApp extends BaseApp {
     protected void installMonitor() {
         applicationContext = this;
         instance = this;
-        L.debug = OSSLog.enableLog = true;
+        L.debug = OSSLog.enableLog = false;
         if (L.debug) {
 //            LeakCanary.install(this);//LeakCanary内存泄漏监控
         }
@@ -52,7 +52,6 @@ public class YiXiuApp extends BaseApp {
         if (JPushInterface.isPushStopped(this)) {
             JPushInterface.setAlias(this, 0, CommonUtils.getUserId(this));
             JPushInterface.resumePush(this);
-            L.d(JiGuangReceiver.TAG, "isPushStopped");
             L.d(JiGuangReceiver.TAG, "极光推送设置别名:" + CommonUtils.getUserId(this));
         }
     }

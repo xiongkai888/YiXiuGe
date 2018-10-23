@@ -171,5 +171,11 @@
     <string name="sunday">周日</string>
     <string name="choose_students">请选择学生</string>
     <string name="answer_sub">答</string>
+    <string name="not_started">未开始</string>
+    <string name="in_progress">正在进行</string>
+    <string name="finished">已结束</string>
+    <string name="submitted">已提交</string>
+    <string name="unreviewed">未审核</string>
+    <string name="submit_num">%1$s人/%2$s人</string>
 
 </resources>

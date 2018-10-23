@@ -8,13 +8,22 @@ import android.view.MenuItem;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.AnswerQuestionnaireAdapter;
+import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.QuestionnaireManagementBean;
+import com.lanmei.yixiu.event.AnswerQuestionnaireEvent;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
+import com.xson.common.bean.BaseBean;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.StringUtils;
+import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -39,8 +48,8 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
     public void initIntent(Intent intent) {
         super.initIntent(intent);
         Bundle bundle = intent.getBundleExtra("bundle");
-        if (bundle != null){
-            managementBean = (QuestionnaireManagementBean)bundle.getSerializable("bean");
+        if (bundle != null) {
+            managementBean = (QuestionnaireManagementBean) bundle.getSerializable("bean");
         }
     }
 
@@ -64,7 +73,6 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_submit, menu);
@@ -84,26 +92,47 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
 
     private void answer() {
         List<QuestionnaireManagementBean.QuestBean> list = adapter.getData();
-        if (StringUtils.isEmpty(list)){
+        if (StringUtils.isEmpty(list)) {
+            UIHelper.ToastMessage(this,"暂无问卷题目");
             return;
         }
-
+        List<String> stringList = answerNum(list);
+        if (stringList.size() != list.size()){
+            UIHelper.ToastMessage(this,"请先完善问卷答案");
+            return;
+        }
+        YiXiuGeApi api = new YiXiuGeApi("app/quest_student_add");
+        api.addParams("uid",api.getUserId(this)).addParams("qid",managementBean.getId()).addParams("result",CommonUtils.getJSONArrayByList(stringList));
+        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+            @Override
+            public void onResponse(BaseBean response) {
+                if (isFinishing()){
+                    return;
+                }
+                UIHelper.ToastMessage(getContext(),response.getMsg());
+                EventBus.getDefault().post(new AnswerQuestionnaireEvent());
+                finish();
+            }
+        });
     }
 
-    private boolean isAllAnswer(List<QuestionnaireManagementBean.QuestBean> list){
-        for (QuestionnaireManagementBean.QuestBean bean:list){
-            if (StringUtils.isSame(bean.getType(), CommonUtils.isOne)){
+    private List<String> answerNum(List<QuestionnaireManagementBean.QuestBean> list) {
+        List<String> stringList = new ArrayList<>();
+        for (QuestionnaireManagementBean.QuestBean bean : list) {
+            if (StringUtils.isSame(bean.getType(), CommonUtils.isOne)) {
                 List<QuestionnaireManagementBean.QuestBean.SelectBean> beanList = bean.getSelect();
-                for (QuestionnaireManagementBean.QuestBean.SelectBean selectBean:beanList){
-                    if (!selectBean.isSelect()){
-
+                for (QuestionnaireManagementBean.QuestBean.SelectBean selectBean : beanList) {
+                    if (selectBean.isSelect()) {
+                        stringList.add(selectBean.getText());
                     }
                 }
-            }else {
-
+            } else {
+                if (StringUtils.isEmpty(bean.getAnswer())) {
+                    stringList.add(bean.getAnswer());
+                }
             }
         }
-        return false;
+        return stringList;
     }
 
 
