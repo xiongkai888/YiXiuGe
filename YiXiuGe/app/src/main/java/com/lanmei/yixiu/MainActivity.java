@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
+import com.data.volley.Response;
+import com.data.volley.error.VolleyError;
 import com.lanmei.yixiu.adapter.MainPagerAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.event.AddCourseEvent;
@@ -15,13 +17,14 @@ import com.lanmei.yixiu.event.KaoQinEvent;
 import com.lanmei.yixiu.event.LogoutEvent;
 import com.lanmei.yixiu.helper.TabHelper;
 import com.lanmei.yixiu.update.UpdateAppConfig;
+import com.lanmei.yixiu.utils.AKDialog;
 import com.lanmei.yixiu.utils.BaiduLocation;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
-import com.xson.common.utils.UIHelper;
+import com.xson.common.widget.ProgressHUD;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,6 +37,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     ViewPager mViewPager;
     @InjectView(R.id.tabLayout)
     TabLayout mTabLayout;
+    private ProgressHUD mProgressHUD;
 
     @Override
     public int getContentViewId() {
@@ -88,10 +92,10 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     //点击考勤的时候调用
     @Subscribe
     public void kaoQinEvent(KaoQinEvent event) {
-        if (!initPermission()){
+        if (!initPermission()) {
             return;
         }
-        UIHelper.ToastMessage(this, getString(R.string.in_attendance));
+        mProgressHUD = ProgressHUD.show(this, getString(R.string.in_attendance), true, true, null);
         new BaiduLocation(this, new BaiduLocation.WHbdLocationListener() {
             @Override
             public void bdLocationListener(LocationClient locationClient, BDLocation location) {
@@ -101,7 +105,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
                 if (location != null) {
                     loadLocation(location);
                 } else {
-                    UIHelper.ToastMessage(getContext(), "定位失败，请确认网络和GPS是否开启");
+                    notice("定位失败，请确认网络和GPS是否开启");
                 }
                 locationClient.stop();
                 locationClient = null;
@@ -119,9 +123,30 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
                 if (isFinishing()) {
                     return;
                 }
-                UIHelper.ToastMessage(getContext(), response.getMsg());
+                notice(response.getMsg());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (isFinishing()) {
+                    return;
+                }
+                notice(error.getMessage());
             }
         });
+    }
+
+
+    private void dismiss() {
+        if (mProgressHUD != null) {
+            mProgressHUD.dismiss();
+            mProgressHUD = null;
+        }
+    }
+
+    private void notice(String info) {
+        dismiss();
+        AKDialog.getMessageDialog(this, "", info, R.string.i_know, null).show();
     }
 
     //退出登录时调用

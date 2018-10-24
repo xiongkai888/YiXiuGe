@@ -144,7 +144,7 @@
     <string name="uploading_failure">上传失败</string>
     <string name="waiting">等待中</string>
     <string name="selection_sort">请选择分类</string>
-    <string name="in_attendance">正在考勤请稍后...</string>
+    <string name="in_attendance">考勤中...</string>
     <string name="delete_note">确认要删除该笔记？</string>
     <string name="delete_courseware">确认要删除该课件？</string>
     <string name="user_protocol">用户协议</string>
@@ -177,5 +177,6 @@
     <string name="submitted">已提交</string>
     <string name="unreviewed">未审核</string>
     <string name="submit_num">%1$s人/%2$s人</string>
+    <string name="i_know">我知道了</string>
 
 </resources>

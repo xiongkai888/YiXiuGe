@@ -74,6 +74,14 @@ public class AKDialog {
      * 提示信息Dialog
      */
     public static AlertDialog.Builder getMessageDialog(Context context, String title, String msg, DialogInterface.OnClickListener okListener) {
+
+        return getMessageDialog(context, title, msg, R.string.sure ,okListener);
+    }
+
+    /**
+     * 提示信息Dialog
+     */
+    public static AlertDialog.Builder getMessageDialog(Context context, String title, String msg, int id, DialogInterface.OnClickListener okListener) {
         AlertDialog.Builder builder = getDialog(context);
         if (!TextUtils.isEmpty(title)) {
             builder.setTitle(title);
@@ -81,7 +89,7 @@ public class AKDialog {
         if (!TextUtils.isEmpty(msg)) {
             builder.setMessage(msg);
         }
-        builder.setPositiveButton(R.string.sure, okListener);
+        builder.setPositiveButton(id, okListener);
         return builder;
     }
 
@@ -117,6 +125,7 @@ public class AKDialog {
         builder.setNegativeButton(R.string.cancel, cancelListener);
         return builder;
     }
+
 
     /**
      * 列表对话框
@@ -299,7 +308,7 @@ public class AKDialog {
                             view.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    UIHelper.ToastMessage(context,"保存成功");
+                                    UIHelper.ToastMessage(context, "保存成功");
                                 }
                             });
 
@@ -310,7 +319,7 @@ public class AKDialog {
                             view.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    UIHelper.ToastMessage(context,"保存失败");
+                                    UIHelper.ToastMessage(context, "保存失败");
                                 }
                             });
                         }
