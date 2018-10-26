@@ -86,7 +86,7 @@ public class SearchCoursewareActivity extends BaseActivity  implements TextView.
             String key = CommonUtils.getStringByTextView(v);
             if (StringUtils.isEmpty(key)) {
                 UIHelper.ToastMessage(this, R.string.input_keyword);
-                return false;
+                return true;
             }
             loadSearchCourse(key);
             return true;

@@ -82,7 +82,7 @@
             android:layout_marginBottom="@dimen/d_5dp"
             android:drawableLeft="@drawable/examination_subject"
             android:drawablePadding="@dimen/d_5dp"
-            android:text="考试结果" />
+            android:text="@string/examination_result" />
 
         <TextView
             style="@style/text12colorBlack"

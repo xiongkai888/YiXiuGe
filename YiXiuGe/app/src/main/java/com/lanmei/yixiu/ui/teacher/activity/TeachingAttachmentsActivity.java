@@ -78,7 +78,7 @@ public class TeachingAttachmentsActivity extends BaseActivity implements TextVie
             String key = CommonUtils.getStringByTextView(v);
             if (StringUtils.isEmpty(key)) {
                 UIHelper.ToastMessage(this, R.string.input_keyword);
-                return false;
+                return true;
             }
             loadSearch(key);
             return true;
@@ -153,6 +153,7 @@ public class TeachingAttachmentsActivity extends BaseActivity implements TextVie
         List<TeacherFiltrateBean> list = new ArrayList<>();
         TeacherFiltrateBean bean1 = new TeacherFiltrateBean();
         bean1.setName(getString(R.string.all));
+        bean1.setSelect(true);
         bean1.setId(CommonUtils.isZero);
         TeacherFiltrateBean bean2 = new TeacherFiltrateBean();
         bean2.setName(getString(R.string.unused));

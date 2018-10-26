@@ -7,8 +7,8 @@ package com.lanmei.yixiu.bean;
 
 public class ExaminationTopicBean {
 
-    private String topic;
-    private String item;
+    private String topic;//
+    private String item;//abcd
     private boolean isSelect;//是否被选择
 
 

@@ -12,7 +12,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
- * 考试
+ * （学生）考试
  */
 public class ExaminationActivity extends BaseActivity {
 
@@ -29,7 +29,7 @@ public class ExaminationActivity extends BaseActivity {
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
 
-        mViewPager.setAdapter(new ExaminationAdapter(getSupportFragmentManager()));
+        mViewPager.setAdapter(new ExaminationAdapter(this,getSupportFragmentManager()));
         mViewPager.setOffscreenPageLimit(2);
         mTabLayout.setupWithViewPager(mViewPager);
 

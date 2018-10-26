@@ -13,21 +13,22 @@
         android:padding="@dimen/d_10dp">
 
         <TextView
+            android:id="@+id/title_tv"
             style="@style/text"
             android:layout_marginBottom="@dimen/d_5dp"
             android:drawableLeft="@drawable/examination_subject"
-            android:drawablePadding="@dimen/d_5dp"
-            android:text="2018美肤管理第一单元测试" />
+            android:drawablePadding="@dimen/d_5dp" />
 
         <TextView
+            android:id="@+id/time_tv"
             style="@style/text12color666"
             android:layout_marginTop="@dimen/d_10dp"
             android:drawableLeft="@drawable/examination_time"
-            android:drawablePadding="@dimen/d_5dp"
-            android:text="2018-8-29  08:30 -- 2018-8-29  12:00" />
+            android:drawablePadding="@dimen/d_5dp" />
 
 
         <TextView
+            android:id="@+id/enter_examination_tv"
             style="@style/text12color1593f0"
             android:layout_gravity="right"
             android:background="@drawable/examination_button_bg"
@@ -36,14 +37,13 @@
     </LinearLayout>
 
 
-
     <TextView
-        android:background="@drawable/examination_ing"
-        android:text="进行中"
-        android:paddingBottom="@dimen/d_2dp"
-        android:gravity="center"
+        android:id="@+id/status_tv"
         style="@style/text8colorWhite"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/d_10dp" />
+        android:layout_marginRight="@dimen/d_10dp"
+        android:background="@drawable/examination_ing"
+        android:gravity="center"
+        android:paddingBottom="@dimen/d_2dp" />
 
 </RelativeLayout>

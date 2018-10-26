@@ -75,10 +75,7 @@ public class StringUtils {
     }
 
     public final static boolean isEmpty(List list) {
-        if (list == null || list.size() == 0)
-            return true;
-        else
-            return false;
+        return (list == null || list.size() == 0);
     }
 
     public final static boolean isEmpty(Set set) {

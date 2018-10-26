@@ -1,30 +1,35 @@
 package com.lanmei.yixiu.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.bean.CourseClassifyBean;
+import com.lanmei.yixiu.bean.ExaminationListBean;
 import com.lanmei.yixiu.ui.mine.activity.Examination1Activity;
-import com.lanmei.yixiu.utils.CommonUtils;
+import com.lanmei.yixiu.utils.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.utils.IntentUtil;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 
 /**
  * 随堂测试
  */
-public class ExaminationListAdapter extends SwipeRefreshAdapter<CourseClassifyBean> {
+public class ExaminationListAdapter extends SwipeRefreshAdapter<ExaminationListBean> {
 
 
+    FormatTime time;
 
     public ExaminationListAdapter(Context context) {
         super(context);
+        time = new FormatTime(context);
     }
 
 
@@ -35,22 +40,21 @@ public class ExaminationListAdapter extends SwipeRefreshAdapter<CourseClassifyBe
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
-        ViewHolder viewHolder = (ViewHolder)holder;
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IntentUtil.startActivity(context,Examination1Activity.class);
-            }
-        });
-    }
-
-
-    @Override
-    public int getCount() {
-        return CommonUtils.quantity;
+        ExaminationListBean bean = getItem(position);
+        ViewHolder viewHolder = (ViewHolder) holder;
+        viewHolder.setParameter(bean);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
+        @InjectView(R.id.title_tv)
+        TextView titleTv;
+        @InjectView(R.id.time_tv)
+        TextView timeTv;
+        @InjectView(R.id.status_tv)
+        TextView statusTv;
+        @InjectView(R.id.enter_examination_tv)
+        TextView enterExaminationTv;
 
         ViewHolder(View view) {
             super(view);
@@ -58,8 +62,46 @@ public class ExaminationListAdapter extends SwipeRefreshAdapter<CourseClassifyBe
         }
 
 
-        public void setParameter(final CourseClassifyBean bean) {
-
+        public void setParameter(final ExaminationListBean bean) {
+            enterExaminationTv.setVisibility(View.GONE);
+            titleTv.setText(bean.getTitle());
+            int status = bean.getStatus();
+            switch (status) {
+                case 1:
+                    statusTv.setText(R.string.not_started);
+                    break;
+                case 2:
+                    statusTv.setText(R.string.underway);
+                    enterExaminationTv.setText(R.string.enter_into_examination);
+                    enterExaminationTv.setVisibility(View.VISIBLE);
+                    enterExaminationTv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("bean",bean);
+                            IntentUtil.startActivity(context, Examination1Activity.class,bundle);
+                        }
+                    });
+                    break;
+                case 3:
+                    statusTv.setText(R.string.finished);
+                    break;
+                case 4:
+                    statusTv.setText(R.string.submitted);
+                    enterExaminationTv.setVisibility(View.VISIBLE);
+                    enterExaminationTv.setText(R.string.achievements);
+                    enterExaminationTv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+//                            IntentUtil.startActivity(context, ExaminationResultActivity.class,bean.getId());
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("bean",bean);
+                            IntentUtil.startActivity(context, Examination1Activity.class,bundle);
+                        }
+                    });
+                    break;
+            }
+            timeTv.setText(String.format(context.getString(R.string.start_end_time), time.formatterTime(bean.getStarttime()), time.formatterTime(bean.getEndtime())));
         }
     }
 

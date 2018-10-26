@@ -21,8 +21,6 @@ import butterknife.InjectView;
 public class ExaminationAnswerAdapter extends SwipeRefreshAdapter<ExaminationAnswerBean> {
 
 
-
-
     public ExaminationAnswerAdapter(Context context) {
         super(context);
     }
@@ -33,13 +31,21 @@ public class ExaminationAnswerAdapter extends SwipeRefreshAdapter<ExaminationAns
     }
 
     @Override
-    public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder2(RecyclerView.ViewHolder holder,final int position) {
         final ExaminationAnswerBean bean = getItem(position);
         if (bean == null) {
             return;
         }
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.setParameter(bean);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null){
+                    listener.choose(position);
+                }
+            }
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -64,5 +70,14 @@ public class ExaminationAnswerAdapter extends SwipeRefreshAdapter<ExaminationAns
         }
     }
 
+    private ChooseTopicListener listener;
+
+    public interface ChooseTopicListener{
+        void choose(int position);
+    }
+
+    public void setChooseTopicListener(ChooseTopicListener listener){
+        this.listener = listener;
+    }
 
 }

@@ -25,6 +25,7 @@ import com.lanmei.yixiu.event.KaoQinEvent;
 import com.lanmei.yixiu.event.SetUserEvent;
 import com.lanmei.yixiu.ui.home.activity.NewsSubActivity;
 import com.lanmei.yixiu.ui.home.activity.TeacherActivity;
+import com.lanmei.yixiu.ui.mine.activity.ExaminationActivity;
 import com.lanmei.yixiu.ui.mine.activity.MyClassScheduleActivity;
 import com.lanmei.yixiu.ui.scan.ScanActivity;
 import com.lanmei.yixiu.ui.teacher.activity.ClassHourActivity;
@@ -244,8 +245,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 IntentUtil.startActivity(context, TeacherActivity.class);
                 break;
             case R.id.kao_shi_tv://考试
-                CommonUtils.developing(context);
-//                IntentUtil.startActivity(context, ExaminationActivity.class);
+//                CommonUtils.developing(context);
+                IntentUtil.startActivity(context, ExaminationActivity.class);
                 break;
             case R.id.questionnaire_tv://问卷
 //                CommonUtils.developing(context);

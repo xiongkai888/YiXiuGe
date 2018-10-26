@@ -105,7 +105,6 @@ public class CommonUtils {
     }
 
     /**
-     * String 逗号隔开 0,2,3
      *
      * @param list
      * @return
@@ -371,6 +370,36 @@ public class CommonUtils {
             child.setLayoutParams(params);
             child.invalidate();
         }
+    }
+
+
+    public static String getLetterByPosition(Context context,int position){
+
+        switch (position){
+            case 0:
+                return context.getString(R.string.A);
+            case 1:
+                return context.getString(R.string.B);
+            case 2:
+                return context.getString(R.string.C);
+            case 3:
+                return context.getString(R.string.D);
+            case 4:
+                return context.getString(R.string.E);
+            case 5:
+                return context.getString(R.string.F);
+            case 6:
+                return context.getString(R.string.G);
+            case 7:
+                return context.getString(R.string.H);
+            case 8:
+                return context.getString(R.string.I);
+            case 9:
+                return context.getString(R.string.J);
+            case 10:
+                return context.getString(R.string.K);
+        }
+        return "";
     }
 
 }

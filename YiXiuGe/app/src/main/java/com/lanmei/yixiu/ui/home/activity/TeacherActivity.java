@@ -82,7 +82,7 @@ public class TeacherActivity extends BaseActivity  implements TextView.OnEditorA
             String key = CommonUtils.getStringByTextView(v);
             if (StringUtils.isEmpty(key)) {
                 UIHelper.ToastMessage(this, R.string.input_keyword);
-                return false;
+                return true;
             }
             loadSearch(key);
             return true;

@@ -129,7 +129,7 @@ public class JsonUtil {
      */
     public static JSONArray getJSONArrayByList(List<?> list){
         JSONArray jsonArray = new JSONArray();
-        if (list==null ||list.isEmpty()) {
+        if (StringUtils.isEmpty(list)) {
             return jsonArray;//nerver return null
         }
 

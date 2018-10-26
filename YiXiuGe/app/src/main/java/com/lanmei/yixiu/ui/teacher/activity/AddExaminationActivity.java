@@ -53,8 +53,8 @@ public class AddExaminationActivity extends BaseActivity {
         actionbar.setTitle(R.string.add_examination);
         actionbar.setHomeAsUpIndicator(R.drawable.back);
         List<String> list = new ArrayList<>();
-        list.add("随堂测试");
-        list.add("综合考试");
+        list.add(getString(R.string.quiz));
+        list.add(getString(R.string.comprehensive_examination));
 
         setSpinner(list);
         initDatePicker();

@@ -6,7 +6,7 @@
 
     <include layout="@layout/include_centertitletoolbar" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
@@ -25,18 +25,19 @@
                     android:text="得分" />
 
                 <TextView
+                    android:id="@+id/score_tv"
                     style="@style/text14colorWhite"
                     android:layout_centerInParent="true"
-                    android:text="50"
+                    android:text="0"
                     android:textSize="80sp" />
 
 
                 <TextView
+                    android:id="@+id/total_points_tv"
                     style="@style/text14colorWhite"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_margin="@dimen/d_10dp"
-                    android:text="/100" />
+                    android:layout_margin="@dimen/d_10dp" />
 
             </RelativeLayout>
 
@@ -47,26 +48,32 @@
                 android:padding="@dimen/d_10dp">
 
                 <TextView
+                    android:id="@+id/number1_tv"
                     style="@style/text_weight"
                     android:gravity="center"
-                    android:text="试题量\n20道"
-
+                    android:text="试题量\n0道"
                     android:textColor="@color/white" />
 
-                <TextView style="@style/line_v1dp_divider" />
+                <TextView
+                    android:background="@color/white"
+                    style="@style/line_v1dp_divider" />
 
                 <TextView
+                    android:id="@+id/number2_tv"
                     style="@style/text_weight"
                     android:gravity="center"
-                    android:text="答题数\n20道"
+                    android:text="答题数\n0道"
                     android:textColor="@color/white" />
 
-                <TextView style="@style/line_v1dp_divider" />
+                <TextView
+                    android:background="@color/white"
+                    style="@style/line_v1dp_divider" />
 
                 <TextView
+                    android:id="@+id/accuracy_tv"
                     style="@style/text_weight"
                     android:gravity="center"
-                    android:text="正确率\n50%"
+                    android:text="正确率\n0%"
                     android:textColor="@color/white" />
 
 
@@ -78,9 +85,10 @@
                 android:padding="@dimen/d_10dp">
 
                 <TextView
+                    android:id="@+id/number3_tv"
                     style="@style/text14color666"
                     android:layout_weight="1"
-                    android:text="共20道   您答对10道" />
+                    android:text="共0道   您答对0道" />
 
                 <TextView
                     android:layout_width="@dimen/d_15dp"
@@ -114,6 +122,6 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

@@ -177,6 +177,31 @@
     <string name="submitted">已提交</string>
     <string name="unreviewed">未审核</string>
     <string name="submit_num">%1$s人/%2$s人</string>
+    <string name="topic_title">%1$s、%2$s(%3$s)</string>
     <string name="i_know">我知道了</string>
+    <string name="underway">进行中</string>
+    <string name="A">A</string>
+    <string name="B">B</string>
+    <string name="C">C</string>
+    <string name="D">D</string>
+    <string name="E">E</string>
+    <string name="F">F</string>
+    <string name="G">G</string>
+    <string name="H">H</string>
+    <string name="I">I</string>
+    <string name="J">J</string>
+    <string name="K">K</string>
+    <string name="next_topic">下一题</string>
+    <string name="on_topic">上一题</string>
+    <string name="quiz">随堂测试</string>
+    <string name="comprehensive_examination">综合考试</string>
+    <string name="multiple_choice">多选</string>
+    <string name="single_choice">单选</string>
+    <string name="achievements">查看成绩</string>
+    <string name="total_points">/%1$s</string>
+    <string name="number1">试题量\n%1$s道</string>
+    <string name="number2">答题数\n%1$s道</string>
+    <string name="accuracy">正确率\n%1$s</string>
+    <string name="number3">共%1$s道   您答对了%2$s道</string>
 
 </resources>

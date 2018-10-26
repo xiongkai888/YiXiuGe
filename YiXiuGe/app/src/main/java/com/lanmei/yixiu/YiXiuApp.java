@@ -6,6 +6,7 @@ import android.support.multidex.MultiDex;
 import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.baidu.mapapi.SDKInitializer;
 import com.hyphenate.chatuidemo.DemoHelper;
+import com.lanmei.yixiu.bean.ExaminationBean;
 import com.lanmei.yixiu.jpush.JiGuangReceiver;
 import com.lanmei.yixiu.update.UpdateAppConfig;
 import com.lanmei.yixiu.utils.CommonUtils;
@@ -15,6 +16,9 @@ import com.xson.common.app.BaseApp;
 import com.xson.common.utils.L;
 import com.xson.common.utils.UserHelper;
 import com.yzq.zxinglibrary.common.Constant;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -26,12 +30,13 @@ public class YiXiuApp extends BaseApp {
 
     public static Context applicationContext;
     private static YiXiuApp instance;
+    public Map<String,ExaminationBean> map = new HashMap<>();
 
     @Override
     protected void installMonitor() {
         applicationContext = this;
         instance = this;
-        L.debug = OSSLog.enableLog = false;
+        L.debug = OSSLog.enableLog = true;
         if (L.debug) {
 //            LeakCanary.install(this);//LeakCanary内存泄漏监控
         }
@@ -40,6 +45,19 @@ public class YiXiuApp extends BaseApp {
         //友盟初始化设置
         initUM();
         initJiGuang();
+    }
+
+    //存考试题目
+    public void saveExamination(String id,ExaminationBean bean){
+        map.put(id,bean);
+    }
+
+    public void removeExamination(String id){
+        map.remove(id);
+    }
+
+    public ExaminationBean getExaminationBean(String id){
+        return map.get(id);
     }
 
     public void initJiGuang() {

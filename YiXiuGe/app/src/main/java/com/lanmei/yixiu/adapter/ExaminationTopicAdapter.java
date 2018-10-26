@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.bean.ExaminationTopicBean;
+import com.lanmei.yixiu.helper.ExaminationPresenter;
+import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 
 import java.util.List;
@@ -24,7 +26,11 @@ public class ExaminationTopicAdapter extends SwipeRefreshAdapter<ExaminationTopi
 
 
     private boolean isMultiterm;//是否是多选项
+    private ExaminationPresenter presenter;
 
+    public void setPresenter(ExaminationPresenter presenter) {
+        this.presenter = presenter;
+    }
 
     public ExaminationTopicAdapter(Context context) {
         super(context);
@@ -46,7 +52,7 @@ public class ExaminationTopicAdapter extends SwipeRefreshAdapter<ExaminationTopi
             return;
         }
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.setParameter(bean);
+        viewHolder.setParameter(bean, position);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,9 +74,12 @@ public class ExaminationTopicAdapter extends SwipeRefreshAdapter<ExaminationTopi
                     bean.setSelect(!bean.isSelect());
                     notifyDataSetChanged();
                 }
+                presenter.getAnswerAtTopic(getData());
             }
         });
     }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -85,11 +94,11 @@ public class ExaminationTopicAdapter extends SwipeRefreshAdapter<ExaminationTopi
         }
 
 
-        public void setParameter(ExaminationTopicBean bean) {
+        public void setParameter(ExaminationTopicBean bean, int position) {
             itemTv.setBackgroundResource(bean.isSelect() ? R.drawable.circle_topic_on : R.drawable.circle_topic_off);
             itemTv.setTextColor(bean.isSelect() ? context.getResources().getColor(R.color.white) : context.getResources().getColor(R.color.colorFF4A4A));
 
-            itemTv.setText(bean.getItem());
+            itemTv.setText(CommonUtils.getLetterByPosition(context, position));
             topicTv.setText(bean.getTopic());
         }
     }

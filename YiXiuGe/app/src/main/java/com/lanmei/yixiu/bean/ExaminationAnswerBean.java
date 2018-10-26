@@ -7,8 +7,9 @@ package com.lanmei.yixiu.bean;
 
 public class ExaminationAnswerBean {
 
-    private String topic;
+    private String topic = "";
     private String item;
+
 
     public String getTopic() {
         return topic;

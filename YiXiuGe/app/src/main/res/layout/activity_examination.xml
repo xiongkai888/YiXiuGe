@@ -9,7 +9,7 @@
 
     <TextView style="@style/line_H1dp_divider" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="@dimen/d_0dp"
         android:layout_weight="1"
@@ -20,20 +20,19 @@
             <LinearLayout
                 style="@style/v_match_parent_no"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="230dp"
                 android:layout_margin="@dimen/d_10dp"
                 android:background="@drawable/evaluate_bg"
                 android:padding="@dimen/d_10dp">
 
                 <TextView
-                    style="@style/text"
-                    android:text="1、药物作用的基本表现是机体器官组织" />
+                    android:id="@+id/title_tv"
+                    style="@style/text" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerView_topic"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/d_10dp" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -50,23 +49,26 @@
                 android:layout_margin="@dimen/d_10dp" />
 
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
     <TextView style="@style/line_H1dp_divider" />
 
-    <LinearLayout style="@style/h_match_parent">
+    <LinearLayout
+        android:id="@+id/ll_bt"
+        android:visibility="gone"
+        style="@style/h_match_parent">
 
         <Button
             android:id="@+id/on_a_bt"
             style="@style/button_style"
             android:layout_weight="1"
-            android:text="上一题" />
+            android:text="@string/on_topic" />
 
         <Button
             android:id="@+id/next_bt"
             style="@style/button_style"
             android:layout_weight="1"
-            android:text="下一题" />
+            android:text="@string/next_topic" />
 
     </LinearLayout>
 
