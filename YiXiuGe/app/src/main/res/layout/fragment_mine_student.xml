@@ -192,7 +192,6 @@
         <LinearLayout
             android:id="@+id/ll_setting"
             style="@style/ll_bottom_h_no"
-            android:layout_marginBottom="@dimen/d_20dp"
             android:padding="@dimen/d_10dp">
 
             <TextView
@@ -209,6 +208,9 @@
                 android:drawableRight="@drawable/in_right"
                 android:gravity="center_vertical" />
         </LinearLayout>
+
+        <TextView
+           style="@style/line_H10dp_on" />
 
     </LinearLayout>
 

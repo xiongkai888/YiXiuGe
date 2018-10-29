@@ -203,5 +203,7 @@
     <string name="number2">答题数\n%1$s道</string>
     <string name="accuracy">正确率\n%1$s</string>
     <string name="number3">共%1$s道   您答对了%2$s道</string>
+    <string name="administrators">管理员</string>
+    <string name="members_group">群成员</string>
 
 </resources>

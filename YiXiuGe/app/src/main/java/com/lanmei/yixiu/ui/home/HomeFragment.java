@@ -14,6 +14,7 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.data.volley.Response;
 import com.data.volley.error.VolleyError;
+import com.hyphenate.chatuidemo.ui.MainActivity;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.HomeAdAdapter;
 import com.lanmei.yixiu.adapter.HomeAdapter;
@@ -221,7 +222,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_home_info:
-                CommonUtils.developing(context);
+                IntentUtil.startActivity(context, MainActivity.class);
                 break;
         }
         return true;

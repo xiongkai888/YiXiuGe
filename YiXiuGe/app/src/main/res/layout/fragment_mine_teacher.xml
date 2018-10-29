@@ -26,16 +26,14 @@
                 android:layout_marginBottom="@dimen/d_5dp"
                 android:layout_marginLeft="@dimen/d_5dp"
                 android:layout_marginTop="@dimen/d_20dp"
-                android:layout_toRightOf="@id/pic_iv"
-                android:text="@string/name" />
+                android:layout_toRightOf="@id/pic_iv" />
 
             <TextView
                 android:id="@+id/id_tv"
                 style="@style/text14colorWhite"
                 android:layout_below="@+id/name_tv"
                 android:layout_marginLeft="@dimen/d_5dp"
-                android:layout_toRightOf="@id/pic_iv"
-                android:text="id:230321321" />
+                android:layout_toRightOf="@id/pic_iv" />
 
 
         </RelativeLayout>
@@ -43,9 +41,9 @@
 
         <LinearLayout
             style="@style/h_match_parent"
-            android:visibility="gone"
             android:paddingBottom="@dimen/d_10dp"
-            android:paddingTop="@dimen/d_10dp">
+            android:paddingTop="@dimen/d_10dp"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/class_schedule_tv"
@@ -114,9 +112,9 @@
 
         <LinearLayout
             android:id="@+id/ll_checking_in"
-            android:visibility="gone"
             style="@style/ll_bottom_h"
-            android:padding="@dimen/d_10dp">
+            android:padding="@dimen/d_10dp"
+            android:visibility="gone">
 
             <TextView
                 style="@style/text_weight"
@@ -303,7 +301,6 @@
         <LinearLayout
             android:id="@+id/ll_setting"
             style="@style/ll_bottom_h_no"
-            android:layout_marginBottom="@dimen/d_20dp"
             android:padding="@dimen/d_10dp">
 
             <TextView
@@ -320,6 +317,8 @@
                 android:drawableRight="@drawable/in_right"
                 android:gravity="center_vertical" />
         </LinearLayout>
+
+        <TextView style="@style/line_H10dp_on" />
 
     </LinearLayout>
 

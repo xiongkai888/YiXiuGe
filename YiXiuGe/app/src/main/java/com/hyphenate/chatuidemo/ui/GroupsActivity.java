@@ -134,8 +134,7 @@ public class GroupsActivity extends BaseActivity {
 			public boolean onTouch(View v, MotionEvent event) {
 				if (getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
 					if (getCurrentFocus() != null)
-						inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-								InputMethodManager.HIDE_NOT_ALWAYS);
+						inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 				}
 				return false;
 			}

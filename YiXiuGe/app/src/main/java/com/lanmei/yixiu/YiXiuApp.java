@@ -30,7 +30,7 @@ public class YiXiuApp extends BaseApp {
 
     public static Context applicationContext;
     private static YiXiuApp instance;
-    public Map<String,ExaminationBean> map = new HashMap<>();
+    private Map<String, ExaminationBean> map;
 
     @Override
     protected void installMonitor() {
@@ -47,16 +47,22 @@ public class YiXiuApp extends BaseApp {
         initJiGuang();
     }
 
-    //存考试题目
-    public void saveExamination(String id,ExaminationBean bean){
-        map.put(id,bean);
+    //存考试题目(暂时这样)
+    public void saveExamination(String id, ExaminationBean bean) {
+        if (map == null) {
+            map = new HashMap<>();
+        }
+        map.put(id, bean);
     }
 
-    public void removeExamination(String id){
+    public void removeExamination(String id) {
+        if (map == null) {
+            map = new HashMap<>();
+        }
         map.remove(id);
     }
 
-    public ExaminationBean getExaminationBean(String id){
+    public ExaminationBean getExaminationBean(String id) {
         return map.get(id);
     }
 

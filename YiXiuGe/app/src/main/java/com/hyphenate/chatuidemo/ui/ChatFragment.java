@@ -42,7 +42,6 @@ import com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenu;
 import com.hyphenate.easeui.widget.presenter.EaseChatRowPresenter;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
-import com.hyphenate.util.EasyUtils;
 import com.hyphenate.util.PathUtil;
 import com.lanmei.yixiu.R;
 
@@ -107,10 +106,10 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 
             @Override
             public void onClick(View v) {
-                if (EasyUtils.isSingleActivity(getActivity())) {
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
-                }
+//                if (EasyUtils.isSingleActivity(getActivity())) {
+//                    Intent intent = new Intent(getActivity(), MainActivity.class);
+//                    startActivity(intent);
+//                }
                 onBackPressed();
             }
         });

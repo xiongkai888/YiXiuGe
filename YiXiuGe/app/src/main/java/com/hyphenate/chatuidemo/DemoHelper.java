@@ -47,7 +47,6 @@ import com.hyphenate.chatuidemo.parse.UserProfileManager;
 import com.hyphenate.chatuidemo.receiver.CallReceiver;
 import com.hyphenate.chatuidemo.receiver.HeadsetReceiver;
 import com.hyphenate.chatuidemo.ui.ChatActivity;
-import com.hyphenate.chatuidemo.ui.MainActivity;
 import com.hyphenate.chatuidemo.ui.VideoCallActivity;
 import com.hyphenate.chatuidemo.ui.VoiceCallActivity;
 import com.hyphenate.chatuidemo.utils.PreferenceManager;
@@ -1253,13 +1252,12 @@ public class DemoHelper {
      * user met some exception: conflict, removed or forbidden
      */
     protected void onUserException(String exception){
-        EMLog.e(TAG, "onUserException: " + exception);
-        Intent intent = new Intent(appContext, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-        intent.putExtra(exception, true);
-        appContext.startActivity(intent);
-
+//        EMLog.e(TAG, "onUserException: " + exception);
+//        Intent intent = new Intent(appContext, MainActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+//        intent.putExtra(exception, true);
+//        appContext.startActivity(intent);
         showToast(exception);
     }
  
