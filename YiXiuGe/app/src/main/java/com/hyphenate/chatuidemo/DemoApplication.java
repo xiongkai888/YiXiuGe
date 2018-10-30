@@ -20,7 +20,7 @@ import android.support.multidex.MultiDex;
 public class DemoApplication extends Application {
 
 	public static Context applicationContext;
-	private static DemoApplication instance;
+//	private static DemoApplication instance;
 	// login user name
 	public final String PREF_USERNAME = "username";
 
@@ -34,18 +34,18 @@ public class DemoApplication extends Application {
 		MultiDex.install(this);
 		super.onCreate();
         applicationContext = this;
-        instance = this;
+//        instance = this;
 
 		//init demo helper
         DemoHelper.getInstance().init(applicationContext);
 
 		// 初始化华为 HMS 推送服务, 需要在SDK初始化后执行
-		HMSPushHelper.getInstance().initHMSAgent(instance);
+		HMSPushHelper.getInstance().initHMSAgent(this);
 	}
 
-	public static DemoApplication getInstance() {
-		return instance;
-	}
+//	public static DemoApplication getInstance() {
+//		return instance;
+//	}
 
 	@Override
 	protected void attachBaseContext(Context base) {

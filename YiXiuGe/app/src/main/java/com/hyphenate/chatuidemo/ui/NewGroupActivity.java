@@ -31,6 +31,9 @@ import com.hyphenate.chat.EMGroupOptions;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.exceptions.HyphenateException;
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.utils.CommonUtils;
+import com.xson.common.utils.L;
+import com.xson.common.utils.StringUtils;
 
 public class NewGroupActivity extends BaseActivity {
 	private EditText groupNameEditText;
@@ -72,7 +75,7 @@ public class NewGroupActivity extends BaseActivity {
 		    new EaseAlertDialog(this, R.string.Group_name_cannot_be_empty).show();
 		} else {
 			// select from contact list
-			startActivityForResult(new Intent(this, GroupPickContactsActivity.class).putExtra("groupName", name), 0);
+			startActivityForResult(new Intent(this, com.lanmei.yixiu.ui.message.activity.GroupPickContactsActivity.class).putExtra("groupName", name), 0);
 		}
 	}
 	
@@ -96,8 +99,8 @@ public class NewGroupActivity extends BaseActivity {
 					String[] members = data.getStringArrayExtra("newmembers");
 					try {
 						EMGroupOptions option = new EMGroupOptions();
-					    option.maxUsers = 200;
-						option.inviteNeedConfirm = true;
+					    option.maxUsers = 500;
+						option.inviteNeedConfirm = false;
 					    
 					    String reason = NewGroupActivity.this.getString(R.string.invite_join_group);
 					    reason  = EMClient.getInstance().getCurrentUser() + reason + groupName;
@@ -119,7 +122,13 @@ public class NewGroupActivity extends BaseActivity {
 						runOnUiThread(new Runnable() {
 							public void run() {
 								progressDialog.dismiss();
-								Toast.makeText(NewGroupActivity.this, st2 + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+								String s = e.getLocalizedMessage();
+								L.d(L.TAG,"getLocalizedMessage:"+s+", getMessage:"+e.getMessage()+",  getDescription:"+e.getDescription()+",  getErrorCode:"+e.getErrorCode());
+								if (!StringUtils.isEmpty(s)){
+									int index = s.indexOf(CommonUtils.HX_USER_HEAD)+2;
+									s = s.substring(index,index+6);
+								}
+								Toast.makeText(NewGroupActivity.this, st2 + "用户 "+s+" 不存在", Toast.LENGTH_LONG).show();
 							}
 						});
 					}

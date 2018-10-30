@@ -19,7 +19,6 @@ import com.lanmei.yixiu.helper.TabHelper;
 import com.lanmei.yixiu.update.UpdateAppConfig;
 import com.lanmei.yixiu.utils.AKDialog;
 import com.lanmei.yixiu.utils.BaiduLocation;
-import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;
@@ -56,7 +55,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 
 //        mViewPager.setNoScroll(true);
         EventBus.getDefault().register(this);
-        CommonUtils.loadUserInfo(this, null);
+//        CommonUtils.loadUserInfo(this, null);
         UpdateAppConfig.requestStoragePermission(this);
 
         initPermission();//百度定位权限

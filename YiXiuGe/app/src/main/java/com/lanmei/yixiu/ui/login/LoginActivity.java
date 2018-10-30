@@ -14,7 +14,6 @@ import com.data.volley.Response;
 import com.data.volley.error.VolleyError;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.chatuidemo.DemoApplication;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.chatuidemo.db.DemoDBManager;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
@@ -204,11 +203,11 @@ public class LoginActivity extends BaseActivity {
                 EMClient.getInstance().chatManager().loadAllConversations();
 
                 // update current user's display name for APNs
-                boolean updatenick = EMClient.getInstance().pushManager().updatePushNickname(
-                        DemoApplication.currentUserNick.trim());
-                if (!updatenick) {
-                    L.d("LoginActivity", "update current user nick fail");
-                }
+//                boolean updatenick = EMClient.getInstance().pushManager().updatePushNickname(
+//                        DemoApplication.currentUserNick.trim());
+//                if (!updatenick) {
+//                    L.d("LoginActivity", "update current user nick fail");
+//                }
 
                 if (!isFinishing() && mProgressHUD.isShowing()) {
                     mProgressHUD.cancel();

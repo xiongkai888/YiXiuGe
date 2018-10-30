@@ -48,6 +48,7 @@ public class CommonUtils {
     public final static String isOne = "1";
     public final static String isTwo = "2";
     public final static String isThree = "3";
+    public final static String uid = "uid";
     public static final String HX_USER_HEAD = "b_";
 
     public static int quantity = 3;

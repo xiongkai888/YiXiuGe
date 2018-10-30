@@ -32,7 +32,6 @@ import android.widget.Toast;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.chatuidemo.DemoApplication;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.chatuidemo.db.DemoDBManager;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
@@ -164,11 +163,11 @@ public class LoginActivity extends BaseActivity {
 			    EMClient.getInstance().chatManager().loadAllConversations();
 
 			    // update current user's display name for APNs
-				boolean updatenick = EMClient.getInstance().pushManager().updatePushNickname(
-						DemoApplication.currentUserNick.trim());
-				if (!updatenick) {
-					Log.e("LoginActivity", "update current user nick fail");
-				}
+//				boolean updatenick = EMClient.getInstance().pushManager().updatePushNickname(
+//						DemoApplication.currentUserNick.trim());
+//				if (!updatenick) {
+//					Log.e("LoginActivity", "update current user nick fail");
+//				}
 
 				if (!LoginActivity.this.isFinishing() && pd.isShowing()) {
 				    pd.dismiss();

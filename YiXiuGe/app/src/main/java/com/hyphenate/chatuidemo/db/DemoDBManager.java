@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import com.hyphenate.chatuidemo.Constant;
-import com.hyphenate.chatuidemo.DemoApplication;
 import com.hyphenate.chatuidemo.domain.InviteMessage;
 import com.hyphenate.chatuidemo.domain.InviteMessage.InviteMessageStatus;
 import com.hyphenate.chatuidemo.domain.RobotUser;

@@ -53,6 +53,11 @@ import com.hyphenate.easeui.widget.EaseSwitchButton;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.event.UserBeanEvent;
+import com.xson.common.utils.L;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -102,7 +107,8 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    
+		EventBus.getDefault().register(this);
+
         groupId = getIntent().getStringExtra("groupId");
         group = EMClient.getInstance().groupManager().getGroup(groupId);
 
@@ -405,6 +411,16 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			}
 		});
 	}
+
+	private int i;
+
+	@Subscribe
+	public void userBeanEvent(UserBeanEvent event){
+		L.d("UserBeanEvent",(i++)+"");
+		membersAdapter.notifyDataSetChanged();
+		ownerAdminAdapter.notifyDataSetChanged();
+	}
+
 
 	private void debugList(String str, List<String> list) {
 		EMLog.d(TAG, str);
@@ -821,7 +837,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 		void init() {
 			final MemberMenuDialog dialog = this;
-			dialog.setTitle("group");
+			dialog.setTitle(operationUserId);
 			dialog.setContentView(R.layout.em_chatroom_member_menu);
 
 			int ids[] = { R.id.menu_item_add_admin,
@@ -1051,7 +1067,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 							EMLog.d(TAG, st11);
 							// 进入选人页面
 							startActivityForResult(
-									(new Intent(GroupDetailsActivity.this, GroupPickContactsActivity.class).putExtra("groupId", groupId)),
+									(new Intent(GroupDetailsActivity.this, com.lanmei.yixiu.ui.message.activity.GroupPickContactsActivity.class).putExtra("groupId", groupId)),
 									REQUEST_CODE_ADD_USER);
 						}
 					});
@@ -1257,7 +1273,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		EMClient.getInstance().groupManager().removeGroupChangeListener(groupChangeListener);
 		super.onDestroy();
 		instance = null;
-
+		EventBus.getDefault().unregister(this);
 	}
 	
 	private static class ViewHolder{

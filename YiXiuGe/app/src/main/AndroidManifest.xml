@@ -51,6 +51,8 @@
 
     <uses-permission android:name="com.lanmei.yixiu.permission.MIPUSH_RECEIVE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--8.0安装apk权限-->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <!--环信权限end-->
 
@@ -255,6 +257,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.teacher.activity.SearchCoursewareActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.teacher.activity.ExaminationManagementActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.teacher.activity.ExaminationManagementActivity"

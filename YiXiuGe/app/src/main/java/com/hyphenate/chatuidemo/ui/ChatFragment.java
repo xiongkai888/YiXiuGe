@@ -44,6 +44,10 @@ import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.PathUtil;
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.event.UserBeanEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -93,6 +97,10 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 
     @Override
     protected void setUpView() {
+        if (!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
+
         setChatFragmentHelper(this);
         if (chatType == Constant.CHATTYPE_SINGLE) { 
             Map<String,RobotUser> robotMap = DemoHelper.getInstance().getRobotList();
@@ -449,8 +457,19 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 
     }
 
+//    private int i;
+
+    @Subscribe
+    public void userBeanEvent(UserBeanEvent event){
+        if (chatType != Constant.CHATTYPE_SINGLE) {
+            messageList.refresh();
+//            L.d("UserBeanEvent",(i++)+"");
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -36,7 +36,7 @@ public class YiXiuApp extends BaseApp {
     protected void installMonitor() {
         applicationContext = this;
         instance = this;
-        L.debug = OSSLog.enableLog = true;
+        L.debug = OSSLog.enableLog = false;
         if (L.debug) {
 //            LeakCanary.install(this);//LeakCanary内存泄漏监控
         }
@@ -81,12 +81,14 @@ public class YiXiuApp extends BaseApp {
     }
 
     public void initUM() {
+
 //        微信
         PlatformConfig.setWeixin(Constant.WEIXIN_APP_ID, Constant.WEIXIN_APP_SECRET);
 //        新浪微博
 //        PlatformConfig.setSinaWeibo(Constant.SINA_APP_ID,Constant.SINA_APP_SECRET,Constant.SINA_NOTIFY_URL);
 //        qq
 //        PlatformConfig.setQQZone(Constant.QQ_APP_ID, Constant.QQ_APP_SECRET);
+        UMConfigure.setLogEnabled(true);//如果查看初始化过程中的LOG，一定要在调用初始化方法前将LOG开关打开。
 //        友盟分享
         UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "");
     }

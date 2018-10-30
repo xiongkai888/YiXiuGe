@@ -15,14 +15,15 @@ import android.widget.Toast;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chatuidemo.Constant;
-import com.hyphenate.chatuidemo.adapter.GroupAdapter;
 import com.hyphenate.chatuidemo.ui.ChatActivity;
 import com.hyphenate.chatuidemo.ui.NewGroupActivity;
-import com.hyphenate.chatuidemo.ui.PublicGroupsActivity;
 import com.hyphenate.exceptions.HyphenateException;
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.adapter.GroupSubAdapter;
 import com.lanmei.yixiu.event.GroupListEvent;
+import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
+import com.xson.common.utils.L;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -46,8 +47,9 @@ public class QunFragment extends BaseFragment {
     @InjectView(R.id.swipe_layout)
     SwipeRefreshLayout swipeRefreshLayout;
     protected List<EMGroup> grouplist;
-    private GroupAdapter groupAdapter;
+    private GroupSubAdapter groupAdapter;
     private InputMethodManager inputMethodManager;
+    private boolean isStudent;
 
     @Override
     public int getContentViewId() {
@@ -61,31 +63,42 @@ public class QunFragment extends BaseFragment {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
+        isStudent = CommonUtils.isStudent(context);
 
         inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         grouplist = EMClient.getInstance().groupManager().getAllGroups();
+        for (EMGroup group : grouplist) {
+            L.d(L.TAG,group.getGroupName()+","+group.getGroupId());
+        }
         //show group list
-        groupAdapter = new GroupAdapter(context, 1, grouplist);
+        groupAdapter = new GroupSubAdapter(context, 1, grouplist, isStudent);
         groupListView.setAdapter(groupAdapter);
 
         groupListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 1) {
-                    // create a new group
-                    startActivityForResult(new Intent(context, NewGroupActivity.class), 0);
-                } else if (position == 2) {
-                    // join a public group
-                    startActivityForResult(new Intent(context, PublicGroupsActivity.class), 0);
-                } else {
+                if (isStudent) {
                     // enter group chat
                     Intent intent = new Intent(context, ChatActivity.class);
                     // it is group chat
                     intent.putExtra("chatType", Constant.CHATTYPE_GROUP);
-                    intent.putExtra("userId", groupAdapter.getItem(position - 3).getGroupId());
+                    intent.putExtra("userId", groupAdapter.getItem(position - 1).getGroupId());
                     startActivityForResult(intent, 0);
+                } else {
+                    if (position == 1) {
+                        // create a new group
+                        startActivityForResult(new Intent(context, NewGroupActivity.class), 0);
+                    } else {
+                        // enter group chat
+                        Intent intent = new Intent(context, ChatActivity.class);
+                        // it is group chat
+                        intent.putExtra("chatType", Constant.CHATTYPE_GROUP);
+                        intent.putExtra("userId", groupAdapter.getItem(position - 2).getGroupId());
+                        startActivityForResult(intent, 0);
+                    }
                 }
+
             }
 
         });
@@ -101,15 +114,14 @@ public class QunFragment extends BaseFragment {
         });
 
 
-
         swipeRefreshLayout.setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light, R.color.holo_orange_light, R.color.holo_red_light);
         //pull down to refresh
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Thread(){
+                new Thread() {
                     @Override
-                    public void run(){
+                    public void run() {
                         try {
                             EMClient.getInstance().groupManager().getJoinedGroupsFromServer();
                             EventBus.getDefault().post(new GroupListEvent(0));
@@ -125,12 +137,12 @@ public class QunFragment extends BaseFragment {
     }
 
 
-    @Subscribe (threadMode = ThreadMode.MAIN)
-    public void groupListEvent(GroupListEvent event){
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void groupListEvent(GroupListEvent event) {
         swipeRefreshLayout.setRefreshing(false);
-        if (event.getType() == 0){
+        if (event.getType() == 0) {
             refresh();
-        }else {
+        } else {
             Toast.makeText(context, R.string.Failed_to_get_group_chat_information, Toast.LENGTH_LONG).show();
         }
     }
@@ -142,9 +154,9 @@ public class QunFragment extends BaseFragment {
         super.onResume();
     }
 
-    private void refresh(){
+    private void refresh() {
         grouplist = EMClient.getInstance().groupManager().getAllGroups();
-        groupAdapter = new GroupAdapter(context, 1, grouplist);
+        groupAdapter = new GroupSubAdapter(context, 1, grouplist, CommonUtils.isStudent(context));
         groupListView.setAdapter(groupAdapter);
         groupAdapter.notifyDataSetChanged();
     }
