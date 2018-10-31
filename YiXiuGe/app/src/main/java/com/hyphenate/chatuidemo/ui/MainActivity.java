@@ -275,7 +275,8 @@ public class MainActivity extends BaseActivity {
 	public void back(View view) {
 		super.back(view);
 	}
-	
+
+
 	private void registerBroadcastReceiver() {
         broadcastManager = LocalBroadcastManager.getInstance(this);
         IntentFilter intentFilter = new IntentFilter();
@@ -464,10 +465,10 @@ public class MainActivity extends BaseActivity {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			moveTaskToBack(false);
-			return true;
-		}
+//		if (keyCode == KeyEvent.KEYCODE_BACK) {
+//			moveTaskToBack(false);
+//			return true;
+//		}
 		return super.onKeyDown(keyCode, event);
 	}
 

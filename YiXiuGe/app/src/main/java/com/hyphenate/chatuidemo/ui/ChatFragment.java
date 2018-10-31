@@ -475,7 +475,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         }
     }
 
-    public static final long HEART_BEAT_RATE = 1200;//
+    public static final long HEART_BEAT_RATE = 1500;//
 
     private int j;
 

@@ -187,6 +187,9 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.home.activity.ConversationListActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.teacher.activity.SelectStudentsActivity"
             android:screenOrientation="portrait" />
         <activity

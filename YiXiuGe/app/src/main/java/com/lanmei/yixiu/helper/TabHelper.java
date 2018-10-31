@@ -77,7 +77,6 @@ public class TabHelper {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 changeTabSelect(tab);
-
             }
 
             @Override

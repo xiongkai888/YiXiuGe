@@ -27,6 +27,9 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.utils.CommonUtils;
+import com.xson.common.utils.L;
+import com.xson.common.utils.StringUtils;
 
 public class AddContactActivity extends BaseActivity{
 	private EditText editText;
@@ -45,8 +48,8 @@ public class AddContactActivity extends BaseActivity{
 		editText = (EditText) findViewById(R.id.edit_note);
 		String strAdd = getResources().getString(R.string.add_friend);
 		mTextView.setText(strAdd);
-		String strUserName = getResources().getString(R.string.user_name);
-		editText.setHint(strUserName);
+//		String strUserName = getResources().getString(R.string.user_name);
+//		editText.setHint(strUserName);
 		searchedUserLayout = (RelativeLayout) findViewById(R.id.ll_user);
 		nameText = (TextView) findViewById(R.id.name);
 		searchBtn = (Button) findViewById(R.id.search);
@@ -58,7 +61,7 @@ public class AddContactActivity extends BaseActivity{
 	 * @param v
 	 */
 	public void searchContact(View v) {
-		final String name = editText.getText().toString().toLowerCase();
+		String name = editText.getText().toString();
 		String saveText = searchBtn.getText().toString();
 		
 		if (getString(R.string.button_search).equals(saveText)) {
@@ -82,7 +85,10 @@ public class AddContactActivity extends BaseActivity{
 	 * @param view
 	 */
 	public void addContact(View view){
-		if(EMClient.getInstance().getCurrentUser().equals(nameText.getText().toString())){
+		String currentUser = EMClient.getInstance().getCurrentUser();
+		String name = CommonUtils.HX_USER_HEAD+nameText.getText().toString();
+		L.d(L.TAG,currentUser+","+name);
+		if(StringUtils.isSame(currentUser,name)){
 			new EaseAlertDialog(this, R.string.not_add_myself).show();
 			return;
 		}
@@ -109,7 +115,8 @@ public class AddContactActivity extends BaseActivity{
 				try {
 					//demo use a hardcode reason here, you need let user to input if you like
 					String s = getResources().getString(R.string.Add_a_friend);
-					EMClient.getInstance().contactManager().addContact(toAddUsername, s);
+					EMClient.getInstance().contactManager().addContact(CommonUtils.HX_USER_HEAD + toAddUsername, s);
+					L.d(L.TAG,"toAddUsername:"+toAddUsername);
 					runOnUiThread(new Runnable() {
 						public void run() {
 							progressDialog.dismiss();

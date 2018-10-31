@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent_no">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+
+    <View style="@style/line_H1dp_divider" />
+
+    <fragment
+        android:id="@+id/kkd"
+        android:name="com.lanmei.yixiu.ui.home.fragment.ConversationListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

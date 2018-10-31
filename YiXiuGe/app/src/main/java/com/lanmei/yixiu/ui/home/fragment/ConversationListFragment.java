@@ -1,12 +1,8 @@
-package com.hyphenate.chatuidemo.ui;
+package com.lanmei.yixiu.ui.home.fragment;
 
 import android.content.Intent;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,9 +12,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chatuidemo.Constant;
-import com.hyphenate.chatuidemo.db.InviteMessgeDao;
-import com.hyphenate.easeui.model.EaseAtMessageHelper;
-import com.hyphenate.easeui.model.EaseDingMessageHelper;
+import com.hyphenate.chatuidemo.ui.ChatActivity;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.util.NetUtils;
 import com.lanmei.yixiu.R;
@@ -36,12 +30,15 @@ public class ConversationListFragment extends EaseConversationListFragment{
         View errorView = (LinearLayout) View.inflate(getActivity(), R.layout.em_chat_neterror_item, null);
         errorItemContainer.addView(errorView);
         errorText = (TextView) errorView.findViewById(R.id.tv_connect_errormsg);
+
     }
     
     @Override
     protected void setUpView() {
         super.setUpView();
         // register context menu
+        hideSoftKeyboard();
+        hideTitleBar();
         registerForContextMenu(conversationListView);
         conversationListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -81,45 +78,4 @@ public class ConversationListFragment extends EaseConversationListFragment{
           errorText.setText(R.string.the_current_network);
         }
     }
-    
-    
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        getActivity().getMenuInflater().inflate(R.menu.em_delete_message, menu); 
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        boolean deleteMessage = false;
-        if (item.getItemId() == R.id.delete_message) {
-            deleteMessage = true;
-        } else if (item.getItemId() == R.id.delete_conversation) {
-            deleteMessage = false;
-        }
-    	EMConversation tobeDeleteCons = conversationListView.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
-    	if (tobeDeleteCons == null) {
-    	    return true;
-    	}
-        if(tobeDeleteCons.getType() == EMConversationType.GroupChat){
-            EaseAtMessageHelper.get().removeAtMeGroup(tobeDeleteCons.conversationId());
-        }
-        try {
-            // deleteBySelectBean conversation
-            EMClient.getInstance().chatManager().deleteConversation(tobeDeleteCons.conversationId(), deleteMessage);
-            InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(getActivity());
-            inviteMessgeDao.deleteMessage(tobeDeleteCons.conversationId());
-            // To deleteBySelectBean the native stored adked users in this conversation.
-            if (deleteMessage) {
-                EaseDingMessageHelper.get().delete(tobeDeleteCons);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        refresh();
-
-        // update unread count
-        ((MainActivity) getActivity()).updateUnreadLabel();
-        return true;
-    }
-
 }

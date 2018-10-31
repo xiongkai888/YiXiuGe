@@ -1350,7 +1350,7 @@ public class DemoHelper {
                 UserBean bean = response.data;
                 userBeanMap.put(username,bean);
                 userIdMap.remove(username);
-                event.setUserName(username);
+//                event.setUserName(username);
                 EventBus.getDefault().post(event);
                 if (l != null){
                     l.succeed(bean);

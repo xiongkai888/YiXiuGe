@@ -1,11 +1,13 @@
 package com.lanmei.yixiu.ui.home;
 
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -14,7 +16,6 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.data.volley.Response;
 import com.data.volley.error.VolleyError;
-import com.hyphenate.chatuidemo.ui.MainActivity;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.HomeAdAdapter;
 import com.lanmei.yixiu.adapter.HomeAdapter;
@@ -24,6 +25,8 @@ import com.lanmei.yixiu.bean.CourseClassifyListBean;
 import com.lanmei.yixiu.event.CourseOperationEvent;
 import com.lanmei.yixiu.event.KaoQinEvent;
 import com.lanmei.yixiu.event.SetUserEvent;
+import com.lanmei.yixiu.event.UnreadEvent;
+import com.lanmei.yixiu.ui.home.activity.ConversationListActivity;
 import com.lanmei.yixiu.ui.home.activity.NewsSubActivity;
 import com.lanmei.yixiu.ui.home.activity.TeacherActivity;
 import com.lanmei.yixiu.ui.mine.activity.ExaminationActivity;
@@ -39,6 +42,7 @@ import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
+import com.xson.common.utils.UserHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -55,7 +59,7 @@ import butterknife.OnClick;
  * 首页
  */
 
-public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener {
+public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
 
     @InjectView(R.id.toolbar)
@@ -76,6 +80,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @InjectView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;//下拉刷新
 
+    private HomeActionProvider provider;
+
     @Override
     public int getContentViewId() {
         return R.layout.fragment_home;
@@ -86,11 +92,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
+        setHasOptionsMenu(true);//在Fragment中加上这句菜单才能显示
 
         toolbar.setTitle(R.string.home);
-        toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.menu_home_message);
-        toolbar.setOnMenuItemClickListener(this);
+        ((com.lanmei.yixiu.MainActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,6 +117,36 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         loadAd();//加载首页的轮播图
         loadHome();
         setUser();
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_home_message, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuItem menuItem = menu.findItem(R.id.action_home_info);
+        provider = (HomeActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        provider.setOnClickListener(new HomeActionProvider.OnClickListener() {
+            @Override
+            public void onClick() {
+                if (!CommonUtils.isLogin(getContext())) {
+                    return;
+                }
+//                IntentUtil.startActivity(context, MainActivity.class);
+                IntentUtil.startActivity(context, ConversationListActivity.class);
+            }
+        });// 设置点击监听。
+        if (!UserHelper.getInstance(context).hasLogin()) {
+            provider.setCount(0);
+        } else {
+            provider.setCount(((com.lanmei.yixiu.MainActivity)getActivity()).getUnreadMsgCountTotal());
+//            provider.setCount(102);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     private void loadHome() {
@@ -207,6 +242,13 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         questionnaireTv.setVisibility(isStudent ? View.VISIBLE : View.GONE);
     }
 
+    //
+    @Subscribe (sticky = true)
+    public void unreadEvent(UnreadEvent event){
+        int count = event.getCount();
+        provider.setCount(count);
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -218,15 +260,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         loadHome();
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_home_info:
-                IntentUtil.startActivity(context, MainActivity.class);
-                break;
-        }
-        return true;
-    }
 
     @OnClick({R.id.ke_cheng_tv, R.id.zi_xun_tv, R.id.jiao_cheng_tv, R.id.kao_shi_tv, R.id.questionnaire_tv, R.id.kaoqin_tv})
     public void onViewClicked(View view) {
