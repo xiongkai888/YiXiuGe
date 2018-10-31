@@ -262,7 +262,7 @@
             android:name=".ui.teacher.activity.ExaminationManagementActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.ExaminationManagementActivity"
+            android:name=".ui.message.activity.GroupPickContactsActivity"
             android:screenOrientation="portrait" />
         <!--环信开始-->
 

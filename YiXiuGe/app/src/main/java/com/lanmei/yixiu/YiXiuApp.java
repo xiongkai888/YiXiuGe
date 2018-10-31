@@ -7,7 +7,6 @@ import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.baidu.mapapi.SDKInitializer;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.lanmei.yixiu.bean.ExaminationBean;
-import com.lanmei.yixiu.jpush.JiGuangReceiver;
 import com.lanmei.yixiu.update.UpdateAppConfig;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.umeng.commonsdk.UMConfigure;
@@ -36,7 +35,7 @@ public class YiXiuApp extends BaseApp {
     protected void installMonitor() {
         applicationContext = this;
         instance = this;
-        L.debug = OSSLog.enableLog = false;
+        L.debug = OSSLog.enableLog = true;
         if (L.debug) {
 //            LeakCanary.install(this);//LeakCanary内存泄漏监控
         }
@@ -76,7 +75,7 @@ public class YiXiuApp extends BaseApp {
         if (JPushInterface.isPushStopped(this)) {
             JPushInterface.setAlias(this, 0, CommonUtils.getUserId(this));
             JPushInterface.resumePush(this);
-            L.d(JiGuangReceiver.TAG, "极光推送设置别名:" + CommonUtils.getUserId(this));
+//            L.d(JiGuangReceiver.TAG, "极光推送设置别名:" + CommonUtils.getUserId(this));
         }
     }
 

@@ -29,6 +29,7 @@ import com.xson.common.bean.DataBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.IntentUtil;
+import com.xson.common.utils.JsonUtil;
 import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
@@ -234,7 +235,7 @@ public class Examination1Activity extends BaseActivity implements ExaminationCon
 //        }
         YiXiuGeApi api = new YiXiuGeApi("app/examsub");
         api.addParams("uid", api.getUserId(this)).addParams("id", id)
-                .addParams("result", CommonUtils.getJSONArrayByList(list));
+                .addParams("result", JsonUtil.getJSONArrayByList(list));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

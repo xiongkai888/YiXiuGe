@@ -412,14 +412,35 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		});
 	}
 
-	private int i;
+	private int j;
+
+	private boolean i;
+	private boolean o;
 
 	@Subscribe
 	public void userBeanEvent(UserBeanEvent event){
-		L.d("UserBeanEvent",(i++)+"");
-		membersAdapter.notifyDataSetChanged();
-		ownerAdminAdapter.notifyDataSetChanged();
+//		L.d("UserBeanEvent",(j++)+"");
+		o = true;
+		if (!i) {
+			membersAdapter.notifyDataSetChanged();
+			ownerAdminAdapter.notifyDataSetChanged();
+			switchButton.postDelayed(heartBeatRunnable,ChatFragment.HEART_BEAT_RATE);
+			i = true;
+		}
 	}
+
+	private Runnable heartBeatRunnable = new Runnable() {//心跳包请求位置信息
+		@Override
+		public void run() {
+			if (o) {
+				L.d("UserBeanEvent","j = "+(j++)+"  "+Thread.currentThread());
+				membersAdapter.notifyDataSetChanged();
+				ownerAdminAdapter.notifyDataSetChanged();
+				o = false;
+				switchButton.postDelayed(this, ChatFragment.HEART_BEAT_RATE);
+			}
+		}
+	};
 
 
 	private void debugList(String str, List<String> list) {
@@ -1273,6 +1294,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		EMClient.getInstance().groupManager().removeGroupChangeListener(groupChangeListener);
 		super.onDestroy();
 		instance = null;
+		switchButton.removeCallbacks(heartBeatRunnable);
 		EventBus.getDefault().unregister(this);
 	}
 	

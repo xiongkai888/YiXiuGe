@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.YiXiuApp;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.EducationBean;
 import com.lanmei.yixiu.helper.AddressAsyncTask;
@@ -583,7 +584,7 @@ public class PersonalDataSubActivity extends BaseActivity {
                     CommonUtils.deleteOssObject(pic);//更新头像后删除从oss删除旧的头像
                 }
                 UIHelper.ToastMessage(getContext(), "修改资料成功");
-                CommonUtils.loadUserInfo(getContext(), null);
+                CommonUtils.loadUserInfo(YiXiuApp.applicationContext, null);
                 finish();
             }
         });

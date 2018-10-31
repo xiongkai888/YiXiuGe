@@ -28,6 +28,7 @@ import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.utils.JsonUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIBaseUtils;
 import com.xson.common.utils.UIHelper;
@@ -183,7 +184,7 @@ public class PublishNoteActivity extends BaseActivity implements BGASortableNine
         api.addParams("title", title);
         api.addParams("enclosure", getEnclosure());
         api.addParams("content", content);
-        api.addParams("pic", CommonUtils.getJSONArrayByList(picList));
+        api.addParams("pic", JsonUtil.getJSONArrayByList(picList));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

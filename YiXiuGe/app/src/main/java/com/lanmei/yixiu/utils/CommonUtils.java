@@ -10,16 +10,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.sdk.android.oss.common.utils.OssUserInfo;
 import com.alibaba.sdk.android.oss.model.DeleteObjectRequest;
-import com.bigkoo.convenientbanner.ConvenientBanner;
-import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.data.volley.Response;
 import com.data.volley.error.VolleyError;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.YiXiuApp;
-import com.lanmei.yixiu.adapter.BannerHolderView;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.event.SetUserEvent;
 import com.lanmei.yixiu.ui.login.LoginActivity;
@@ -88,39 +84,6 @@ public class CommonUtils {
 
 
     /**
-     * String 逗号隔开 0,2,3
-     *
-     * @param list
-     * @return
-     */
-    public static String getStringByList(List<String> list) {
-        if (StringUtils.isEmpty(list)) {
-            return "";
-        }
-        StringBuilder builder = new StringBuilder();
-        int size = list.size();
-        for (int i = 0; i < size; i++) {
-            builder.append(((size - 1) != i) ? list.get(i) + "," : list.get(i));
-        }
-        return builder.toString();
-    }
-
-    /**
-     *
-     * @param list
-     * @return
-     */
-    public static JSONArray getJSONArrayByList(List<String> list) {
-        JSONArray array = new JSONArray();
-        if (StringUtils.isEmpty(list)) {
-            return array;
-        }
-        for (String s : list) {
-            array.add(s);
-        }
-        return array;
-    }
-    /**
      *
      * @param list
      * @return
@@ -138,7 +101,7 @@ public class CommonUtils {
     }
 
     public static String getUserId(Context context) {
-        UserBean bean = UserHelper.getInstance(context).getUserBean();
+        UserBean bean = getUserBean(context);
         if (StringUtils.isEmpty(bean)) {
             return "";
         }
@@ -147,7 +110,7 @@ public class CommonUtils {
 
     //获取 用户类型
     public static String getUserType(Context context) {
-        UserBean bean = UserHelper.getInstance(context).getUserBean();
+        UserBean bean = getUserBean(context);
         if (StringUtils.isEmpty(bean)) {
             return "";
         }
@@ -161,30 +124,6 @@ public class CommonUtils {
 
     public static UserBean getUserBean(Context context) {
         return UserHelper.getInstance(context).getUserBean();
-    }
-
-    /**
-     * @param banner
-     * @param list
-     * @param isTurning 防止重复  banner.startTurning(3000);
-     */
-    public static void setBanner(ConvenientBanner banner, List<String> list, boolean isTurning) {
-        //初始化商品图片轮播
-        banner.setPages(new CBViewHolderCreator() {
-            @Override
-            public Object createHolder() {
-                return new BannerHolderView();
-            }
-        }, list);
-        banner.setPageIndicator(new int[]{R.drawable.shape_item_index_white, R.drawable.shape_item_index_red});
-        banner.setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
-        if (list.size() == 1) {
-            return;
-        }
-        if (!isTurning) {
-            return;
-        }
-        banner.startTurning(3000);
     }
 
 

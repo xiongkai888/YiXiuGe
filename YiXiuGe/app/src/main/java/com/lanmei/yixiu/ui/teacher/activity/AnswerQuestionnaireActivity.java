@@ -16,6 +16,7 @@ import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.utils.JsonUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
@@ -102,7 +103,7 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
             return;
         }
         YiXiuGeApi api = new YiXiuGeApi("app/quest_student_add");
-        api.addParams("uid",api.getUserId(this)).addParams("qid",managementBean.getId()).addParams("result",CommonUtils.getJSONArrayByList(stringList));
+        api.addParams("uid",api.getUserId(this)).addParams("qid",managementBean.getId()).addParams("result", JsonUtil.getJSONArrayByList(stringList));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

@@ -32,6 +32,7 @@ import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.utils.JsonUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIBaseUtils;
 import com.xson.common.utils.UIHelper;
@@ -244,7 +245,7 @@ public class PublishCoursewareActivity extends BaseActivity implements BGASortab
         api.addParams("content", content);
         api.addParams("type", 2);
         api.addParams("cid", getCid(list));
-        api.addParams("pic", CommonUtils.getJSONArrayByList(picList));
+        api.addParams("pic", JsonUtil.getJSONArrayByList(picList));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
