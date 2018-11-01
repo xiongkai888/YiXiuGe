@@ -12,6 +12,7 @@ import com.lanmei.yixiu.ui.mine.activity.PersonalDataSubActivity;
 import com.lanmei.yixiu.ui.mine.activity.SettingActivity;
 import com.lanmei.yixiu.ui.teacher.activity.ClassHourActivity;
 import com.lanmei.yixiu.ui.teacher.activity.EvaluateActivity;
+import com.lanmei.yixiu.ui.teacher.activity.TestPaperListActivity;
 import com.lanmei.yixiu.ui.teacher.activity.MyCourseActivity;
 import com.lanmei.yixiu.ui.teacher.activity.MyTutorialCoursewareActivity;
 import com.lanmei.yixiu.ui.teacher.activity.QuestionnaireManagementActivity;
@@ -105,14 +106,12 @@ public class MineTeacherFragment extends BaseFragment {
                 IntentUtil.startActivity(context, MyTutorialCoursewareActivity.class);
                 break;
             case R.id.ll_evaluate://我的评价
-//                CommonUtils.developing(context);
                 IntentUtil.startActivity(context, EvaluateActivity.class);
                 break;
             case R.id.ll_setting://设置
                 IntentUtil.startActivity(context, SettingActivity.class);
                 break;
             case R.id.class_schedule_tv://课程表
-//                CommonUtils.developing(context);
                 IntentUtil.startActivity(context, MyClassScheduleActivity.class);
                 break;
             case R.id.kao_shi_tv://考试(管理)
@@ -127,15 +126,12 @@ public class MineTeacherFragment extends BaseFragment {
                 break;
             case R.id.ll_mine_teacher3://调查问卷
                 IntentUtil.startActivity(context, QuestionnaireManagementActivity.class,CommonUtils.isOne);
-//                CommonUtils.developing(context);
                 break;
-            case R.id.ll_mine_teacher4://发布题库
-//                IntentUtil.startActivity(context, AddQuestionnaireSubjectActivity.class);
-                CommonUtils.developing(context);
+            case R.id.ll_mine_teacher4://我的试卷
+                IntentUtil.startActivity(context, TestPaperListActivity.class);
                 break;
             case R.id.ll_mine_teacher5://教学设备
                 IntentUtil.startActivity(context, TeachingAttachmentsActivity.class);
-//                CommonUtils.developing(context);
                 break;
         }
     }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="@dimen/d_10dp"
+    style="@style/h_match_parent">
+
+    <ImageView
+        android:id="@+id/type_iv"
+        android:src="@drawable/temp_teacher_sui"
+        style="@style/text" />
+
+    <LinearLayout
+        android:layout_marginLeft="@dimen/d_8dp"
+        style="@style/v_match_parent_no">
+
+        <TextView
+            android:id="@+id/title_tv"
+            style="@style/text"/>
+        <TextView
+            android:id="@+id/time_tv"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/teacher_time"
+            android:drawablePadding="@dimen/d_3dp"
+            android:layout_marginTop="@dimen/d_3dp"
+            style="@style/text12color666"/>
+        <TextView
+            android:id="@+id/status_tv"
+            android:drawableLeft="@drawable/teacher_underway"
+            android:drawablePadding="@dimen/d_3dp"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/d_3dp"
+            style="@style/text12color666"/>
+
+    </LinearLayout>
+
+</LinearLayout>

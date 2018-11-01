@@ -1293,8 +1293,8 @@ public class DemoHelper {
             UserBean bean = UserHelper.getInstance(appContext).getUserBean();
             user = getUserProfileManager().getCurrentUserInfo();
             user.setAvatar(bean.getPic());
-            user.setNickname(bean.getNickname());
-            user.setInitialLetter(bean.getNickname());
+            user.setNickname(bean.getRealname());
+//            user.setInitialLetter(bean.getNickname());
             return user;
         }
 
@@ -1311,7 +1311,7 @@ public class DemoHelper {
             UserBean userBean = getUserBeanByUid(username);
             user = getUserProfileManager().getCurrentUserInfo();
             user.setAvatar(userBean.getPic());
-            user.setNickname(userBean.getNickname());
+            user.setNickname(userBean.getRealname());
         }else {
             getUserBean(username,null);
         }

@@ -17,14 +17,20 @@ import com.baidu.location.LocationClient;
 import com.data.volley.Response;
 import com.data.volley.error.VolleyError;
 import com.hyphenate.EMClientListener;
+import com.hyphenate.EMGroupChangeListener;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMMucSharedFile;
 import com.hyphenate.chatuidemo.Constant;
 import com.hyphenate.chatuidemo.DemoHelper;
+import com.hyphenate.exceptions.HyphenateException;
 import com.lanmei.yixiu.adapter.MainPagerAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.event.AddCourseEvent;
+import com.lanmei.yixiu.event.GroupListEvent;
+import com.lanmei.yixiu.event.InvitationGroupEvent;
 import com.lanmei.yixiu.event.KaoQinEvent;
 import com.lanmei.yixiu.event.LogoutEvent;
 import com.lanmei.yixiu.event.UnreadEvent;
@@ -36,16 +42,19 @@ import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.utils.L;
+import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.ProgressHUD;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
 import butterknife.InjectView;
 
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity {
 
     @InjectView(R.id.viewPager)
     ViewPager mViewPager;
@@ -78,7 +87,179 @@ public class MainActivity extends BaseActivity{
         UpdateAppConfig.requestStoragePermission(this);
 
         initPermission();//百度定位权限
+
+        eMClientListener();
     }
+
+
+    private void eMClientListener() {
+        EMClient.getInstance().groupManager().addGroupChangeListener(new EMGroupChangeListener() {
+
+            @Override
+            public void onInvitationReceived(String groupId, String groupName, String inviter, String reason) {
+                //接收到群组加入邀请
+                L.d("onRequestToJoinReceived", "接收到群组加入邀请 " + Thread.currentThread());
+            }
+
+            @Override
+            public void onRequestToJoinReceived(String groupId, String groupName, String applyer, String reason) {
+                //用户申请加入群
+//                UIHelper.ToastMessage(MainActivity.this, groupId + "," + groupName + "," + applyer + "," + applyer);
+                L.d("onRequestToJoinReceived", "用户申请加入群 " + Thread.currentThread());
+            }
+
+            @Override
+            public void onRequestToJoinAccepted(String groupId, String groupName, String accepter) {
+                //加群申请被同意
+                L.d("onRequestToJoinReceived", "加群申请被同意 " + Thread.currentThread());
+            }
+
+            @Override
+            public void onRequestToJoinDeclined(String groupId, String groupName, String decliner, String reason) {
+                //加群申请被拒绝
+                L.d("onRequestToJoinReceived", "加群申请被拒绝" + Thread.currentThread());
+            }
+
+            @Override
+            public void onInvitationAccepted(String groupId, String inviter, String reason) {
+                //群组邀请被同意
+                L.d("onRequestToJoinReceived", "群组邀请被同意 " + Thread.currentThread());
+            }
+
+            @Override
+            public void onInvitationDeclined(String groupId, String invitee, String reason) {
+                //群组邀请被拒绝
+                L.d("onRequestToJoinReceived", "群组邀请被拒绝 " + Thread.currentThread());
+            }
+
+            @Override
+            public void onUserRemoved(final String groupId,final String groupName) {
+                //当前用户被管理员移除出群聊
+                L.d("onRequestToJoinReceived", "当前用户被管理员移除出群聊 " + groupId + "," + groupName);
+                EventBus.getDefault().post(new GroupListEvent(0));//被踢出某个群后，通知群聊列表刷新
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        UIHelper.ToastMessage(getContext(), "你被 "+groupName+" 管理员踢出了该群");
+                    }
+                });
+            }
+
+            @Override
+            public void onGroupDestroyed(final String groupId,final String groupName) {
+                //groupName 群解散后调用
+                EventBus.getDefault().post(new GroupListEvent(0));//群解散后，通知群聊列表刷新
+                L.d("onRequestToJoinReceived", "onGroupDestroyed " +groupId+","+groupId);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        UIHelper.ToastMessage(getContext(), "群主解散了 "+groupName+" 群");
+                    }
+                });
+            }
+
+            @Override
+            public void onAutoAcceptInvitationFromGroup(final String groupId, String inviter, String inviteMessage) {
+                //接收邀请时自动加入到群组的通知(被邀请进入某个群)
+                L.d("onRequestToJoinReceived", "接收邀请时自动加入到群组的通知 groupId:" + groupId+",inviter:"+inviter+",inviteMessage:"+inviteMessage);
+                EventBus.getDefault().post(new GroupListEvent(0));//被邀请进入某个群后，通知群聊列表刷新
+                try {
+                    EMGroup group = EMClient.getInstance().groupManager().getGroupFromServer(groupId);
+                    EventBus.getDefault().post(new InvitationGroupEvent(group));
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onMuteListAdded(final String groupId, List<String> mutes, long muteExpire) {
+                //成员禁言的通知 (只有自己被禁言才调用)
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        EMGroup group = EMClient.getInstance().groupManager().getGroup(groupId);
+                        UIHelper.ToastMessage(getContext(), "你被 "+group.getGroupName()+" 管理员禁言了");
+                    }
+                });
+            }
+
+            @Override
+            public void onMuteListRemoved(final String groupId, final List<String> mutes) {
+                //成员从禁言列表里移除通知 (只有自己被解除禁言才调用)
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        EMGroup group = EMClient.getInstance().groupManager().getGroup(groupId);
+                        UIHelper.ToastMessage(getContext(), group.getGroupName() + " 管理员已经解除对你的禁言");
+                    }
+                });
+            }
+
+            @Override
+            public void onAdminAdded(final String groupId, final String administrator) {
+                L.d("onRequestToJoinReceived", "增加管理员的通知 " + administrator);
+                //增加管理员的通知 (只有自己被增加为管理员才调用)
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        EMGroup group = EMClient.getInstance().groupManager().getGroup(groupId);
+                        UIHelper.ToastMessage(getContext(), "你被 "+group.getGroupName()+" 群主升级为该群管理员");
+                    }
+                });
+            }
+
+            @Override
+            public void onAdminRemoved(final String groupId, String administrator) {
+                //管理员移除的通知 (只有自己的管理员被移除才调用)
+                L.d("onRequestToJoinReceived", "管理员移除的通知" + Thread.currentThread());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        EMGroup group = EMClient.getInstance().groupManager().getGroup(groupId);
+                        UIHelper.ToastMessage(getContext(), "你被 "+group.getGroupName()+" 群主撤销了管理员");
+                    }
+                });
+            }
+
+            @Override
+            public void onOwnerChanged(String groupId, String newOwner, String oldOwner) {
+                //群所有者变动通知
+                L.d("onRequestToJoinReceived", "群所有者变动通知" + Thread.currentThread());
+            }
+
+            @Override
+            public void onMemberJoined(final String groupId, final String member) {
+                //群组加入新成员通知
+                L.d("onRequestToJoinReceived", "群组加入新成员通知" + Thread.currentThread());
+            }
+
+            @Override
+            public void onMemberExited(final String groupId, final String member) {
+                //群成员退出通知
+                L.d("onRequestToJoinReceived", "群成员退出通知" + Thread.currentThread());
+            }
+
+            @Override
+            public void onAnnouncementChanged(String groupId, String announcement) {
+                //群公告变动通知
+                L.d("onRequestToJoinReceived", "群公告变动通知" + Thread.currentThread());
+            }
+
+            @Override
+            public void onSharedFileAdded(String groupId, EMMucSharedFile sharedFile) {
+                //增加共享文件的通知
+                L.d("onRequestToJoinReceived", "增加共享文件的通知" + Thread.currentThread());
+            }
+
+            @Override
+            public void onSharedFileDeleted(String groupId, String fileId) {
+                //群共享文件删除通知
+                L.d("onRequestToJoinReceived", "群共享文件删除通知" + Thread.currentThread());
+            }
+        });
+
+    }
+
 
     private void registerBroadcastReceiver() {
         broadcastManager = LocalBroadcastManager.getInstance(this);
@@ -95,7 +276,7 @@ public class MainActivity extends BaseActivity{
         broadcastManager.registerReceiver(broadcastReceiver, intentFilter);
     }
 
-    private void unregisterBroadcastReceiver(){
+    private void unregisterBroadcastReceiver() {
         broadcastManager.unregisterReceiver(broadcastReceiver);
     }
 
@@ -114,53 +295,60 @@ public class MainActivity extends BaseActivity{
 
         @Override
         public void onMessageReceived(List<EMMessage> messages) {
-            // notify new message
-            for (EMMessage message: messages) {
-                DemoHelper.getInstance().getNotifier().vibrateAndPlayTone(message);
+            //收到消息
+            for (EMMessage message : messages) {
+                DemoHelper.getInstance().getNotifier().vibrateAndPlayTone(message);//控制声音和震动
+                L.d("onRequestToJoinReceived", "message " + message.getUserName());
             }
             refreshUIWithMessage();
         }
 
         @Override
         public void onCmdMessageReceived(List<EMMessage> messages) {
+            //收到透传消息
             refreshUIWithMessage();
+            L.d("onRequestToJoinReceived", "onCmdMessageReceived " + Thread.currentThread());
         }
 
         @Override
         public void onMessageRead(List<EMMessage> messages) {
+            //收到已读回执
+            L.d("onRequestToJoinReceived", "onMessageRead " + Thread.currentThread());
         }
 
         @Override
         public void onMessageDelivered(List<EMMessage> message) {
+            //收到已送达回执
+            L.d("onRequestToJoinReceived", "onMessageDelivered " + Thread.currentThread());
         }
 
         @Override
         public void onMessageRecalled(List<EMMessage> messages) {
+            //消息被撤回
             refreshUIWithMessage();
+            L.d("onRequestToJoinReceived", "onMessageRecalled " + Thread.currentThread());
         }
 
         @Override
-        public void onMessageChanged(EMMessage message, Object change) {}
+        public void onMessageChanged(EMMessage message, Object change) {
+            //消息状态变动
+            L.d("onRequestToJoinReceived", "onMessageChanged " + Thread.currentThread());
+        }
     };
 
 
     @Override
     protected void onResume() {
         super.onResume();
-
         updateUnreadLabel();
-        // unregister this event listener when this activity enters the
-        // background
         DemoHelper sdkHelper = DemoHelper.getInstance();
         sdkHelper.pushActivity(this);
-
         EMClient.getInstance().chatManager().addMessageListener(messageListener);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
         EMClient.getInstance().chatManager().removeMessageListener(messageListener);
         EMClient.getInstance().removeClientListener(clientListener);
         DemoHelper sdkHelper = DemoHelper.getInstance();
@@ -170,7 +358,6 @@ public class MainActivity extends BaseActivity{
     private void refreshUIWithMessage() {
         runOnUiThread(new Runnable() {
             public void run() {
-                // refresh unread count
                 updateUnreadLabel();
             }
         });
@@ -226,6 +413,14 @@ public class MainActivity extends BaseActivity{
             }
         });
     }
+    //自己被邀请进入某群是调用
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void invitationGroupEvent(InvitationGroupEvent event) {
+        EMGroup group = event.getGroup();
+        if (group != null){
+            UIHelper.ToastMessage(getContext(),"你被 " +group.getGroupName() + " 群管理员邀请进入该群");
+        }
+    }
 
 
     private void loadLocation(BDLocation location) {
@@ -279,7 +474,6 @@ public class MainActivity extends BaseActivity{
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-
         unregisterBroadcastReceiver();
     }
 }

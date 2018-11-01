@@ -44,6 +44,7 @@ import com.hyphenate.chat.EMCursorResult;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMucSharedFile;
 import com.hyphenate.chat.EMPushConfigs;
+import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.easeui.ui.EaseGroupListener;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
@@ -54,6 +55,7 @@ import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.event.UserBeanEvent;
+import com.xson.common.bean.UserBean;
 import com.xson.common.utils.L;
 
 import org.greenrobot.eventbus.EventBus;
@@ -858,7 +860,12 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 		void init() {
 			final MemberMenuDialog dialog = this;
-			dialog.setTitle(operationUserId);
+			UserBean bean = DemoHelper.getInstance().getUserBeanByUid(operationUserId);
+			String s = operationUserId;
+			if (bean != null){
+				s = bean.getRealname();
+			}
+			dialog.setTitle(s);
 			dialog.setContentView(R.layout.em_chatroom_member_menu);
 
 			int ids[] = { R.id.menu_item_add_admin,
