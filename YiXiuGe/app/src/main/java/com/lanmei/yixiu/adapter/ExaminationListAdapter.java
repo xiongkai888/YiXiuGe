@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.bean.ExaminationListBean;
 import com.lanmei.yixiu.ui.mine.activity.Examination1Activity;
+import com.lanmei.yixiu.ui.mine.activity.ExaminationResultActivity;
 import com.lanmei.yixiu.utils.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.utils.IntentUtil;
@@ -93,15 +94,12 @@ public class ExaminationListAdapter extends SwipeRefreshAdapter<ExaminationListB
                     enterExaminationTv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-//                            IntentUtil.startActivity(context, ExaminationResultActivity.class,bean.getId());
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("bean",bean);
-                            IntentUtil.startActivity(context, Examination1Activity.class,bundle);
+                            IntentUtil.startActivity(context, ExaminationResultActivity.class,bean.getId());
                         }
                     });
                     break;
             }
-            timeTv.setText(String.format(context.getString(R.string.start_end_time), time.formatterTime(bean.getStarttime()), time.formatterTime(bean.getEndtime())));
+            timeTv.setText(String.format(context.getString(R.string.start_and_time), time.formatterTime(bean.getStarttime()), time.formatterTime(bean.getEndtime())));
         }
     }
 

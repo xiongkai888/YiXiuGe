@@ -1,10 +1,12 @@
 package com.othershe.calendarview.weiget;
 
+import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.othershe.calendarview.R;
 import com.othershe.calendarview.bean.AttrsBean;
 import com.othershe.calendarview.bean.CalendarEvent;
 import com.othershe.calendarview.bean.DateBean;
@@ -26,6 +28,7 @@ public class CalendarPagerAdapter extends PagerAdapter {
     private SparseArray<MonthView> mViews = new SparseArray<>();
     private int listCount;//数据个数
     private int count;
+    private Context context;
 
     private Map<String, List<DateBean>> listMap = new HashMap<>();
 
@@ -35,8 +38,9 @@ public class CalendarPagerAdapter extends PagerAdapter {
 
     private AttrsBean mAttrsBean;
 
-    public CalendarPagerAdapter(int count) {
+    public CalendarPagerAdapter(Context context,int count) {
         this.count = count;
+        this.context = context;
     }
 
     @Override
@@ -51,8 +55,9 @@ public class CalendarPagerAdapter extends PagerAdapter {
 
     public void setParameter(List<Integer> list, int year, int month,int position) {
         listCount = (list == null) ? 0 : list.size();
-        if (listMap.containsKey(year + "-" + month)) {
-            List<DateBean> beanList = listMap.get(year + "-" + month);
+        String yearMonth = String.format(context.getString(R.string.year_and_month),String.valueOf(year),String.valueOf(month));
+        if (listMap.containsKey(yearMonth)) {
+            List<DateBean> beanList = listMap.get(yearMonth);
             if (beanList != null && listCount > 0) {
                 int size = beanList.size();
                 for (int i = 0; i < size; i++) {
@@ -63,7 +68,9 @@ public class CalendarPagerAdapter extends PagerAdapter {
                 }
             }
             MonthView monthView = mViews.get(position);
-            monthView.setDateList(beanList,listCount);
+            if (monthView != null){
+                monthView.setDateList(beanList,listCount);
+            }
         }
     }
 

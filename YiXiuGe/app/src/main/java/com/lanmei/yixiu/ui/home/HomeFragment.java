@@ -245,8 +245,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     //
     @Subscribe (sticky = true)
     public void unreadEvent(UnreadEvent event){
-        int count = event.getCount();
-        provider.setCount(count);
+        if (provider != null){
+            provider.setCount(event.getCount());
+        }
     }
 
     @Override
@@ -275,15 +276,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 IntentUtil.startActivity(context, NewsSubActivity.class);
                 break;
             case R.id.jiao_cheng_tv://教师
-//                CommonUtils.developing(context);
                 IntentUtil.startActivity(context, TeacherActivity.class);
                 break;
             case R.id.kao_shi_tv://考试
-//                CommonUtils.developing(context);
                 IntentUtil.startActivity(context, ExaminationActivity.class);
                 break;
             case R.id.questionnaire_tv://问卷
-//                CommonUtils.developing(context);
 //                IntentUtil.startActivity(context, QuestionnaireActivity.class);
                 IntentUtil.startActivity(context, QuestionnaireManagementActivity.class,CommonUtils.isZero);
                 break;

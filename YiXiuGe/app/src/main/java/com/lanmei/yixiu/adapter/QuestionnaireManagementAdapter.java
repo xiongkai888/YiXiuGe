@@ -90,7 +90,7 @@ public class QuestionnaireManagementAdapter extends SwipeRefreshAdapter<Question
 
         public void setParameter(QuestionnaireManagementBean bean) {
             titleTv.setText(bean.getTitle());
-            timeTv.setText(String.format(context.getString(R.string.start_end_time),formatTime.formatterTime(bean.getStarttime()),formatTime.formatterTime(bean.getEndtime())));
+            timeTv.setText(String.format(context.getString(R.string.start_and_time),formatTime.formatterTime(bean.getStarttime()),formatTime.formatterTime(bean.getEndtime())));
 
             if (StringUtils.isSame(bean.getState(), CommonUtils.isZero)) {
                 statusTv.setText(R.string.unreviewed);

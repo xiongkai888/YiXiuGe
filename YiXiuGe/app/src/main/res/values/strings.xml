@@ -64,7 +64,7 @@
     <string name="num_120">%1$s/120</string>
     <string name="num_person">%1$s人</string>
     <string name="num_question">%1$s题</string>
-    <string name="start_end_time">%1$s - %2$s</string>
+    <string name="start_and_time">%1$s - %2$s</string>
     <string name="questionnaire">问卷</string>
     <string name="check_questionnaire">调查问卷</string>
     <string name="examination_result">考试结果</string>

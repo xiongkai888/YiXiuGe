@@ -1315,8 +1315,7 @@ public class DemoHelper {
         }else {
             getUserBean(username,null);
         }
-//        getUserBean(username,true,null);
-        L.d(L.TAG,user.getNickname()+","+user.getUsername()+","+user.getAvatar());
+//        L.d(L.TAG,user.getNickname()+","+user.getUsername()+","+user.getAvatar());
         return user;
     }
 

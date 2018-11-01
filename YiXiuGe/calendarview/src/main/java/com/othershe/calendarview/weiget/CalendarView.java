@@ -113,7 +113,7 @@ public class CalendarView extends ViewPager {
     public void init() {
         //根据设定的日期范围计算日历的页数
         count = (endDate[0] - startDate[0]) * 12 + endDate[1] - startDate[1] + 1;
-        calendarPagerAdapter = new CalendarPagerAdapter(count);
+        calendarPagerAdapter = new CalendarPagerAdapter(getContext(),count);
         calendarPagerAdapter.setAttrsBean(mAttrsBean);
         calendarPagerAdapter.setOnCalendarViewAdapter(item_layout, calendarViewAdapter);
         setAdapter(calendarPagerAdapter);

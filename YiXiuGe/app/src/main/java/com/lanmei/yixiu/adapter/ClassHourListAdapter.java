@@ -102,7 +102,7 @@ public class ClassHourListAdapter extends SwipeRefreshAdapter<ClassHourBean> {
             String startTime = formatTime.formatterTime();
             formatTime.setTime(bean.getEnd_time());
             String endTime = formatTime.formatterTime();
-            timeTv.setText(String.format(context.getString(R.string.start_end_time), startTime, endTime));
+            timeTv.setText(String.format(context.getString(R.string.start_and_time), startTime, endTime));
             stateTv.setText(StringUtils.isSame(bean.getState(), CommonUtils.isZero) ? context.getString(R.string.not_check) : context.getString(R.string.checked));
             checkingInManageTv.setOnClickListener(new View.OnClickListener() {
                 @Override

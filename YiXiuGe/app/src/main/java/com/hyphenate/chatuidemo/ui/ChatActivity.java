@@ -6,11 +6,10 @@ import android.support.annotation.NonNull;
 
 import com.hyphenate.chatuidemo.runtimepermissions.PermissionsManager;
 import com.hyphenate.easeui.ui.EaseChatFragment;
-import com.hyphenate.util.EasyUtils;
 import com.lanmei.yixiu.R;
 
 /**
- * chat activity，EaseChatFragment was used {@link #EaseChatFragment}
+ * chat activity，EaseChatFragment was used {@link #}
  *
  */
 public class ChatActivity extends BaseActivity{

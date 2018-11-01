@@ -13,9 +13,14 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chatuidemo.Constant;
 import com.hyphenate.chatuidemo.ui.ChatActivity;
+import com.hyphenate.chatuidemo.ui.ChatFragment;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.util.NetUtils;
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.event.UserBeanEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * 环信会话列表
@@ -37,8 +42,12 @@ public class ConversationListFragment extends EaseConversationListFragment{
     protected void setUpView() {
         super.setUpView();
         // register context menu
-        hideSoftKeyboard();
         hideTitleBar();
+
+        if (!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
+
         registerForContextMenu(conversationListView);
         conversationListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -67,6 +76,37 @@ public class ConversationListFragment extends EaseConversationListFragment{
             }
         });
         super.setUpView();
+    }
+
+    private boolean i;
+    private boolean o;
+
+    @Subscribe
+    public void userBeanEvent(UserBeanEvent event){
+        o = true;
+        if (!i) {
+            refresh();
+            query.postDelayed(heartBeatRunnable, ChatFragment.HEART_BEAT_RATE);
+            i = true;
+        }
+    }
+
+    private Runnable heartBeatRunnable = new Runnable() {//心跳包请求位置信息
+        @Override
+        public void run() {
+            if (o) {
+                refresh();
+                o = false;
+                query.postDelayed(this, ChatFragment.HEART_BEAT_RATE);
+            }
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        query.removeCallbacks(heartBeatRunnable);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

@@ -128,7 +128,7 @@ public class ClassDetailsAdapter extends SwipeRefreshAdapter<ClassDetailsBean> {
             String startTime = formatTime.formatterTime();
             formatTime.setTime(bean.getEnd_time());
             String endTime = formatTime.formatterTime();
-            timeTv.setText(String.format(context.getString(R.string.start_end_time), startTime, endTime));
+            timeTv.setText(String.format(context.getString(R.string.start_and_time), startTime, endTime));
 
             roomnameTv.setText(bean.getRoomname());
             remarkTv.setText(bean.getRemark());

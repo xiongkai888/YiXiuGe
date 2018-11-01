@@ -16,6 +16,8 @@ import android.view.WindowManager;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.hyphenate.chatuidemo.Constant;
+import com.hyphenate.chatuidemo.ui.ChatActivity;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.adapter.TeacherDetailsCommentAdapter;
 import com.lanmei.yixiu.adapter.TeacherDetailsPublishAdapter;
@@ -65,23 +67,14 @@ public class TeacherDetailsSubActivity extends BaseActivity implements SlideDeta
 
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
-//    @InjectView(R.id.good_reputation_tv)
-//    TextView goodReputationTv;
-//    @InjectView(R.id.middle_reputation_tv)
-//    TextView middleReputationTv;
-//    @InjectView(R.id.bad_reputation_tv)
-//    TextView badReputationTv;
 
     @InjectView(R.id.viewPager)
     ViewPager mViewPager;
     @InjectView(R.id.tabLayout)
     TabLayout mTabLayout;
 
-    TeacherDetailsCommentAdapter teacherDetailsCommentAdapter;
-
     private String tid;
     private TeacherDetailsBean bean;//老师详情
-//    TextView[] textViews = new TextView[3];
 
     @Override
     public int getContentViewId() {
@@ -96,10 +89,6 @@ public class TeacherDetailsSubActivity extends BaseActivity implements SlideDeta
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-//        textViews[0] = goodReputationTv;
-//        textViews[1] = middleReputationTv;
-//        textViews[2] = badReputationTv;
-//        fullScreen(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -108,11 +97,10 @@ public class TeacherDetailsSubActivity extends BaseActivity implements SlideDeta
         fabUp.hide();
         slideDetailsLayout.setOnSlideDetailsListener(this);
 
-        teacherDetailsCommentAdapter = new TeacherDetailsCommentAdapter(getSupportFragmentManager(),tid);
         mViewPager.setOffscreenPageLimit(2);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        mViewPager.setAdapter(teacherDetailsCommentAdapter);
+        mViewPager.setAdapter(new TeacherDetailsCommentAdapter(getSupportFragmentManager(),tid));
 
     }
 
@@ -144,6 +132,7 @@ public class TeacherDetailsSubActivity extends BaseActivity implements SlideDeta
 
         List<TeacherDetailsBean.VideoBean> list =  bean.getVideo();
         TeacherDetailsPublishAdapter adapter = new TeacherDetailsPublishAdapter(this);
+        adapter.setDetailsBean(bean);
         adapter.setData(list);
         recyclerView.setAdapter(adapter);
 
@@ -186,6 +175,14 @@ public class TeacherDetailsSubActivity extends BaseActivity implements SlideDeta
                 finish();
                 break;
             case R.id.message_iv:
+                if (bean == null){
+                    return;
+                }
+                // start chat acitivity
+                Intent intent = new Intent(this, ChatActivity.class);
+                // it's single chat
+                intent.putExtra(Constant.EXTRA_USER_ID, CommonUtils.HX_USER_HEAD+bean.getId());
+                startActivity(intent);
                 break;
             case R.id.fab_up://滚到顶部
                 scrollView.smoothScrollTo(0, 0);
@@ -194,15 +191,6 @@ public class TeacherDetailsSubActivity extends BaseActivity implements SlideDeta
             case R.id.pull_up_view://上拉查看评论
                 slideDetailsLayout.smoothOpen(true);
                 break;
-//            case R.id.good_reputation_tv://好评
-//                setTextViewBg(goodReputationTv);
-//                break;
-//            case R.id.middle_reputation_tv://中评
-//                setTextViewBg(middleReputationTv);
-//                break;
-//            case R.id.bad_reputation_tv://差评
-//                setTextViewBg(badReputationTv);
-//                break;
         }
     }
 

@@ -35,7 +35,7 @@ public class YiXiuApp extends BaseApp {
     protected void installMonitor() {
         applicationContext = this;
         instance = this;
-        L.debug = OSSLog.enableLog = false;
+        L.debug = OSSLog.enableLog = true;
         if (L.debug) {
 //            LeakCanary.install(this);//LeakCanary内存泄漏监控
         }
@@ -62,6 +62,9 @@ public class YiXiuApp extends BaseApp {
     }
 
     public ExaminationBean getExaminationBean(String id) {
+        if (map == null) {
+            map = new HashMap<>();
+        }
         return map.get(id);
     }
 

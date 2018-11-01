@@ -466,24 +466,23 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     public void userBeanEvent(UserBeanEvent event) {
         if (chatType != Constant.CHATTYPE_SINGLE) {
             o = true;
-//            L.d("UserBeanEvent","o = "+o);
             if (!i) {
                 messageList.refresh();
                 handler.postDelayed(heartBeatRunnable, HEART_BEAT_RATE);
                 i = true;
             }
+        }else {
+            super.setUpView();
         }
     }
 
-    public static final long HEART_BEAT_RATE = 1500;//
+    public static final long HEART_BEAT_RATE = 2000;//
 
-    private int j;
 
-    private Runnable heartBeatRunnable = new Runnable() {//心跳包请求位置信息
+    private Runnable heartBeatRunnable = new Runnable() {//
         @Override
         public void run() {
             if (o) {
-//                L.d("UserBeanEvent","j = "+(j++)+"  "+Thread.currentThread());
                 messageList.refresh();
                 o = false;
                 handler.postDelayed(this, HEART_BEAT_RATE);

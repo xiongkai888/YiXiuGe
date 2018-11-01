@@ -214,6 +214,9 @@
             android:name=".ui.teacher.activity.EvaluateActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.teacher.activity.CourseListActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.teacher.activity.ClassSelectActivity"
             android:screenOrientation="portrait" />
         <activity
