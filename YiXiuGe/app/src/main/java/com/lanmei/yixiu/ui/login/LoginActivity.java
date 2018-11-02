@@ -3,7 +3,6 @@ package com.lanmei.yixiu.ui.login;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,7 +48,6 @@ import butterknife.OnClick;
  */
 public class LoginActivity extends BaseActivity {
 
-    private static final String TAG = "LoginHX";
     @InjectView(R.id.toolbar)
     CenterTitleToolbar toolbar;
     @InjectView(R.id.phone_et)
@@ -58,7 +56,6 @@ public class LoginActivity extends BaseActivity {
     DrawClickableEditText pwdEt;
     @InjectView(R.id.showPwd_iv)
     ImageView showPwdIv;
-    UserBean bean;
     /**
      * 登录等待
      */
@@ -149,8 +146,7 @@ public class LoginActivity extends BaseActivity {
                 if (isFinishing()) {
                     return;
                 }
-                bean = response.data;
-                loginHX();
+                loginHX(response.data);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -159,91 +155,57 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
                 mProgressHUD.cancel();
-                UIHelper.ToastMessage(getContext(),error.getMessage());
+                UIHelper.ToastMessage(getContext(), error.getMessage());
             }
         });
     }
 
 
-    public void loginHX() {
+    public void loginHX(final UserBean bean) {
         if (!EaseCommonUtils.isNetWorkConnected(this)) {
             Toast.makeText(this, R.string.network_isnot_available, Toast.LENGTH_SHORT).show();
             return;
         }
         String currentUsername = CommonUtils.HX_USER_HEAD + bean.getId();
         String currentPassword = "123456";
-
-        if (TextUtils.isEmpty(currentUsername)) {
-            Toast.makeText(this, R.string.User_name_cannot_be_empty, Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(currentPassword)) {
-            Toast.makeText(this, R.string.Password_cannot_be_empty, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // After logout，the DemoDB may still be accessed due to async callback, so the DemoDB will be re-opened again.
-        // close it before login to make sure DemoDB not overlap
         DemoDBManager.getInstance().closeDB();
-
-        // reset current user name before login
         DemoHelper.getInstance().setCurrentUserName(currentUsername);
-
-        // call login method
-        L.d(TAG, "EMClient.getInstance().login:currentUsername = "+currentUsername+",currentPassword = "+currentPassword);
         EMClient.getInstance().login(currentUsername, currentPassword, new EMCallBack() {
 
             @Override
             public void onSuccess() {
-                L.d(TAG, "login: onSuccess");
-
-
-                // ** manually load all local groups and conversation
+                if (isFinishing()) {
+                    return;
+                }
+                mProgressHUD.cancel();
                 EMClient.getInstance().groupManager().loadAllGroups();
                 EMClient.getInstance().chatManager().loadAllConversations();
-
-                // update current user's display name for APNs
-//                boolean updatenick = EMClient.getInstance().pushManager().updatePushNickname(
-//                        DemoApplication.currentUserNick.trim());
-//                if (!updatenick) {
-//                    L.d("LoginActivity", "update current user nick fail");
-//                }
-
-                if (!isFinishing() && mProgressHUD.isShowing()) {
-                    mProgressHUD.cancel();
-                }
-                // get user's info (this should be get from App's server or 3rd party service)
                 DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
-
-                saveUser(bean);
-
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        UIHelper.ToastMessage(getContext(), "登录成功");
+                        saveUser(bean);
                         YiXiuApp.getInstance().initJiGuang();
                     }
                 });
                 SharedAccount.getInstance(getContext()).saveMobile(phone);
                 finish();
+
             }
 
             @Override
             public void onProgress(int progress, String status) {
-                L.d(TAG, "login: onProgress");
+                L.d(L.TAG, "login: onProgress = "+progress);
             }
 
             @Override
             public void onError(final int code, final String message) {
-                L.d(TAG, "login: onError: " + code);
                 if (isFinishing()) {
                     return;
                 }
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        if (!isFinishing() && mProgressHUD.isShowing()) {
-                            mProgressHUD.cancel();
-                        }
-                        Toast.makeText(getApplicationContext(), getString(R.string.Login_failed),Toast.LENGTH_SHORT).show();
+                        mProgressHUD.cancel();
+                        Toast.makeText(getApplicationContext(), getString(R.string.Login_failed), Toast.LENGTH_SHORT).show();
                     }
                 });
             }

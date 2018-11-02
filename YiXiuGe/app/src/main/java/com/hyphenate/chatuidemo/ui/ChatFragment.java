@@ -288,9 +288,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                 Toast.makeText(getActivity(), R.string.gorup_not_found, Toast.LENGTH_SHORT).show();
                 return;
             }
-            startActivityForResult(
-                    (new Intent(getActivity(), GroupDetailsActivity.class).putExtra("groupId", toChatUsername)),
-                    REQUEST_CODE_GROUP_DETAIL);
+            startActivityForResult((new Intent(getActivity(), GroupDetailsActivity.class).putExtra("groupId", toChatUsername)), REQUEST_CODE_GROUP_DETAIL);
         } else if (chatType == Constant.CHATTYPE_CHATROOM) {
             startActivityForResult(new Intent(getActivity(), ChatRoomDetailsActivity.class).putExtra("roomId", toChatUsername), REQUEST_CODE_GROUP_DETAIL);
         }
@@ -460,18 +458,20 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     }
 
     private boolean i;
-    private boolean o;
+    private boolean isFirst;
 
     @Subscribe
     public void userBeanEvent(UserBeanEvent event) {
         if (chatType != Constant.CHATTYPE_SINGLE) {
-            o = true;
             if (!i) {
-                messageList.refresh();
+                if (isFirst){
+                    messageList.refresh();
+                    isFirst = !isFirst;
+                }
                 handler.postDelayed(heartBeatRunnable, HEART_BEAT_RATE);
                 i = true;
             }
-        }else {
+        } else {
             super.setUpView();
         }
     }
@@ -482,14 +482,10 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     private Runnable heartBeatRunnable = new Runnable() {//
         @Override
         public void run() {
-            if (o) {
-                messageList.refresh();
-                o = false;
-                handler.postDelayed(this, HEART_BEAT_RATE);
-            }
+            messageList.refresh();
+            i = false;
         }
     };
-
 
 
     @Override

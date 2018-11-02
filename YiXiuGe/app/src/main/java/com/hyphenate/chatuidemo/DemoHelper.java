@@ -47,6 +47,7 @@ import com.hyphenate.chatuidemo.parse.UserProfileManager;
 import com.hyphenate.chatuidemo.receiver.CallReceiver;
 import com.hyphenate.chatuidemo.receiver.HeadsetReceiver;
 import com.hyphenate.chatuidemo.ui.ChatActivity;
+import com.hyphenate.chatuidemo.ui.MainActivity;
 import com.hyphenate.chatuidemo.ui.VideoCallActivity;
 import com.hyphenate.chatuidemo.ui.VoiceCallActivity;
 import com.hyphenate.chatuidemo.utils.PreferenceManager;
@@ -491,7 +492,7 @@ public class DemoHelper {
         connectionListener = new EMConnectionListener() {
             @Override
             public void onDisconnected(int error) {
-                EMLog.d("global listener", "onDisconnect" + error);
+                EMLog.d("global listener", "onDisconnect = " + error);
                 if (error == EMError.USER_REMOVED) {
                     onUserException(Constant.ACCOUNT_REMOVED);
                 } else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
@@ -825,7 +826,7 @@ public class DemoHelper {
             msg.setFrom(inviter);
             msg.setTo(groupId);
             msg.setMsgId(UUID.randomUUID().toString());
-            msg.addBody(new EMTextMessageBody(inviter + " " + st3));
+            msg.addBody(new EMTextMessageBody("欢迎 " +CommonUtils.getRealName(appContext)+ " 加入群聊"));
             msg.setStatus(EMMessage.Status.SUCCESS);
             // save invitation as messages
             EMClient.getInstance().chatManager().saveMessage(msg);
@@ -899,13 +900,13 @@ public class DemoHelper {
     }
 
     void showToast(final String message) {
-        Log.d(TAG, "receive invitation to join the group：" + message);
-        if (handler != null) {
-            Message msg = Message.obtain(handler, 0, message);
-            handler.sendMessage(msg);
-        } else {
-            msgQueue.add(message);
-        }
+        L.d(TAG, "receive invitation to join the group：" + message);
+//        if (handler != null) {
+//            Message msg = Message.obtain(handler, 0, message);
+//            handler.sendMessage(msg);
+//        } else {
+//            msgQueue.add(message);
+//        }
     }
 
     public void initHandler(Looper looper) {
@@ -1276,13 +1277,13 @@ public class DemoHelper {
      * user met some exception: conflict, removed or forbidden
      */
     protected void onUserException(String exception) {
-//        EMLog.e(TAG, "onUserException: " + exception);
-//        Intent intent = new Intent(appContext, MainActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-//        intent.putExtra(exception, true);
-//        appContext.startActivity(intent);
-        showToast(exception);
+        EMLog.e(TAG, "onUserException: " + exception);
+        Intent intent = new Intent(appContext, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        intent.putExtra(exception, true);
+        appContext.startActivity(intent);
+//        showToast(exception);
     }
 
     private EaseUser getUserInfo(String username) {

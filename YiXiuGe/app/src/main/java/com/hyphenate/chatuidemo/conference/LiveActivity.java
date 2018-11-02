@@ -37,8 +37,10 @@ import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.EasyUtils;
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.utils.CommonUtils;
 import com.superrtc.mediamanager.ScreenCaptureManager;
 import com.superrtc.sdk.VideoView;
+import com.xson.common.utils.L;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -266,7 +268,7 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
 
                     if (btnState == STATE_AUDIENCE) { // 当前按钮状态是观众，需要变成主播
                         if (currentRole == EMConferenceManager.EMConferenceRole.Audience) { // 发送消息，申请上麦
-                            String content = EMClient.getInstance().getCurrentUser() + " " + getString(R.string.alert_request_tobe_talker);
+                            String content = CommonUtils.getRealName(LiveActivity.this) + " " + getString(R.string.alert_request_tobe_talker);
                             sendRequestMessage(content, inviter, Constant.OP_REQUEST_TOBE_SPEAKER);
                         } else { // 已经是主播，直接推流
                             publish();
@@ -278,7 +280,7 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
                             unpublish(conference.getPubStreamId(EMConferenceStream.StreamType.NORMAL));
                             setRequestBtnState(STATE_AUDIENCE);
                             // 请求管理员改变自己角色
-                            String content = EMClient.getInstance().getCurrentUser() + " " + getString(R.string.alert_request_tobe_audience);
+                            String content = CommonUtils.getRealName(LiveActivity.this) + " " + getString(R.string.alert_request_tobe_audience);
                             sendRequestMessage(content, inviter, Constant.OP_REQUEST_TOBE_AUDIENCE);
                         }
                     }
@@ -316,7 +318,7 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
         localView = new ConferenceMemberView(activity);
         localView.setVideoOff(normalParam.isVideoOff());
         localView.setAudioOff(normalParam.isAudioOff());
-        localView.setUsername(EMClient.getInstance().getCurrentUser());
+        localView.setUsername(CommonUtils.getRealName(this));
         EMClient.getInstance().conferenceManager().setLocalSurfaceView(localView.getSurfaceView());
 
         callConferenceViewGroup.addView(localView);
@@ -467,7 +469,8 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
                                 // 申请连麦、下麦按钮对于管理员不能点击
                                 videoConnectBtnCover.setVisibility(View.VISIBLE);
 
-                                Toast.makeText(activity, "Create and join conference success", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(activity, "Create and join conference success", Toast.LENGTH_SHORT).show();
+                                L.d(L.TAG,"createAndJoinConference");
                                 if (callBack != null) {
                                     callBack.onSuccess(value);
                                 }
@@ -505,7 +508,8 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(activity, "Join conference success", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(activity, "Join conference success", Toast.LENGTH_SHORT).show();
+                        L.d(L.TAG,"joinConference");
                         // 加入会议的成员身份为主播
                         if (value.getConferenceRole() == EMConferenceManager.EMConferenceRole.Talker) {
                             publish();
@@ -519,10 +523,11 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
             @Override
             public void onError(final int error, final String errorMsg) {
                 EMLog.e(TAG, "join conference failed error " + error + ", msg " + errorMsg);
+                L.d(L.TAG,errorMsg);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(activity, "Join conference failed " + error + " " + errorMsg, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "互动视频已结束", Toast.LENGTH_SHORT).show();
                     }
                 });
                 finish();
@@ -549,8 +554,7 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
      */
     private void sendInviteMessage(String to, boolean isGroupChat) {
         final EMConversation conversation = EMClient.getInstance().chatManager().getConversation(to, EMConversation.EMConversationType.Chat, true);
-        final EMMessage message = EMMessage.createTxtSendMessage(String.format(getString(R.string.msg_live_invite),
-                EMClient.getInstance().getCurrentUser(), conference.getConferenceId()), to);
+        final EMMessage message = EMMessage.createTxtSendMessage(String.format(getString(R.string.msg_live_invite), CommonUtils.getRealName(this), conference.getConferenceId()), to);
         message.setAttribute(Constant.EM_CONFERENCE_OP, Constant.OP_INVITE);
         message.setAttribute(Constant.EM_CONFERENCE_ID, conference.getConferenceId());
         message.setAttribute(Constant.EM_CONFERENCE_PASSWORD, conference.getPassword());
@@ -587,7 +591,7 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
         message.setAttribute(Constant.EM_CONFERENCE_OP, op);
         message.setAttribute(Constant.EM_CONFERENCE_ID, conference.getConferenceId());
         message.setAttribute(Constant.EM_CONFERENCE_PASSWORD, conference.getPassword());
-        message.setAttribute(Constant.EM_MEMBER_NAME, EasyUtils.getMediaRequestUid(EMClient.getInstance().getOptions().getAppKey(), EMClient.getInstance().getCurrentUser()));
+        message.setAttribute(Constant.EM_MEMBER_NAME, EasyUtils.getMediaRequestUid(EMClient.getInstance().getOptions().getAppKey(), CommonUtils.getRealName(this)));
         message.setMessageStatusCallback(new EMCallBack() {
             @Override
             public void onSuccess() {
@@ -866,7 +870,8 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(activity, member.memberName + " joined conference!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(activity, member.memberName + " joined conference!", Toast.LENGTH_SHORT).show();
+                L.d(L.TAG,"onMemberJoined");
             }
         });
     }
@@ -876,8 +881,8 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(activity, member.memberName + " removed conference!", Toast.LENGTH_SHORT).show();
-
+//                Toast.makeText(activity, member.memberName + " removed conference!", Toast.LENGTH_SHORT).show();
+                L.d(L.TAG,"onMemberExited = "+member.memberName);
                 if (EMClient.getInstance().getCurrentUser().equals(member.memberName)) {
                     setRequestBtnState(STATE_AUDIENCE);
                 }
@@ -890,8 +895,9 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(activity, stream.getUsername() + " stream add!", Toast.LENGTH_SHORT)
-                        .show();
+//                Toast.makeText(activity, stream.getUsername() + " stream add!", Toast.LENGTH_SHORT)
+//                        .show();
+                L.d(L.TAG,"onStreamAdded");
                 addConferenceView(stream);
             }
         });
@@ -902,7 +908,8 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(activity, stream.getUsername() + " stream removed!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(activity, stream.getUsername() + " stream removed!", Toast.LENGTH_SHORT).show();
+                L.d(L.TAG,"onStreamRemoved");
                 if (streamList.contains(stream)) {
                     removeConferenceView(stream);
                 }
@@ -916,7 +923,8 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(activity, stream.getUsername() + " stream update!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(activity, stream.getUsername() + " stream update!", Toast.LENGTH_SHORT).show();
+                L.d(L.TAG,"onStreamUpdate");
                 updateConferenceMemberView(stream);
             }
         });
@@ -927,7 +935,8 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(activity, "Passive exit " + error + ", message" + message, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(activity, "Passive exit " + error + ", message" + message, Toast.LENGTH_SHORT).show();
+                L.d(L.TAG,"onPassiveLeave");
                 finish();
             }
         });
@@ -938,7 +947,8 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(activity, "State=" + state, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(activity, "State=" + state, Toast.LENGTH_SHORT).show();
+                L.d(L.TAG,"onConferenceState");
             }
         });
     }
@@ -955,9 +965,11 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
             public void run() {
                 if (streamId.equals(conference.getPubStreamId(EMConferenceStream.StreamType.NORMAL))
                         || streamId.equals(conference.getPubStreamId(EMConferenceStream.StreamType.DESKTOP))) {
-                    Toast.makeText(activity, "Publish setup streamId=" + streamId, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(activity, "Publish setup streamId=" + streamId, Toast.LENGTH_SHORT).show();
+                    L.d(L.TAG,"onStreamSetup = " +true);
                 } else {
-                    Toast.makeText(activity, "Subscribe setup streamId=" + streamId, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(activity, "Subscribe setup streamId=" + streamId, Toast.LENGTH_SHORT).show();
+                    L.d(L.TAG,"onStreamSetup = "+false);
                 }
             }
         });
@@ -985,7 +997,8 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(activity, "Receive invite " + confId, Toast.LENGTH_LONG).show();
+//                Toast.makeText(activity, "Receive invite " + confId, Toast.LENGTH_LONG).show();
+                L.d(L.TAG,"onReceiveInvite");
             }
         });
     }
@@ -1072,7 +1085,7 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
             }
         } else {
             localStream = new EMConferenceStream();
-            localStream.setUsername(EMClient.getInstance().getCurrentUser());
+            localStream.setUsername(CommonUtils.getRealName(this));
             localStream.setStreamId(targetStreamId);
             streamList.add(localStream);
         }

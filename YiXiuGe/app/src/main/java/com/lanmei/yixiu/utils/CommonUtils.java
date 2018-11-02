@@ -126,6 +126,10 @@ public class CommonUtils {
         return UserHelper.getInstance(context).getUserBean();
     }
 
+    public static String getRealName(Context context) {
+        UserBean bean = getUserBean(context);
+        return StringUtils.isEmpty(bean)?"":bean.getRealname();
+    }
 
     //获取用户信息
     public static void loadUserInfo(final Context context, final UserInfoListener l) {

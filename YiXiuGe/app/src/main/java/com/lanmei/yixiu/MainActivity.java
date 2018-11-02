@@ -10,13 +10,11 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.data.volley.Response;
 import com.data.volley.error.VolleyError;
-import com.hyphenate.EMClientListener;
 import com.hyphenate.EMGroupChangeListener;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
@@ -72,7 +70,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
 
-        EMClient.getInstance().addClientListener(clientListener);
         registerBroadcastReceiver();
 
         mViewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager()));
@@ -280,17 +277,6 @@ public class MainActivity extends BaseActivity {
         broadcastManager.unregisterReceiver(broadcastReceiver);
     }
 
-    EMClientListener clientListener = new EMClientListener() {
-        @Override
-        public void onMigrate2x(boolean success) {
-            Toast.makeText(getContext(), "onUpgradeFrom 2.x to 3.x " + (success ? "success" : "fail"), Toast.LENGTH_LONG).show();
-            if (success) {
-                refreshUIWithMessage();
-            }
-        }
-    };
-
-
     EMMessageListener messageListener = new EMMessageListener() {
 
         @Override
@@ -350,7 +336,6 @@ public class MainActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         EMClient.getInstance().chatManager().removeMessageListener(messageListener);
-        EMClient.getInstance().removeClientListener(clientListener);
         DemoHelper sdkHelper = DemoHelper.getInstance();
         sdkHelper.popActivity(this);
     }
