@@ -2,6 +2,7 @@ package com.hyphenate.easeui.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -259,27 +260,14 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
                     }else{
                         EaseUser user = EaseUserUtils.getUserInfo(username);
                         // TODO: not support Nick anymore
-//                        if(user != null && user.getNick() != null)
-//                            username = user.getNick();
-                    }
-
-                    // First match against the whole ,non-splitted value
-                    if (username.startsWith(prefixString)) {
-                        newValues.add(value);
-                    } else{
-                          final String[] words = username.split(" ");
-                            final int wordCount = words.length;
-
-                            // Start at index 0, in case valueText starts with space(s)
-                        for (String word : words) {
-                            if (word.startsWith(prefixString)) {
-                                newValues.add(value);
-                                break;
-                            }
+                        if (user != null && user.getNickname() != null) {
+                            username = user.getNickname();
                         }
                     }
+                    if (username.contains(prefixString)) {
+                        newValues.add(value);
+                    }
                 }
-
                 results.values = newValues;
                 results.count = newValues.size();
             }
