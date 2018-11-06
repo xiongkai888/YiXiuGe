@@ -50,10 +50,13 @@ import com.hyphenate.chatuidemo.runtimepermissions.PermissionsResultAction;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.YiXiuApp;
 import com.xson.common.utils.L;
 import com.xson.common.utils.UserHelper;
 
 import java.util.List;
+
+import cn.jpush.android.api.JPushInterface;
 
 @SuppressLint("NewApi")
 public class MainActivity extends BaseActivity {
@@ -497,6 +500,7 @@ public class MainActivity extends BaseActivity {
 		L.d(TAG,"showExceptionDialog,removeMultiDeviceListener");
 		String st = getResources().getString(R.string.Logoff_notification);
 		UserHelper.getInstance(MainActivity.this).cleanLogin();//
+		JPushInterface.stopPush(YiXiuApp.applicationContext);//停止接收极光的推送
 		if (!MainActivity.this.isFinishing()) {
 			// clear up global variables
 			try {

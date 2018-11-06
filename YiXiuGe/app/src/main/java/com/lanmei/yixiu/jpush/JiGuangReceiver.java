@@ -6,7 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.lanmei.yixiu.YiXiuApp;
+import com.lanmei.yixiu.bean.TypeBean;
+import com.lanmei.yixiu.ui.message.activity.SiXinActivity;
 import com.lanmei.yixiu.utils.BadgeUtil;
+import com.xson.common.utils.JsonUtil;
 import com.xson.common.utils.L;
 
 import org.json.JSONException;
@@ -39,7 +43,7 @@ public class JiGuangReceiver extends BroadcastReceiver {
             } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
                 L.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
             } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
-                L.d(TAG, "[MyReceiver] 接收到推送下来的通知："+Thread.currentThread());
+//                L.d(TAG, "[MyReceiver] 接收到推送下来的通知："+Thread.currentThread());
                 int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
                 L.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
                 try {
@@ -49,9 +53,18 @@ public class JiGuangReceiver extends BroadcastReceiver {
                     e.printStackTrace();
                 }
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
-                L.d(TAG, "[MyReceiver] 用户点击打开了通知");
                 String content = bundle.getString(JPushInterface.EXTRA_ALERT);
-//                MainActivity.showHome(context, SpeakApp.instance);
+                L.d(TAG, "[MyReceiver] 用户点击打开了通知:" + content + "," + bundle.getString(JPushInterface.EXTRA_EXTRA));
+                String type = bundle.getString(JPushInterface.EXTRA_EXTRA);
+
+                TypeBean bean = JsonUtil.jsonToBean(type, TypeBean.class);
+                if (bean != null && bean.getType() == 1) {
+                    Intent intent1 = new Intent();
+                    intent1.setClass(context, SiXinActivity.class);
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    YiXiuApp.getInstance().startActivity(intent1);
+                }
+//                MainActivity.showMessage(context, YiXiuApp.getInstance());
             } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
                 L.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
                 //在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..

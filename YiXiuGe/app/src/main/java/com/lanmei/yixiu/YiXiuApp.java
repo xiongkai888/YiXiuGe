@@ -7,6 +7,7 @@ import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.baidu.mapapi.SDKInitializer;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.lanmei.yixiu.bean.ExaminationBean;
+import com.lanmei.yixiu.jpush.JiGuangReceiver;
 import com.lanmei.yixiu.update.UpdateAppConfig;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.umeng.commonsdk.UMConfigure;
@@ -40,7 +41,7 @@ public class YiXiuApp extends BaseApp {
 //            LeakCanary.install(this);//LeakCanary内存泄漏监控
         }
         DemoHelper.getInstance().init(this);
-        UpdateAppConfig.initUpdateApp(applicationContext);//app版本更新
+        UpdateAppConfig.initUpdateApp(this);//app版本更新
         //友盟初始化设置
         initUM();
         initJiGuang();
@@ -73,12 +74,13 @@ public class YiXiuApp extends BaseApp {
             JPushInterface.stopPush(this);//停止接收极光的推送
             return;
         }
-        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
+        JPushInterface.setDebugMode(L.debug);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);    // 初始化 JPush
         if (JPushInterface.isPushStopped(this)) {
-            JPushInterface.setAlias(this, 0, CommonUtils.getUserId(this));
+            String uid = CommonUtils.getUserId(this);
             JPushInterface.resumePush(this);
-//            L.d(JiGuangReceiver.TAG, "极光推送设置别名:" + CommonUtils.getUserId(this));
+            JPushInterface.setAlias(this, Integer.valueOf(uid), uid);
+            L.d(JiGuangReceiver.TAG, "极光推送设置别名:" + uid);
         }
     }
 

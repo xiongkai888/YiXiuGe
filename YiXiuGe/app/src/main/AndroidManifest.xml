@@ -156,7 +156,7 @@
             android:name=".webviewpage.PhotoBrowserActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.NoticeActivity"
+            android:name=".ui.message.activity.NoticeActivity"
             android:screenOrientation="portrait" />
         <!--上传服务-->
         <service android:name=".ui.teacher.uploadvideo.UploadVideoService" />
@@ -272,6 +272,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.message.activity.GroupPickContactsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.message.activity.SiXinActivity"
             android:screenOrientation="portrait" />
         <!--环信开始-->
 

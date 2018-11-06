@@ -1,4 +1,4 @@
-package com.lanmei.yixiu.ui.home.activity;
+package com.lanmei.yixiu.ui.message.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;

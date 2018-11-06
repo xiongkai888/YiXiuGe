@@ -17,7 +17,6 @@ import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
 import com.xson.common.utils.IntentUtil;
-import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
@@ -47,7 +46,7 @@ public class QuestionnaireManagementActivity extends BaseActivity  {
     @Override
     public void initIntent(Intent intent) {
         super.initIntent(intent);
-        isStudent = StringUtils.isSame(intent.getStringExtra("value"), CommonUtils.isZero);
+        isStudent = CommonUtils.isStudent(this);
     }
 
     @Override

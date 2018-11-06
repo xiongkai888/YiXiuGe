@@ -40,7 +40,9 @@ import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.superrtc.mediamanager.ScreenCaptureManager;
 import com.superrtc.sdk.VideoView;
+import com.xson.common.bean.UserBean;
 import com.xson.common.utils.L;
+import com.xson.common.utils.StringUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -332,7 +334,8 @@ public class LiveActivity extends BaseActivity implements EMConferenceListener {
         streamList.add(stream);
         final ConferenceMemberView memberView = new ConferenceMemberView(activity);
         callConferenceViewGroup.addView(memberView);
-        memberView.setUsername(stream.getUsername());
+        UserBean bean = DemoHelper.getInstance().getUserBeanByUid(stream.getUsername());
+        memberView.setUsername(StringUtils.isEmpty(bean)?stream.getUsername():bean.getRealname());
         memberView.setStreamId(stream.getStreamId());
         memberView.setAudioOff(stream.isAudioOff());
         memberView.setVideoOff(stream.isVideoOff());

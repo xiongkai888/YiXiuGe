@@ -75,16 +75,10 @@ public class MainActivity extends BaseActivity {
         mViewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager()));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
-
         new TabHelper(this, mTabLayout);
-
-//        mViewPager.setNoScroll(true);
         EventBus.getDefault().register(this);
-//        CommonUtils.loadUserInfo(this, null);
         UpdateAppConfig.requestStoragePermission(this);
-
         initPermission();//百度定位权限
-
         eMClientListener();
     }
 
@@ -461,4 +455,22 @@ public class MainActivity extends BaseActivity {
         EventBus.getDefault().unregister(this);
         unregisterBroadcastReceiver();
     }
+
+//    public static final String ACTION_SHOW_MESSAGE = "android.intent.action.SHOW_MESSAGE";
+//
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        if (ACTION_SHOW_MESSAGE.equals(intent.getAction())) {
+//            mViewPager.setCurrentItem(1);
+//        }
+//    }
+//
+//    public static void showMessage(Context context,Application application) {//至消息页面
+//        Intent intent = new Intent(ACTION_SHOW_MESSAGE);
+//        intent.setClass(context, MainActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        application.startActivity(intent);
+//        IntentUtil.startActivity(application, SiXinActivity.class);
+//    }
 }

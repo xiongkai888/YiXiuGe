@@ -17,10 +17,14 @@ import com.hyphenate.chat.EMCursorResult
 import com.hyphenate.chatuidemo.Constant
 import com.hyphenate.chatuidemo.DemoHelper
 import com.hyphenate.chatuidemo.ui.BaseActivity
+import com.hyphenate.chatuidemo.ui.ChatFragment.HEART_BEAT_RATE
 import com.hyphenate.easeui.utils.EaseUserUtils
 import com.hyphenate.exceptions.HyphenateException
 import com.hyphenate.util.EMLog
 import com.lanmei.yixiu.R
+import com.lanmei.yixiu.event.UserBeanEvent
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 /**
  * Created by zhangsong on 18-4-18.
@@ -45,7 +49,7 @@ class ConferenceInviteActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_conference_invite)
-
+        EventBus.getDefault().register(this)
         initViews()
         initData()
     }
@@ -75,6 +79,26 @@ class ConferenceInviteActivity : BaseActivity() {
     override fun onBackPressed() {
         setResult(Activity.RESULT_CANCELED)
         super.onBackPressed()
+    }
+
+    var i: Boolean = false
+
+    @Subscribe
+    fun userBeanEvent(event: UserBeanEvent) {
+        if (!i) {
+            startBtn!!.postDelayed(heartBeatRunnable, HEART_BEAT_RATE)
+            i = true
+        }
+    }
+
+    private val heartBeatRunnable = java.lang.Runnable() {
+        contactAdapter!!.notifyDataSetChanged()
+        i = false
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        EventBus.getDefault().unregister(this)
     }
 
     private fun initViews() {

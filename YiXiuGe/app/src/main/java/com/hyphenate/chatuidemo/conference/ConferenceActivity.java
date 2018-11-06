@@ -43,8 +43,11 @@ import com.hyphenate.chatuidemo.widget.EasePageIndicator;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.EasyUtils;
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.utils.CommonUtils;
 import com.superrtc.mediamanager.ScreenCaptureManager;
 import com.superrtc.sdk.VideoView;
+import com.xson.common.bean.UserBean;
+import com.xson.common.utils.StringUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -387,7 +390,8 @@ public class ConferenceActivity extends BaseActivity implements EMConferenceList
         localView = new ConferenceMemberView(activity);
         localView.setVideoOff(normalParam.isVideoOff());
         localView.setAudioOff(normalParam.isAudioOff());
-        localView.setUsername(EMClient.getInstance().getCurrentUser());
+//        localView.setUsername(EMClient.getInstance().getCurrentUser());
+        localView.setUsername(CommonUtils.getRealName(this));
         EMClient.getInstance().conferenceManager().setLocalSurfaceView(localView.getSurfaceView());
 
         callConferenceViewGroup.addView(localView);
@@ -401,7 +405,9 @@ public class ConferenceActivity extends BaseActivity implements EMConferenceList
         streamList.add(stream);
         final ConferenceMemberView memberView = new ConferenceMemberView(activity);
         callConferenceViewGroup.addView(memberView);
-        memberView.setUsername(stream.getUsername());
+        UserBean bean = DemoHelper.getInstance().getUserBeanByUid(stream.getUsername());
+        memberView.setUsername(StringUtils.isEmpty(bean)?stream.getUsername():bean.getRealname());
+//        memberView.setUsername(stream.getUsername());
         memberView.setStreamId(stream.getStreamId());
         memberView.setAudioOff(stream.isAudioOff());
         memberView.setVideoOff(stream.isVideoOff());
@@ -550,7 +556,7 @@ public class ConferenceActivity extends BaseActivity implements EMConferenceList
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(activity, "Create and join conference success", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(activity, "Create and join conference success", Toast.LENGTH_SHORT).show();
                         if (callBack != null) {
                             callBack.onSuccess(value);
                         }
@@ -585,22 +591,22 @@ public class ConferenceActivity extends BaseActivity implements EMConferenceList
                 startAudioTalkingMonitor();
                 publish();
                 timeHandler.startTime();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(activity, "Join conference success", Toast.LENGTH_SHORT).show();
-                    }
-                });
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toast.makeText(activity, "Join conference success", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
             }
 
             @Override public void onError(final int error, final String errorMsg) {
                 EMLog.e(TAG, "join conference failed error " + error + ", msg " + errorMsg);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(activity, "Join conference failed " + error + " " + errorMsg, Toast.LENGTH_SHORT).show();
-                    }
-                });
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toast.makeText(activity, "Join conference failed " + error + " " + errorMsg, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
                 finish();
             }
         });
@@ -946,7 +952,7 @@ public class ConferenceActivity extends BaseActivity implements EMConferenceList
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(activity, member.memberName + " joined conference!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(activity, member.memberName + " joined conference!", Toast.LENGTH_SHORT).show();
                 updateConferenceMembers();
             }
         });
@@ -957,7 +963,7 @@ public class ConferenceActivity extends BaseActivity implements EMConferenceList
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(activity, member.memberName + " removed conference!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(activity, member.memberName + " removed conference!", Toast.LENGTH_SHORT).show();
                 updateConferenceMembers();
             }
         });
@@ -1007,7 +1013,7 @@ public class ConferenceActivity extends BaseActivity implements EMConferenceList
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(activity, stream.getUsername() + " stream update!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(activity, stream.getUsername() + " stream update!", Toast.LENGTH_SHORT).show();
                 updateConferenceMemberView(stream);
             }
         });
@@ -1030,12 +1036,12 @@ public class ConferenceActivity extends BaseActivity implements EMConferenceList
 
     @Override
     public void onConferenceState(final ConferenceState state) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(activity, "State=" + state, Toast.LENGTH_SHORT).show();
-            }
-        });
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Toast.makeText(activity, "State=" + state, Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     @Override
@@ -1046,17 +1052,17 @@ public class ConferenceActivity extends BaseActivity implements EMConferenceList
 
     @Override
     public void onStreamSetup(final String streamId) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (streamId.equals(conference.getPubStreamId(EMConferenceStream.StreamType.NORMAL))
-                        || streamId.equals(conference.getPubStreamId(EMConferenceStream.StreamType.DESKTOP))) {
-                    Toast.makeText(activity, "Publish setup streamId=" + streamId, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(activity, "Subscribe setup streamId=" + streamId, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (streamId.equals(conference.getPubStreamId(EMConferenceStream.StreamType.NORMAL))
+//                        || streamId.equals(conference.getPubStreamId(EMConferenceStream.StreamType.DESKTOP))) {
+//                    Toast.makeText(activity, "Publish setup streamId=" + streamId, Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(activity, "Subscribe setup streamId=" + streamId, Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
         streamList.get(0).setStreamId(streamId);
         debugPanelView.setStreamListAndNotify(streamList);
@@ -1149,13 +1155,13 @@ public class ConferenceActivity extends BaseActivity implements EMConferenceList
 
     private void updateConferenceMembers() {
         List<EMConferenceMember> members = EMClient.getInstance().conferenceManager().getConferenceMemberList();
-        String count = members.size() > 0 ? "(" + members.size() + ")" : "";
-        String membersStr = getMembersStr(members);
+        String count = members.size() > 0 ? "(" + members.size() + "人)" : "";
+//        String membersStr = getMembersStr(members);
 
-        membersTV.setText(membersStr);
+//        membersTV.setText(membersStr);
         memberCountTV.setText(count);
 
-        membersTVMain.setText(membersStr);
+//        membersTVMain.setText(membersStr);
         memberCountTVMain.setText(count);
     }
 
@@ -1222,7 +1228,8 @@ public class ConferenceActivity extends BaseActivity implements EMConferenceList
                 windowStream = streamList.get(1);
             } else { // 会议中无其他成员,显示自己信息
                 windowStream = new EMConferenceStream();
-                windowStream.setUsername(EMClient.getInstance().getCurrentUser());
+//                windowStream.setUsername(EMClient.getInstance().getCurrentUser());
+                windowStream.setUsername(CommonUtils.getRealName(this));
                 windowStream.setVideoOff(normalParam.isVideoOff());
                 windowStream.setAudioOff(normalParam.isAudioOff());
             }
@@ -1234,7 +1241,8 @@ public class ConferenceActivity extends BaseActivity implements EMConferenceList
 
     private void addSelfToList() {
         EMConferenceStream localStream = new EMConferenceStream();
-        localStream.setUsername(EMClient.getInstance().getCurrentUser());
+//        localStream.setUsername(EMClient.getInstance().getCurrentUser());
+        localStream.setUsername(CommonUtils.getRealName(this));
         localStream.setStreamId("local-stream");
         streamList.add(localStream);
     }

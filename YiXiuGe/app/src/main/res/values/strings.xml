@@ -206,5 +206,6 @@
     <string name="administrators">管理员</string>
     <string name="members_group">群成员</string>
     <string name="my_test_paper">我的试卷</string>
+    <string name="private_letter">私信</string>
 
 </resources>

@@ -283,7 +283,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 break;
             case R.id.questionnaire_tv://问卷
 //                IntentUtil.startActivity(context, QuestionnaireActivity.class);
-                IntentUtil.startActivity(context, QuestionnaireManagementActivity.class,CommonUtils.isZero);
+                IntentUtil.startActivity(context, QuestionnaireManagementActivity.class);
                 break;
             case R.id.kaoqin_tv://考勤
                 EventBus.getDefault().post(new KaoQinEvent());

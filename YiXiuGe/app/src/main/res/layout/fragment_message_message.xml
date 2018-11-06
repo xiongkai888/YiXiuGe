@@ -12,7 +12,7 @@
         <ImageView
             android:layout_width="@dimen/d_60dp"
             android:layout_height="@dimen/d_60dp"
-            android:src="@drawable/message_qun" />
+            android:src="@drawable/message_gg" />
 
         <LinearLayout
             style="@style/v_match_parent_no"
@@ -40,12 +40,13 @@
     <LinearLayout
         android:id="@+id/ll_action"
         style="@style/ll_bottom_h"
+        android:visibility="gone"
         android:padding="@dimen/d_20dp">
 
         <ImageView
             android:layout_width="@dimen/d_60dp"
             android:layout_height="@dimen/d_60dp"
-            android:src="@drawable/message_qun" />
+            android:src="@drawable/message_fl" />
 
         <LinearLayout
             style="@style/v_match_parent_no"
@@ -69,4 +70,38 @@
             android:src="@drawable/in_right" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_sx"
+        style="@style/ll_bottom_h"
+        android:padding="@dimen/d_20dp">
+
+        <ImageView
+            android:layout_width="@dimen/d_60dp"
+            android:layout_height="@dimen/d_60dp"
+            android:src="@drawable/message_sx" />
+
+        <LinearLayout
+            style="@style/v_match_parent_no"
+            android:layout_marginLeft="@dimen/d_10dp"
+            android:layout_weight="1">
+
+            <TextView
+                style="@style/text"
+                android:text="私信" />
+
+            <TextView
+                style="@style/text12color666"
+                android:layout_marginTop="@dimen/d_5dp"
+                android:text="" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            style="@style/text"
+            android:src="@drawable/in_right" />
+
+    </LinearLayout>
+
 </LinearLayout>

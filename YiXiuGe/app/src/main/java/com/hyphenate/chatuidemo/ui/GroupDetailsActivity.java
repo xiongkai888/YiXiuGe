@@ -413,14 +413,11 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
         });
     }
 
-    private int j;
-
     private boolean i;
     private boolean isFirst = true;
 
     @Subscribe
     public void userBeanEvent(UserBeanEvent event) {
-//		L.d("UserBeanEvent",(j++)+"");
         if (!i) {
             if (isFirst){
                 membersAdapter.notifyDataSetChanged();
@@ -435,7 +432,6 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
     private Runnable heartBeatRunnable = new Runnable() {//心跳包请求位置信息
         @Override
         public void run() {
-//            L.d("UserBeanEvent", "j = " + (j++) + "  " + Thread.currentThread());
             membersAdapter.notifyDataSetChanged();
             ownerAdminAdapter.notifyDataSetChanged();
             i = false;

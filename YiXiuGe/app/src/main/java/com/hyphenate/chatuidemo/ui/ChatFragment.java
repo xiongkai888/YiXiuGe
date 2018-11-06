@@ -458,16 +458,11 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     }
 
     private boolean i;
-    private boolean isFirst;
 
     @Subscribe
     public void userBeanEvent(UserBeanEvent event) {
         if (chatType != Constant.CHATTYPE_SINGLE) {
             if (!i) {
-                if (isFirst){
-                    messageList.refresh();
-                    isFirst = !isFirst;
-                }
                 handler.postDelayed(heartBeatRunnable, HEART_BEAT_RATE);
                 i = true;
             }
