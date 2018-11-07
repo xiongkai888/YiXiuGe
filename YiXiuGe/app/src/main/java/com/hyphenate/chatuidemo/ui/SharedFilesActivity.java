@@ -84,10 +84,10 @@ public class SharedFilesActivity extends BaseActivity {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 int lasPos = view.getLastVisiblePosition();
-                if(scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
                         && hasMoreData
                         && !isLoading
-                        && lasPos == fileList.size() -1){
+                        && lasPos == fileList.size() - 1) {
                     showFileList(false);
                 }
             }
@@ -109,10 +109,10 @@ public class SharedFilesActivity extends BaseActivity {
 
     private void showFileList(final boolean isRefresh) {
         isLoading = true;
-        if(isRefresh){
+        if (isRefresh) {
             pageNum = 1;
             swipeRefreshLayout.setRefreshing(true);
-        }else{
+        } else {
             pageNum++;
             loadmorePB.setVisibility(View.VISIBLE);
         }
@@ -122,24 +122,24 @@ public class SharedFilesActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if(isRefresh) {
+                        if (isRefresh) {
                             swipeRefreshLayout.setRefreshing(false);
-                        }else{
+                        } else {
                             loadmorePB.setVisibility(View.INVISIBLE);
                         }
                         isLoading = false;
-                        if(isRefresh)
+                        if (isRefresh)
                             fileList.clear();
                         fileList.addAll(value);
-                        if(value.size() == pageSize){
+                        if (value.size() == pageSize) {
                             hasMoreData = true;
-                        }else{
+                        } else {
                             hasMoreData = false;
                         }
-                        if(adapter == null){
+                        if (adapter == null) {
                             adapter = new FilesAdapter(SharedFilesActivity.this, 1, fileList);
                             listView.setAdapter(adapter);
-                        }else{
+                        } else {
                             adapter.notifyDataSetChanged();
                         }
 
@@ -153,7 +153,7 @@ public class SharedFilesActivity extends BaseActivity {
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
-                        Toast.makeText(SharedFilesActivity.this, "Load files fail", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SharedFilesActivity.this, "加载文件失败", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -163,17 +163,18 @@ public class SharedFilesActivity extends BaseActivity {
     /**
      * If local file doesn't exits, download it first.
      * else show file directly
+     *
      * @param file
      */
-    private void showFile(EMMucSharedFile file){
+    private void showFile(EMMucSharedFile file) {
         final File localFile = new File(PathUtil.getInstance().getFilePath(), file.getFileName());
-        if(localFile.exists()){
+        if (localFile.exists()) {
             openFile(localFile);
             return;
         }
 
         final ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Downloading...");
+        pd.setMessage("正在下载...");
         pd.setCanceledOnTouchOutside(false);
         pd.show();
         EMClient.getInstance().groupManager().asyncDownloadGroupSharedFile(
@@ -198,7 +199,7 @@ public class SharedFilesActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 pd.dismiss();
-                                Toast.makeText(SharedFilesActivity.this, "Download file fails, " + error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SharedFilesActivity.this, "下载文件失败, " + error, Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -210,8 +211,8 @@ public class SharedFilesActivity extends BaseActivity {
         );
     }
 
-    private void openFile(File file){
-        if(file != null && file.exists()){
+    private void openFile(File file) {
+        if (file != null && file.exists()) {
             FileUtils.openFile(file, this);
         }
     }
@@ -219,13 +220,13 @@ public class SharedFilesActivity extends BaseActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add("Delete File");
+        menu.add("删除该文件");
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         final ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Deleting...");
+        pd.setMessage("正在删除...");
         pd.setCanceledOnTouchOutside(false);
         pd.show();
 
@@ -254,7 +255,7 @@ public class SharedFilesActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 pd.dismiss();
-                                Toast.makeText(SharedFilesActivity.this, "Delete file fails, " + error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SharedFilesActivity.this, "删除文件失败, " + error, Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -270,9 +271,10 @@ public class SharedFilesActivity extends BaseActivity {
 
     /**
      * upload file button clicked
+     *
      * @param view
      */
-    public void uploadFile(View view){
+    public void uploadFile(View view) {
         selectFileFromLocal();
     }
 
@@ -295,8 +297,8 @@ public class SharedFilesActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            if(requestCode == REQUEST_CODE_SELECT_FILE){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CODE_SELECT_FILE) {
                 if (data != null) {
                     Uri uri = data.getData();
                     if (uri != null) {
@@ -320,7 +322,7 @@ public class SharedFilesActivity extends BaseActivity {
         }
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setCanceledOnTouchOutside(false);
-        pd.setMessage("Uploading...");
+        pd.setMessage("正在上传...");
         pd.show();
         EMClient.getInstance().groupManager().asyncUploadGroupSharedFile(groupId, filePath, new EMCallBack() {
             @Override
@@ -329,15 +331,14 @@ public class SharedFilesActivity extends BaseActivity {
                     @Override
                     public void run() {
                         pd.dismiss();
-                        if(adapter != null){
+                        if (adapter != null) {
                             fileList.clear();
                             fileList.addAll(group.getShareFileList());
                             adapter.notifyDataSetChanged();
-                            Toast.makeText(SharedFilesActivity.this, "Upload success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SharedFilesActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
             }
 
             @Override
@@ -346,10 +347,11 @@ public class SharedFilesActivity extends BaseActivity {
                     @Override
                     public void run() {
                         pd.dismiss();
-                        Toast.makeText(SharedFilesActivity.this, "Upload fail, " + error, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SharedFilesActivity.this, "上传失败, " + error, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
+
             @Override
             public void onProgress(int progress, String status) {
             }
@@ -360,7 +362,7 @@ public class SharedFilesActivity extends BaseActivity {
     private String getFilePath(Uri uri) {
         String filePath = null;
         if ("content".equalsIgnoreCase(uri.getScheme())) {
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = null;
 
             try {

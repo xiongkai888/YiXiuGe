@@ -101,7 +101,12 @@ public class EaseConversationList extends ListView{
     		handler.sendEmptyMessage(MSG_REFRESH_ADAPTER_DATA);
     	}
     }
-    
+
+    public void removeItem(int position){
+        adapter.remove(getItem(position));
+        adapter.notifyDataSetChanged();
+    }
+
     public void filter(CharSequence str) {
         adapter.getFilter().filter(str);
     }

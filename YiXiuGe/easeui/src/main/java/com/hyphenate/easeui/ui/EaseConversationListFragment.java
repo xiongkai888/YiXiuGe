@@ -207,7 +207,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
     protected List<EMConversation> loadConversationList(){
         // get all conversations
         Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
-        List<Pair<Long, EMConversation>> sortList = new ArrayList<Pair<Long, EMConversation>>();
+        List<Pair<Long, EMConversation>> sortList = new ArrayList<>();
         /**
          * lastMsgTime will change if there is new message during sorting
          * so use synchronized to make sure timestamp of last message won't change.
@@ -215,7 +215,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
         synchronized (conversations) {
             for (EMConversation conversation : conversations.values()) {
                 if (conversation.getAllMessages().size() != 0) {
-                    sortList.add(new Pair<Long, EMConversation>(conversation.getLastMessage().getMsgTime(), conversation));
+                    sortList.add(new Pair<>(conversation.getLastMessage().getMsgTime(), conversation));
                 }
             }
         }
@@ -225,7 +225,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        List<EMConversation> list = new ArrayList<EMConversation>();
+        List<EMConversation> list = new ArrayList<>();
         for (Pair<Long, EMConversation> sortItem : sortList) {
             list.add(sortItem.second);
         }

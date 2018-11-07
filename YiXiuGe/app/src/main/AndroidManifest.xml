@@ -72,9 +72,10 @@
             </intent-filter>
         </activity>
 
+        <!-- fileProvider配置访问路径，适配7.0及其以上 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.lanmei.yixiu.fileprovider"
+            android:authorities="com.lanmei.yixiu.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

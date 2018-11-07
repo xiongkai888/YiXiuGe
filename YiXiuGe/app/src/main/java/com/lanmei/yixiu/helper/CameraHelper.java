@@ -16,6 +16,7 @@ import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
+import com.lanmei.yixiu.BuildConfig;
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.utils.AKDialog;
 import com.xson.common.app.BaseActivity;
@@ -134,7 +135,7 @@ public class CameraHelper {
         }
         Uri uri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(context, "com.lanmei.yixiu.fileprovider", file);
+            uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID+".fileProvider", file);
         } else {
             uri = Uri.fromFile(file);
         }

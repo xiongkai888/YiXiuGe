@@ -432,6 +432,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
     private Runnable heartBeatRunnable = new Runnable() {//心跳包请求位置信息
         @Override
         public void run() {
+            if (membersAdapter == null){
+                return;
+            }
             membersAdapter.notifyDataSetChanged();
             ownerAdminAdapter.notifyDataSetChanged();
             i = false;
