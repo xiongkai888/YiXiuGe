@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.lanmei.yixiu.ui.teacher.activity.TestItemActivity">
+
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+
+    <TextView
+        android:id="@+id/test_student_tv"
+        style="@style/match_parent"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:background="@drawable/border_bottom_divider"
+        android:drawableRight="@drawable/in_right"
+        android:padding="@dimen/d_10dp" />
+
+    <TextView
+        android:id="@+id/test_time_tv"
+        style="@style/match_parent"
+        android:background="@drawable/border_bottom_divider"
+        android:padding="@dimen/d_10dp" />
+
+    <TextView
+        android:id="@+id/test_evaluate_name_tv"
+        style="@style/match_parent"
+        android:background="@drawable/border_bottom_divider"
+        android:padding="@dimen/d_10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+
+    <Button
+        android:id="@+id/start_bt"
+        style="@style/button_style"
+        android:layout_gravity="bottom"
+        android:text="开始评估" />
+
+</LinearLayout>

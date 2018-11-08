@@ -207,5 +207,8 @@
     <string name="members_group">群成员</string>
     <string name="my_test_paper">我的试卷</string>
     <string name="private_letter">私信</string>
+    <string name="test_student">学员：%1$s</string>
+    <string name="test_time">考试时间：%1$s分钟</string>
+    <string name="test_evaluate_name">评估人员：%1$s</string>
 
 </resources>

@@ -70,6 +70,18 @@ public class AddQuestionnaireSubjectActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setEmptyView(mEmptyView);
         mRecyclerView.setAdapter(adapter);
+//        adapter.setClickAnswerListener(new ClickAnswerListener() {
+//            @Override
+//            public void onClick(final int position) {
+//                AKDialog.getAlertDialog(getContext(), "确认删除？", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                    }
+//                });
+//
+//            }
+//        });
     }
 
     //添加问卷题目的时候调用

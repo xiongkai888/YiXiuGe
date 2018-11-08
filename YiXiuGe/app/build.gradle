@@ -11,8 +11,8 @@ android {
         applicationId "com.lanmei.yixiu"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 32
-        versionName "1.4.9"
+        versionCode 33
+        versionName "1.4.91"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "API_URL", "\"http://47.107.59.111/api/\""
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
@@ -24,14 +24,14 @@ android {
 
         ndk {
             //选择要添加的对应 cpu 类型的 .so 库。
-            abiFilters 'armeabi', 'arm64-v8a', 'armeabi-v7a', 'x86','arm64-v8a'
+            abiFilters 'armeabi', 'arm64-v8a', 'armeabi-v7a', 'x86', 'arm64-v8a'
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
 
         manifestPlaceholders = [
-                JPUSH_PKGNAME : applicationId,
+                JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "f11427346c236ce73f92f70f", //JPush 上注册的包名对应的 Appkey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
 
     }

@@ -12,11 +12,12 @@ import com.lanmei.yixiu.ui.mine.activity.PersonalDataSubActivity;
 import com.lanmei.yixiu.ui.mine.activity.SettingActivity;
 import com.lanmei.yixiu.ui.teacher.activity.ClassHourActivity;
 import com.lanmei.yixiu.ui.teacher.activity.EvaluateActivity;
-import com.lanmei.yixiu.ui.teacher.activity.TestPaperListActivity;
 import com.lanmei.yixiu.ui.teacher.activity.MyCourseActivity;
 import com.lanmei.yixiu.ui.teacher.activity.MyTutorialCoursewareActivity;
 import com.lanmei.yixiu.ui.teacher.activity.QuestionnaireManagementActivity;
 import com.lanmei.yixiu.ui.teacher.activity.TeachingAttachmentsActivity;
+import com.lanmei.yixiu.ui.teacher.activity.TestPaperListActivity;
+import com.lanmei.yixiu.ui.teacher.activity.TestsListActivity;
 import com.lanmei.yixiu.ui.teacher.activity.TutorialCoursewareActivity;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
@@ -29,7 +30,6 @@ import com.xson.common.widget.CircleImageView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
@@ -85,7 +85,7 @@ public class MineTeacherFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.ll_courseware,R.id.ll_my_courseware,R.id.pic_iv,R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_evaluate, R.id.ll_setting, R.id.class_schedule_tv, R.id.kao_shi_tv, R.id.ll_mine_teacher1, R.id.ll_mine_teacher2, R.id.ll_mine_teacher3, R.id.ll_mine_teacher4, R.id.ll_mine_teacher5})
+    @OnClick({R.id.ll_tests_list, R.id.ll_courseware, R.id.ll_my_courseware, R.id.pic_iv, R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_evaluate, R.id.ll_setting, R.id.class_schedule_tv, R.id.kao_shi_tv, R.id.ll_mine_teacher1, R.id.ll_mine_teacher2, R.id.ll_mine_teacher3, R.id.ll_mine_teacher4, R.id.ll_mine_teacher5})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.pic_iv://个人资料
@@ -133,12 +133,9 @@ public class MineTeacherFragment extends BaseFragment {
             case R.id.ll_mine_teacher5://教学设备
                 IntentUtil.startActivity(context, TeachingAttachmentsActivity.class);
                 break;
+            case R.id.ll_tests_list://我的评估
+                IntentUtil.startActivity(context, TestsListActivity.class);
+                break;
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.reset(this);
     }
 }

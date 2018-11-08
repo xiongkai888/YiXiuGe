@@ -128,7 +128,7 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
                     }
                 }
             } else {
-                if (StringUtils.isEmpty(bean.getAnswer())) {
+                if (!StringUtils.isEmpty(bean.getAnswer())) {
                     stringList.add(bean.getAnswer());
                 }
             }

@@ -296,6 +296,27 @@
                 android:gravity="center_vertical" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/ll_tests_list"
+            style="@style/ll_bottom_h"
+            android:visibility="gone"
+            android:padding="@dimen/d_10dp">
+
+            <TextView
+                style="@style/text_weight"
+                android:drawableLeft="@drawable/mine_teacher_5"
+                android:drawablePadding="@dimen/d_10dp"
+                android:gravity="center_vertical"
+                android:text="我的评估" />
+
+
+            <TextView
+                style="@style/text12color666"
+                android:layout_marginLeft="@dimen/d_10dp"
+                android:drawableRight="@drawable/in_right"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
         <TextView style="@style/line_H10dp_on" />
 
         <LinearLayout

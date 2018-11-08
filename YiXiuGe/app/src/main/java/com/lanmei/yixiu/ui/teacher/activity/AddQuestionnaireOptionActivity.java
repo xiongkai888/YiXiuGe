@@ -1,7 +1,6 @@
 package com.lanmei.yixiu.ui.teacher.activity;
 
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.GridLayoutManager;
@@ -103,7 +102,7 @@ public class AddQuestionnaireOptionActivity extends BaseActivity {
     PopupWindow window;
 
     private void popupWindow() {
-        setCompoundDrawables(R.color.color1593f0, R.drawable.common_filter_arrow_up);
+        CommonUtils.setCompoundDrawables(getContext(),toolbarNameTv,R.drawable.common_filter_arrow_up,R.color.color1593f0,2);
         if (window != null) {
             window.showAsDropDown(lineTv);
             return;
@@ -142,20 +141,9 @@ public class AddQuestionnaireOptionActivity extends BaseActivity {
         window.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                setCompoundDrawables(R.color.color666, R.drawable.common_filter_arrow_down);
+                CommonUtils.setCompoundDrawables(getContext(),toolbarNameTv,R.drawable.common_filter_arrow_down,R.color.color666,2);
             }
         });
-    }
-
-    /**
-     * @param drawableId 项目图片id
-     */
-    private void setCompoundDrawables(int colorId, int drawableId) {
-        Drawable img = getResources().getDrawable(drawableId);
-// 调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
-        img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-        toolbarNameTv.setTextColor(getResources().getColor(colorId));
-        toolbarNameTv.setCompoundDrawables(null, null, img, null); //设置右图标
     }
 
 

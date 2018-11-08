@@ -42,7 +42,6 @@ public class QuestionnaireManagementBean implements Serializable{
     private String cid;
     private String starttime;
     private String endtime;
-    private String is_del;
     private String submit_num;
     private String submittime;
 
@@ -158,14 +157,6 @@ public class QuestionnaireManagementBean implements Serializable{
 
     public void setEndtime(String endtime) {
         this.endtime = endtime;
-    }
-
-    public String getIs_del() {
-        return is_del;
-    }
-
-    public void setIs_del(String is_del) {
-        this.is_del = is_del;
     }
 
     public String getSubmit_num() {

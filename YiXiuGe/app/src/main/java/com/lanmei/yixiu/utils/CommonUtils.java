@@ -3,6 +3,7 @@ package com.lanmei.yixiu.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.util.TypedValue;
 import android.view.View;
@@ -84,12 +85,11 @@ public class CommonUtils {
 
 
     /**
-     *
      * @param list
      * @return
      */
     public static String[] toArray(List<String> list) {
-        return list.toArray(new String[StringUtils.isEmpty(list)?0:list.size()]);
+        return list.toArray(new String[StringUtils.isEmpty(list) ? 0 : list.size()]);
     }
 
     /**
@@ -119,7 +119,7 @@ public class CommonUtils {
 
     //获取 用户类型 true 学生 false 老师
     public static boolean isStudent(Context context) {
-        return !StringUtils.isSame(isOne,getUserType(context));
+        return !StringUtils.isSame(isOne, getUserType(context));
     }
 
     public static UserBean getUserBean(Context context) {
@@ -128,7 +128,7 @@ public class CommonUtils {
 
     public static String getRealName(Context context) {
         UserBean bean = getUserBean(context);
-        return StringUtils.isEmpty(bean)?"":bean.getRealname();
+        return StringUtils.isEmpty(bean) ? "" : bean.getRealname();
     }
 
     //获取用户信息
@@ -281,6 +281,7 @@ public class CommonUtils {
 
     /**
      * 设置TabLayout tab 左右边距
+     *
      * @param tabs
      * @param leftDip
      * @param rightDip
@@ -317,9 +318,9 @@ public class CommonUtils {
     }
 
 
-    public static String getLetterByPosition(Context context,int position){
+    public static String getLetterByPosition(Context context, int position) {
 
-        switch (position){
+        switch (position) {
             case 0:
                 return context.getString(R.string.A);
             case 1:
@@ -344,6 +345,27 @@ public class CommonUtils {
                 return context.getString(R.string.K);
         }
         return "";
+    }
+
+    /**
+     * @param context
+     * @param textView
+     * @param drawableId 本地图片资源
+     * @param colorId    textView的颜色id
+     * @param position   图片在文字的位置  0左、1上、2右、3下
+     */
+    public static void setCompoundDrawables(Context context, TextView textView, int drawableId, int colorId, int position) {
+        if (colorId > 0) {
+            textView.setTextColor(context.getResources().getColor(colorId));
+        }
+        if (drawableId > 0) {
+            Drawable img = context.getResources().getDrawable(drawableId);
+            // 调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
+            img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
+            textView.setCompoundDrawables(position == 0 ? img : null, position == 1 ? img : null, position == 2 ? img : null, position == 3 ? img : null); //设置右图标
+        } else {//清除文字周围的图片
+            textView.setBackgroundResource(0);
+        }
     }
 
 }

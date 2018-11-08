@@ -1,10 +1,12 @@
 package com.lanmei.yixiu.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by xkai on 2018/9/13.
  */
 
-public class StudentsBean {
+public class StudentsBean implements Serializable{
 
     /**
      * id : 820519

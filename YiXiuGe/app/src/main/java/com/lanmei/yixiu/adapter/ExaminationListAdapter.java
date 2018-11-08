@@ -94,6 +94,9 @@ public class ExaminationListAdapter extends SwipeRefreshAdapter<ExaminationListB
                     enterExaminationTv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+//                            Bundle bundle = new Bundle();
+//                            bundle.putSerializable("bean",bean);
+//                            IntentUtil.startActivity(context, Examination1Activity.class,bundle);
                             IntentUtil.startActivity(context, ExaminationResultActivity.class,bean.getId());
                         }
                     });

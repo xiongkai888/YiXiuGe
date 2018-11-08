@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.bean.ExaminationAnswerBean;
-import com.lanmei.yixiu.helper.ClickAnswerListener;
+import com.lanmei.yixiu.bean.StudentsBean;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 
 import butterknife.ButterKnife;
@@ -17,23 +16,23 @@ import butterknife.InjectView;
 
 
 /**
- * 考试答案
+ * 选择考试学生
  */
-public class ExaminationAnswerAdapter extends SwipeRefreshAdapter<ExaminationAnswerBean> {
+public class SelectTestStudentAdapter extends SwipeRefreshAdapter<StudentsBean> {
 
-
-    public ExaminationAnswerAdapter(Context context) {
+    public SelectTestStudentAdapter(Context context) {
         super(context);
     }
 
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder2(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_examination_answer, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_select_test_student, parent, false));
     }
 
     @Override
-    public void onBindViewHolder2(RecyclerView.ViewHolder holder,final int position) {
-        final ExaminationAnswerBean bean = getItem(position);
+    public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
+        final StudentsBean bean = getItem(position);
         if (bean == null) {
             return;
         }
@@ -43,7 +42,7 @@ public class ExaminationAnswerAdapter extends SwipeRefreshAdapter<ExaminationAns
             @Override
             public void onClick(View v) {
                 if (listener != null){
-                    listener.onClick(position);
+                    listener.select(bean);
                 }
             }
         });
@@ -51,10 +50,8 @@ public class ExaminationAnswerAdapter extends SwipeRefreshAdapter<ExaminationAns
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @InjectView(R.id.item_tv)
-        TextView itemTv;
-        @InjectView(R.id.topic_tv)
-        TextView topicTv;
+        @InjectView(R.id.name_tv)
+        TextView nameTv;
 
         ViewHolder(View view) {
             super(view);
@@ -62,17 +59,18 @@ public class ExaminationAnswerAdapter extends SwipeRefreshAdapter<ExaminationAns
         }
 
 
-        public void setParameter(ExaminationAnswerBean bean) {
-
-            itemTv.setText(String.valueOf(getAdapterPosition()+1));
-            topicTv.setText(bean.getTopic());
+        public void setParameter(StudentsBean bean) {
+            nameTv.setText(bean.getRealname());
         }
     }
 
-    private ClickAnswerListener listener;
+    public SelectStudentListener listener;
 
+    public interface SelectStudentListener {
+        void select(StudentsBean bean);
+    }
 
-    public void setClickAnswerListener(ClickAnswerListener listener){
+    public void setSelectStudentListener(SelectStudentListener listener) {
         this.listener = listener;
     }
 

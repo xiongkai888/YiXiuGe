@@ -20,6 +20,7 @@ import com.lanmei.yixiu.bean.ExaminationAnswerBean;
 import com.lanmei.yixiu.bean.ExaminationBean;
 import com.lanmei.yixiu.bean.ExaminationListBean;
 import com.lanmei.yixiu.event.ExaminationFinishEvent;
+import com.lanmei.yixiu.helper.ClickAnswerListener;
 import com.lanmei.yixiu.helper.ExaminationContract;
 import com.lanmei.yixiu.helper.ExaminationPresenter;
 import com.lanmei.yixiu.utils.CommonUtils;
@@ -116,9 +117,9 @@ public class Examination1Activity extends BaseActivity implements ExaminationCon
         recyclerViewAnswer.setLayoutManager(new GridLayoutManager(this, 4));
         examinationAnswerAdapter = new ExaminationAnswerAdapter(this);
         recyclerViewAnswer.setNestedScrollingEnabled(false);
-        examinationAnswerAdapter.setChooseTopicListener(new ExaminationAnswerAdapter.ChooseTopicListener() {
+        examinationAnswerAdapter.setClickAnswerListener(new ClickAnswerListener() {
             @Override
-            public void choose(int position) {
+            public void onClick(int position) {
                 setAnswerPosition(position);
             }
         });
@@ -170,9 +171,7 @@ public class Examination1Activity extends BaseActivity implements ExaminationCon
             }
             beanList = new ArrayList<>();
             for (int i = 0; i < number; i++) {
-                ExaminationAnswerBean answerBean = new ExaminationAnswerBean();
-                answerBean.setItem(String.valueOf(i + 1));
-                beanList.add(answerBean);
+                beanList.add(new ExaminationAnswerBean());
             }
         } else {
             beanList = bean.getBeanList();

@@ -11,14 +11,12 @@
         style="@style/text14colorFF4A4A"
         android:background="@drawable/circle_topic_off"
         android:gravity="center"
-        android:layout_marginLeft="@dimen/d_10dp"
-        android:text="A" />
+        android:layout_marginLeft="@dimen/d_10dp" />
 
     <TextView
         android:id="@+id/topic_tv"
         style="@style/text14colorFF4A4A"
-        android:layout_marginLeft="@dimen/d_5dp"
-        android:text="功能提升或兴奋" />
+        android:layout_marginLeft="@dimen/d_5dp" />
 
 
 </LinearLayout>

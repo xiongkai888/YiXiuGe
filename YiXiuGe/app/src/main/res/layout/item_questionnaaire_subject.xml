@@ -5,15 +5,28 @@
     android:layout_marginTop="@dimen/d_5dp">
 
 
-    <TextView
-        android:id="@+id/title_tv"
-        style="@style/text"
-        android:gravity="center"
-        android:paddingBottom="@dimen/d_3dp"
-        android:padding="@dimen/d_10dp"
-        android:drawableLeft="@drawable/class_name" />
+    <LinearLayout
+        style="@style/ll_bottom_h">
 
-    <TextView style="@style/line_H1dp_divider" />
+        <TextView
+            android:id="@+id/title_tv"
+            style="@style/text_weight"
+            android:paddingBottom="@dimen/d_3dp"
+            android:drawablePadding="@dimen/d_5dp"
+            android:padding="@dimen/d_10dp"
+            android:lines="1"
+            android:ellipsize="end"
+            android:drawableLeft="@drawable/class_name" />
+
+        <ImageView
+            android:id="@+id/delete_iv"
+            android:src="@mipmap/cross"
+            android:layout_marginRight="@dimen/d_10dp"
+            android:layout_width="@dimen/d_30dp"
+            android:layout_height="@dimen/d_30dp" />
+
+    </LinearLayout>
+
 
 
     <android.support.v7.widget.RecyclerView

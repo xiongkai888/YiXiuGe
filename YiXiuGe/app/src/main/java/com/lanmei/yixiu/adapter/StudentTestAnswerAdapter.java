@@ -8,21 +8,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.bean.ExaminationAnswerBean;
+import com.lanmei.yixiu.bean.StudentTestAnswerBean;
 import com.lanmei.yixiu.helper.ClickAnswerListener;
+import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
+import com.xson.common.utils.StringUtils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
 /**
- * 考试答案
+ * 学生线下考试答案
  */
-public class ExaminationAnswerAdapter extends SwipeRefreshAdapter<ExaminationAnswerBean> {
+public class StudentTestAnswerAdapter extends SwipeRefreshAdapter<StudentTestAnswerBean> {
 
 
-    public ExaminationAnswerAdapter(Context context) {
+    public StudentTestAnswerAdapter(Context context) {
         super(context);
     }
 
@@ -33,7 +35,7 @@ public class ExaminationAnswerAdapter extends SwipeRefreshAdapter<ExaminationAns
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder,final int position) {
-        final ExaminationAnswerBean bean = getItem(position);
+        final StudentTestAnswerBean bean = getItem(position);
         if (bean == null) {
             return;
         }
@@ -62,15 +64,21 @@ public class ExaminationAnswerAdapter extends SwipeRefreshAdapter<ExaminationAns
         }
 
 
-        public void setParameter(ExaminationAnswerBean bean) {
-
+        public void setParameter(StudentTestAnswerBean bean) {
             itemTv.setText(String.valueOf(getAdapterPosition()+1));
-            topicTv.setText(bean.getTopic());
+            if (!StringUtils.isSame(CommonUtils.isOne,bean.getType())){
+                CommonUtils.setCompoundDrawables(context,topicTv,0,0,0);
+                topicTv.setText(bean.getAnswer());
+            }else {
+                if (bean.isClick()){
+                    topicTv.setText("");
+                    CommonUtils.setCompoundDrawables(context,topicTv,bean.isRight()?R.drawable.test_right:R.drawable.test_wrong,0,0);
+                }
+            }
         }
     }
 
     private ClickAnswerListener listener;
-
 
     public void setClickAnswerListener(ClickAnswerListener listener){
         this.listener = listener;

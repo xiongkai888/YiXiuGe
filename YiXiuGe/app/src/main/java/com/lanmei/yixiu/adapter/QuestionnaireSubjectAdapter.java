@@ -1,15 +1,18 @@
 package com.lanmei.yixiu.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
 import com.lanmei.yixiu.bean.QuestionnaireSubjectBean;
+import com.lanmei.yixiu.utils.AKDialog;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.utils.StringUtils;
@@ -46,6 +49,8 @@ public class QuestionnaireSubjectAdapter extends SwipeRefreshAdapter<Questionnai
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        @InjectView(R.id.delete_iv)
+        ImageView deleteIv;
         @InjectView(R.id.title_tv)
         TextView titleTv;
         @InjectView(R.id.recyclerView)
@@ -70,8 +75,31 @@ public class QuestionnaireSubjectAdapter extends SwipeRefreshAdapter<Questionnai
             }else {
                 recyclerView.setVisibility(View.GONE);
             }
+            deleteIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AKDialog.getAlertDialog(context, "确认删除？", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            int position = getAdapterPosition();
+                            getData().remove(position);
+                            notifyItemChanged(position);
+                        }
+                    });
 
+//                    if (listener != null){
+//                        listener.onClick(getAdapterPosition());
+//                    }
+                }
+            });
         }
     }
+
+//    public ClickAnswerListener listener;
+//
+//    public void setClickAnswerListener(ClickAnswerListener listener){
+//        this.listener = listener;
+//    }
+
 
 }
