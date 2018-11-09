@@ -7,6 +7,7 @@ import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.baidu.mapapi.SDKInitializer;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.lanmei.yixiu.bean.ExaminationBean;
+import com.lanmei.yixiu.bean.StudentTestAnswerBean;
 import com.lanmei.yixiu.jpush.JiGuangReceiver;
 import com.lanmei.yixiu.update.UpdateAppConfig;
 import com.lanmei.yixiu.utils.CommonUtils;
@@ -18,6 +19,7 @@ import com.xson.common.utils.UserHelper;
 import com.yzq.zxinglibrary.common.Constant;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cn.jpush.android.api.JPushInterface;
@@ -31,12 +33,13 @@ public class YiXiuApp extends BaseApp {
     public static Context applicationContext;
     private static YiXiuApp instance;
     private Map<String, ExaminationBean> map;
+    private Map<String, List<StudentTestAnswerBean>> answerBeanMap;
 
     @Override
     protected void installMonitor() {
         applicationContext = this;
         instance = this;
-        L.debug = OSSLog.enableLog = true;
+        L.debug = OSSLog.enableLog = false;
         if (L.debug) {
 //            LeakCanary.install(this);//LeakCanary内存泄漏监控
         }
@@ -46,6 +49,30 @@ public class YiXiuApp extends BaseApp {
         initUM();
         initJiGuang();
     }
+
+    //存评估题目(暂时这样)
+    public void saveTestAnswerBean(String id, List<StudentTestAnswerBean> bean) {
+        if (answerBeanMap == null) {
+            answerBeanMap = new HashMap<>();
+        }
+        answerBeanMap.put(id, bean);
+    }
+
+    public void removeTestAnswerBean(String id) {
+        if (map == null) {
+            map = new HashMap<>();
+        }
+        answerBeanMap.remove(id);
+    }
+
+    public List<StudentTestAnswerBean> getTestAnswerBean(String id) {
+        if (answerBeanMap == null) {
+            answerBeanMap = new HashMap<>();
+        }
+        return answerBeanMap.get(id);
+    }
+
+
 
     //存考试题目(暂时这样)
     public void saveExamination(String id, ExaminationBean bean) {

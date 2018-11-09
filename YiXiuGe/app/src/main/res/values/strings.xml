@@ -178,6 +178,7 @@
     <string name="unreviewed">未审核</string>
     <string name="submit_num">%1$s人/%2$s人</string>
     <string name="topic_title">%1$s、%2$s(%3$s)</string>
+    <string name="topic_title1">%1$s、%2$s</string>
     <string name="i_know">我知道了</string>
     <string name="underway">进行中</string>
     <string name="A">A</string>
@@ -210,5 +211,9 @@
     <string name="test_student">学员：%1$s</string>
     <string name="test_time">考试时间：%1$s分钟</string>
     <string name="test_evaluate_name">评估人员：%1$s</string>
+    <string name="score_range">最高%1$s分，最低%2$s分</string>
+    <string name="score">%1$s分</string>
+    <string name="count_down">倒计时：%1$s</string>
+    <string name="overtime">考试已超时</string>
 
 </resources>

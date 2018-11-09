@@ -161,6 +161,8 @@
             android:screenOrientation="portrait" />
         <!-- 上传服务 -->
         <service android:name=".ui.teacher.uploadvideo.UploadVideoService" />
+        <!-- 考试服务 -->
+        <service android:name=".ui.teacher.service.TestService" />
 
         <activity
             android:name=".ui.home.activity.TeacherActivity"

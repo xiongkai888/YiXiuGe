@@ -299,12 +299,12 @@
         <LinearLayout
             android:id="@+id/ll_tests_list"
             style="@style/ll_bottom_h"
-            android:visibility="gone"
+            android:visibility="visible"
             android:padding="@dimen/d_10dp">
 
             <TextView
                 style="@style/text_weight"
-                android:drawableLeft="@drawable/mine_teacher_5"
+                android:drawableLeft="@drawable/mine_2"
                 android:drawablePadding="@dimen/d_10dp"
                 android:gravity="center_vertical"
                 android:text="我的评估" />

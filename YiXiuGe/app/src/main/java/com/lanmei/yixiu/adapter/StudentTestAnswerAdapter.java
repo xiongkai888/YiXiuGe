@@ -24,6 +24,12 @@ import butterknife.InjectView;
 public class StudentTestAnswerAdapter extends SwipeRefreshAdapter<StudentTestAnswerBean> {
 
 
+    private boolean isSubmit;//是否提交了
+
+    public void setSubmit(boolean submit) {
+        isSubmit = submit;
+    }
+
     public StudentTestAnswerAdapter(Context context) {
         super(context);
     }
@@ -34,7 +40,7 @@ public class StudentTestAnswerAdapter extends SwipeRefreshAdapter<StudentTestAns
     }
 
     @Override
-    public void onBindViewHolder2(RecyclerView.ViewHolder holder,final int position) {
+    public void onBindViewHolder2(RecyclerView.ViewHolder holder, final int position) {
         final StudentTestAnswerBean bean = getItem(position);
         if (bean == null) {
             return;
@@ -44,7 +50,7 @@ public class StudentTestAnswerAdapter extends SwipeRefreshAdapter<StudentTestAns
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null){
+                if (listener != null) {
                     listener.onClick(position);
                 }
             }
@@ -63,16 +69,22 @@ public class StudentTestAnswerAdapter extends SwipeRefreshAdapter<StudentTestAns
             ButterKnife.inject(this, view);
         }
 
-
         public void setParameter(StudentTestAnswerBean bean) {
-            itemTv.setText(String.valueOf(getAdapterPosition()+1));
-            if (!StringUtils.isSame(CommonUtils.isOne,bean.getType())){
-                CommonUtils.setCompoundDrawables(context,topicTv,0,0,0);
-                topicTv.setText(bean.getAnswer());
-            }else {
-                if (bean.isClick()){
-                    topicTv.setText("");
-                    CommonUtils.setCompoundDrawables(context,topicTv,bean.isRight()?R.drawable.test_right:R.drawable.test_wrong,0,0);
+            itemTv.setText(String.valueOf(getAdapterPosition() + 1));
+            if (isSubmit) {
+                CommonUtils.setCompoundDrawables(context, topicTv, 0, 0, 0);
+                topicTv.setText(String.format(context.getString(R.string.score), bean.getScore()));
+            } else {
+                if (!StringUtils.isSame(CommonUtils.isOne, bean.getType())) {
+                    CommonUtils.setCompoundDrawables(context, topicTv, 0, 0, 0);
+                    if (!StringUtils.isEmpty(bean.getScore())) {
+                        topicTv.setText(String.format(context.getString(R.string.score), bean.getScore()));
+                    }
+                } else {//
+                    if (!StringUtils.isEmpty(bean.getScore())) {
+                        topicTv.setText("");
+                        CommonUtils.setCompoundDrawables(context, topicTv, StringUtils.isSame(CommonUtils.isOne, bean.getScore()) ? R.drawable.test_right : R.drawable.test_wrong, 0, 0);
+                    }
                 }
             }
         }
@@ -80,7 +92,7 @@ public class StudentTestAnswerAdapter extends SwipeRefreshAdapter<StudentTestAns
 
     private ClickAnswerListener listener;
 
-    public void setClickAnswerListener(ClickAnswerListener listener){
+    public void setClickAnswerListener(ClickAnswerListener listener) {
         this.listener = listener;
     }
 

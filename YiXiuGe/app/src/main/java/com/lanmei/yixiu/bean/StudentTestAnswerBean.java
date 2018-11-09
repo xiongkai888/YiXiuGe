@@ -7,41 +7,39 @@ package com.lanmei.yixiu.bean;
 
 public class StudentTestAnswerBean {
 
-    private String type;
-    private String answer;
-    private boolean isRight;//选择的对错
-    private boolean isClick;//是否点击选择
+    /**
+     * score : 0
+     * text : 2
+     * type : 1
+     */
 
-    public void setClick(boolean click) {
-        isClick = click;
+    private String score;//分数
+    private String text;//备注
+    private String type;//类型
+
+    public String getScore() {
+        return score;
     }
 
-    public boolean isClick() {
-        return isClick;
+    public void setScore(String score) {
+        this.score = score;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getType() {
         return type;
     }
 
-    public String getAnswer() {
-        return answer;
-    }
-
-    public boolean isRight() {
-        return isRight;
-    }
-
     public void setType(String type) {
         this.type = type;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    public void setRight(boolean right) {
-        isRight = right;
-    }
 
 }

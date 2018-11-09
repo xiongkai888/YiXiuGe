@@ -7,13 +7,21 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lanmei.yixiu.R;
+import com.lanmei.yixiu.api.YiXiuGeApi;
 import com.lanmei.yixiu.bean.StudentsBean;
 import com.lanmei.yixiu.bean.TestListBean;
 import com.lanmei.yixiu.event.SelectTestStudentEvent;
+import com.lanmei.yixiu.event.TestFinishEvent;
+import com.lanmei.yixiu.event.TestUidEvent;
+import com.lanmei.yixiu.ui.teacher.service.TestService;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.lanmei.yixiu.utils.FormatTime;
 import com.xson.common.app.BaseActivity;
+import com.xson.common.bean.BaseBean;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.IntentUtil;
+import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 
@@ -96,13 +104,35 @@ public class TestItemActivity extends BaseActivity {
                     UIHelper.ToastMessage(this, "请选择评估学生");
                     return;
                 }
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("bean", bean);
-                bundle.putString("time",testListBean.getE_time());
-                bundle.putString("id",testListBean.getId());
-                IntentUtil.startActivity(this, StudentTestActivity.class,bundle);
+                if (!StringUtils.isEmpty(TestService.uid)) {
+                    if (!StringUtils.isSame(TestService.uid,bean.getUid())){
+                        EventBus.getDefault().post(new TestUidEvent());
+                        return;
+                    }
+                }
+                YiXiuGeApi api = new YiXiuGeApi("app/assess_user_select");
+                api.addParams("id", testListBean.getId());//评估id
+                api.addParams("uid", api.getUserId(this));//教师id
+                api.addParams("sid", bean.getUid());//学生id
+                HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+                    @Override
+                    public void onResponse(BaseBean response) {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("bean", bean);
+                        bundle.putString("time", testListBean.getE_time());
+                        bundle.putString("id", testListBean.getId());
+                        bundle.putString("title", testListBean.getTitle());
+                        IntentUtil.startActivity(getContext(), StudentTestActivity.class, bundle);
+                    }
+                });
                 break;
         }
+    }
+
+    @Subscribe
+    public void testFinishEvent(TestFinishEvent event) {
+        bean = null;
+        testStudentTv.setText(String.format(getString(R.string.test_student), ""));
     }
 
     @Override
