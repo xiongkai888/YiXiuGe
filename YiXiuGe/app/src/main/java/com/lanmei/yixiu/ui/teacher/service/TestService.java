@@ -43,6 +43,10 @@ public class TestService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (!isRunning) {
+            if (intent == null){
+                stopSelf();
+                return START_STICKY;
+            }
             bean = (StudentsBean) intent.getSerializableExtra("bean");
             uid = bean.getUid();
             testTime = Integer.valueOf(intent.getStringExtra("testTime")) * 60;

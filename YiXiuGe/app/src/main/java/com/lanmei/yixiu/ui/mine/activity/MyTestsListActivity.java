@@ -1,12 +1,12 @@
-package com.lanmei.yixiu.ui.teacher.activity;
+package com.lanmei.yixiu.ui.mine.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 
 import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.adapter.TestsListAdapter;
+import com.lanmei.yixiu.adapter.MyTestsListAdapter;
 import com.lanmei.yixiu.api.YiXiuGeApi;
-import com.lanmei.yixiu.bean.TestListBean;
+import com.lanmei.yixiu.bean.MyTestsBean;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
@@ -16,16 +16,14 @@ import com.xson.common.widget.SmartSwipeRefreshLayout;
 import butterknife.InjectView;
 
 /**
- * 我的评估（老师端）
+ * 我的评估(学生)
  */
-public class TestsListActivity extends BaseActivity {
+public class MyTestsListActivity extends BaseActivity {
 
     @InjectView(R.id.toolbar)
     CenterTitleToolbar mToolbar;
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
-    private TestsListAdapter adapter;
-    private SwipeRefreshController<NoPageListBean<TestListBean>> controller;
 
     @Override
     public int getContentViewId() {
@@ -44,16 +42,15 @@ public class TestsListActivity extends BaseActivity {
         actionbar.setHomeAsUpIndicator(R.drawable.back);
         actionbar.setTitle(R.string.my_tests);
 
-        YiXiuGeApi api = new YiXiuGeApi("app/assesslist");
+        YiXiuGeApi api = new YiXiuGeApi("app/assess_list");
         api.addParams("uid", api.getUserId(this));
 
-        adapter = new TestsListAdapter(this);
+        MyTestsListAdapter  adapter = new MyTestsListAdapter(this);
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.setAdapter(adapter);
-        controller = new SwipeRefreshController<NoPageListBean<TestListBean>>(this, smartSwipeRefreshLayout, api, adapter) {
+        SwipeRefreshController<NoPageListBean<MyTestsBean>> controller = new SwipeRefreshController<NoPageListBean<MyTestsBean>>(this, smartSwipeRefreshLayout, api, adapter) {
         };
         controller.loadFirstPage();
-//        adapter.notifyDataSetChanged();
     }
 
 

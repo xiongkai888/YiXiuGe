@@ -229,9 +229,6 @@ public class Examination1Activity extends BaseActivity implements ExaminationCon
             UIHelper.ToastMessage(this, "请答完所有的题目后再提交");
             return;
         }
-//        for (String s:stringList){
-//            L.d(L.TAG,s);
-//        }
         YiXiuGeApi api = new YiXiuGeApi("app/examsub");
         api.addParams("uid", api.getUserId(this)).addParams("id", id)
                 .addParams("result", JsonUtil.getJSONArrayByList(list));
@@ -257,16 +254,15 @@ public class Examination1Activity extends BaseActivity implements ExaminationCon
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
         if (!isSubmit) {
-            L.d(L.TAG, "saveExamination");
             bean.setExam(list);
             bean.setBeanList(beanList);
             YiXiuApp.getInstance().saveExamination(id, bean);
         } else {
             YiXiuApp.getInstance().removeExamination(id);
-            L.d(L.TAG, "removeExamination");
         }
     }
+
 }

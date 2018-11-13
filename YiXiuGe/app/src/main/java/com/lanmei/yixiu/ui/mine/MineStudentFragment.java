@@ -11,6 +11,7 @@ import com.lanmei.yixiu.ui.mine.activity.MyClassScheduleActivity;
 import com.lanmei.yixiu.ui.mine.activity.MyCollectActivity;
 import com.lanmei.yixiu.ui.mine.activity.MyEvaluateActivity;
 import com.lanmei.yixiu.ui.mine.activity.MyNoteActivity;
+import com.lanmei.yixiu.ui.mine.activity.MyTestsListActivity;
 import com.lanmei.yixiu.ui.mine.activity.PersonalDataSubActivity;
 import com.lanmei.yixiu.ui.mine.activity.SettingActivity;
 import com.lanmei.yixiu.ui.teacher.activity.TutorialCoursewareActivity;
@@ -80,7 +81,7 @@ public class MineStudentFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.pic_iv,R.id.ll_courseware,R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_notes, R.id.ll_evaluate, R.id.ll_setting,R.id.class_schedule_tv,R.id.kao_shi_tv})
+    @OnClick({R.id.ll_tests_list,R.id.pic_iv,R.id.ll_courseware,R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_notes, R.id.ll_evaluate, R.id.ll_setting,R.id.class_schedule_tv,R.id.kao_shi_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.pic_iv://个人资料
@@ -114,6 +115,9 @@ public class MineStudentFragment extends BaseFragment {
             case R.id.kao_shi_tv://考试
                 CommonUtils.developing(context);
 //                IntentUtil.startActivity(context, MyExaminationActivity.class);
+                break;
+            case R.id.ll_tests_list://我的评估
+                IntentUtil.startActivity(context, MyTestsListActivity.class);
                 break;
         }
     }

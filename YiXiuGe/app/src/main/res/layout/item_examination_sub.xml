@@ -32,7 +32,7 @@
             style="@style/text12color1593f0"
             android:layout_gravity="right"
             android:background="@drawable/examination_button_bg"
-            android:text="@string/enter_into_examination" />
+            android:text="@string/achievements" />
 
     </LinearLayout>
 

@@ -69,13 +69,13 @@ public class TestPaperListAdapter extends SwipeRefreshAdapter<TestPaperBean> {
             timeTv.setText(String.format(context.getString(R.string.start_and_time),formatTime.formatterTime(bean.getStarttime()),formatTime.formatterTime(bean.getEndtime())));
             switch (bean.getStatus()){
                 case 1:
-                    statusTv.setText("未开始");
+                    statusTv.setText(R.string.not_started);
                     break;
                 case 2:
-                    statusTv.setText("进行中");
+                    statusTv.setText(R.string.underway);
                     break;
                 case 3:
-                    statusTv.setText("已结束");
+                    statusTv.setText(R.string.finished);
                     break;
             }
             typeIv.setImageResource(StringUtils.isSame(CommonUtils.isOne,bean.getType())?R.drawable.temp_teacher_sui:R.drawable.temp_teacher_z);

@@ -39,12 +39,11 @@ public class YiXiuApp extends BaseApp {
     protected void installMonitor() {
         applicationContext = this;
         instance = this;
-        L.debug = OSSLog.enableLog = false;
+        L.debug = OSSLog.enableLog = true;//true,false
         if (L.debug) {
 //            LeakCanary.install(this);//LeakCanary内存泄漏监控
         }
         DemoHelper.getInstance().init(this);
-        UpdateAppConfig.initUpdateApp(this);//app版本更新
         //友盟初始化设置
         initUM();
         initJiGuang();
@@ -129,6 +128,7 @@ public class YiXiuApp extends BaseApp {
 //        MultiDex.install(this);
         SDKInitializer.initialize(this);//百度地图
         super.onCreate();
+        UpdateAppConfig.initUpdateApp(this);//app版本更新
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.lanmei.yixiu.ui.teacher.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,6 +23,7 @@ import com.lanmei.yixiu.event.TestTimeEvent;
 import com.lanmei.yixiu.helper.ClickAnswerListener;
 import com.lanmei.yixiu.helper.SimpleTextWatcher;
 import com.lanmei.yixiu.ui.teacher.service.TestService;
+import com.lanmei.yixiu.utils.AKDialog;
 import com.lanmei.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
@@ -194,6 +196,7 @@ public class StudentTestActivity extends BaseActivity {
                             hasJudge = true;//有打分题
                         }
                         answerBean.setType(bean.getType());
+                        answerBean.setId(bean.getId());
                         beanList.add(answerBean);
                     }
                     answerAdapter.setData(beanList);
@@ -261,7 +264,12 @@ public class StudentTestActivity extends BaseActivity {
                 break;
             case R.id.next_bt:
                 if (index == number - 1) {
-                    submit();
+                    AKDialog.getAlertDialog(this, "确定提交？", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            submit();
+                        }
+                    });
                     break;
                 }
                 index += 1;
@@ -371,13 +379,18 @@ public class StudentTestActivity extends BaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
+    protected void onPause() {
+        super.onPause();
         if (!isSubmit) {
             YiXiuApp.getInstance().saveTestAnswerBean(bean.getUid(), beanList);
         } else {
             YiXiuApp.getInstance().removeTestAnswerBean(bean.getUid());
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

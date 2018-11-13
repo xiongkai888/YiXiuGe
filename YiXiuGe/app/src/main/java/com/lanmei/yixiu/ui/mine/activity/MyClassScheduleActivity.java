@@ -44,7 +44,7 @@ import butterknife.OnClick;
 public class MyClassScheduleActivity extends BaseActivity {
 
     //    @InjectView(R.id.toolbar)
-//    CenterTitleToolbar mToolbar;
+//    CenterTitleToolbar toolbar;
     @InjectView(R.id.calendar)
     CalendarView calendarView;
     @InjectView(R.id.toolbar_name_tv)

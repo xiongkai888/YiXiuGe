@@ -364,7 +364,7 @@ public class CommonUtils {
             img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
             textView.setCompoundDrawables(position == 0 ? img : null, position == 1 ? img : null, position == 2 ? img : null, position == 3 ? img : null); //设置右图标
         } else {//清除文字周围的图片
-            textView.setBackgroundResource(0);
+            textView.setCompoundDrawables(null,null, null,null);
         }
     }
 

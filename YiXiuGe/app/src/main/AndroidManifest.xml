@@ -106,6 +106,9 @@
             android:name=".ui.mine.activity.MyNoteActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.MyTestsListActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.mine.activity.NoteDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -843,7 +846,12 @@
 
         <!-- 极光推送end -->
 
-        <activity android:name=".ui.teacher.activity.TestItemActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.teacher.activity.TestItemActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.mine.activity.StudentTestResultActivity"/>
     </application>
 
 </manifest>
