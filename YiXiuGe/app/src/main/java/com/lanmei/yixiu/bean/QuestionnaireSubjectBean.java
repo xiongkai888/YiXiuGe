@@ -17,6 +17,15 @@ public class QuestionnaireSubjectBean implements Serializable{
         return title;
     }
 
+    private int id;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public void setTitle(String title) {
         this.title = title;

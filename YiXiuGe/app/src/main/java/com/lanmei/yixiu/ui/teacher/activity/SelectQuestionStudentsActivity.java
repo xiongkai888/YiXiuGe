@@ -1,5 +1,6 @@
 package com.lanmei.yixiu.ui.teacher.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
@@ -36,10 +37,20 @@ public class SelectQuestionStudentsActivity extends BaseActivity {
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     private SwipeRefreshController<NoPageListBean<SelectQuestionStudentsBean>> controller;
+    private List<SelectQuestionStudentsBean> list;//所有的班级和学生列表
 
     @Override
     public int getContentViewId() {
         return R.layout.activity_single_listview_no;
+    }
+
+    @Override
+    public void initIntent(Intent intent) {
+        super.initIntent(intent);
+        Bundle bundle = intent.getBundleExtra("bundle");
+        if (bundle != null) {
+            list = (List<SelectQuestionStudentsBean>) bundle.getSerializable("list");
+        }
     }
 
     @Override
@@ -51,15 +62,43 @@ public class SelectQuestionStudentsActivity extends BaseActivity {
         actionbar.setHomeAsUpIndicator(R.drawable.back);
 
         adapter = new SelectQuestionStudentsAdapter(this);
+        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NO_PAGE);
+        smartSwipeRefreshLayout.initWithLinearLayout();
+
+        if (!StringUtils.isEmpty(list)) {
+            adapter.setData(list);
+            smartSwipeRefreshLayout.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            return;
+        }
 
         YiXiuGeApi api = new YiXiuGeApi("app/getclassuser");
-
         adapter = new SelectQuestionStudentsAdapter(this);
-        smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.setAdapter(adapter);
         controller = new SwipeRefreshController<NoPageListBean<SelectQuestionStudentsBean>>(this, smartSwipeRefreshLayout, api, adapter) {
+            @Override
+            public boolean onSuccessResponse(NoPageListBean<SelectQuestionStudentsBean> response) {
+                if (isFinishing()) {
+                    return true;
+                }
+                list = response.data;
+                if (!StringUtils.isEmpty(list)) {
+                    int size = list.size();
+                    for (int i = 0; i < size; i++) {
+                        SelectQuestionStudentsBean bean = list.get(i);
+                        List<SelectQuestionStudentsBean.StudentBean> studentBeanList = bean.getStudent();
+                        if (!StringUtils.isEmpty(studentBeanList)) {
+                            int sizeJ = studentBeanList.size();
+                            for (int j = 0; j < sizeJ; j++) {
+                                studentBeanList.get(j).setParent_id(bean.getParent_id());
+                            }
+                        }
+                    }
+                    return false;
+                }
+                return false;
+            }
         };
-        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NO_PAGE);
         controller.loadFirstPage();
 
     }
@@ -78,11 +117,11 @@ public class SelectQuestionStudentsActivity extends BaseActivity {
             case R.id.action_sure:
                 List<SelectQuestionStudentsBean> list = adapter.getData();
                 List<SelectQuestionStudentsBean.StudentBean> listList = isSelectStudent(list);
-                if (StringUtils.isEmpty(list) || StringUtils.isEmpty(listList)){
-                    UIHelper.ToastMessage(this,"请选择问卷学生");
+                if (StringUtils.isEmpty(list) || StringUtils.isEmpty(listList)) {
+                    UIHelper.ToastMessage(this, "请选择问卷学生");
                     break;
                 }
-                EventBus.getDefault().post(new SelectQuestionStudentsEvent(listList,getCids(list)));
+                EventBus.getDefault().post(new SelectQuestionStudentsEvent(listList, list));
                 finish();
                 break;
         }
@@ -90,45 +129,15 @@ public class SelectQuestionStudentsActivity extends BaseActivity {
     }
 
 
-    public String getCids(List<SelectQuestionStudentsBean> list){
-        String cids = "";
-        if (StringUtils.isEmpty(list)){
-            return cids;
-        }
-        for (SelectQuestionStudentsBean bean:list){
-            List<SelectQuestionStudentsBean.StudentBean> studentBeanList = bean.getStudent();
-            for (SelectQuestionStudentsBean.StudentBean studentBean:studentBeanList){
-                if (studentBean.isSelect()){
-                    cids += bean.getId()+",";
-                    break;
-                }
-            }
-        }
-        return getSubString(cids);
-    }
-
-    /**
-     * 去掉后面最后一个字符
-     *
-     * @param decs
-     * @return
-     */
-    public String getSubString(String decs) {
-        if (StringUtils.isEmpty(decs)) {
-            return decs;
-        }
-        return decs.substring(0, decs.length() - 1);
-    }
-
-    private List<SelectQuestionStudentsBean.StudentBean> isSelectStudent(List<SelectQuestionStudentsBean> list){
-        if (StringUtils.isEmpty(list)){
+    private List<SelectQuestionStudentsBean.StudentBean> isSelectStudent(List<SelectQuestionStudentsBean> list) {
+        if (StringUtils.isEmpty(list)) {
             return null;
         }
         List<SelectQuestionStudentsBean.StudentBean> beanList = new ArrayList<>();
-        for (SelectQuestionStudentsBean bean:list){
+        for (SelectQuestionStudentsBean bean : list) {
             List<SelectQuestionStudentsBean.StudentBean> studentBeanList = bean.getStudent();
-            for (SelectQuestionStudentsBean.StudentBean studentBean:studentBeanList){
-                if (studentBean.isSelect()){
+            for (SelectQuestionStudentsBean.StudentBean studentBean : studentBeanList) {
+                if (studentBean.isSelect()) {
                     beanList.add(studentBean);
                 }
             }

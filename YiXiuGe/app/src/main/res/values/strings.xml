@@ -170,6 +170,7 @@
     <string name="saturday">周六</string>
     <string name="sunday">周日</string>
     <string name="choose_students">请选择学生</string>
+    <string name="choose_subjects">请选择题目</string>
     <string name="answer_sub">答</string>
     <string name="not_started">未开始</string>
     <string name="in_progress">正在进行</string>
@@ -217,6 +218,7 @@
     <string name="overtime">考试已超时</string>
     <string name="my_tests">我的评估</string>
     <string name="marked">已打分</string>
+    <string name="cids">%1$s,%2$s</string>
     <string name="test_result">评估结果</string>
 
 </resources>

@@ -23,7 +23,6 @@ import butterknife.InjectView;
  */
 public class SelectQuestionStudentsSubAdapter extends SwipeRefreshAdapter<SelectQuestionStudentsBean.StudentBean> {
 
-
     public SelectQuestionStudentsSubAdapter(Context context) {
         super(context);
     }

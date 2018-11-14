@@ -159,7 +159,7 @@
                     android:id="@+id/question_num_tv"
                     style="@style/text_weight"
                     android:padding="@dimen/d_5dp"
-                    android:hint="请选择题目" />
+                    android:hint="@string/choose_subjects" />
 
                 <ImageView
                     style="@style/text"

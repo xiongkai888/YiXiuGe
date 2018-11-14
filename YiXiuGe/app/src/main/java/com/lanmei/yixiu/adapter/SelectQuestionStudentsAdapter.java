@@ -43,13 +43,6 @@ public class SelectQuestionStudentsAdapter extends SwipeRefreshAdapter<SelectQue
         }
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.setParameter(bean);
-//        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                bean.setSelect(!bean.isSelect());
-//                notifyDataSetChanged();
-//            }
-//        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -70,7 +63,6 @@ public class SelectQuestionStudentsAdapter extends SwipeRefreshAdapter<SelectQue
 
 
         public void setParameter(final SelectQuestionStudentsBean bean) {
-//            selectIv.setImageResource(bean.isSelect()?R.drawable.pay_on :R.drawable.pay_off);
             nameTv.setText(bean.getParent_name()+bean.getName());
             final SelectQuestionStudentsSubAdapter adapter = new SelectQuestionStudentsSubAdapter(context);
             recyclerView.setNestedScrollingEnabled(false);
@@ -84,6 +76,7 @@ public class SelectQuestionStudentsAdapter extends SwipeRefreshAdapter<SelectQue
                     bean.setAll(isAll);
                 }
             });
+            selectIv.setImageResource(bean.isAll()?R.drawable.pay_on:R.drawable.pay_off);
             selectIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -96,7 +89,7 @@ public class SelectQuestionStudentsAdapter extends SwipeRefreshAdapter<SelectQue
                         studentBean.setSelect(isAll);
                     }
                     bean.setAll(isAll);
-                    selectIv.setImageResource(isAll?R.drawable.pay_on:R.drawable.pay_off);
+                    selectIv.setImageResource(bean.isAll()?R.drawable.pay_on:R.drawable.pay_off);
                     adapter.notifyDataSetChanged();
                 }
             });

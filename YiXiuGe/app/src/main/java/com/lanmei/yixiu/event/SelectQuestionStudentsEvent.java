@@ -12,19 +12,18 @@ import java.util.List;
 public class SelectQuestionStudentsEvent {
 
     private List<SelectQuestionStudentsBean.StudentBean> list;
+    private  List<SelectQuestionStudentsBean> beanList;
 
-    public String getGetCids() {
-        return getCids;
+    public List<SelectQuestionStudentsBean> getBeanList() {
+        return beanList;
     }
-
-    private String getCids;
 
     public List<SelectQuestionStudentsBean.StudentBean> getList() {
         return list;
     }
 
-    public SelectQuestionStudentsEvent(List<SelectQuestionStudentsBean.StudentBean> list,String getCids){
+    public SelectQuestionStudentsEvent(List<SelectQuestionStudentsBean.StudentBean> list,List<SelectQuestionStudentsBean> beanList){
         this.list = list;
-        this.getCids = getCids;
+        this.beanList = beanList;
     }
 }

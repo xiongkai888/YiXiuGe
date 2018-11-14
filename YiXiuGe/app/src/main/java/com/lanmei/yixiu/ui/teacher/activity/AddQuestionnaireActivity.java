@@ -34,6 +34,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.Serializable;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -63,8 +64,8 @@ public class AddQuestionnaireActivity extends BaseActivity {
     private long startTime;
     private long endTime;
     private List<SelectQuestionStudentsBean.StudentBean> studentBeanList;//选择的学生
+    private List<SelectQuestionStudentsBean> beanList;//所有的班级和学生列表
     private List<QuestionnaireSubjectBean> questionnaireSubjectBeanList;//问卷题目
-    private String cids;
 
 
     @Override
@@ -179,13 +180,21 @@ public class AddQuestionnaireActivity extends BaseActivity {
             UIHelper.ToastMessage(this, R.string.choose_students);
             return;
         }
+        if (StringUtils.isEmpty(questionnaireSubjectBeanList)) {
+            UIHelper.ToastMessage(this, R.string.choose_subjects);
+            return;
+        }
+        int size = questionnaireSubjectBeanList.size();
+        for (int i = 0; i < size; i++) {
+            questionnaireSubjectBeanList.get(i).setId(i + 1);
+        }
         JSONArray array = JsonUtil.getJSONArrayByList(questionnaireSubjectBeanList);
         JSONArray arrayPeople = JsonUtil.getJSONArrayByList(studentBeanList);
 
         YiXiuGeApi api = new YiXiuGeApi("app/questions_add");
         api.addParams("uid", api.getUserId(this)).addParams("title", title).addParams("number", arrayPeople)
-                .addParams("content", CommonUtils.getStringByEditText(noticeEt)).addParams("quest_num", questionnaireSubjectBeanList.size())
-                .addParams("cid", cids).addParams("quest", array).addParams("starttime", this.startTime)
+                .addParams("content", CommonUtils.getStringByEditText(noticeEt)).addParams("quest_num", size)
+                .addParams("cid", getCidsJSONArray()).addParams("quest", array).addParams("starttime", this.startTime)
                 .addParams("endtime", this.endTime);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
@@ -193,7 +202,7 @@ public class AddQuestionnaireActivity extends BaseActivity {
                 if (isFinishing()) {
                     return;
                 }
-                UIHelper.ToastMessage(getContext(),response.getMsg());
+                UIHelper.ToastMessage(getContext(), response.getMsg());
                 EventBus.getDefault().post(new AddQuestionnaireEvent());
                 finish();
             }
@@ -201,13 +210,25 @@ public class AddQuestionnaireActivity extends BaseActivity {
 
     }
 
+    private JSONArray getCidsJSONArray() {
+        List<String> list = new ArrayList<>();
+        int size = studentBeanList.size();
+        for (int i = 0; i < size; i++) {
+            SelectQuestionStudentsBean.StudentBean bean = studentBeanList.get(i);
+            L.d(L.TAG,i+":"+String.format(getString(R.string.cids), bean.getParent_id(), bean.getId()));
+            list.add(String.format(getString(R.string.cids), bean.getParent_id(), bean.getId()));
+        }
+        return JsonUtil.getJSONArrayByList(list);
+    }
 
     @OnClick({R.id.ll_student_num, R.id.ll_question_num, R.id.start_time_tv, R.id.end_time_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_student_num:
 //                CommonUtils.developing(this);
-                IntentUtil.startActivity(this, SelectQuestionStudentsActivity.class);
+                Bundle bundle1 = new Bundle();
+                bundle1.putSerializable("list", (Serializable) beanList);
+                IntentUtil.startActivity(this, SelectQuestionStudentsActivity.class, bundle1);
                 break;
             case R.id.ll_question_num:
                 Bundle bundle = new Bundle();
@@ -233,8 +254,8 @@ public class AddQuestionnaireActivity extends BaseActivity {
     @Subscribe
     public void selectQuestionStudentsEvent(SelectQuestionStudentsEvent event) {
         studentBeanList = event.getList();
-        cids = event.getGetCids();
-        L.d(L.TAG, cids);
+        getCidsJSONArray();
+        beanList = event.getBeanList();
         studentNumTv.setText(String.format(getString(R.string.num_person), String.valueOf(studentBeanList.size())));
     }
 

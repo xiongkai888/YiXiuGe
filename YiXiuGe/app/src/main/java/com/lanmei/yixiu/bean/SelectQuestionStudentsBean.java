@@ -1,12 +1,13 @@
 package com.lanmei.yixiu.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by xkai on 2018/10/19.
  */
 
-public class SelectQuestionStudentsBean {
+public class SelectQuestionStudentsBean implements Serializable{
 
     /**
      * id : 48
@@ -81,15 +82,24 @@ public class SelectQuestionStudentsBean {
         this.student = student;
     }
 
-    public static class StudentBean {
+    public static class StudentBean implements Serializable{
         /**
          * id : 820517
          * realname : b_1341615****
          */
 
         private String id;
+        private String parent_id;//自己是手动加的
         private String realname;
         private boolean isSelect;
+
+        public String getParent_id() {
+            return parent_id;
+        }
+
+        public void setParent_id(String parent_id) {
+            this.parent_id = parent_id;
+        }
 
         public void setSelect(boolean select) {
             isSelect = select;
