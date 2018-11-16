@@ -215,7 +215,7 @@ public class AddQuestionnaireActivity extends BaseActivity {
         int size = studentBeanList.size();
         for (int i = 0; i < size; i++) {
             SelectQuestionStudentsBean.StudentBean bean = studentBeanList.get(i);
-            L.d(L.TAG,i+":"+String.format(getString(R.string.cids), bean.getParent_id(), bean.getId()));
+//            L.d(L.TAG,i+":"+String.format(getString(R.string.cids), bean.getParent_id(), bean.getId()));
             list.add(String.format(getString(R.string.cids), bean.getParent_id(), bean.getId()));
         }
         return JsonUtil.getJSONArrayByList(list);
@@ -261,7 +261,7 @@ public class AddQuestionnaireActivity extends BaseActivity {
 
     //添加问卷题目后调用
     @Subscribe
-    public void addquestionnaireSubjectEvent(AddQuestionnaireSubjectEvent event) {
+    public void addQuestionnaireSubjectEvent(AddQuestionnaireSubjectEvent event) {
         questionnaireSubjectBeanList = event.getList();
         questionNumTv.setText(String.format(getString(R.string.num_question), String.valueOf(questionnaireSubjectBeanList.size())));
     }

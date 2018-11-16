@@ -3,10 +3,8 @@ package com.xson.common.app;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Intent;
-import android.os.StrictMode;
 import android.util.Log;
 
-import com.umeng.analytics.MobclickAgent;
 import com.xson.common.api.AbstractApi;
 import com.xson.common.utils.L;
 import com.xson.common.utils.SysUtils;
@@ -23,23 +21,18 @@ public abstract class BaseApp extends Application implements Thread.UncaughtExce
     @SuppressLint("NewApi")
     public void init() {
         installMonitor();
-        if (SysUtils.isDebug(this)) {
-            L.debug = true;
-            //内存泄漏监控
-            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-            builder.detectAll();
-            builder.penaltyLog();
-            StrictMode.setVmPolicy(builder.build());
-        }
+
+        // 捕捉未知异常(崩溃报告)
+//        Thread.setDefaultUncaughtExceptionHandler(this);
+
+        AbstractApi.API_URL = (String) SysUtils.getBuildConfigValue(this, "API_URL");
+
         // 友盟捕获异常
 //        MobclickAgent.setCatchUncaughtExceptions(true);
-        // 捕捉未知异常
-        Thread.setDefaultUncaughtExceptionHandler(this);
-        // fix: java.lang.IllegalArgumentException: You must not call setTag() on a view Glide is targeting
-//        ViewTarget.setTagId(R.id.tag_first);
-        AbstractApi.API_URL = (String) SysUtils.getBuildConfigValue(this, "API_URL");
+        // 打开统计SDK调试模式（上线时记得关闭）
 //        MobclickAgent.setDebugMode( true );
-        MobclickAgent.openActivityDurationTrack(false);
+        //禁止默认的页面统计功能，这样将不会再自动统计Activity页面。（包含Activity、Fragment或View的应用）
+//        MobclickAgent.openActivityDurationTrack(false);
     }
 
     @Override

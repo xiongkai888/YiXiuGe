@@ -220,5 +220,7 @@
     <string name="marked">已打分</string>
     <string name="cids">%1$s,%2$s</string>
     <string name="test_result">评估结果</string>
+    <string name="choose_questionnaires_students">选择问卷学生</string>
+    <string name="choose_questionnaires_students_q">请选择问卷学生</string>
 
 </resources>

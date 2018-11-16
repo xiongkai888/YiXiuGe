@@ -493,6 +493,10 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
             hideLoadingLayout();
     }
 
+    public void addOnItemTouchListener(RecyclerView.OnItemTouchListener listener){
+        recyclerView.addOnItemTouchListener(listener);
+    }
+
     public void scrollToPosition(int position) {
         recyclerView.scrollToPosition(position);
     }

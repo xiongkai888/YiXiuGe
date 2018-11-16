@@ -57,7 +57,7 @@ public class SelectQuestionStudentsActivity extends BaseActivity {
     protected void initAllMembersView(Bundle savedInstanceState) {
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setTitle("选择问卷学生");
+        actionbar.setTitle(R.string.choose_questionnaires_students);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.back);
 
@@ -100,7 +100,6 @@ public class SelectQuestionStudentsActivity extends BaseActivity {
             }
         };
         controller.loadFirstPage();
-
     }
 
 
@@ -118,7 +117,7 @@ public class SelectQuestionStudentsActivity extends BaseActivity {
                 List<SelectQuestionStudentsBean> list = adapter.getData();
                 List<SelectQuestionStudentsBean.StudentBean> listList = isSelectStudent(list);
                 if (StringUtils.isEmpty(list) || StringUtils.isEmpty(listList)) {
-                    UIHelper.ToastMessage(this, "请选择问卷学生");
+                    UIHelper.ToastMessage(this, R.string.choose_questionnaires_students_q);
                     break;
                 }
                 EventBus.getDefault().post(new SelectQuestionStudentsEvent(listList, list));
