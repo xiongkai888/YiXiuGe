@@ -1,6 +1,11 @@
 package com.xson.common.api;
 
+import android.content.Context;
+
+import com.xson.common.bean.UserBean;
 import com.xson.common.utils.L;
+import com.xson.common.utils.StringUtils;
+import com.xson.common.utils.UserHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +52,12 @@ public abstract class AbstractApi {
         paramsHashMap.put(key, value);
         return this;
     }
+
+    public String getUserId(Context context) {
+        UserBean userBean = UserHelper.getInstance(context).getUserBean();
+        return StringUtils.isEmpty(userBean) ? "" : userBean.getId()+"";
+    }
+
 
     public Map<String, Object> getParams() {
         HashMap<String, Object> params = new HashMap<String, Object>();

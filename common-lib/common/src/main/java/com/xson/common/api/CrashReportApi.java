@@ -4,11 +4,9 @@ package com.xson.common.api;
  * @author Jecelyin <jecelyin@gmail.com>
  * @since 2014.01.13
  */
-public class CrashReportApi extends AbstractApi
-{
+public class CrashReportApi extends AbstractApi {
     @Override
-    protected String getPath()
-    {
+    protected String getPath() {
         return "/report/report_app_error";
     }
 
@@ -17,8 +15,7 @@ public class CrashReportApi extends AbstractApi
         return Method.POST;
     }
 
-    private String appVersion, phoneModel, androidVersion
-            ,screen, freeMem, trace, email, comment;
+    private String appVersion, phoneModel, androidVersion, screen, freeMem, trace, email, comment;
 
     public String getAppVersion() {
         return appVersion;
