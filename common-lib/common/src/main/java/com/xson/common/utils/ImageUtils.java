@@ -405,9 +405,9 @@ public class ImageUtils {
         File path ;
         if (hasSDCardMounted()) {
             path = context.getExternalCacheDir();
-            path=new File(path,"_lanmei");
+            path=new File(path,"_medui");
         } else {
-            path = new File(context.getCacheDir(), "_lanmei"/*+context.getPackageName()*/);
+            path = new File(context.getCacheDir(), "_medui"/*+context.getPackageName()*/);
         }
 
         File file;

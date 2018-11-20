@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.lanmei.yixiu.widget.KaiSpinner xmlns:android="http://schemas.android.com/apk/res/android"
+<com.medui.yixiu.widget.KaiSpinner xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/evaluate_bar_bg">
@@ -18,4 +18,4 @@
         android:paddingRight="@dimen/d_10dp"
         android:src="@drawable/common_filter_arrow_down" />
 
-</com.lanmei.yixiu.widget.KaiSpinner>
+</com.medui.yixiu.widget.KaiSpinner>

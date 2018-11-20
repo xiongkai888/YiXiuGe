@@ -15,7 +15,7 @@ import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMConferenceStream
 import com.hyphenate.chat.EMStreamStatistics
 import com.hyphenate.util.EMLog
-import com.lanmei.yixiu.R
+import com.medui.yixiu.R
 import kotlinx.android.synthetic.main.em_layout_debug_detail.view.*
 import kotlinx.android.synthetic.main.em_layout_debug_panel.view.*
 

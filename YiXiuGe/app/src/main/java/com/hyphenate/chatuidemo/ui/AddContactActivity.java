@@ -26,8 +26,8 @@ import android.widget.Toast;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
-import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.utils.CommonUtils;
+import com.medui.yixiu.R;
+import com.medui.yixiu.utils.CommonUtils;
 import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
 

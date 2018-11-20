@@ -15,6 +15,6 @@ public class OssUserInfo {
     public static final String newHostId = "images.yxg-medu.com";//
     public static final String aliyuncs = testBucket+"."+endpoint;
 
-    public static final String uploadPath = "lanmei/yixiuge/";
+    public static final String uploadPath = "medui/yixiuge/";
 
 }

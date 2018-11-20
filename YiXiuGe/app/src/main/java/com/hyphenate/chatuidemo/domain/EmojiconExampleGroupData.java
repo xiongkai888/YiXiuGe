@@ -3,8 +3,8 @@ package com.hyphenate.chatuidemo.domain;
 import com.hyphenate.easeui.domain.EaseEmojicon;
 import com.hyphenate.easeui.domain.EaseEmojicon.Type;
 import com.hyphenate.easeui.domain.EaseEmojiconGroupEntity;
-import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.YiXiuApp;
+import com.medui.yixiu.R;
+import com.medui.yixiu.YiXiuApp;
 
 import java.util.Arrays;
 

@@ -10,7 +10,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.chatuidemo.conference.ConferenceActivity;
 import com.hyphenate.util.EasyUtils;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 /**
  * 开屏页

@@ -26,7 +26,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.util.DateUtils;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 import java.util.Date;
 import java.util.List;

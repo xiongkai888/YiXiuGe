@@ -21,7 +21,7 @@ import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.model.EaseDingMessageHelper;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.util.NetUtils;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 /**
  * 环信会话列表

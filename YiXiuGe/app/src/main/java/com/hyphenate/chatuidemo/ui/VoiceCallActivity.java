@@ -38,7 +38,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 import java.util.UUID;
 

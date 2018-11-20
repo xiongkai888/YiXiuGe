@@ -21,8 +21,8 @@ import com.hyphenate.chatuidemo.ui.ChatFragment.HEART_BEAT_RATE
 import com.hyphenate.easeui.utils.EaseUserUtils
 import com.hyphenate.exceptions.HyphenateException
 import com.hyphenate.util.EMLog
-import com.lanmei.yixiu.R
-import com.lanmei.yixiu.event.UserBeanEvent
+import com.medui.yixiu.R
+import com.medui.yixiu.event.UserBeanEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 

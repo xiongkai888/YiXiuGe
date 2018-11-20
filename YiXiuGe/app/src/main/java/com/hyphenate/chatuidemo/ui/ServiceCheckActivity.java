@@ -15,7 +15,7 @@ import com.hyphenate.chat.EMCheckType;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 /**
  * Created by zhangsong on 17-11-15.

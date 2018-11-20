@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/kkd"
-        android:name="com.lanmei.yixiu.ui.home.fragment.ConversationListFragment"
+        android:name="com.medui.yixiu.ui.home.fragment.ConversationListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>

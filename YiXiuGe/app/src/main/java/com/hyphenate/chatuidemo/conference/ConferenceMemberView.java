@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hyphenate.media.EMCallSurfaceView;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 import com.superrtc.sdk.VideoView;
 
 /**

@@ -12,7 +12,7 @@ import android.view.WindowManager;
 
 import com.hyphenate.easeui.model.EaseCompat;
 import com.hyphenate.util.EMLog;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 /**
  * Created by lzan13 on 2017/3/27.

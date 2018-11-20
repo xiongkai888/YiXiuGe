@@ -46,7 +46,7 @@ import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.media.EMCallSurfaceView;
 import com.hyphenate.util.EMLog;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 import com.superrtc.sdk.VideoView;
 
 import java.io.File;

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 
 public class NamePasswordActivity extends BaseActivity {

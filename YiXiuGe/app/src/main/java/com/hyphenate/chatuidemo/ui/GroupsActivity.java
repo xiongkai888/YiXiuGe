@@ -38,7 +38,7 @@ import com.hyphenate.chatuidemo.Constant;
 import com.hyphenate.chatuidemo.adapter.GroupAdapter;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.exceptions.HyphenateException;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 import java.util.List;
 

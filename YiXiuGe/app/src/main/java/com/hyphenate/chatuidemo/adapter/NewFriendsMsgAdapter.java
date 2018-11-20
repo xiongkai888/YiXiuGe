@@ -31,7 +31,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.db.InviteMessgeDao;
 import com.hyphenate.chatuidemo.domain.InviteMessage;
 import com.hyphenate.chatuidemo.domain.InviteMessage.InviteMessageStatus;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 import java.util.List;
 

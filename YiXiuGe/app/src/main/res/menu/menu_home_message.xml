@@ -6,7 +6,7 @@
     <item
         android:id="@+id/action_home_info"
         android:title=""
-        app:actionProviderClass="com.lanmei.yixiu.ui.home.HomeActionProvider"
+        app:actionProviderClass="com.medui.yixiu.ui.home.HomeActionProvider"
         app:showAsAction="always" />
 
 </menu>

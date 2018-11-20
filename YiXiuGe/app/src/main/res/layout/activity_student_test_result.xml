@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.lanmei.yixiu.ui.mine.activity.StudentTestResultActivity">
+    tools:context="com.medui.yixiu.ui.mine.activity.StudentTestResultActivity">
 
     <include layout="@layout/include_centertitletoolbar" />
 

@@ -48,7 +48,7 @@ import com.hyphenate.chatuidemo.video.util.Utils;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.PathUtil;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 public class ChatRowLive extends EaseChatRow {
 

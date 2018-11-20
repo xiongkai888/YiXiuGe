@@ -24,7 +24,7 @@ import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.exceptions.HyphenateException;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 /**
  * register screen

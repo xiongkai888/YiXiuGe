@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 import com.hyphenate.chatuidemo.DemoModel;
 import com.hyphenate.easeui.widget.EaseTitleBar;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 public class SetServersActivity extends BaseActivity {
 

@@ -20,7 +20,7 @@ import android.widget.ListView;
 import com.hyphenate.chatuidemo.adapter.NewFriendsMsgAdapter;
 import com.hyphenate.chatuidemo.db.InviteMessgeDao;
 import com.hyphenate.chatuidemo.domain.InviteMessage;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 import java.util.Collections;
 import java.util.List;

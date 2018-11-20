@@ -34,7 +34,7 @@ import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.easeui.adapter.EaseContactAdapter;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.widget.EaseSidebar;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -49,8 +49,8 @@ import com.hyphenate.chatuidemo.runtimepermissions.PermissionsManager;
 import com.hyphenate.chatuidemo.runtimepermissions.PermissionsResultAction;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
-import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.YiXiuApp;
+import com.medui.yixiu.R;
+import com.medui.yixiu.YiXiuApp;
 import com.xson.common.utils.L;
 import com.xson.common.utils.UserHelper;
 
@@ -113,11 +113,11 @@ public class MainActivity extends BaseActivity {
 						getIntent().getBooleanExtra(Constant.ACCOUNT_KICKED_BY_OTHER_DEVICE, false))) {
 			DemoHelper.getInstance().logout(false,null);
 			finish();
-			startActivity(new Intent(this, com.lanmei.yixiu.ui.login.LoginActivity.class));
+			startActivity(new Intent(this, com.medui.yixiu.ui.login.LoginActivity.class));
 			return;
 		} else if (getIntent() != null && getIntent().getBooleanExtra("isConflict", false)) {
 			finish();
-			startActivity(new Intent(this, com.lanmei.yixiu.ui.login.LoginActivity.class));
+			startActivity(new Intent(this, com.medui.yixiu.ui.login.LoginActivity.class));
 			return;
 		}
 		setContentView(R.layout.em_activity_main);
@@ -513,7 +513,7 @@ public class MainActivity extends BaseActivity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.cancel();
-						Intent intent = new Intent(MainActivity.this, com.lanmei.yixiu.ui.login.LoginActivity.class);
+						Intent intent = new Intent(MainActivity.this, com.medui.yixiu.ui.login.LoginActivity.class);
 						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 						startActivity(intent);
 						exceptionBuilder = null;
@@ -541,7 +541,7 @@ public class MainActivity extends BaseActivity {
         } else if (intent.getBooleanExtra(Constant.ACCOUNT_KICKED_BY_CHANGE_PASSWORD, false) ||
                 intent.getBooleanExtra(Constant.ACCOUNT_KICKED_BY_OTHER_DEVICE, false)) {
             this.finish();
-            startActivity(new Intent(this, com.lanmei.yixiu.ui.login.LoginActivity.class));
+            startActivity(new Intent(this, com.medui.yixiu.ui.login.LoginActivity.class));
         }
 	}
 
@@ -567,7 +567,7 @@ public class MainActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             public void run() {
                                 finish();
-                                startActivity(new Intent(MainActivity.this, com.lanmei.yixiu.ui.login.LoginActivity.class));
+                                startActivity(new Intent(MainActivity.this, com.medui.yixiu.ui.login.LoginActivity.class));
                             }
                         });
                     }

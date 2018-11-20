@@ -53,8 +53,8 @@ import com.hyphenate.easeui.widget.EaseExpandGridView;
 import com.hyphenate.easeui.widget.EaseSwitchButton;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
-import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.event.UserBeanEvent;
+import com.medui.yixiu.R;
+import com.medui.yixiu.event.UserBeanEvent;
 import com.xson.common.bean.UserBean;
 import com.xson.common.utils.L;
 
@@ -1094,7 +1094,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                             EMLog.d(TAG, st11);
                             // 进入选人页面
                             startActivityForResult(
-                                    (new Intent(GroupDetailsActivity.this, com.lanmei.yixiu.ui.message.activity.GroupPickContactsActivity.class).putExtra("groupId", groupId)),
+                                    (new Intent(GroupDetailsActivity.this, com.medui.yixiu.ui.message.activity.GroupPickContactsActivity.class).putExtra("groupId", groupId)),
                                     REQUEST_CODE_ADD_USER);
                         }
                     });

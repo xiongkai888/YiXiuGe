@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.lanmei.yixiu">
+    package="com.medui.yixiu">
 
     <!-- 极光推送 start -->
     <permission
-        android:name="com.lanmei.yixiu.permission.JPUSH_MESSAGE"
+        android:name="com.medui.yixiu.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
     <!-- Required -->
-    <uses-permission android:name="com.lanmei.yixiu.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="com.medui.yixiu.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
@@ -47,24 +47,24 @@
     <!-- bugly end -->
 
     <permission
-        android:name="com.lanmei.yixiu.permission.MIPUSH_RECEIVE"
+        android:name="com.medui.yixiu.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signatureOrSystem" />
 
-    <uses-permission android:name="com.lanmei.yixiu.permission.MIPUSH_RECEIVE" />
+    <uses-permission android:name="com.medui.yixiu.permission.MIPUSH_RECEIVE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- 8.0安装apk权限 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <!-- 环信权限end -->
     <application
-        android:name=".YiXiuApp"
+        android:name="com.medui.yixiu.YiXiuApp"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity">
+        <activity android:name="com.medui.yixiu.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -75,7 +75,7 @@
         <!-- fileProvider配置访问路径，适配7.0及其以上 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.lanmei.yixiu.fileProvider"
+            android:authorities="com.medui.yixiu.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -84,212 +84,212 @@
         </provider>
 
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name="com.medui.yixiu.ui.login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.login.ProtocolActivity"
+            android:name="com.medui.yixiu.ui.login.ProtocolActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.login.RegisterActivity"
+            android:name="com.medui.yixiu.ui.login.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.medui.yixiu.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.scan.ScanActivity"
+            android:name="com.medui.yixiu.ui.scan.ScanActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.MyExaminationActivity"
+            android:name="com.medui.yixiu.ui.mine.activity.MyExaminationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.MyNoteActivity"
+            android:name="com.medui.yixiu.ui.mine.activity.MyNoteActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.MyTestsListActivity"
+            android:name="com.medui.yixiu.ui.mine.activity.MyTestsListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.NoteDetailsActivity"
+            android:name="com.medui.yixiu.ui.mine.activity.NoteDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.NewsDetailsActivity"
+            android:name="com.medui.yixiu.ui.home.activity.NewsDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.PublishNoteActivity"
+            android:name="com.medui.yixiu.ui.mine.activity.PublishNoteActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.SettingActivity"
+            android:name="com.medui.yixiu.ui.mine.activity.SettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.ShowEnclosureActivity"
+            android:name="com.medui.yixiu.ui.mine.activity.ShowEnclosureActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.PersonalCompileSubActivity"
+            android:name="com.medui.yixiu.ui.mine.activity.PersonalCompileSubActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.PersonalDataSubActivity"
+            android:name="com.medui.yixiu.ui.mine.activity.PersonalDataSubActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.MyEvaluateActivity"
+            android:name="com.medui.yixiu.ui.mine.activity.MyEvaluateActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.MyCheckingInActivity"
+            android:name="com.medui.yixiu.ui.mine.activity.MyCheckingInActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.ExaminationResultActivity"
+            android:name="com.medui.yixiu.ui.mine.activity.ExaminationResultActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.ClassDetailsActivity"
+            android:name="com.medui.yixiu.ui.mine.activity.ClassDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.CheckingInManageActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.CheckingInManageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.ExaminationActivity"
+            android:name="com.medui.yixiu.ui.mine.activity.ExaminationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.Examination1Activity"
+            android:name="com.medui.yixiu.ui.mine.activity.Examination1Activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.MyClassScheduleActivity"
+            android:name="com.medui.yixiu.ui.mine.activity.MyClassScheduleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.MyCollectActivity"
+            android:name="com.medui.yixiu.ui.mine.activity.MyCollectActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".webviewpage.PhotoBrowserActivity"
+            android:name="com.medui.yixiu.webviewpage.PhotoBrowserActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.message.activity.NoticeActivity"
+            android:name="com.medui.yixiu.ui.message.activity.NoticeActivity"
             android:screenOrientation="portrait" />
         <!-- 上传服务 -->
-        <service android:name=".ui.teacher.uploadvideo.UploadVideoService" />
+        <service android:name="com.medui.yixiu.ui.teacher.uploadvideo.UploadVideoService" />
         <!-- 考试服务 -->
-        <service android:name=".ui.teacher.service.TestService" />
+        <service android:name="com.medui.yixiu.ui.teacher.service.TestService" />
 
         <activity
-            android:name=".ui.home.activity.TeacherActivity"
+            android:name="com.medui.yixiu.ui.home.activity.TeacherActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.TeacherDetailsActivity"
+            android:name="com.medui.yixiu.ui.home.activity.TeacherDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.TeacherDetailsSubActivity"
+            android:name="com.medui.yixiu.ui.home.activity.TeacherDetailsSubActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.NewsActivity"
+            android:name="com.medui.yixiu.ui.home.activity.NewsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.NewsSubActivity"
+            android:name="com.medui.yixiu.ui.home.activity.NewsSubActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.NoticeDetailsActivity"
+            android:name="com.medui.yixiu.ui.home.activity.NoticeDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.QuestionnaireActivity"
+            android:name="com.medui.yixiu.ui.home.activity.QuestionnaireActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.CourseDetailsActivity"
+            android:name="com.medui.yixiu.ui.home.activity.CourseDetailsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.ConversationListActivity"
+            android:name="com.medui.yixiu.ui.home.activity.ConversationListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.SelectStudentsActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.SelectStudentsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.SelectQuestionStudentsActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.SelectQuestionStudentsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".search.SearchCourseActivity"
+            android:name="com.medui.yixiu.search.SearchCourseActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.TeachingAttachmentsActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.TeachingAttachmentsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.StudentTestActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.StudentTestActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.SelectTestStudentActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.SelectTestStudentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.MyTutorialCoursewareActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.MyTutorialCoursewareActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.TutorialCoursewareActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.TutorialCoursewareActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.TestsListActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.TestsListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.UploadVideoListActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.UploadVideoListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.EvaluateActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.EvaluateActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.CourseListActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.CourseListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.TestPaperListActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.TestPaperListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.ClassSelectActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.ClassSelectActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.ClassHourActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.ClassHourActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.AddQuestionnaireActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.AddQuestionnaireActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.AddExaminationActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.AddExaminationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.AddCheckInActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.AddCheckInActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.AddQuestionnaireOptionActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.AddQuestionnaireOptionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.AddQuestionnaireSubjectActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.AddQuestionnaireSubjectActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.AnswerQuestionnaireActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.AnswerQuestionnaireActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.ExaminationDetailsActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.ExaminationDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.ExamTopicsActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.ExamTopicsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.PublishClassHourActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.PublishClassHourActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.MyCourseActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.MyCourseActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.PublishCourseActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.PublishCourseActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.PublishCoursewareActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.PublishCoursewareActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.QuestionnaireManagementActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.QuestionnaireManagementActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.SearchCoursewareActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.SearchCoursewareActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.activity.ExaminationManagementActivity"
+            android:name="com.medui.yixiu.ui.teacher.activity.ExaminationManagementActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.message.activity.GroupPickContactsActivity"
+            android:name="com.medui.yixiu.ui.message.activity.GroupPickContactsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.message.activity.SiXinActivity"
+            android:name="com.medui.yixiu.ui.message.activity.SiXinActivity"
             android:screenOrientation="portrait" />
         <!-- 环信开始 -->
 
@@ -681,14 +681,14 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="4tK9DNq1dUmkVdgwaCH1QUScrpouEOcz" />
+            android:value="FSOUiCKGP4t3OiddGGMMooGKfD3GNvWB" />
 
         <!-- 环信结束 -->
 
 
         <!-- 微信分享 -->
         <activity
-            android:name=".wxapi.WXEntryActivity"
+            android:name="com.medui.yixiu.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
@@ -721,7 +721,7 @@
         <!-- since 3.0.9 Required SDK 核心功能 -->
         <provider
             android:name="cn.jpush.android.service.DataProvider"
-            android:authorities="com.lanmei.yixiu.DataProvider"
+            android:authorities="com.medui.yixiu.DataProvider"
             android:exported="true"
             tools:replace="android:exported" />
 
@@ -735,14 +735,14 @@
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.DaemonService" />
 
-                <category android:name="com.lanmei.yixiu" />
+                <category android:name="com.medui.yixiu" />
             </intent-filter>
         </service>
 
         <!-- since 3.1.0 Required SDK 核心功能 -->
         <provider
             android:name="cn.jpush.android.service.DownloadProvider"
-            android:authorities="com.lanmei.yixiu.DownloadProvider"
+            android:authorities="com.medui.yixiu.DownloadProvider"
             android:exported="true" />
 
         <!-- Required SDK 核心功能 -->
@@ -752,7 +752,7 @@
             <intent-filter android:priority="1000">
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
 
-                <category android:name="com.lanmei.yixiu" />
+                <category android:name="com.medui.yixiu" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -777,7 +777,7 @@
                 <action android:name="cn.jpush.android.ui.PushActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.lanmei.yixiu" />
+                <category android:name="com.medui.yixiu" />
             </intent-filter>
         </activity>
 
@@ -789,7 +789,7 @@
             android:theme="@style/MyDialogStyle">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.lanmei.yixiu" />
+                <category android:name="com.medui.yixiu" />
             </intent-filter>
         </activity>
 
@@ -806,19 +806,19 @@
         <!-- 新的 tag/alias 接口结果返回需要开发者配置一个自定的广播 -->
         <!-- 该广播需要继承 JPush 提供的 JPushMessageReceiver 类, 并如下新增一个 Intent-Filter -->
         <receiver
-            android:name=".jpush.MessageReceiver"
+            android:name="com.medui.yixiu.jpush.MessageReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
 
-                <category android:name="com.lanmei.yixiu" />
+                <category android:name="com.medui.yixiu" />
             </intent-filter>
         </receiver>
 
         <!-- User defined. 用户自定义的广播接收器 -->
         <receiver
-            android:name=".jpush.JiGuangReceiver"
+            android:name="com.medui.yixiu.jpush.JiGuangReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -827,7 +827,7 @@
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!-- Required  用户接收SDK通知栏信息的intent -->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!-- Required  用户打开自定义通知栏的intent -->
                 <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
-                <category android:name="com.lanmei.yixiu" />
+                <category android:name="com.medui.yixiu" />
             </intent-filter>
         </receiver>
 
@@ -842,16 +842,16 @@
         <!-- Required. AppKey copied from Portal -->
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="f11427346c236ce73f92f70f" />
+            android:value="868d7c936689647ac2038b5e" />
 
         <!-- 极光推送end -->
 
         <activity
             android:screenOrientation="portrait"
-            android:name=".ui.teacher.activity.TestItemActivity" />
+            android:name="com.medui.yixiu.ui.teacher.activity.TestItemActivity" />
         <activity
             android:screenOrientation="portrait"
-            android:name=".ui.mine.activity.StudentTestResultActivity"/>
+            android:name="com.medui.yixiu.ui.mine.activity.StudentTestResultActivity"/>
     </application>
 
 </manifest>

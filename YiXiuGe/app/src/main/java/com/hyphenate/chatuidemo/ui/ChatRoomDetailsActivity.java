@@ -46,7 +46,7 @@ import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.easeui.widget.EaseAlertDialog.AlertDialogUser;
 import com.hyphenate.easeui.widget.EaseExpandGridView;
 import com.hyphenate.exceptions.HyphenateException;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 import java.util.ArrayList;
 import java.util.Collections;

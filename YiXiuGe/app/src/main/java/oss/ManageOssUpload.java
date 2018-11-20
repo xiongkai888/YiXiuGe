@@ -147,7 +147,7 @@ public class ManageOssUpload {
 
         ListObjectsRequest listObjects = new ListObjectsRequest(OssUserInfo.testBucket);
 // 设定前缀
-        listObjects.setPrefix("lanmei");
+        listObjects.setPrefix("medui");
 
 // 设置成功、失败回调，发送异步罗列请求
         OSSAsyncTask task = oss.asyncListObjects(listObjects, new OSSCompletedCallback<ListObjectsRequest, ListObjectsResult>() {

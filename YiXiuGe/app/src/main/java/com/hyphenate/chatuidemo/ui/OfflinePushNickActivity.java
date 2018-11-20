@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.DemoHelper;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 public class OfflinePushNickActivity extends BaseActivity {
 

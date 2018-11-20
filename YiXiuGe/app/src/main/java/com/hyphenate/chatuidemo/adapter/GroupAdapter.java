@@ -27,7 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hyphenate.chat.EMGroup;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 import java.util.List;
 

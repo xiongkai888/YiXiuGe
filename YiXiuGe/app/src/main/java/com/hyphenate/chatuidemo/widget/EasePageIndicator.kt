@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.hyphenate.chatuidemo.utils.DisplayUtils
-import com.lanmei.yixiu.R
+import com.medui.yixiu.R
 
 /**
  * Created by zhangsong on 18-5-23.

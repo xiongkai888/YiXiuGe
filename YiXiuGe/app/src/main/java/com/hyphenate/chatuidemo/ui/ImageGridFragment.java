@@ -34,8 +34,8 @@ import com.hyphenate.chatuidemo.widget.RecyclingImageView;
 import com.hyphenate.util.DateUtils;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.TextFormater;
-import com.lanmei.yixiu.BuildConfig;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.BuildConfig;
+import com.medui.yixiu.R;
 
 import java.util.ArrayList;
 import java.util.List;

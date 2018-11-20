@@ -15,7 +15,7 @@ import com.hyphenate.chatuidemo.DemoModel;
 import com.hyphenate.easeui.widget.EaseSwitchButton;
 import com.hyphenate.easeui.widget.EaseTitleBar;
 import com.hyphenate.exceptions.HyphenateException;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 /**
  * Created by wei on 2016/12/6.

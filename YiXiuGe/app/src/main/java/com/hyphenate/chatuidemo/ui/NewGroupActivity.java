@@ -30,8 +30,8 @@ import com.hyphenate.chat.EMGroupManager.EMGroupStyle;
 import com.hyphenate.chat.EMGroupOptions;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.exceptions.HyphenateException;
-import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.utils.CommonUtils;
+import com.medui.yixiu.R;
+import com.medui.yixiu.utils.CommonUtils;
 import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
 
@@ -75,7 +75,7 @@ public class NewGroupActivity extends BaseActivity {
 		    new EaseAlertDialog(this, R.string.Group_name_cannot_be_empty).show();
 		} else {
 			// select from contact list
-			startActivityForResult(new Intent(this, com.lanmei.yixiu.ui.message.activity.GroupPickContactsActivity.class).putExtra("groupName", name), 0);
+			startActivityForResult(new Intent(this, com.medui.yixiu.ui.message.activity.GroupPickContactsActivity.class).putExtra("groupName", name), 0);
 		}
 	}
 	

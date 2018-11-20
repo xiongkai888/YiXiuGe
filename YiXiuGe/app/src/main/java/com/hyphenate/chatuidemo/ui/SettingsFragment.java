@@ -43,7 +43,7 @@ import com.hyphenate.chatuidemo.utils.PreferenceManager;
 import com.hyphenate.easeui.model.EaseCompat;
 import com.hyphenate.easeui.widget.EaseSwitchButton;
 import com.hyphenate.util.EMLog;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -541,7 +541,7 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 						pd.dismiss();
 						// show login screen
 						((MainActivity) getActivity()).finish();
-						startActivity(new Intent(getActivity(), com.lanmei.yixiu.ui.login.LoginActivity.class));
+						startActivity(new Intent(getActivity(), com.medui.yixiu.ui.login.LoginActivity.class));
 						
 					}
 				});

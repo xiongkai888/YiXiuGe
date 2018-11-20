@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/v_all_match_parent_no"
-    tools:context="com.lanmei.yixiu.ui.home.activity.CourseDetailsActivity">
+    tools:context="com.medui.yixiu.ui.home.activity.CourseDetailsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

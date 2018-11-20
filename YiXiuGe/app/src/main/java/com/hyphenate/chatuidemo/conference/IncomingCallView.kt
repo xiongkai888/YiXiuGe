@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
-import com.lanmei.yixiu.R
+import com.medui.yixiu.R
 import kotlinx.android.synthetic.main.em_incoming_call_view.view.*
 
 /**

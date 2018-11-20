@@ -17,7 +17,7 @@ import com.alibaba.sdk.android.oss.model.DeleteObjectRequest;
 import com.alibaba.sdk.android.oss.model.DeleteObjectResult;
 import com.alibaba.sdk.android.oss.model.ListObjectsRequest;
 import com.alibaba.sdk.android.oss.model.ListObjectsResult;
-import com.lanmei.yixiu.utils.CommonUtils;
+import com.medui.yixiu.utils.CommonUtils;
 import com.xson.common.utils.L;
 
 /**

@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 /**
  * Created by easemob on 2017/7/31.

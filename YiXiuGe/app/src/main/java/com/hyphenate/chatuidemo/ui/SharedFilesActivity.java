@@ -32,7 +32,7 @@ import com.hyphenate.chat.EMMucSharedFile;
 import com.hyphenate.util.FileUtils;
 import com.hyphenate.util.PathUtil;
 import com.hyphenate.util.TextFormater;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -12,7 +12,7 @@ import com.hyphenate.chatuidemo.domain.RobotUser;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.HanziToPinyin;
-import com.lanmei.yixiu.YiXiuApp;
+import com.medui.yixiu.YiXiuApp;
 
 import java.util.ArrayList;
 import java.util.Collections;

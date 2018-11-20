@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/v_all_match_parent_no"
-    tools:context="com.lanmei.yixiu.ui.mine.activity.Examination1Activity">
+    tools:context="com.medui.yixiu.ui.mine.activity.Examination1Activity">
 
     <include layout="@layout/include_examination_tablayout" />
 

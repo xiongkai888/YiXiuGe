@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.utils.PreferenceManager;
 import com.hyphenate.easeui.widget.EaseSwitchButton;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 import java.util.ArrayList;
 import java.util.List;

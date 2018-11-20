@@ -38,7 +38,7 @@ import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseContactListFragment;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.NetUtils;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 import java.util.Hashtable;
 import java.util.Map;

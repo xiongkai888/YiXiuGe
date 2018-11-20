@@ -43,8 +43,8 @@ import com.hyphenate.easeui.widget.presenter.EaseChatRowPresenter;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.PathUtil;
-import com.lanmei.yixiu.R;
-import com.lanmei.yixiu.event.UserBeanEvent;
+import com.medui.yixiu.R;
+import com.medui.yixiu.event.UserBeanEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

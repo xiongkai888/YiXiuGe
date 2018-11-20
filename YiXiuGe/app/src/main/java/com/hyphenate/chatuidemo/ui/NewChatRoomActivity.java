@@ -25,7 +25,7 @@ import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.Constant;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 public class NewChatRoomActivity extends BaseActivity {
 	private EditText chatRoomNameEditText;

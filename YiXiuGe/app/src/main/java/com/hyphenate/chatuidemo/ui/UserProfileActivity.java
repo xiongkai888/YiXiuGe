@@ -26,7 +26,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 import java.io.ByteArrayOutputStream;
 

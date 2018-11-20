@@ -181,7 +181,7 @@ public class FileUtils {
             //设置intent的data和Type属性。
             Uri uri;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                uri = FileProvider.getUriForFile(context, "com.lanmei.yixiu.provider", file);
+                uri = FileProvider.getUriForFile(context, "com.medui.yixiu.fileProvider", file);
             } else {
                 uri = Uri.fromFile(file);
             }

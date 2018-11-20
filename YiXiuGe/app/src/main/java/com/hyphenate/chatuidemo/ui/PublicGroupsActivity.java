@@ -36,7 +36,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCursorResult;
 import com.hyphenate.chat.EMGroupInfo;
 import com.hyphenate.exceptions.HyphenateException;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -19,7 +19,7 @@ import android.view.View;
 
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chatuidemo.Constant;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 public class ContextMenuActivity extends BaseActivity {
     public static final int RESULT_CODE_COPY = 1;

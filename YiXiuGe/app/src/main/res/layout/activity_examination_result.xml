@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/v_all_match_parent_no"
-    tools:context="com.lanmei.yixiu.ui.mine.activity.ExaminationResultActivity">
+    tools:context="com.medui.yixiu.ui.mine.activity.ExaminationResultActivity">
 
     <include layout="@layout/include_centertitletoolbar" />
 

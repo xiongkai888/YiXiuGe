@@ -20,7 +20,7 @@ import com.hyphenate.chat.EMConferenceStream;
 import com.hyphenate.easeui.model.EaseCompat;
 import com.hyphenate.media.EMCallSurfaceView;
 import com.hyphenate.util.EMLog;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 import com.superrtc.sdk.VideoView;
 
 /**

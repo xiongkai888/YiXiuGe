@@ -19,7 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 
 public class ExitGroupDialog extends BaseActivity{

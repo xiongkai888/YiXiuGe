@@ -46,7 +46,7 @@ import com.hyphenate.chat.EMPageResult;
 import com.hyphenate.easeui.ui.EaseChatRoomListener;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 import java.util.ArrayList;
 import java.util.List;

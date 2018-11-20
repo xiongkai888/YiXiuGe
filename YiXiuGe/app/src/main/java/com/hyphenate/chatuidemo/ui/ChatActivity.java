@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.hyphenate.chatuidemo.runtimepermissions.PermissionsManager;
 import com.hyphenate.easeui.ui.EaseChatFragment;
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 /**
  * chat activity，EaseChatFragment was used {@link #}

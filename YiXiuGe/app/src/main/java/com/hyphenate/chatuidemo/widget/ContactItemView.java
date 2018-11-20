@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.lanmei.yixiu.R;
+import com.medui.yixiu.R;
 
 
 public class ContactItemView extends LinearLayout{

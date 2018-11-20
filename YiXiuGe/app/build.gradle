@@ -8,11 +8,11 @@ android {
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
     defaultConfig {
-        applicationId "com.lanmei.yixiu"
+        applicationId "com.medui.yixiu"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 36
-        versionName "1.4.94"
+        versionCode 37
+        versionName "1.4.95"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "API_URL", "\"http://47.107.59.111/api/\""
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
@@ -30,7 +30,7 @@ android {
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
-                JPUSH_APPKEY : "f11427346c236ce73f92f70f", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_APPKEY : "868d7c936689647ac2038b5e", //JPush 上注册的包名对应的 Appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
 
@@ -38,6 +38,12 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -60,15 +66,10 @@ android {
         debug {
             keyAlias 'yixiuge'
             keyPassword 'lanmei888'
-            storeFile file('yixiuge.jks')
+            storeFile file('yixiuge_sub.jks')
             storePassword 'lanmei888'
         }
-        release {
-            keyAlias 'yixiuge'
-            keyPassword 'lanmei888'
-            storeFile file('yixiuge.jks')
-            storePassword 'lanmei888'
-        }
+
     }
 
 
