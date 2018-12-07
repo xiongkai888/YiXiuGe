@@ -16,6 +16,7 @@ import com.medui.yixiu.R;
 import com.medui.yixiu.api.YiXiuGeApi;
 import com.medui.yixiu.bean.AdBean;
 import com.medui.yixiu.bean.NewsClassifyListBean;
+import com.medui.yixiu.helper.ShareHelper;
 import com.medui.yixiu.ui.home.activity.NewsDetailsActivity;
 import com.medui.yixiu.utils.CommonUtils;
 import com.medui.yixiu.widget.SudokuView;
@@ -122,7 +123,8 @@ public class NewsSubAdapter extends SwipeRefreshAdapter<NewsClassifyListBean> {
             shareIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CommonUtils.developing(context);
+//                    CommonUtils.developing(context);
+                    new ShareHelper(context).share();
                 }
             });
             likeTv.setText(bean.getLike());

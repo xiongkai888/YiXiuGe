@@ -8,13 +8,11 @@ import com.medui.yixiu.R;
 import com.medui.yixiu.adapter.CourseAdapter;
 import com.medui.yixiu.api.YiXiuGeApi;
 import com.medui.yixiu.bean.CourseClassifyBean;
-import com.medui.yixiu.search.SearchCourseActivity;
 import com.medui.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
-import com.xson.common.utils.IntentUtil;
 import com.xson.common.widget.CenterTitleToolbar;
 
 import butterknife.ButterKnife;
@@ -85,6 +83,7 @@ public class CourseFragment extends BaseFragment {
 
     @OnClick(R.id.keywordEditText)
     public void onViewClicked() {
-        IntentUtil.startActivity(context, SearchCourseActivity.class);
+        CommonUtils.developing(context);
+//        IntentUtil.startActivity(context, SearchCourseActivity.class);
     }
 }

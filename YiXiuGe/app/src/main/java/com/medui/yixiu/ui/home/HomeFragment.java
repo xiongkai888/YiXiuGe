@@ -237,9 +237,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     private void setUser() {
         boolean isStudent = CommonUtils.isStudent(context);
-        kaoShiTv.setVisibility(isStudent ? View.VISIBLE : View.GONE);
-        kaoQinTv.setVisibility(isStudent ? View.VISIBLE : View.GONE);
-        questionnaireTv.setVisibility(isStudent ? View.VISIBLE : View.GONE);
+//        kaoShiTv.setVisibility(isStudent ? View.VISIBLE : View.GONE);
+//        kaoQinTv.setVisibility(isStudent ? View.VISIBLE : View.GONE);
+//        questionnaireTv.setVisibility(isStudent ? View.VISIBLE : View.GONE);
     }
 
     //

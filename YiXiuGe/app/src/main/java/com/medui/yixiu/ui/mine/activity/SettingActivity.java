@@ -14,6 +14,7 @@ import com.medui.yixiu.R;
 import com.medui.yixiu.YiXiuApp;
 import com.medui.yixiu.event.LogoutEvent;
 import com.medui.yixiu.ui.login.LoginActivity;
+import com.medui.yixiu.ui.login.ProtocolActivity;
 import com.medui.yixiu.update.UpdateAppConfig;
 import com.medui.yixiu.update.UpdateEvent;
 import com.medui.yixiu.utils.AKDialog;
@@ -87,8 +88,8 @@ public class SettingActivity extends BaseActivity {
             case R.id.ll_info_setting://消息设置
                 UIHelper.ToastMessage(this, R.string.developing);
                 break;
-            case R.id.ll_help_info://帮助信息
-                UIHelper.ToastMessage(this, R.string.developing);
+            case R.id.ll_help_info://隐私设置
+                IntentUtil.startActivity(this,ProtocolActivity.class);
                 break;
             case R.id.ll_clean_cache://清除缓存
                 showClearCache();

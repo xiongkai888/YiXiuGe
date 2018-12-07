@@ -100,6 +100,7 @@
     <style name="text12color666" parent="Text.Size12">
         <item name="android:textColor">@color/color666</item>
     </style>
+
     <style name="text10color666" parent="Text.Size10">
         <item name="android:textColor">@color/color666</item>
     </style>
@@ -107,6 +108,7 @@
     <style name="text10color999" parent="Text.Size10">
         <item name="android:textColor">@color/color999</item>
     </style>
+
     <style name="text10colorWhite" parent="Text.Size10">
         <item name="android:textColor">@color/white</item>
     </style>
@@ -118,6 +120,7 @@
     <style name="text14colorFFCE4D" parent="Text.Size14">
         <item name="android:textColor">@color/colorFFCE4D</item>
     </style>
+
     <style name="text14colorF9D14D" parent="Text.Size14">
         <item name="android:textColor">@color/colorF9D14D</item>
     </style>
@@ -129,12 +132,15 @@
     <style name="text14color999" parent="Text.Size14">
         <item name="android:textColor">@color/color999</item>
     </style>
+
     <style name="text12color999" parent="Text.Size12">
         <item name="android:textColor">@color/color999</item>
     </style>
+
     <style name="text14colorFF4A4A" parent="Text.Size14">
         <item name="android:textColor">@color/colorFF4A4A</item>
     </style>
+
     <style name="text14colorWhite" parent="Text.Size14">
         <item name="android:textColor">@color/white</item>
     </style>
@@ -162,6 +168,7 @@
     <style name="Text.Size10" parent="text">
         <item name="android:textSize">@dimen/txt_10sp</item>
     </style>
+
     <style name="Text.Size8" parent="text">
         <item name="android:textSize">@dimen/txt_8sp</item>
     </style>
@@ -173,6 +180,7 @@
     <style name="Text.Size14" parent="text">
         <item name="android:textSize">@dimen/txt_14sp</item>
     </style>
+
     <style name="Text.Size16" parent="text">
         <item name="android:textSize">@dimen/txt_16sp</item>
     </style>

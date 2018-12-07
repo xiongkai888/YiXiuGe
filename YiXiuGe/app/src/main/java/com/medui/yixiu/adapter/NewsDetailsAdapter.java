@@ -15,6 +15,7 @@ import com.medui.yixiu.bean.NewsClassifyListBean;
 import com.medui.yixiu.bean.NewsCommentBean;
 import com.medui.yixiu.event.NewsCollectEvent;
 import com.medui.yixiu.event.NewsOperationEvent;
+import com.medui.yixiu.helper.ShareHelper;
 import com.medui.yixiu.utils.CommonUtils;
 import com.medui.yixiu.utils.FormatTime;
 import com.medui.yixiu.webviewpage.WebViewPhotoBrowserUtil;
@@ -126,6 +127,13 @@ public class NewsDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
         BannerViewHolder(View view) {
             super(view);
             ButterKnife.inject(this, view);
+
+            shareIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new ShareHelper(context).share();
+                }
+            });
         }
 
         public void remove() {
@@ -160,12 +168,12 @@ public class NewsDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
                 loadFavoured(viewHolder.favouredIv);
             }
         });
-        viewHolder.shareIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CommonUtils.developing(context);
-            }
-        });
+//        viewHolder.shareIv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                CommonUtils.developing(context);
+//            }
+//        });
     }
 
     //点击收藏或者取消收藏
