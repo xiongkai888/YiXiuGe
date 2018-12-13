@@ -50,6 +50,7 @@ public class TestService extends Service {
             bean = (StudentsBean) intent.getSerializableExtra("bean");
             uid = bean.getUid();
             testTime = Integer.valueOf(intent.getStringExtra("testTime")) * 60;
+//            testTime = 10;
             handler.removeCallbacks(heartBeatRunnable);
             handler.postDelayed(heartBeatRunnable, HEART_BEAT_RATE);// 发送心跳包
             isRunning = true;
@@ -86,9 +87,7 @@ public class TestService extends Service {
             switch (msg.what) {
                 case 1://
                     testTime = testTime - 1;
-                    L.d(L.TAG, testTime + "");
                     if (testTime <= 0) {
-                        L.d(L.TAG, "考试已超时");
                         EventBus.getDefault().post(new TestTimeEvent(getString(R.string.overtime),testTime));
                     } else {
                         EventBus.getDefault().post(new TestTimeEvent(CommonUtils.secToTime(testTime),testTime));

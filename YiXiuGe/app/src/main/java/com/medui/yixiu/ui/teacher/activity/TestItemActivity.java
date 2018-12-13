@@ -122,7 +122,7 @@ public class TestItemActivity extends BaseActivity {
                         bundle.putString("time", testListBean.getE_time());
                         bundle.putString("id", testListBean.getId());
                         bundle.putString("title", testListBean.getTitle());
-                        IntentUtil.startActivity(getContext(), StudentTestActivity.class, bundle);
+                        IntentUtil.startActivity(getContext(), StudentTestSubActivity.class, bundle);
                     }
                 });
                 break;

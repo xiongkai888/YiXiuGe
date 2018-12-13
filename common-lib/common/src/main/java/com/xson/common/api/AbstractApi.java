@@ -63,12 +63,13 @@ public abstract class AbstractApi {
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("key", key);
         for (Map.Entry<String, Object> item : paramsHashMap.entrySet()) {
-            if (item.getValue() instanceof com.alibaba.fastjson.JSONArray) {
-                params.put(item.getKey(), (com.alibaba.fastjson.JSONArray) item.getValue());
-                L.d(L.TAG, item.getKey() + "," + item.getValue());
-            } else {
-                params.put(item.getKey(), item.getValue());
-            }
+            params.put(item.getKey(), item.getValue());
+//            if (item.getValue() instanceof com.alibaba.fastjson.JSONArray) {
+//                params.put(item.getKey(), (com.alibaba.fastjson.JSONArray) item.getValue());
+//                L.d(L.TAG, item.getKey() + "," + item.getValue());
+//            } else {
+//                params.put(item.getKey(), item.getValue());
+//            }
         }
         if (p > 0) {
             params.put(L.p, p);

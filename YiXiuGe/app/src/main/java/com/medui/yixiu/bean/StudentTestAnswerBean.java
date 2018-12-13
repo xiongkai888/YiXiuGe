@@ -14,9 +14,9 @@ public class StudentTestAnswerBean {
      * id : 1
      */
 
-    private String score;//分数
+    private String score;//分数 (type == 1时：score=0是对，1是错)(type != 1时，表示分数)
     private String text;//备注
-    private String type;//类型
+    private String type;//类型（1|2=>判断题|打分题）
     private String id;//
 
     public void setId(String id) {

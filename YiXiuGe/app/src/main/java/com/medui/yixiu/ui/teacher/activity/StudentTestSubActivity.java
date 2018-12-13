@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,11 +18,9 @@ import com.medui.yixiu.bean.StudentTestBean;
 import com.medui.yixiu.bean.StudentsBean;
 import com.medui.yixiu.event.TestFinishEvent;
 import com.medui.yixiu.event.TestTimeEvent;
-import com.medui.yixiu.helper.ClickAnswerListener;
-import com.medui.yixiu.helper.SimpleTextWatcher;
+import com.medui.yixiu.helper.StudentsTestTopicHelper;
 import com.medui.yixiu.ui.teacher.service.TestService;
 import com.medui.yixiu.utils.AKDialog;
-import com.medui.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.NoPageListBean;
@@ -46,9 +42,9 @@ import butterknife.OnClick;
 import cn.qqtheme.framework.picker.OptionPicker;
 
 /**
- * 学生线下考试试题
+ * 学生线下考试试题(修改后)
  */
-public class StudentTestActivity extends BaseActivity {
+public class StudentTestSubActivity extends BaseActivity {
 
 
     @InjectView(R.id.toolbar_name_tv)
@@ -57,32 +53,16 @@ public class StudentTestActivity extends BaseActivity {
     TextView timeTv;
     @InjectView(R.id.menu_tv)
     TextView menuTv;
-    @InjectView(R.id.next_bt)
-    Button nextBt;//下一题
-    @InjectView(R.id.title_tv)
-    TextView titleTv;//题目
-    @InjectView(R.id.ll_bt)
-    LinearLayout llBt;//上一题下一题按钮
+
+    @InjectView(R.id.performance_tv)
+    TextView performance_tv;
+
+    @InjectView(R.id.ll_root)
+    LinearLayout root;
+
     @InjectView(R.id.recyclerView_answer)
     RecyclerView recyclerViewAnswer;//答案
     StudentTestAnswerAdapter answerAdapter;//答案
-
-    @InjectView(R.id.right_tv)
-    TextView rightTv;//对
-    @InjectView(R.id.wrong_tv)
-    TextView wrongTv;//错
-    @InjectView(R.id.ll_judge)
-    LinearLayout llJudge;//判断题
-    @InjectView(R.id.score_tv)
-    TextView scoreTv;//打分题分数
-    @InjectView(R.id.score_range_tv)
-    TextView scoreRangeTv;//打分题分数范围
-    @InjectView(R.id.ll_mark)
-    LinearLayout llMark;//打分题
-    @InjectView(R.id.ll_remark)
-    LinearLayout llRemark;//备注
-    @InjectView(R.id.remark_et)
-    EditText remarkEt;//备注
 
     private StudentsBean bean;//学生信息
     private String id;//评估id
@@ -91,16 +71,16 @@ public class StudentTestActivity extends BaseActivity {
 
     private List<StudentTestBean> list;//考试题目列表
     private List<StudentTestAnswerBean> beanList;//答案列表
-    private int number;//总的题目数量
-    private int index;//答题下标
     private OptionPicker picker;//分数选择器
     private boolean isSubmit;//是否提交了
     private int timeRemaining = 0;//考试剩余时间
+    private boolean isOverTime = true;
 
+    private StudentsTestTopicHelper testTopicHelper;
 
     @Override
     public int getContentViewId() {
-        return R.layout.activity_student_test;
+        return R.layout.activity_student_test_sub;
     }
 
 
@@ -116,7 +96,7 @@ public class StudentTestActivity extends BaseActivity {
         }
     }
 
-    private void initPicker(List<String> list) {
+    private void initPicker(List<String> list, final int position) {
         picker = new OptionPicker(this, list);
         picker.setOffset(3);
         picker.setSelectedIndex(1);
@@ -124,52 +104,39 @@ public class StudentTestActivity extends BaseActivity {
         picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(int index, String item) {
-                scoreTv.setText(String.format(getString(R.string.score), item));
-                setAnswer(item);
+                testTopicHelper.setDataByPosition(item, position);
             }
         });
+        picker.show();
     }
 
-
-    private void setAnswer(String answer) {
-        StudentTestAnswerBean answerBean = beanList.get(index);
-        if (StringUtils.isSame(answer, answerBean.getScore())) {
-            return;
-        }
-        answerBean.setScore(answer);
-        answerAdapter.notifyItemChanged(index);
-    }
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
-
+        menuTv.setText(R.string.submit);
+        testTopicHelper = new StudentsTestTopicHelper(this, root);
+        testTopicHelper.setPickListener(new StudentsTestTopicHelper.PickListener() {
+            @Override
+            public void setMarkList(String min_mark, String max_mark, int position) {
+                if (isSubmit) {
+                    return;
+                }
+                initPicker(getMarkList(min_mark, max_mark), position);
+            }
+        });
         beanList = YiXiuApp.getInstance().getTestAnswerBean(bean.getUid());
-
         toolbarNameTv.setText("学号：" + bean.getUid() + "-" + title);
         //试题答案
         recyclerViewAnswer.setLayoutManager(new GridLayoutManager(this, 5));
         answerAdapter = new StudentTestAnswerAdapter(this);
         recyclerViewAnswer.setNestedScrollingEnabled(false);
-        answerAdapter.setClickAnswerListener(new ClickAnswerListener() {
-            @Override
-            public void onClick(int position) {
-                if (index == position || isSubmit) {
-                    return;
-                }
-                setAnswerPosition(position);
-            }
-        });
-
-        remarkEt.addTextChangedListener(new SimpleTextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!StringUtils.isEmpty(beanList)) {
-                    beanList.get(index).setText(s + "");
-                }
-            }
-        });
-
+//        answerAdapter.setClickAnswerListener(new ClickAnswerListener() {
+//            @Override
+//            public void onClick(int position) {
+//
+//            }
+//        });
         loadTestList();
     }
 
@@ -186,7 +153,6 @@ public class StudentTestActivity extends BaseActivity {
                 if (StringUtils.isEmpty(list)) {
                     return;
                 }
-                number = list.size();
                 if (StringUtils.isEmpty(beanList)) {
                     beanList = new ArrayList<>();
                     for (StudentTestBean bean : list) {
@@ -197,6 +163,7 @@ public class StudentTestActivity extends BaseActivity {
                     }
                     answerAdapter.setData(beanList);
                     recyclerViewAnswer.setAdapter(answerAdapter);
+
                     Intent intent = new Intent(getContext(), TestService.class);
                     intent.putExtra("testTime", time);
                     intent.putExtra("bean", bean);
@@ -204,85 +171,24 @@ public class StudentTestActivity extends BaseActivity {
                 } else {
                     answerAdapter.setData(beanList);
                     recyclerViewAnswer.setAdapter(answerAdapter);
-                    timeTv.setText("考试已超时");
+                    timeTv.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (isFinishing()) {
+                                return;
+                            }
+                            if (isOverTime) {
+                                timeTv.setText("考试已超时");
+                            }
+                        }
+                    }, 1200);
                 }
-                llBt.setVisibility(View.VISIBLE);
-                setAnswerPosition(0);
+
+                testTopicHelper.setBeanList(beanList);
+                testTopicHelper.setData(list);
+                testTopicHelper.setAnswerAdapter(answerAdapter);
             }
         });
-    }
-
-    //
-    private void setAnswerPosition(int position) {
-        this.index = position;
-        nextBt.setText((position + 1 == number) ? R.string.submit : R.string.next_topic);
-        menuTv.setText(String.format(getString(R.string.examination_num), String.valueOf(position + 1), String.valueOf(number)));
-        StudentTestBean bean = list.get(position);
-        boolean isJudge = StringUtils.isSame(CommonUtils.isTwo, bean.getType());
-        String title = isJudge ? bean.getTitle1() + bean.getTitle2() + bean.getTitle() : bean.getTitle();
-        llJudge.setVisibility(isJudge ? View.GONE : View.VISIBLE);
-        llMark.setVisibility(isJudge ? View.VISIBLE : View.GONE);
-        titleTv.setText(String.format(getString(R.string.topic_title1), String.valueOf((position + 1)), title));
-        StudentTestAnswerBean answerBean = beanList.get(position);
-        String answer = answerBean.getScore();
-        if (!isJudge) {//判断题
-            if (StringUtils.isEmpty(answer)) {
-                rightTv.setBackgroundResource(R.drawable.circle_topic_off);
-                wrongTv.setBackgroundResource(R.drawable.circle_topic_off);
-            } else {
-                setRightOrWrong(StringUtils.isSame(CommonUtils.isOne, answer) ? rightTv : wrongTv, answer);
-            }
-        } else {//打分题
-            initPicker(getMarkList(bean.getMin_mark(), bean.getMax_mark()));
-            scoreTv.setText(StringUtils.isEmpty(answer) ? String.format(getString(R.string.score), bean.getMin_mark()) : String.format(getString(R.string.score), answer));
-            scoreRangeTv.setText(String.format(getString(R.string.score_range), bean.getMax_mark(), bean.getMin_mark()));
-        }
-        remarkEt.setText(answerBean.getText());
-    }
-
-    @OnClick({R.id.on_a_bt, R.id.next_bt, R.id.back_iv, R.id.ll_right, R.id.ll_wrong, R.id.score_tv})
-    public void onViewClicked(View view) {
-        int id = view.getId();
-        if (id == R.id.back_iv) {
-            finish();
-            return;
-        }
-        if (StringUtils.isEmpty(list) || isSubmit) {
-            return;
-        }
-        switch (id) {
-            case R.id.on_a_bt:
-                if (index == 0) {
-                    break;
-                }
-                index -= 1;
-                setAnswerPosition(index);
-                break;
-            case R.id.next_bt:
-                if (index == number - 1) {
-                    AKDialog.getAlertDialog(this, "确定提交？", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            submit();
-                        }
-                    });
-                    break;
-                }
-                index += 1;
-                setAnswerPosition(index);//nextBt
-                break;
-            case R.id.ll_right:
-                setRightOrWrong(rightTv, CommonUtils.isOne);
-                break;
-            case R.id.ll_wrong:
-                setRightOrWrong(wrongTv, CommonUtils.isZero);
-                break;
-            case R.id.score_tv:
-                if (picker != null) {
-                    picker.show();
-                }
-                break;
-        }
     }
 
     private void submit() {
@@ -307,16 +213,12 @@ public class StudentTestActivity extends BaseActivity {
                 isSubmit = true;
                 UIHelper.ToastMessage(getContext(), response.getMsg());
                 YiXiuApp.getInstance().removeTestAnswerBean(bean.getUid());
-                llJudge.setVisibility(View.GONE);
-                llMark.setVisibility(View.GONE);
-                llRemark.setVisibility(View.GONE);
-                llBt.setVisibility(View.GONE);
                 answerAdapter.setSubmit(isSubmit);
                 answerAdapter.notifyDataSetChanged();
                 int total = Integer.valueOf(time) * 60 - timeRemaining;
-                titleTv.setText("用时：" + getTotalTime(total) + "  " + "得分：" + getScore());
-
+                performance_tv.setText("答题情况\u3000用时：" + getTotalTime(total) + "\u3000" + "得分：" + getScore());
                 EventBus.getDefault().post(new TestFinishEvent());
+                menuTv.setVisibility(View.GONE);
             }
         });
     }
@@ -359,19 +261,13 @@ public class StudentTestActivity extends BaseActivity {
         return list;
     }
 
-    private void setRightOrWrong(TextView view, String answer) {
-        rightTv.setBackgroundResource(R.drawable.circle_topic_off);
-        wrongTv.setBackgroundResource(R.drawable.circle_topic_off);
-
-        view.setBackgroundResource(R.drawable.circle_topic_on);
-        setAnswer(answer);
-    }
 
     @Subscribe
     public void testTimeEvent(TestTimeEvent event) {
         L.d(L.TAG, event.getTime());
         timeRemaining = event.getSecond();
         timeTv.setText(String.format(getString(R.string.count_down), event.getTime()));
+        isOverTime = false;
     }
 
     @Override
@@ -388,5 +284,23 @@ public class StudentTestActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+
+    @OnClick({R.id.back_iv, R.id.menu_tv})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.back_iv:
+                onBackPressed();
+                break;
+            case R.id.menu_tv:
+                AKDialog.getAlertDialog(this, "确定提交？", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        submit();
+                    }
+                });
+                break;
+        }
     }
 }

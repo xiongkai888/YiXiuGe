@@ -211,6 +211,9 @@
             android:name="com.medui.yixiu.ui.teacher.activity.StudentTestActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.medui.yixiu.ui.teacher.activity.StudentTestSubActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.medui.yixiu.ui.teacher.activity.SelectTestStudentActivity"
             android:screenOrientation="portrait" />
         <activity

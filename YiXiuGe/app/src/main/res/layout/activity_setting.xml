@@ -76,7 +76,19 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/ll_versions"
+                    style="@style/ll_bottom_h_no"
+                    android:visibility="visible"
+                    android:layout_marginLeft="@dimen/d_20dp">
 
+                    <TextView
+                        style="@style/setting_text"
+                        android:text="版本信息" />
+
+                    <ImageView style="@style/in_right_icon" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_reset_pwd"
@@ -101,20 +113,6 @@
                     <TextView
                         style="@style/setting_text"
                         android:text="消息设置" />
-
-                    <ImageView style="@style/in_right_icon" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_versions"
-                    style="@style/ll_bottom_h_no"
-                    android:visibility="gone"
-                    android:layout_marginLeft="@dimen/d_20dp">
-
-                    <TextView
-                        style="@style/setting_text"
-                        android:text="版本信息" />
 
                     <ImageView style="@style/in_right_icon" />
 

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent_no">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_h"
+        android:background="@color/white"
+        >
+
+        <TextView
+            android:id="@+id/toolbar_name_tv"
+           android:layout_centerHorizontal="true"
+            android:drawablePadding="@dimen/d_5dp"
+            android:layout_marginTop="@dimen/d_8dp"
+            style="@style/text" />
+
+        <TextView
+            android:id="@+id/time_tv"
+            android:textColor="@color/red"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/toolbar_name_tv"
+            style="@style/text12color999"/>
+
+        <ImageView
+            android:id="@+id/back_iv"
+            android:src="@drawable/back"
+            android:padding="@dimen/d_5dp"
+            android:layout_centerVertical="true"
+            style="@style/text" />
+
+        <TextView
+            android:id="@+id/menu_tv"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/txt_14sp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/d_10dp"
+            style="@style/text" />
+
+    </RelativeLayout>
+
+    <TextView style="@style/line_H1dp_divider" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d_0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            style="@style/v_match_parent_no"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <LinearLayout
+                android:id="@+id/ll_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+
+            <TextView
+                android:id="@+id/performance_tv"
+                style="@style/text"
+                android:layout_marginLeft="@dimen/d_20dp"
+                android:layout_marginTop="@dimen/d_15dp"
+                android:text="答题情况" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/d_10dp" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

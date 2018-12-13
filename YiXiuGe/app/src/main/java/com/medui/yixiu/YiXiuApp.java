@@ -49,7 +49,7 @@ public class YiXiuApp extends BaseApp {
         DemoHelper.getInstance().init(this);
     }
 
-    //存评估题目(暂时这样)
+    //存评估题目(暂时这样,可以考虑保存在TestService中)
     public void saveTestAnswerBean(String id, List<StudentTestAnswerBean> bean) {
         if (answerBeanMap == null) {
             answerBeanMap = new HashMap<>();
