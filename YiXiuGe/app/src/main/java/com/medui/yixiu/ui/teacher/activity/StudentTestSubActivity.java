@@ -192,10 +192,6 @@ public class StudentTestSubActivity extends BaseActivity {
     }
 
     private void submit() {
-        if (!isPerfect()) {
-            UIHelper.ToastMessage(this, "请先完成学生评估内容再提交");
-            return;
-        }
         YiXiuGeApi api = new YiXiuGeApi("app/assess_submit");
         api.addParams("result", JsonUtil.getJSONArrayByList(beanList));//评估结果 score=>分数，text=>备注
         api.addParams("sid", bean.getUid());//学生id
@@ -218,6 +214,7 @@ public class StudentTestSubActivity extends BaseActivity {
                 int total = Integer.valueOf(time) * 60 - timeRemaining;
                 performance_tv.setText("答题情况\u3000用时：" + getTotalTime(total) + "\u3000" + "得分：" + getScore());
                 EventBus.getDefault().post(new TestFinishEvent());
+                timeTv.setText("考试结束");
                 menuTv.setVisibility(View.GONE);
             }
         });
@@ -264,8 +261,8 @@ public class StudentTestSubActivity extends BaseActivity {
 
     @Subscribe
     public void testTimeEvent(TestTimeEvent event) {
-        L.d(L.TAG, event.getTime());
         timeRemaining = event.getSecond();
+        L.d(L.TAG, event.getTime()+","+timeRemaining);
         timeTv.setText(String.format(getString(R.string.count_down), event.getTime()));
         isOverTime = false;
     }
@@ -294,6 +291,10 @@ public class StudentTestSubActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.menu_tv:
+                if (!isPerfect()) {
+                    UIHelper.ToastMessage(this, "请先完成学生评估内容再提交");
+                    return;
+                }
                 AKDialog.getAlertDialog(this, "确定提交？", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

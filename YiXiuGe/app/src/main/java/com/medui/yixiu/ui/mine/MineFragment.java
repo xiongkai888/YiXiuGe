@@ -31,9 +31,9 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
+//        if (!EventBus.getDefault().isRegistered(this)) {
+//            EventBus.getDefault().register(this);
+//        }
         setUserType();
     }
 
@@ -43,16 +43,16 @@ public class MineFragment extends BaseFragment {
         transaction.commitAllowingStateLoss();
     }
 
+//
+//    @Subscribe
+//    public void setUserEvent(SetUserEvent event) {
+//        setUserType();
+//    }
 
-    @Subscribe
-    public void setUserEvent(SetUserEvent event) {
-        setUserType();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        EventBus.getDefault().unregister(this);
+//    }
 
 }

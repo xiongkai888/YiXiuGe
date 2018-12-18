@@ -307,7 +307,7 @@
                 android:drawableLeft="@drawable/mine_2"
                 android:drawablePadding="@dimen/d_10dp"
                 android:gravity="center_vertical"
-                android:text="我的评估" />
+                android:text="@string/my_tests" />
 
 
             <TextView

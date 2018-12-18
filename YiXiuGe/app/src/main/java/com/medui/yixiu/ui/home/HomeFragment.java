@@ -34,6 +34,7 @@ import com.medui.yixiu.ui.mine.activity.MyClassScheduleActivity;
 import com.medui.yixiu.ui.scan.ScanActivity;
 import com.medui.yixiu.ui.teacher.activity.ClassHourActivity;
 import com.medui.yixiu.ui.teacher.activity.QuestionnaireManagementActivity;
+import com.medui.yixiu.ui.teacher.activity.TestPaperListActivity;
 import com.medui.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
@@ -279,7 +280,11 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 IntentUtil.startActivity(context, TeacherActivity.class);
                 break;
             case R.id.kao_shi_tv://考试
-                IntentUtil.startActivity(context, ExaminationActivity.class);
+                if (CommonUtils.isStudent(context)){
+                    IntentUtil.startActivity(context, ExaminationActivity.class);
+                }else {
+                    IntentUtil.startActivity(context, TestPaperListActivity.class);//我的试卷
+                }
                 break;
             case R.id.questionnaire_tv://问卷
 //                IntentUtil.startActivity(context, QuestionnaireActivity.class);

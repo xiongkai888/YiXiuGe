@@ -110,7 +110,12 @@ public class StudentsTestTopicHelper {
         public void setParameter(final int position) {
             bean = list.get(position);
             boolean isJudge = StringUtils.isSame(CommonUtils.isTwo, bean.getType());
-            String title = isJudge ? bean.getTitle1() + bean.getTitle2() + bean.getTitle() : bean.getTitle();
+            String title = bean.getTitle();
+            if (isJudge){
+                String title1 = StringUtils.isEmpty(bean.getTitle1())?"":bean.getTitle1();
+                String title2 = StringUtils.isEmpty(bean.getTitle2())?"":bean.getTitle2();
+                title = title1 + title2 + bean.getTitle();
+            }
             llJudge.setVisibility(isJudge ? View.GONE : View.VISIBLE);
             llMark.setVisibility(isJudge ? View.VISIBLE : View.GONE);
             titleTv.setText(String.format(context.getString(R.string.topic_title1), String.valueOf((position + 1)), title));

@@ -31,6 +31,7 @@ public class TestService extends Service {
     private boolean isRunning;
     private StudentsBean bean;//学生信息
     public static String uid;
+    private int limit = -60*60;//超时60分钟自动停止TestService
 
     @Override
     public void onCreate() {
@@ -87,7 +88,10 @@ public class TestService extends Service {
             switch (msg.what) {
                 case 1://
                     testTime = testTime - 1;
-                    if (testTime <= 0) {
+                    if (testTime < 0) {
+                        if (testTime == limit){
+                            stopSelf();
+                        }
                         EventBus.getDefault().post(new TestTimeEvent(getString(R.string.overtime),testTime));
                     } else {
                         EventBus.getDefault().post(new TestTimeEvent(CommonUtils.secToTime(testTime),testTime));
