@@ -129,6 +129,7 @@ public class TestItemActivity extends BaseActivity {
         }
     }
 
+    //测试结束的时候调用
     @Subscribe
     public void testFinishEvent(TestFinishEvent event) {
         bean = null;

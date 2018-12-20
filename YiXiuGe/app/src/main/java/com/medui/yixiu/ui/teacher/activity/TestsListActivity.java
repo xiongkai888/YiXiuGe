@@ -7,11 +7,15 @@ import com.medui.yixiu.R;
 import com.medui.yixiu.adapter.TestsListAdapter;
 import com.medui.yixiu.api.YiXiuGeApi;
 import com.medui.yixiu.bean.TestListBean;
+import com.medui.yixiu.event.TestFinishEvent;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.InjectView;
 
@@ -36,6 +40,7 @@ public class TestsListActivity extends BaseActivity {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
 
         setSupportActionBar(mToolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -56,5 +61,15 @@ public class TestsListActivity extends BaseActivity {
 //        adapter.notifyDataSetChanged();
     }
 
+    //测试结束的时候调用
+    @Subscribe
+    public void testFinishEvent(TestFinishEvent event) {
+        controller.loadFirstPage();
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

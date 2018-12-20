@@ -112,8 +112,8 @@ public class StudentsTestTopicHelper {
             boolean isJudge = StringUtils.isSame(CommonUtils.isTwo, bean.getType());
             String title = bean.getTitle();
             if (isJudge){
-                String title1 = StringUtils.isEmpty(bean.getTitle1())?"":bean.getTitle1();
-                String title2 = StringUtils.isEmpty(bean.getTitle2())?"":bean.getTitle2();
+                String title1 = StringUtils.isEmpty(bean.getTitle1())?"":bean.getTitle1()+"-";
+                String title2 = StringUtils.isEmpty(bean.getTitle2())?"":bean.getTitle2()+"-";
                 title = title1 + title2 + bean.getTitle();
             }
             llJudge.setVisibility(isJudge ? View.GONE : View.VISIBLE);

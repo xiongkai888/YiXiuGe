@@ -54,9 +54,6 @@ public class StudentTestSubActivity extends BaseActivity {
     @InjectView(R.id.menu_tv)
     TextView menuTv;
 
-    @InjectView(R.id.performance_tv)
-    TextView performance_tv;
-
     @InjectView(R.id.ll_root)
     LinearLayout root;
 
@@ -212,9 +209,8 @@ public class StudentTestSubActivity extends BaseActivity {
                 answerAdapter.setSubmit(isSubmit);
                 answerAdapter.notifyDataSetChanged();
                 int total = Integer.valueOf(time) * 60 - timeRemaining;
-                performance_tv.setText("答题情况\u3000用时：" + getTotalTime(total) + "\u3000" + "得分：" + getScore());
                 EventBus.getDefault().post(new TestFinishEvent());
-                timeTv.setText("考试结束");
+                timeTv.setText("考试结束\u3000用时："+getTotalTime(total) + "\u3000" + "得分：" + getScore());
                 menuTv.setVisibility(View.GONE);
             }
         });
