@@ -27,14 +27,24 @@ public class StringUtils {
     public static boolean isEmpty(String input) {
         if (input == null || "".equals(input))
             return true;
-
-        for (int i = 0; i < input.length(); i++) {
+        int length = input.length();
+        for (int i = 0; i < length; i++) {
             char c = input.charAt(i);
             if (c != ' ' && c != '\t' && c != '\r' && c != '\n') {
                 return false;
             }
         }
         return true;
+    }
+
+    /**
+     * 要是input为空就返回substitute
+     * @param input
+     * @param substitute
+     * @return
+     */
+    public static String isEmpty(String input,String substitute) {
+        return isEmpty(input)?substitute:input;
     }
 
     /**

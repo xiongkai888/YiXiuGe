@@ -34,7 +34,6 @@ public class QuestionnaireManagementActivity extends BaseActivity  {
     CenterTitleToolbar mToolbar;
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
-    QuestionnaireManagementAdapter mAdapter;
     private SwipeRefreshController<NoPageListBean<QuestionnaireManagementBean>> controller;
     private boolean isStudent;//true 学生  false 老师
 
@@ -77,11 +76,11 @@ public class QuestionnaireManagementActivity extends BaseActivity  {
         YiXiuGeApi api = new YiXiuGeApi(isStudent?"app/quest_student_list":"app/questions_list");
         api.addParams("uid", api.getUserId(this));
 
-        mAdapter = new QuestionnaireManagementAdapter(this);
-        mAdapter.setStudent(isStudent);
+        QuestionnaireManagementAdapter adapter = new QuestionnaireManagementAdapter(this);
+        adapter.setStudent(isStudent);
         smartSwipeRefreshLayout.initWithLinearLayout();
-        smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<QuestionnaireManagementBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
+        smartSwipeRefreshLayout.setAdapter(adapter);
+        controller = new SwipeRefreshController<NoPageListBean<QuestionnaireManagementBean>>(this, smartSwipeRefreshLayout, api, adapter) {
         };
         controller.loadFirstPage();
 

@@ -80,8 +80,6 @@ public class MainActivity extends BaseActivity {
         UpdateAppConfig.requestStoragePermission(this);
         initPermission();//百度定位权限
         eMClientListener();
-
-//        CommonUtils.uninstall(this,"com.lanmei.yixiu");
     }
 
 
@@ -97,7 +95,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onRequestToJoinReceived(String groupId, String groupName, String applyer, String reason) {
                 //用户申请加入群
-//                UIHelper.ToastMessage(MainActivity.this, groupId + "," + groupName + "," + applyer + "," + applyer);
                 L.d("onRequestToJoinReceived", "用户申请加入群 " + Thread.currentThread());
             }
 
@@ -458,21 +455,4 @@ public class MainActivity extends BaseActivity {
         unregisterBroadcastReceiver();
     }
 
-//    public static final String ACTION_SHOW_MESSAGE = "android.intent.action.SHOW_MESSAGE";
-//
-//    @Override
-//    protected void onNewIntent(Intent intent) {
-//        super.onNewIntent(intent);
-//        if (ACTION_SHOW_MESSAGE.equals(intent.getAction())) {
-//            mViewPager.setCurrentItem(1);
-//        }
-//    }
-//
-//    public static void showMessage(Context context,Application application) {//至消息页面
-//        Intent intent = new Intent(ACTION_SHOW_MESSAGE);
-//        intent.setClass(context, MainActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        application.startActivity(intent);
-//        IntentUtil.startActivity(application, SiXinActivity.class);
-//    }
 }

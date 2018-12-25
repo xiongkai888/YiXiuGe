@@ -120,7 +120,7 @@ public class QuestionnaireManagementAdapter extends SwipeRefreshAdapter<Question
             if (isStudent) {
                 numberTv.setVisibility(View.GONE);
             } else {
-                numberTv.setText(String.format(context.getString(R.string.submit_num),bean.getSubmit_num(),bean.getNumber()));
+                numberTv.setText(String.format(context.getString(R.string.submit_num),StringUtils.isEmpty(bean.getSubmit_num(),CommonUtils.isZero),StringUtils.isEmpty(bean.getNumber(),CommonUtils.isZero)));
             }
             if (StringUtils.isEmpty(bean.getContent())) {
                 llRemark.setVisibility(View.GONE);

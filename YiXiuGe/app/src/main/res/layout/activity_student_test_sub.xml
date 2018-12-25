@@ -62,7 +62,6 @@
 
 
             <TextView
-                android:id="@+id/performance_tv"
                 style="@style/text"
                 android:layout_marginLeft="@dimen/d_20dp"
                 android:layout_marginTop="@dimen/d_15dp"

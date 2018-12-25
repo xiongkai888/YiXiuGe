@@ -39,7 +39,7 @@ public class QuestionnaireSubjectAdapter extends SwipeRefreshAdapter<Questionnai
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
         QuestionnaireSubjectBean bean = getItem(position);
-        if (bean == null){
+        if (bean == null) {
             return;
         }
         ViewHolder viewHolder = (ViewHolder) holder;
@@ -65,14 +65,14 @@ public class QuestionnaireSubjectAdapter extends SwipeRefreshAdapter<Questionnai
         public void setParameter(QuestionnaireSubjectBean bean) {
 
             titleTv.setText(bean.getTitle());
-            if (StringUtils.isSame(bean.getType(), CommonUtils.isOne)){
+            if (StringUtils.isSame(bean.getType(), CommonUtils.isOne)) {
                 recyclerView.setVisibility(View.VISIBLE);
                 SelectQuestionItemAdapter adapter = new SelectQuestionItemAdapter(context);
                 recyclerView.setNestedScrollingEnabled(false);
                 adapter.setData(bean.getSelect());
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
                 recyclerView.setAdapter(adapter);
-            }else {
+            } else {
                 recyclerView.setVisibility(View.GONE);
             }
             deleteIv.setOnClickListener(new View.OnClickListener() {
@@ -81,25 +81,12 @@ public class QuestionnaireSubjectAdapter extends SwipeRefreshAdapter<Questionnai
                     AKDialog.getAlertDialog(context, "确认删除？", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            int position = getAdapterPosition();
-                            getData().remove(position);
-                            notifyItemChanged(position);
+                            getData().remove(getAdapterPosition());
+                            notifyDataSetChanged();
                         }
                     });
-
-//                    if (listener != null){
-//                        listener.onClick(getAdapterPosition());
-//                    }
                 }
             });
         }
     }
-
-//    public ClickAnswerListener listener;
-//
-//    public void setClickAnswerListener(ClickAnswerListener listener){
-//        this.listener = listener;
-//    }
-
-
 }
