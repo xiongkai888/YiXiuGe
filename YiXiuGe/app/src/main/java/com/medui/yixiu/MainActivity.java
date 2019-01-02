@@ -36,6 +36,7 @@ import com.medui.yixiu.helper.TabHelper;
 import com.medui.yixiu.update.UpdateAppConfig;
 import com.medui.yixiu.utils.AKDialog;
 import com.medui.yixiu.utils.BaiduLocation;
+import com.medui.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;
@@ -80,6 +81,7 @@ public class MainActivity extends BaseActivity {
         UpdateAppConfig.requestStoragePermission(this);
         initPermission();//百度定位权限
         eMClientListener();
+        CommonUtils.loadUserInfo(YiXiuApp.applicationContext, null);
     }
 
 

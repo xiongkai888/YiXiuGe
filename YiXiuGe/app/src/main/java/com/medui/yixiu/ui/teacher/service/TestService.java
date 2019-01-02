@@ -31,7 +31,7 @@ public class TestService extends Service {
     private boolean isRunning;
     private StudentsBean bean;//学生信息
     public static String uid;
-    private int limit = -60*60;//超时60分钟自动停止TestService
+    private int limit = -30*60;//超时30分钟自动停止TestService
 
     @Override
     public void onCreate() {

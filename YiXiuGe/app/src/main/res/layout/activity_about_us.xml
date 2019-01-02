@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_all_match_parent"
+    tools:context=".ui.mine.activity.AboutUsActivity">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <WebView
+        android:id="@+id/web_view"
+        style="@style/match_parent"/>
+
+</LinearLayout>

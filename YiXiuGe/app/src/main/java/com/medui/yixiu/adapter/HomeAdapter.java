@@ -51,6 +51,9 @@ public class HomeAdapter extends SwipeRefreshAdapter<CourseClassifyListBean> {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!CommonUtils.isExamine(context)){
+                    return;
+                }
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("bean",bean);
                 IntentUtil.startActivity(context, CourseDetailsActivity.class,bundle);

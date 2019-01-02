@@ -4,10 +4,12 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.medui.yixiu.R;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
@@ -19,6 +21,8 @@ public class DetailsMoreView extends LinearLayout {
 
 
     Context mContext;
+    @InjectView(R.id.share_tv)
+    TextView textView;
 
     public DetailsMoreView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -47,6 +51,10 @@ public class DetailsMoreView extends LinearLayout {
         }
     }
 
+    public void setTextView(String t){
+        textView.setText(t);
+        textView.setVisibility(GONE);
+    }
 
 
     DetailsMoreListener mDetailsMoreListener;//详情更多分享、删除监听

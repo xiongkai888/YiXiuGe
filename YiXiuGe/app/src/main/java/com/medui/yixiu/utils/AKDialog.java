@@ -75,7 +75,7 @@ public class AKDialog {
      */
     public static AlertDialog.Builder getMessageDialog(Context context, String title, String msg, DialogInterface.OnClickListener okListener) {
 
-        return getMessageDialog(context, title, msg, R.string.sure ,okListener);
+        return getMessageDialog(context, title, msg, R.string.sure, okListener);
     }
 
     /**
@@ -147,25 +147,26 @@ public class AKDialog {
         return builder;
     }
 
-    /**
-     * 单选对话框
-     */
-    public static AlertDialog.Builder getSingleChoiceDialog(Context context, String[] arrays,
-                                                            int selectIndex, DialogInterface.OnClickListener onClickListener) {
-        return getSingleChoiceDialog(context, null, arrays, selectIndex, onClickListener);
-    }
+//    /**
+//     * 单选对话框
+//     */
+//    public static AlertDialog.Builder getSingleChoiceDialog(Context context, String[] arrays,
+//                                                            int selectIndex, DialogInterface.OnClickListener onClickListener) {
+//        return getSingleChoiceDialog(context, null, arrays, selectIndex, onClickListener);
+//    }
 
     /**
      * 单选对话框
      */
     public static AlertDialog.Builder getSingleChoiceDialog(Context context, String title, String[] arrays,
-                                                            int selectIndex, DialogInterface.OnClickListener onClickListener) {
+                                                            int selectIndex, DialogInterface.OnClickListener onClickListener,DialogInterface.OnClickListener listener) {
         AlertDialog.Builder builder = getDialog(context);
         builder.setSingleChoiceItems(arrays, selectIndex, onClickListener);
         if (!TextUtils.isEmpty(title)) {
             builder.setTitle(title);
         }
-        // builder.setNegativeButton("取消", null);
+        builder.setNegativeButton(R.string.cancel, null);
+        builder.setPositiveButton(R.string.sure, listener);
         return builder;
     }
 

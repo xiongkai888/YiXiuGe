@@ -52,7 +52,16 @@ public class UserBean {
     private String position;
     private String learned;
     private String nolearned;
-    private String political;//政治面貌
+    private String political;//政治面貌=1|2|3=>群众|团员|党员
+    private String examine;// 0|1|2|3=>未提交|已提交|已审核|审核不通过
+
+    public void setExamine(String examine) {
+        this.examine = examine;
+    }
+
+    public String getExamine() {
+        return examine;
+    }
 
     private List<String> department;
 

@@ -142,6 +142,9 @@
             android:name="com.medui.yixiu.ui.mine.activity.ClassDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.medui.yixiu.ui.mine.activity.AboutUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.medui.yixiu.ui.teacher.activity.CheckingInManageActivity"
             android:screenOrientation="portrait" />
         <activity

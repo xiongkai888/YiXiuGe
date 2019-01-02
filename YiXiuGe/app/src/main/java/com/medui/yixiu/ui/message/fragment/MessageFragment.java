@@ -39,6 +39,9 @@ public class MessageFragment extends BaseFragment {
 
     @OnClick({R.id.ll_notice, R.id.ll_action, R.id.ll_sx})
     public void onViewClicked(View view) {
+        if (!CommonUtils.isExamine(context)){
+            return;
+        }
         switch (view.getId()) {
             case R.id.ll_notice://通知公告
                 IntentUtil.startActivity(context, NoticeActivity.class);

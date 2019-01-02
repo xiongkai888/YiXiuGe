@@ -167,7 +167,7 @@ public class CourseDetailsAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
                 @Override
                 public void onClick(View v) {
                    if (listener != null){
-                       listener.share(courseClassifyListBean.getVideo());
+                       listener.share(courseClassifyListBean.getVideo(),courseClassifyListBean.getTitle());
                    }
                 }
             });

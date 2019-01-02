@@ -78,6 +78,9 @@ public class QunFragment extends BaseFragment {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!CommonUtils.isExamine(context)){
+                    return;
+                }
                 if (isStudent) {
                     // enter group chat
                     Intent intent = new Intent(context, ChatActivity.class);

@@ -13,6 +13,7 @@ import com.medui.yixiu.R;
 import com.medui.yixiu.adapter.ScheduleFiltrateAdapter;
 import com.medui.yixiu.api.YiXiuGeApi;
 import com.medui.yixiu.bean.TeacherFiltrateBean;
+import com.medui.yixiu.utils.CommonUtils;
 import com.medui.yixiu.utils.FormatTime;
 import com.othershe.calendarview.bean.CalendarEvent;
 import com.othershe.calendarview.bean.DateBean;
@@ -70,6 +71,7 @@ public class MyClassScheduleActivity extends BaseActivity {
 
         toolbarNameTv.setText(R.string.my_class_schedule);
         menuTv.setText(R.string.all);
+        menuTv.setVisibility(CommonUtils.isStudent(this)?View.VISIBLE:View.GONE);//是老师就隐藏掉
 
         api.addParams("uid", api.getUserId(this));
         formatTime = new FormatTime(this);

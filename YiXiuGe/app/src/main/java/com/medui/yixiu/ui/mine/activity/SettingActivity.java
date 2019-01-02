@@ -15,9 +15,11 @@ import com.medui.yixiu.YiXiuApp;
 import com.medui.yixiu.event.LogoutEvent;
 import com.medui.yixiu.ui.login.LoginActivity;
 import com.medui.yixiu.ui.login.ProtocolActivity;
+import com.medui.yixiu.ui.login.RegisterActivity;
 import com.medui.yixiu.update.UpdateAppConfig;
 import com.medui.yixiu.update.UpdateEvent;
 import com.medui.yixiu.utils.AKDialog;
+import com.medui.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.helper.DataCleanManager;
 import com.xson.common.utils.IntentUtil;
@@ -70,49 +72,13 @@ public class SettingActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.ll_about_us, R.id.back_login, R.id.ll_info_setting,
-            R.id.ll_help_info, R.id.ll_clean_cache, R.id.ll_reset_pwd, R.id.ll_versions})
-    public void showSettingInfo(View view) {//
-        switch (view.getId()) {
-            case R.id.ll_about_us://关于我们
-                UIHelper.ToastMessage(this, R.string.developing);
-                break;
-            case R.id.back_login://退出登录
-                AKDialog.getAlertDialog(this, "确认要退出登录？", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        logoutHX();
-                    }
-                });
-                break;
-            case R.id.ll_info_setting://消息设置
-                UIHelper.ToastMessage(this, R.string.developing);
-                break;
-            case R.id.ll_help_info://隐私设置
-                IntentUtil.startActivity(this,ProtocolActivity.class);
-                break;
-            case R.id.ll_clean_cache://清除缓存
-                showClearCache();
-                break;
-            case R.id.ll_reset_pwd://修改密码
-                UIHelper.ToastMessage(this, R.string.developing);
-//                RegisterActivity.startActivity(this, RegisterActivity.RESET_PWD_STYLE);
-                break;
-            case R.id.ll_versions://版本信息
-                UpdateAppConfig.requestStoragePermission(this);
-                break;
-        }
-
-    }
-
-
     void logoutHX() {
         final ProgressDialog pd = new ProgressDialog(this);
         String st = getResources().getString(R.string.Are_logged_out);
         pd.setMessage(st);
         pd.setCanceledOnTouchOutside(false);
         pd.show();
-        DemoHelper.getInstance().logout(true,new EMCallBack() {
+        DemoHelper.getInstance().logout(true, new EMCallBack() {
 
             @Override
             public void onSuccess() {
@@ -175,4 +141,32 @@ public class SettingActivity extends BaseActivity {
         EventBus.getDefault().unregister(this);
     }
 
+    @OnClick({R.id.user_protocol_tv, R.id.ll_clean_cache, R.id.version_information_tv, R.id.change_password_tv, R.id.back_login,R.id.about_us_tv})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.user_protocol_tv://
+                IntentUtil.startActivity(this,ProtocolActivity.class);
+                break;
+            case R.id.ll_clean_cache://清除缓存
+                showClearCache();
+                break;
+            case R.id.version_information_tv://版本信息
+                UpdateAppConfig.requestStoragePermission(this);
+                break;
+            case R.id.change_password_tv://修改密码
+                IntentUtil.startActivity(this, RegisterActivity.class, CommonUtils.isThree);
+                break;
+            case R.id.back_login://退出登录
+                AKDialog.getAlertDialog(this, "确认要退出登录？", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        logoutHX();
+                    }
+                });
+                break;
+            case R.id.about_us_tv://关于我们
+                IntentUtil.startActivity(this, AboutUsActivity.class);
+                break;
+        }
+    }
 }

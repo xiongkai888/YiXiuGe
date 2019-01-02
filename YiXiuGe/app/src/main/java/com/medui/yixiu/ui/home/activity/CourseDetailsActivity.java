@@ -86,9 +86,8 @@ public class CourseDetailsActivity extends BaseActivity {
         controller.loadFirstPage();
         adapter.setShare(new ShareListener() {
             @Override
-            public void share(String url) {
-                shareHelper.share(url);
-//                CommonUtils.developing(getContext());
+            public void share(String url,String title) {
+                shareHelper.share(url,title);
             }
         });
         mJzvdStd.setUp(bean.getVideo(), bean.getTitle(), JzvdStd.SCREEN_WINDOW_NORMAL);

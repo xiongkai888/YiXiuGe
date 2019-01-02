@@ -20,6 +20,7 @@ import com.medui.yixiu.YiXiuApp;
 import com.medui.yixiu.api.YiXiuGeApi;
 import com.medui.yixiu.event.SetUserEvent;
 import com.medui.yixiu.ui.login.LoginActivity;
+import com.medui.yixiu.ui.mine.activity.PersonalDataSubActivity;
 import com.medui.yixiu.webviewpage.PhotoBrowserActivity;
 import com.xson.common.bean.DataBean;
 import com.xson.common.bean.UserBean;
@@ -165,6 +166,36 @@ public class CommonUtils {
         void userInfo(UserBean bean);
 
         void error(String error);
+    }
+
+
+    /**
+     * 是否通过了审核，只有通过了审核才能点击查看
+     * @param context
+     * @return
+     */
+    public static boolean isExamine(Context context){
+        UserBean bean = getUserBean(context);
+        String examine = bean.getExamine();
+        if (StringUtils.isEmpty(examine)){
+            examine = "4";
+        }
+        switch (examine){//0|1|2|3=>未提交|已提交|已审核|审核不通过
+            case "0":
+                IntentUtil.startActivity(context,PersonalDataSubActivity.class);
+                UIHelper.ToastMessage(context,context.getString(R.string.not_submitted_for_review));
+               return false;
+            case "1":
+                UIHelper.ToastMessage(context,context.getString(R.string.under_review));
+                return false;
+            case "2":
+                return true;
+            case "3":
+                IntentUtil.startActivity(context,PersonalDataSubActivity.class);
+                UIHelper.ToastMessage(context,context.getString(R.string.re_examination));
+                return false;
+        }
+        return false;
     }
 
 

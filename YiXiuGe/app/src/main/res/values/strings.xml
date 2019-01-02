@@ -222,5 +222,10 @@
     <string name="test_result">评估结果</string>
     <string name="choose_questionnaires_students">选择问卷学生</string>
     <string name="choose_questionnaires_students_q">请选择问卷学生</string>
+    <string name="not_submitted_for_review">您还未提交审核资料，请先提交资料</string>
+    <string name="under_review">资料审核通过才能查看</string>
+    <string name="re_examination">审核不通过，请重新审核</string>
+    <string name="about_us">关于我们</string>
+
 
 </resources>

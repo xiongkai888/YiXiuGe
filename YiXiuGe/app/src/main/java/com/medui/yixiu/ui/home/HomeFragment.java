@@ -32,7 +32,6 @@ import com.medui.yixiu.ui.home.activity.TeacherActivity;
 import com.medui.yixiu.ui.mine.activity.ExaminationActivity;
 import com.medui.yixiu.ui.mine.activity.MyClassScheduleActivity;
 import com.medui.yixiu.ui.scan.ScanActivity;
-import com.medui.yixiu.ui.teacher.activity.ClassHourActivity;
 import com.medui.yixiu.ui.teacher.activity.QuestionnaireManagementActivity;
 import com.medui.yixiu.ui.teacher.activity.TestPaperListActivity;
 import com.medui.yixiu.utils.CommonUtils;
@@ -100,6 +99,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!CommonUtils.isExamine(context)){
+                    return;
+                }
                 IntentUtil.startActivity(context, ScanActivity.class);
             }
         });
@@ -131,6 +133,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             @Override
             public void onClick() {
                 if (!CommonUtils.isLogin(getContext())) {
+                    return;
+                }
+                if (!CommonUtils.isExamine(context)){
                     return;
                 }
 //                IntentUtil.startActivity(context, MainActivity.class);
@@ -265,13 +270,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @OnClick({R.id.ke_cheng_tv, R.id.zi_xun_tv, R.id.jiao_cheng_tv, R.id.kao_shi_tv, R.id.questionnaire_tv, R.id.kaoqin_tv})
     public void onViewClicked(View view) {
+        if (!CommonUtils.isExamine(context)){
+            return;
+        }
         switch (view.getId()) {
             case R.id.ke_cheng_tv://课程
-                if (CommonUtils.isStudent(context)) {//学生是跳到课程表，老师跳到我的课时
-                    IntentUtil.startActivity(context, MyClassScheduleActivity.class);
-                } else {
-                    IntentUtil.startActivity(context, ClassHourActivity.class);
-                }
+                IntentUtil.startActivity(context, MyClassScheduleActivity.class);
                 break;
             case R.id.zi_xun_tv://资讯
                 IntentUtil.startActivity(context, NewsSubActivity.class);

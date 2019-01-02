@@ -5,5 +5,5 @@ package com.medui.yixiu.helper;
  */
 
 public interface ShareListener {
-    void share(String url);
+    void share(String url,String title);
 }

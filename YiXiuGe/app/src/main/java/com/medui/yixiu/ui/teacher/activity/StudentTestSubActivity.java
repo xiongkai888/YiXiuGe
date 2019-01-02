@@ -27,7 +27,6 @@ import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.JsonUtil;
-import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 
@@ -194,6 +193,7 @@ public class StudentTestSubActivity extends BaseActivity {
         api.addParams("sid", bean.getUid());//学生id
         api.addParams("uid", api.getUserId(this));//教师id
         api.addParams("id", id);//评估id
+        api.addParams("grade", (grade+1));//1|2|3|4=>不通过|待定|通过|优秀
         int stipulatetime = Integer.valueOf(time) * 60;
         int total = stipulatetime - timeRemaining;
         api.addParams("overtime", (total > stipulatetime) ? 1 : 0);//评估id
@@ -244,6 +244,12 @@ public class StudentTestSubActivity extends BaseActivity {
         return true;
     }
 
+    /**
+     * 设置最大、最小分数
+     * @param min_mark
+     * @param max_mark
+     * @return
+     */
     private List<String> getMarkList(String min_mark, String max_mark) {
         List<String> list = new ArrayList<>();
         int min = Integer.valueOf(min_mark);
@@ -255,10 +261,11 @@ public class StudentTestSubActivity extends BaseActivity {
     }
 
 
+    //测试时间（）
     @Subscribe
     public void testTimeEvent(TestTimeEvent event) {
         timeRemaining = event.getSecond();
-        L.d(L.TAG, event.getTime()+","+timeRemaining);
+//        L.d(L.TAG, event.getTime()+","+timeRemaining);
         timeTv.setText(String.format(getString(R.string.count_down), event.getTime()));
         isOverTime = false;
     }
@@ -280,6 +287,8 @@ public class StudentTestSubActivity extends BaseActivity {
     }
 
 
+    private int grade;
+
     @OnClick({R.id.back_iv, R.id.menu_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -291,12 +300,17 @@ public class StudentTestSubActivity extends BaseActivity {
                     UIHelper.ToastMessage(this, "请先完成学生评估内容再提交");
                     return;
                 }
-                AKDialog.getAlertDialog(this, "确定提交？", new DialogInterface.OnClickListener() {
+                AKDialog.getSingleChoiceDialog(this, "是否通过?", new String[]{"不通过", "待定", "通过", "优秀"}, 0, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                      grade = which;
+                    }
+                }, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         submit();
                     }
-                });
+                }).show();
                 break;
         }
     }

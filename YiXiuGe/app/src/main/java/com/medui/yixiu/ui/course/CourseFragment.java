@@ -85,6 +85,9 @@ public class CourseFragment extends BaseFragment {
 
     @OnClick(R.id.keywordEditText)
     public void onViewClicked() {
+        if (!CommonUtils.isExamine(context)){
+            return;
+        }
         IntentUtil.startActivity(context, SearchCourseActivity.class);
     }
 }

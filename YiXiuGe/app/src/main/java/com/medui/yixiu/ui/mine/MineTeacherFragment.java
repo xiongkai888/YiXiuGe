@@ -71,6 +71,8 @@ public class MineTeacherFragment extends BaseFragment {
     private void setUser() {
         UserBean userBean = CommonUtils.getUserBean(context);
         if (StringUtils.isEmpty(userBean)) {
+            nameTv.setText("游客");
+            picIv.setImageResource(R.drawable.default_pic);
             return;
         }
         ImageHelper.load(context, userBean.getPic(), picIv, null, true, R.drawable.default_pic, R.drawable.default_pic);
@@ -87,6 +89,9 @@ public class MineTeacherFragment extends BaseFragment {
 
     @OnClick({R.id.ll_tests_list, R.id.ll_courseware, R.id.ll_my_courseware, R.id.pic_iv, R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_evaluate, R.id.ll_setting, R.id.class_schedule_tv, R.id.kao_shi_tv, R.id.ll_mine_teacher1, R.id.ll_mine_teacher2, R.id.ll_mine_teacher3, R.id.ll_mine_teacher4, R.id.ll_mine_teacher5})
     public void onViewClicked(View view) {
+        if (!CommonUtils.isExamine(context)){
+            return;
+        }
         switch (view.getId()) {
             case R.id.pic_iv://个人资料
             case R.id.ll_data://个人资料
@@ -135,6 +140,7 @@ public class MineTeacherFragment extends BaseFragment {
                 break;
             case R.id.ll_tests_list://我的评估
                 IntentUtil.startActivity(context, TestsListActivity.class);
+//                CommonUtils.loadUserInfo(YiXiuApp.applicationContext, null);
                 break;
         }
     }

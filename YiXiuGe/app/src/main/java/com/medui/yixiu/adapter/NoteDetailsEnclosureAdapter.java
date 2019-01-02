@@ -1,6 +1,7 @@
 package com.medui.yixiu.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 
 import com.medui.yixiu.R;
 import com.medui.yixiu.bean.NotesBean;
-import com.medui.yixiu.helper.ShareListener;
 import com.medui.yixiu.ui.mine.activity.ShowEnclosureActivity;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.utils.IntentUtil;
@@ -44,25 +44,27 @@ public class NoteDetailsEnclosureAdapter extends SwipeRefreshAdapter<NotesBean.E
         viewHolder.checkTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentUtil.startActivity(context, ShowEnclosureActivity.class,bean.getUrl());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("bean",bean);
+                IntentUtil.startActivity(context, ShowEnclosureActivity.class,bundle);
             }
         });
-        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (listener != null){
-                    listener.share(bean.getUrl());
-                }
-                return false;
-            }
-        });
+//        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                if (listener != null){
+//                    listener.share(bean.getUrl());
+//                }
+//                return false;
+//            }
+//        });
     }
 
-    private ShareListener listener;
-
-    public void setShareListener(ShareListener listener){
-        this.listener = listener;
-    }
+//    private ShareListener listener;
+//
+//    public void setShareListener(ShareListener listener){
+//        this.listener = listener;
+//    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 

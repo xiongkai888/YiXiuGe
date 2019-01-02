@@ -1,10 +1,8 @@
 package com.medui.yixiu.ui.login;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -81,43 +79,34 @@ public class RegisterActivity extends BaseActivity implements Toolbar.OnMenuItem
         //初始化倒计时
         mCountDownTimer = new CodeCountDownTimer(this, 60 * 1000, 1000, obtainCodeBt);
 
-        setSupportActionBar(toolbar);
-        ActionBar actionbar = getSupportActionBar();
-
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.back);
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.menu_register);
+        //toolbar的menu点击事件的监听
+        toolbar.setOnMenuItemClickListener(this);
+        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         type = getIntent().getStringExtra("value");
-
         isRegister = StringUtils.isSame(type, CommonUtils.isOne);
 
-        if (isRegister) {//1是注册2是找回密码
-            actionbar.setTitle(R.string.register);
+        if (isRegister) {//1是注册2是找回密码3重设密码
+            toolbar.setTitle(R.string.register);
             llRealName.setVisibility(View.VISIBLE);
             agreeProtocolTv.setVisibility(View.VISIBLE);
-        } else {
-            actionbar.setTitle("找回密码");
+        } else if (StringUtils.isSame(type, CommonUtils.isTwo)){
+            toolbar.setTitle("找回密码");
             button.setText(R.string.sure);
+        }else {
+            toolbar.setTitle("重设密码");
+            button.setText(R.string.sure);
+            toolbar.getMenu().clear();
         }
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_register, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_login:
-                onBackPressed();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 
     //注册或找回密码、修改密码
     private void registerOrRetrievePwd(final String phone, String code, final String pwd) {
@@ -125,7 +114,7 @@ public class RegisterActivity extends BaseActivity implements Toolbar.OnMenuItem
         if (isRegister){
             apiUrl = "app/registered";//注册
         }else {
-            apiUrl = "app/changePassword";//修改密码
+            apiUrl = "app/changePassword";//修改密码(重设密码)
         }
         YiXiuGeApi api = new YiXiuGeApi(apiUrl);
         api.addParams("phone", phone);

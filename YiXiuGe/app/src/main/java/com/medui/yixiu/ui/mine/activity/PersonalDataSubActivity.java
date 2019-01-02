@@ -97,7 +97,8 @@ public class PersonalDataSubActivity extends BaseActivity {
     private String email;
     private String sex;//性别
     private String chooseSex;
-    private String area;//地址
+    private String area;//修改后地址
+    private String areaSub;//修改前的地址
     private String address;//详细地址
     private String unit;//单位
     private String school;//学校
@@ -140,6 +141,7 @@ public class PersonalDataSubActivity extends BaseActivity {
     private OptionPicker educationPicker;//学历选择器
     private OptionPicker technicalPostPicker;//职称选择器
     private OptionPicker politicalPicker;//政治面貌选择器
+    private String examine;//0|1|2|3=>未提交|已提交|已审核|审核不通过
 
 
     @Override
@@ -155,15 +157,6 @@ public class PersonalDataSubActivity extends BaseActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.back);
 
-        addressAsyncTask = new AddressAsyncTask();//异步获取省市区列表
-        addressAsyncTask.setAddressAsyncTaskListener(new AddressAsyncTask.AddressAsyncTaskListener() {
-            @Override
-            public void setAddressList(ArrayList<Province> result) {
-                initAddressPicker(result);
-            }
-        });
-        addressAsyncTask.execute();
-
         cameraHelper = new CameraHelper(this);
         cameraHelper.setHeadUrlListener(new CameraHelper.HeadUrlListener() {
             @Override
@@ -177,11 +170,14 @@ public class PersonalDataSubActivity extends BaseActivity {
 
         bean = UserHelper.getInstance(this).getUserBean();
         if (bean != null) {
+            examine = bean.getExamine();
+
             name = bean.getNickname();
             email = bean.getEmail();
             phone = bean.getPhone();
             weixin = bean.getWeixin();
-            area = bean.getArea();
+            areaSub = area = bean.getArea();
+//            areaSub = area = "530000,530100,530103";
             address = bean.getAddress();
             pic = bean.getPic();
             chooseSex = sex = bean.getSex();
@@ -213,7 +209,7 @@ public class PersonalDataSubActivity extends BaseActivity {
 
             nameTv.setText(name);
             emailTv.setText(email);
-            addressTv.setText(area);
+//            addressTv.setText(area);
             phoneTv.setText(phone);
             weixinTv.setText(weixin);
             addressDetailsTv.setText(address);
@@ -228,13 +224,13 @@ public class PersonalDataSubActivity extends BaseActivity {
             if (StringUtils.isEmpty(technicalPost)) {//为空可以选择
                 initEducation(4);//职称
                 setCompoundDrawables(technicalPostTv, R.drawable.in_right);
-            }else {
+            } else {
                 technicalPostTv.setText(technicalPost);
             }
             if (StringUtils.isEmpty(political)) {//为空可以选择
                 initEducation(8);//政治面貌
                 setCompoundDrawables(politicsStatusTv, R.drawable.in_right);
-            }else {
+            } else {
                 politicsStatusTv.setText(political);
             }
             pic = bean.getPic();
@@ -248,10 +244,22 @@ public class PersonalDataSubActivity extends BaseActivity {
                 llLearnedSubject.setVisibility(View.GONE);
                 llLearnSubject.setVisibility(View.GONE);
             }
+
+            addressAsyncTask = new AddressAsyncTask();//异步获取省市区列表
+            addressAsyncTask.setAddressAsyncTaskListener(new AddressAsyncTask.AddressAsyncTaskListener() {
+                @Override
+                public void setAddressList(ArrayList<Province> result) {
+                    initAddressPicker(result);
+                }
+            });
+            addressAsyncTask.execute();
+
         }
         mSaveButton.setEnabled(false);
         mSaveButton.setBackgroundResource(R.drawable.button_unable);
         initEducationPicker();
+
+        mSaveButton.setVisibility(StringUtils.isSame(examine, CommonUtils.isTwo) ? View.GONE : View.VISIBLE);//通过审核后隐藏提交按钮
     }
 
     /**
@@ -274,7 +282,7 @@ public class PersonalDataSubActivity extends BaseActivity {
                 if (isFinishing()) {
                     return;
                 }
-                switch (type){
+                switch (type) {
                     case 4:
                         technicalPostList = response.data;
                         initPositionPicker();
@@ -301,14 +309,57 @@ public class PersonalDataSubActivity extends BaseActivity {
         addressPicker.setOnAddressPickListener(new AddressPicker.OnAddressPickListener() {
             @Override
             public void onAddressPicked(Province province, City city, County county) {
-//                area = province.getAreaId() + "," + city.getAreaId() + "," + county.getAreaId();
+                area = province.getAreaId() + "," + city.getAreaId() + "," + county.getAreaId();
                 addressTv.setText(province.getAreaName() + "" + city.getAreaName() + "" + county.getAreaName());
                 dataIsChange();
 //                L.d("AddressPicker", province.getAreaId() + "," + city.getAreaId() + "," + county.getAreaId());
             }
         });
+        setAddress(data);
     }
 
+    /**
+     * 根据 areaId(如530000,530100,530103)获取省市区
+     * @param data
+     */
+    private void setAddress(ArrayList<Province> data){
+        if (!StringUtils.isEmpty(areaSub) && !StringUtils.isEmpty(data)) {
+            String[] strings = areaSub.split(",");
+            if (!StringUtils.isEmpty(strings) && strings.length == 3) {
+                String province = "";
+                String city = "";
+//                String county = "";
+                int size = data.size();
+                for (int i = 0; i < size; i++) {
+                    Province p = data.get(i);
+                    if (StringUtils.isSame(p.getAreaId(), strings[0])) {
+                        province = p.getAreaName();
+                        List<City> cityList = p.getCities();
+                        if (!StringUtils.isEmpty(cityList)) {
+                            int sizeCity = cityList.size();
+                            for (int j = 0; j < sizeCity; j++) {
+                                City c = cityList.get(j);
+                                if (StringUtils.isSame(c.getAreaId(), strings[1])) {
+                                    city = c.getAreaName();
+                                    List<County> countyList = c.getCounties();
+                                    if (!StringUtils.isEmpty(countyList)) {
+                                        int sizeCounty = countyList.size();
+                                        for (int o = 0; o < sizeCounty; o++) {
+                                            County co = countyList.get(o);
+                                            if (StringUtils.isSame(co.getAreaId(), strings[2])){
+                                                addressTv.setText(province + "" + city + "" + co.getAreaName());
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     //初始化学历选择器
     private void initEducationPicker() {
@@ -388,9 +439,12 @@ public class PersonalDataSubActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.ll_personal_icons,R.id.ll_politics_status, R.id.ll_name, R.id.ll_address, R.id.ll_phone, R.id.save_bt, R.id.ll_email, R.id.ll_address_details
+    @OnClick({R.id.ll_personal_icons, R.id.ll_politics_status, R.id.ll_name, R.id.ll_address, R.id.ll_phone, R.id.save_bt, R.id.ll_email, R.id.ll_address_details
             , R.id.ll_weixin, R.id.ll_unit, R.id.ll_education, R.id.ll_school, R.id.ll_technical_post})
     public void onViewClicked(View view) {
+        if (StringUtils.isSame(examine, CommonUtils.isTwo)) {//通过审核后不可修改
+            return;
+        }
         switch (view.getId()) {
             case R.id.ll_personal_icons://上传头像
                 cameraHelper.showDialog();
@@ -509,7 +563,7 @@ public class PersonalDataSubActivity extends BaseActivity {
         String cName = CommonUtils.getStringByTextView(nameTv);
         String cEmail = CommonUtils.getStringByTextView(emailTv);
         String cWeixin = CommonUtils.getStringByTextView(weixinTv);
-        String cArea = CommonUtils.getStringByTextView(addressTv);
+//        String cArea = CommonUtils.getStringByTextView(addressTv);
         String cSchool = CommonUtils.getStringByTextView(schoolTv);
         String cUnit = CommonUtils.getStringByTextView(unitTv);
         String cEducation = CommonUtils.getStringByTextView(educationTv);
@@ -517,7 +571,7 @@ public class PersonalDataSubActivity extends BaseActivity {
         String cTechnicalPost = CommonUtils.getStringByTextView(technicalPostTv);
         String cAddress = CommonUtils.getStringByTextView(addressDetailsTv);
         if (!StringUtils.isSame(cName, name)
-                || !StringUtils.isSame(cArea, area)
+                || !StringUtils.isSame(areaSub, area)
                 || !StringUtils.isSame(cAddress, address)
                 || !StringUtils.isSame(cAddress, address)
                 || !StringUtils.isSame(cWeixin, weixin)
@@ -549,7 +603,7 @@ public class PersonalDataSubActivity extends BaseActivity {
     private void loadUpDate(final String url) {
         final String name = CommonUtils.getStringByTextView(nameTv);
         final String email = CommonUtils.getStringByTextView(emailTv);
-        final String area = CommonUtils.getStringByTextView(addressTv);
+//        final String area = CommonUtils.getStringByTextView(addressTv);
         final String address = CommonUtils.getStringByTextView(addressDetailsTv);
 
         YiXiuGeApi api = new YiXiuGeApi("app/upuser");

@@ -13,6 +13,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.shareboard.ShareBoardConfig;
+import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 
 /**
@@ -33,23 +34,23 @@ public class ShareHelper {
     }
 
     public void share() {
-        share(shareUrl);
+        share(shareUrl,"");
     }
-    public void share(String share) {
-//        if (StringUtils.isEmpty(shareUrl)){
-//            UIHelper.ToastMessage(context,"分享的内容为空，分享失败");
-//            return;
-//        }
+    public void share(String share,String title) {
+        if (StringUtils.isEmpty(share)){
+            UIHelper.ToastMessage(context,"分享的内容为空，分享失败");
+            return;
+        }
         Config.isJumptoAppStore = true;//其中qq 微信会跳转到下载界面进行下载，其他应用会跳到应用商店进行下载
         UMImage thumb = new UMImage(context, R.drawable.logo);//资源文件  SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,, SHARE_MEDIA.QZONE
-        UMWeb web = new UMWeb(shareUrl);
+        UMWeb web = new UMWeb(share);
         web.setTitle(context.getString(R.string.app_name));//标题
         web.setThumb(thumb);  //缩略图
         web.setDescription(context.getString(R.string.app_name));//描述
 
         ShareAction shareAction = new ShareAction((Activity) context);
 
-        shareAction.withText("快来加入我们吧！")
+        shareAction.withText(StringUtils.isEmpty(title)?context.getString(R.string.app_name):title)
                 .setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN_FAVORITE)
                 .withMedia(web)
                 .setCallback(umShareListener);
@@ -71,17 +72,17 @@ public class ShareHelper {
 
         @Override
         public void onResult(SHARE_MEDIA platform) {
-//            shareMediaToastMessage(platform, "分享成功", "收藏成功");
+            shareMediaToastMessage(platform, "分享成功", "收藏成功");
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-//            shareMediaToastMessage(platform, "分享失败", "收藏失败");
+            shareMediaToastMessage(platform, "分享失败", "收藏失败");
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform) {
-//            shareMediaToastMessage(platform, "分享取消", "收藏取消");
+            shareMediaToastMessage(platform, "分享取消", "收藏取消");
         }
     };
 
