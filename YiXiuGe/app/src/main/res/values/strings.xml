@@ -18,6 +18,7 @@
     <string name="developing">开发中</string>
     <string name="send_code_succeed">验证码发送成功</string>
     <string name="agree_protocol"><![CDATA[点击注册即表示同意 <font color="#ff2456">%s</font>]]></string>
+    <string name="performance"><![CDATA[成绩：<font color="#ff2456">%s</font>]]></string>
     <string name="home">首页</string>
     <string name="class_schedule">课程表</string>
     <string name="ke_cheng">课程</string>
@@ -124,6 +125,7 @@
     <string name="my_course">我的教程</string>
     <string name="year_month">%1$s年%2$s月</string>
     <string name="grade">%1$s分</string>
+    <string name="teacher_remark">老师评语：\n\u3000\u3000%1$s</string>
     <string name="user_evaluation">用户评价：</string>
     <string name="teaching_age">%1$s年教龄</string>
     <string name="teacher_info">%1$s | %2$s岁 | %3$s</string>
@@ -226,6 +228,7 @@
     <string name="under_review">资料审核通过才能查看</string>
     <string name="re_examination">审核不通过，请重新审核</string>
     <string name="about_us">关于我们</string>
+    <string name="my_performance">我的成绩</string>
 
 
 </resources>

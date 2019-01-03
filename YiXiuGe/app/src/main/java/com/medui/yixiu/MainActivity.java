@@ -33,15 +33,19 @@ import com.medui.yixiu.event.KaoQinEvent;
 import com.medui.yixiu.event.LogoutEvent;
 import com.medui.yixiu.event.UnreadEvent;
 import com.medui.yixiu.helper.TabHelper;
+import com.medui.yixiu.ui.mine.activity.PersonalDataSubActivity;
 import com.medui.yixiu.update.UpdateAppConfig;
 import com.medui.yixiu.utils.AKDialog;
 import com.medui.yixiu.utils.BaiduLocation;
 import com.medui.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
+import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.L;
+import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.ProgressHUD;
 
@@ -81,7 +85,23 @@ public class MainActivity extends BaseActivity {
         UpdateAppConfig.requestStoragePermission(this);
         initPermission();//百度定位权限
         eMClientListener();
-        CommonUtils.loadUserInfo(YiXiuApp.applicationContext, null);
+        CommonUtils.loadUserInfo(YiXiuApp.applicationContext, new CommonUtils.UserInfoListener() {
+            @Override
+            public void userInfo(UserBean bean) {
+                if (isFinishing()) {
+                    return;
+                }
+                if (StringUtils.isSame(bean.getExamine(), CommonUtils.isZero) || StringUtils.isSame(bean.getExamine(), CommonUtils.isThree)) {
+                    IntentUtil.startActivity(getContext(), PersonalDataSubActivity.class);
+                    UIHelper.ToastMessage(getContext(),getString(R.string.not_submitted_for_review));
+                }
+            }
+
+            @Override
+            public void error(String error) {
+
+            }
+        });
     }
 
 
@@ -125,27 +145,27 @@ public class MainActivity extends BaseActivity {
             }
 
             @Override
-            public void onUserRemoved(final String groupId,final String groupName) {
+            public void onUserRemoved(final String groupId, final String groupName) {
                 //当前用户被管理员移除出群聊
                 L.d("onRequestToJoinReceived", "当前用户被管理员移除出群聊 " + groupId + "," + groupName);
                 EventBus.getDefault().post(new GroupListEvent(0));//被踢出某个群后，通知群聊列表刷新
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        UIHelper.ToastMessage(getContext(), "你被 "+groupName+" 管理员踢出了该群");
+                        UIHelper.ToastMessage(getContext(), "你被 " + groupName + " 管理员踢出了该群");
                     }
                 });
             }
 
             @Override
-            public void onGroupDestroyed(final String groupId,final String groupName) {
+            public void onGroupDestroyed(final String groupId, final String groupName) {
                 //groupName 群解散后调用
                 EventBus.getDefault().post(new GroupListEvent(0));//群解散后，通知群聊列表刷新
-                L.d("onRequestToJoinReceived", "onGroupDestroyed " +groupId+","+groupId);
+                L.d("onRequestToJoinReceived", "onGroupDestroyed " + groupId + "," + groupId);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        UIHelper.ToastMessage(getContext(), "群主解散了 "+groupName+" 群");
+                        UIHelper.ToastMessage(getContext(), "群主解散了 " + groupName + " 群");
                     }
                 });
             }
@@ -153,7 +173,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onAutoAcceptInvitationFromGroup(final String groupId, String inviter, String inviteMessage) {
                 //接收邀请时自动加入到群组的通知(被邀请进入某个群)
-                L.d("onRequestToJoinReceived", "接收邀请时自动加入到群组的通知 groupId:" + groupId+",inviter:"+inviter+",inviteMessage:"+inviteMessage);
+                L.d("onRequestToJoinReceived", "接收邀请时自动加入到群组的通知 groupId:" + groupId + ",inviter:" + inviter + ",inviteMessage:" + inviteMessage);
                 EventBus.getDefault().post(new GroupListEvent(0));//被邀请进入某个群后，通知群聊列表刷新
                 try {
                     EMGroup group = EMClient.getInstance().groupManager().getGroupFromServer(groupId);
@@ -170,7 +190,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void run() {
                         EMGroup group = EMClient.getInstance().groupManager().getGroup(groupId);
-                        UIHelper.ToastMessage(getContext(), "你被 "+group.getGroupName()+" 管理员禁言了");
+                        UIHelper.ToastMessage(getContext(), "你被 " + group.getGroupName() + " 管理员禁言了");
                     }
                 });
             }
@@ -195,7 +215,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void run() {
                         EMGroup group = EMClient.getInstance().groupManager().getGroup(groupId);
-                        UIHelper.ToastMessage(getContext(), "你被 "+group.getGroupName()+" 群主升级为该群管理员");
+                        UIHelper.ToastMessage(getContext(), "你被 " + group.getGroupName() + " 群主升级为该群管理员");
                     }
                 });
             }
@@ -208,7 +228,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void run() {
                         EMGroup group = EMClient.getInstance().groupManager().getGroup(groupId);
-                        UIHelper.ToastMessage(getContext(), "你被 "+group.getGroupName()+" 群主撤销了管理员");
+                        UIHelper.ToastMessage(getContext(), "你被 " + group.getGroupName() + " 群主撤销了管理员");
                     }
                 });
             }
@@ -393,12 +413,13 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
+
     //自己被邀请进入某群是调用
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void invitationGroupEvent(InvitationGroupEvent event) {
         EMGroup group = event.getGroup();
-        if (group != null){
-            UIHelper.ToastMessage(getContext(),"你被 " +group.getGroupName() + " 群管理员邀请进入该群");
+        if (group != null) {
+            UIHelper.ToastMessage(getContext(), "你被 " + group.getGroupName() + " 群管理员邀请进入该群");
         }
     }
 

@@ -54,6 +54,9 @@ public class SplashActivity extends AppCompatActivity implements ViewPager.OnPag
     }
 
     private void enterHomeActivity() {
+        if (isFinishing()){
+            return;
+        }
         if (CommonUtils.isLogin(this)) {
             IntentUtil.startActivity(this, MainActivity.class);
         }

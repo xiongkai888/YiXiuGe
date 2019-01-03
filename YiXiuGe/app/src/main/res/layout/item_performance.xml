@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/h_match_parent_no"
+    android:layout_marginLeft="@dimen/d_10dp"
+    android:layout_marginTop="@dimen/d_5dp"
+    android:layout_marginBottom="@dimen/d_5dp"
+    android:layout_marginRight="@dimen/d_10dp">
+
+    <LinearLayout
+        android:padding="@dimen/d_10dp"
+        style="@style/v_match_parent_no"
+        android:background="@drawable/evaluate_bg">
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            style="@style/h_match_parent_no">
+
+            <com.xson.common.widget.FormatTextView
+                android:id="@+id/performance_tv"
+                style="@style/text"
+                android:textSize="@dimen/txt_16sp"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                app:formatText="@string/performance" />
+
+            <TextView
+                android:gravity="end"
+                android:layout_width="match_parent"
+                android:text="@string/time"
+                android:id="@+id/time_tv"
+                style="@style/text12colorBlack" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="@dimen/d_10dp"
+            android:layout_marginBottom="@dimen/d_10dp"
+            style="@style/line_H1dp_divider" />
+
+        <TextView
+            android:id="@+id/teacher_remark_tv"
+            android:lineSpacingExtra="@dimen/d_3dp"
+            style="@style/text14color666" />
+
+    </LinearLayout>
+
+</LinearLayout>

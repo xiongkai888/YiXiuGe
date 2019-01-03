@@ -12,8 +12,10 @@ import com.medui.yixiu.ui.mine.activity.MyClassScheduleActivity;
 import com.medui.yixiu.ui.mine.activity.MyCollectActivity;
 import com.medui.yixiu.ui.mine.activity.MyEvaluateActivity;
 import com.medui.yixiu.ui.mine.activity.MyNoteActivity;
+import com.medui.yixiu.ui.mine.activity.MyPerformanceActivity;
 import com.medui.yixiu.ui.mine.activity.MyTestsListActivity;
 import com.medui.yixiu.ui.mine.activity.PersonalDataSubActivity;
+import com.medui.yixiu.ui.mine.activity.SettingActivity;
 import com.medui.yixiu.ui.teacher.activity.TutorialCoursewareActivity;
 import com.medui.yixiu.utils.CommonUtils;
 import com.xson.common.app.BaseFragment;
@@ -83,7 +85,7 @@ public class MineStudentFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.ll_tests_list, R.id.pic_iv, R.id.ll_courseware, R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_notes, R.id.ll_evaluate, R.id.ll_setting, R.id.class_schedule_tv, R.id.kao_shi_tv})
+    @OnClick({R.id.ll_tests_list,R.id.ll_performance, R.id.pic_iv, R.id.ll_courseware, R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_notes, R.id.ll_evaluate, R.id.ll_setting, R.id.class_schedule_tv, R.id.kao_shi_tv})
     public void onViewClicked(View view) {
         if (!CommonUtils.isExamine(context)){
             return;
@@ -92,6 +94,9 @@ public class MineStudentFragment extends BaseFragment {
             case R.id.pic_iv://个人资料
             case R.id.ll_data://个人资料
                 IntentUtil.startActivity(context, PersonalDataSubActivity.class);
+                break;
+            case R.id.ll_performance://我的成绩
+                IntentUtil.startActivity(context, MyPerformanceActivity.class);
                 break;
             case R.id.ll_collect://我的收藏
                 IntentUtil.startActivity(context, MyCollectActivity.class);
@@ -109,8 +114,8 @@ public class MineStudentFragment extends BaseFragment {
                 IntentUtil.startActivity(context, MyEvaluateActivity.class);
                 break;
             case R.id.ll_setting://设置
-                CommonUtils.loadUserInfo(context,null);
-//                IntentUtil.startActivity(context, SettingActivity.class);
+//                CommonUtils.loadUserInfo(context,null);
+                IntentUtil.startActivity(context, SettingActivity.class);
                 break;
             case R.id.class_schedule_tv://课程表
                 IntentUtil.startActivity(context, MyClassScheduleActivity.class);

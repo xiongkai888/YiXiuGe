@@ -23,8 +23,6 @@ public class EvaluateListFragment extends BaseFragment {
 
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
-    EvaluateListAdapter mAdapter;
-    private SwipeRefreshController<NoPageListBean<EvaluateListBean>> controller;
 
     @Override
     public int getContentViewId() {
@@ -34,32 +32,14 @@ public class EvaluateListFragment extends BaseFragment {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        initSwipeRefreshLayout();
-//        if (!EventBus.getDefault().isRegistered(this)) {
-//            EventBus.getDefault().register(this);
-//        }
-    }
-
-    private void initSwipeRefreshLayout() {
         smartSwipeRefreshLayout.initWithLinearLayout();
         YiXiuGeApi api = new YiXiuGeApi("app/my_comment");
         api.addParams("uid", api.getUserId(context));
         api.addParams("type", getArguments().getString("type"));
-        mAdapter = new EvaluateListAdapter(context);
+        EvaluateListAdapter mAdapter = new EvaluateListAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<EvaluateListBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
+        SwipeRefreshController<NoPageListBean<EvaluateListBean>> controller = new SwipeRefreshController<NoPageListBean<EvaluateListBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
         };
         controller.loadFirstPage();
     }
-
-
-
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-//        EventBus.getDefault().unregister(this);
-    }
-
 }

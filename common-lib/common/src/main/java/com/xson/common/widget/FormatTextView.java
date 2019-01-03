@@ -2,6 +2,7 @@ package com.xson.common.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -14,7 +15,7 @@ import com.xson.common.utils.L;
 /**
  * Created by xson on 15-9-25.
  */
-public class FormatTextView extends TextView {
+public class FormatTextView extends AppCompatTextView {
     private CharSequence mFormatText;
 
     public FormatTextView(Context context, AttributeSet attrs) {

@@ -78,13 +78,28 @@
             <TextView
                 style="@style/text_weight"
                 android:drawableLeft="@drawable/mine_1"
-                android:drawablePadding="@dimen/d_10dp"
                 android:gravity="center_vertical"
                 android:text="个人资料" />
 
             <TextView
                 style="@style/text"
-                android:layout_marginLeft="@dimen/d_10dp"
+                android:drawableRight="@drawable/in_right"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_performance"
+            style="@style/ll_bottom_h"
+            android:padding="@dimen/d_10dp">
+
+            <TextView
+                style="@style/text_weight"
+                android:drawableLeft="@drawable/mine_performance"
+                android:gravity="center_vertical"
+                android:text="我的成绩" />
+
+            <TextView
+                style="@style/text"
                 android:drawableRight="@drawable/in_right"
                 android:gravity="center_vertical" />
         </LinearLayout>
@@ -97,13 +112,11 @@
             <TextView
                 style="@style/text_weight"
                 android:drawableLeft="@drawable/mine_2"
-                android:drawablePadding="@dimen/d_10dp"
                 android:gravity="center_vertical"
                 android:text="我的收藏" />
 
             <TextView
                 style="@style/text"
-                android:layout_marginLeft="@dimen/d_10dp"
                 android:drawableRight="@drawable/in_right"
                 android:gravity="center_vertical" />
         </LinearLayout>
@@ -116,14 +129,12 @@
             <TextView
                 style="@style/text_weight"
                 android:drawableLeft="@drawable/mine_teacher_6"
-                android:drawablePadding="@dimen/d_10dp"
                 android:gravity="center_vertical"
                 android:text="@string/tutorial_courseware" />
 
 
             <TextView
                 style="@style/text12color666"
-                android:layout_marginLeft="@dimen/d_10dp"
                 android:drawableRight="@drawable/in_right"
                 android:gravity="center_vertical" />
 
@@ -138,13 +149,11 @@
             <TextView
                 style="@style/text_weight"
                 android:drawableLeft="@drawable/mine_3"
-                android:drawablePadding="@dimen/d_10dp"
                 android:gravity="center_vertical"
                 android:text="@string/my_checking_in" />
 
             <TextView
                 style="@style/text12color666"
-                android:layout_marginLeft="@dimen/d_10dp"
                 android:drawableRight="@drawable/in_right"
                 android:gravity="center_vertical" />
         </LinearLayout>
@@ -157,7 +166,6 @@
             <TextView
                 style="@style/text_weight"
                 android:drawableLeft="@drawable/mine_4"
-                android:drawablePadding="@dimen/d_10dp"
                 android:gravity="center_vertical"
                 android:text="@string/my_note" />
 
@@ -176,13 +184,11 @@
             <TextView
                 style="@style/text_weight"
                 android:drawableLeft="@drawable/mine_5"
-                android:drawablePadding="@dimen/d_10dp"
                 android:gravity="center_vertical"
                 android:text="我的评价" />
 
             <TextView
                 style="@style/text"
-                android:layout_marginLeft="@dimen/d_10dp"
                 android:drawableRight="@drawable/in_right"
                 android:gravity="center_vertical" />
         </LinearLayout>
@@ -191,20 +197,18 @@
         <LinearLayout
             android:id="@+id/ll_tests_list"
             style="@style/ll_bottom_h"
-            android:visibility="visible"
-            android:padding="@dimen/d_10dp">
+            android:padding="@dimen/d_10dp"
+            android:visibility="visible">
 
             <TextView
                 style="@style/text_weight"
                 android:drawableLeft="@drawable/mine_2"
-                android:drawablePadding="@dimen/d_10dp"
                 android:gravity="center_vertical"
                 android:text="我的评估" />
 
 
             <TextView
                 style="@style/text12color666"
-                android:layout_marginLeft="@dimen/d_10dp"
                 android:drawableRight="@drawable/in_right"
                 android:gravity="center_vertical" />
         </LinearLayout>
@@ -219,20 +223,17 @@
             <TextView
                 style="@style/text_weight"
                 android:drawableLeft="@drawable/mine_6"
-                android:drawablePadding="@dimen/d_10dp"
                 android:gravity="center_vertical"
                 android:text="@string/setting" />
 
 
             <TextView
                 style="@style/text"
-                android:layout_marginLeft="@dimen/d_10dp"
                 android:drawableRight="@drawable/in_right"
                 android:gravity="center_vertical" />
         </LinearLayout>
 
-        <TextView
-           style="@style/line_H10dp_on" />
+        <TextView style="@style/line_H10dp_on" />
 
     </LinearLayout>
 
