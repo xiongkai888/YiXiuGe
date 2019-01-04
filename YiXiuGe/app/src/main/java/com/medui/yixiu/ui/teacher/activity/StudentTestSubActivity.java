@@ -300,7 +300,7 @@ public class StudentTestSubActivity extends BaseActivity {
                     UIHelper.ToastMessage(this, "请先完成学生评估内容再提交");
                     return;
                 }
-                AKDialog.getSingleChoiceDialog(this, "是否通过?", new String[]{"不通过", "待定", "通过", "优秀"}, 0, new DialogInterface.OnClickListener() {
+                AKDialog.getSingleChoiceDialog(this, "是否通过?", new String[]{"不通过", "待定", "通过", "优秀"}, grade, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                       grade = which;

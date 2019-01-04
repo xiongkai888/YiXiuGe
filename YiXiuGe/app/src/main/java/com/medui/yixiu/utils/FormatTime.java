@@ -170,12 +170,13 @@ public class FormatTime {
     public String[] getMonthAgoOrNext(int year, int month,boolean isNext) {
         String[] strings = null;
         try {
+
             Date date = new Date(dateToStampLongSub(year + "-" + month)*1000);
             //过去一月
             calendar.setTime(date);
             calendar.add(Calendar.MONTH, isNext?1:-1);
             Date m = calendar.getTime();
-            String mon = new SimpleDateFormat("yyyy-MM").format(m);
+            String mon = new SimpleDateFormat(context.getString(R.string.format_time_year_month)).format(m);
             strings = mon.split("-");
         } catch (ParseException e) {
             e.printStackTrace();

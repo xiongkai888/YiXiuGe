@@ -62,7 +62,7 @@ public class LoginActivity extends BaseActivity {
     ProgressHUD mProgressHUD;
 
     private void initProgressDialog() {
-        mProgressHUD = ProgressHUD.show(this, "正在登陆...", true, false, null);
+        mProgressHUD = ProgressHUD.show(this, "正在登录...", true, false, null);
         mProgressHUD.cancel();
         mProgressHUD.setCancelable(true);
     }

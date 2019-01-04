@@ -74,7 +74,17 @@ public class MineStudentFragment extends BaseFragment {
             return;
         }
         ImageHelper.load(context, userBean.getPic(), picIv, null, true, R.drawable.default_pic, R.drawable.default_pic);
-        nameTv.setText(userBean.getNickname());
+        String examine = userBean.getExamine();
+        if (StringUtils.isSame(examine,CommonUtils.isZero)){
+            examine = " (资料未提交)";
+        }else if (StringUtils.isSame(examine,CommonUtils.isOne)){
+            examine = " (资料审核中)";
+        }else if(StringUtils.isSame(examine,CommonUtils.isThree)){
+            examine = " (资料审核不通过)";
+        }else {
+            examine = "";
+        }
+        nameTv.setText(userBean.getNickname()+examine);
         idTv.setText("id：" + userBean.getId());
     }
 
@@ -85,12 +95,15 @@ public class MineStudentFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.ll_tests_list,R.id.ll_performance, R.id.pic_iv, R.id.ll_courseware, R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_notes, R.id.ll_evaluate, R.id.ll_setting, R.id.class_schedule_tv, R.id.kao_shi_tv})
+    @OnClick({R.id.ll_tests_list, R.id.ll_performance, R.id.pic_iv, R.id.ll_courseware, R.id.ll_data, R.id.ll_collect, R.id.ll_checking_in, R.id.ll_notes, R.id.ll_evaluate, R.id.ll_setting, R.id.class_schedule_tv, R.id.kao_shi_tv})
     public void onViewClicked(View view) {
-        if (!CommonUtils.isExamine(context)){
-            return;
+        int id = view.getId();
+        if (id != R.id.ll_setting){
+            if (!CommonUtils.isExamine(context)) {
+                return;
+            }
         }
-        switch (view.getId()) {
+        switch (id) {
             case R.id.pic_iv://个人资料
             case R.id.ll_data://个人资料
                 IntentUtil.startActivity(context, PersonalDataSubActivity.class);

@@ -11,8 +11,8 @@ android {
         applicationId "com.medui.yixiu"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 50
-        versionName "1.5.43"
+        versionCode 51
+        versionName "1.5.44"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "API_URL", "\"http://47.107.59.111/api/\""
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }

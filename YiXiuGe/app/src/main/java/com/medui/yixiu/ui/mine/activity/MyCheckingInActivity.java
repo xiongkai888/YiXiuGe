@@ -58,6 +58,7 @@ public class MyCheckingInActivity extends BaseActivity {
         formatTime = new FormatTime(this);
         formatTime.setApplyToTimeYearMonthDay();
         year = formatTime.getYear();
+//        month = 5;
         month = formatTime.getMonth();
 
         currentTime = year+"-"+month;
@@ -87,6 +88,7 @@ public class MyCheckingInActivity extends BaseActivity {
 
     @OnClick({R.id.last_month_iv, R.id.next_month_iv})
     public void onViewClicked(View view) {
+        formatTime.setApplyPattern(getString(R.string.format_time_year_month));
         switch (view.getId()) {
             case R.id.last_month_iv:
                 String[] strings = formatTime.getMonthAgoOrNext(year,month,false);
@@ -108,6 +110,7 @@ public class MyCheckingInActivity extends BaseActivity {
 
 
     public void loadcheckingIn(int year,int month){
+        formatTime.setApplyToTimeYearMonthDay();
         this.year = year;
         this.month = month;
         monthDays = SolarUtil.getMonthDays(year, month);
