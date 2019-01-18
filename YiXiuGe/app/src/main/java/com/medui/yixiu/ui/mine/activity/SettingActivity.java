@@ -145,7 +145,7 @@ public class SettingActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.user_protocol_tv://
-                IntentUtil.startActivity(this,ProtocolActivity.class);
+                IntentUtil.startActivity(this,ProtocolActivity.class,getString(R.string.privacy_policy));
                 break;
             case R.id.ll_clean_cache://清除缓存
                 showClearCache();

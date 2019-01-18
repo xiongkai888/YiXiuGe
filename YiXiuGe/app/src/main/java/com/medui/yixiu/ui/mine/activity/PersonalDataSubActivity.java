@@ -141,7 +141,7 @@ public class PersonalDataSubActivity extends BaseActivity {
     private OptionPicker educationPicker;//学历选择器
     private OptionPicker technicalPostPicker;//职称选择器
     private OptionPicker politicalPicker;//政治面貌选择器
-    private String examine;//0|1|2|3=>未提交|已提交|已审核|审核不通过
+    private boolean examine;//0|1|2|3=>未提交|已提交|已审核|审核不通过
 
 
     @Override
@@ -170,7 +170,7 @@ public class PersonalDataSubActivity extends BaseActivity {
 
         bean = UserHelper.getInstance(this).getUserBean();
         if (bean != null) {
-            examine = bean.getExamine();
+            examine = StringUtils.isSame(bean.getExamine(),CommonUtils.isOne);//bean.getExamine() == 1已提交审核（不能修改资料）
 
             name = bean.getNickname();
             email = bean.getEmail();
@@ -186,7 +186,7 @@ public class PersonalDataSubActivity extends BaseActivity {
             education = bean.getEducation();
             technicalPost = bean.getPosition();
             political = bean.getPolitical();
-            if (StringUtils.isSame(sex, CommonUtils.isZero)) {
+            if (StringUtils.isSame(sex, CommonUtils.isZero)) {//只能改一次
                 mRadgroup.setVisibility(View.VISIBLE);
                 mRadgroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
@@ -259,7 +259,7 @@ public class PersonalDataSubActivity extends BaseActivity {
         mSaveButton.setBackgroundResource(R.drawable.button_unable);
         initEducationPicker();
 
-        mSaveButton.setVisibility(StringUtils.isSame(examine, CommonUtils.isTwo) ? View.GONE : View.VISIBLE);//通过审核后隐藏提交按钮
+        mSaveButton.setVisibility(examine ? View.GONE : View.VISIBLE);//隐藏提交按钮
     }
 
     /**
@@ -442,7 +442,7 @@ public class PersonalDataSubActivity extends BaseActivity {
     @OnClick({R.id.ll_personal_icons, R.id.ll_politics_status, R.id.ll_name, R.id.ll_address, R.id.ll_phone, R.id.save_bt, R.id.ll_email, R.id.ll_address_details
             , R.id.ll_weixin, R.id.ll_unit, R.id.ll_education, R.id.ll_school, R.id.ll_technical_post})
     public void onViewClicked(View view) {
-        if (StringUtils.isSame(examine, CommonUtils.isTwo)) {//通过审核后不可修改
+        if (examine) {//通过审核后不可修改
             return;
         }
         switch (view.getId()) {

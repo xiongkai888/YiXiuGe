@@ -18,7 +18,7 @@ public class TestPaperBean {
 
     private String id;
     private String title;
-    private String type;
+    private String type;// 1|2=>综合考试|随堂考试
     private String starttime;
     private String endtime;
     private int status;

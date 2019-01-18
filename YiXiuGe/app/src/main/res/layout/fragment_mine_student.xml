@@ -69,171 +69,108 @@
         </LinearLayout>
 
 
-        <LinearLayout
+
+        <TextView
             android:id="@+id/ll_data"
-            style="@style/ll_bottom_h"
-            android:layout_marginTop="@dimen/d_10dp"
-            android:padding="@dimen/d_10dp">
-
-            <TextView
-                style="@style/text_weight"
-                android:drawableLeft="@drawable/mine_1"
-                android:gravity="center_vertical"
-                android:text="个人资料" />
-
-            <TextView
-                style="@style/text"
-                android:drawableRight="@drawable/in_right"
-                android:gravity="center_vertical" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_performance"
-            style="@style/ll_bottom_h"
-            android:padding="@dimen/d_10dp">
-
-            <TextView
-                style="@style/text_weight"
-                android:drawableLeft="@drawable/mine_performance"
-                android:gravity="center_vertical"
-                android:text="我的成绩" />
-
-            <TextView
-                style="@style/text"
-                android:drawableRight="@drawable/in_right"
-                android:gravity="center_vertical" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_collect"
-            style="@style/ll_bottom_h"
-            android:padding="@dimen/d_10dp">
-
-            <TextView
-                style="@style/text_weight"
-                android:drawableLeft="@drawable/mine_2"
-                android:gravity="center_vertical"
-                android:text="我的收藏" />
-
-            <TextView
-                style="@style/text"
-                android:drawableRight="@drawable/in_right"
-                android:gravity="center_vertical" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_courseware"
-            style="@style/ll_bottom_h"
-            android:padding="@dimen/d_10dp">
-
-            <TextView
-                style="@style/text_weight"
-                android:drawableLeft="@drawable/mine_teacher_6"
-                android:gravity="center_vertical"
-                android:text="@string/tutorial_courseware" />
-
-
-            <TextView
-                style="@style/text12color666"
-                android:drawableRight="@drawable/in_right"
-                android:gravity="center_vertical" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/ll_checking_in"
-            style="@style/ll_bottom_h"
-            android:padding="@dimen/d_10dp">
-
-            <TextView
-                style="@style/text_weight"
-                android:drawableLeft="@drawable/mine_3"
-                android:gravity="center_vertical"
-                android:text="@string/my_checking_in" />
-
-            <TextView
-                style="@style/text12color666"
-                android:drawableRight="@drawable/in_right"
-                android:gravity="center_vertical" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_notes"
-            style="@style/ll_bottom_h"
-            android:padding="@dimen/d_10dp">
-
-            <TextView
-                style="@style/text_weight"
-                android:drawableLeft="@drawable/mine_4"
-                android:gravity="center_vertical"
-                android:text="@string/my_note" />
-
-            <TextView
-                style="@style/text12color666"
-                android:layout_marginLeft="@dimen/d_10dp"
-                android:drawableRight="@drawable/in_right"
-                android:gravity="center_vertical" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_evaluate"
-            style="@style/ll_bottom_h"
-            android:padding="@dimen/d_10dp">
-
-            <TextView
-                style="@style/text_weight"
-                android:drawableLeft="@drawable/mine_5"
-                android:gravity="center_vertical"
-                android:text="我的评价" />
-
-            <TextView
-                style="@style/text"
-                android:drawableRight="@drawable/in_right"
-                android:gravity="center_vertical" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/ll_tests_list"
-            style="@style/ll_bottom_h"
+            style="@style/match_parent"
+            android:background="@drawable/border_bottom_divider"
+            android:drawableLeft="@drawable/mine_1"
+            android:drawableRight="@drawable/in_right"
+            android:gravity="center_vertical"
             android:padding="@dimen/d_10dp"
-            android:visibility="visible">
-
-            <TextView
-                style="@style/text_weight"
-                android:drawableLeft="@drawable/mine_2"
-                android:gravity="center_vertical"
-                android:text="我的评估" />
+            android:layout_marginTop="@dimen/d_10dp"
+            android:text="个人资料" />
 
 
-            <TextView
-                style="@style/text12color666"
-                android:drawableRight="@drawable/in_right"
-                android:gravity="center_vertical" />
-        </LinearLayout>
 
-        <TextView style="@style/line_H10dp_on" />
+        <TextView
+            android:id="@+id/ll_performance"
+            style="@style/match_parent"
+            android:background="@drawable/border_bottom_divider"
+            android:drawableLeft="@drawable/mine_performance"
+            android:drawableRight="@drawable/in_right"
+            android:gravity="center_vertical"
+            android:padding="@dimen/d_10dp"
+            android:text="我的成绩" />
 
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/ll_collect"
+            style="@style/match_parent"
+            android:background="@drawable/border_bottom_divider"
+            android:drawableLeft="@drawable/mine_2"
+            android:drawableRight="@drawable/in_right"
+            android:gravity="center_vertical"
+            android:padding="@dimen/d_10dp"
+            android:text="我的收藏" />
+
+
+
+        <TextView
+            android:id="@+id/ll_courseware"
+            style="@style/match_parent"
+            android:background="@drawable/border_bottom_divider"
+            android:drawableLeft="@drawable/mine_teacher_6"
+            android:drawableRight="@drawable/in_right"
+            android:gravity="center_vertical"
+            android:padding="@dimen/d_10dp"
+            android:text="@string/tutorial_courseware" />
+
+
+        <TextView
+            android:id="@+id/ll_checking_in"
+            style="@style/match_parent"
+            android:background="@drawable/border_bottom_divider"
+            android:drawableLeft="@drawable/mine_3"
+            android:drawableRight="@drawable/in_right"
+            android:gravity="center_vertical"
+            android:padding="@dimen/d_10dp"
+            android:text="@string/my_checking_in" />
+
+        <TextView
+            android:id="@+id/ll_notes"
+            style="@style/match_parent"
+            android:background="@drawable/border_bottom_divider"
+            android:drawableLeft="@drawable/mine_4"
+            android:drawableRight="@drawable/in_right"
+            android:gravity="center_vertical"
+            android:padding="@dimen/d_10dp"
+            android:text="@string/my_note" />
+
+        <TextView
+            android:id="@+id/ll_evaluate"
+            style="@style/match_parent"
+            android:background="@drawable/border_bottom_divider"
+            android:drawableLeft="@drawable/mine_5"
+            android:drawableRight="@drawable/in_right"
+            android:gravity="center_vertical"
+            android:padding="@dimen/d_10dp"
+            android:text="我的评价" />
+
+
+        <TextView
+            android:id="@+id/ll_tests_list"
+            style="@style/match_parent"
+            android:background="@color/white"
+            android:drawableLeft="@drawable/mine_2"
+            android:drawableRight="@drawable/in_right"
+            android:gravity="center_vertical"
+            android:padding="@dimen/d_10dp"
+            android:text="我的评估" />
+
+
+        <TextView
             android:id="@+id/ll_setting"
-            style="@style/ll_bottom_h_no"
-            android:padding="@dimen/d_10dp">
+            style="@style/match_parent"
+            android:background="@color/white"
+            android:drawableLeft="@drawable/mine_6"
+            android:drawableRight="@drawable/in_right"
+            android:gravity="center_vertical"
+            android:padding="@dimen/d_10dp"
+            android:layout_marginTop="@dimen/d_10dp"
+            android:layout_marginBottom="@dimen/d_10dp"
+            android:text="@string/setting" />
 
-            <TextView
-                style="@style/text_weight"
-                android:drawableLeft="@drawable/mine_6"
-                android:gravity="center_vertical"
-                android:text="@string/setting" />
-
-
-            <TextView
-                style="@style/text"
-                android:drawableRight="@drawable/in_right"
-                android:gravity="center_vertical" />
-        </LinearLayout>
-
-        <TextView style="@style/line_H10dp_on" />
 
     </LinearLayout>
 

@@ -3,6 +3,7 @@ package com.medui.yixiu.ui.message.activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 
+import com.google.gson.Gson;
 import com.medui.yixiu.R;
 import com.medui.yixiu.adapter.SiXinAdapter;
 import com.medui.yixiu.api.YiXiuGeApi;
@@ -31,6 +32,7 @@ public class SiXinActivity extends BaseActivity {
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     private SiXinAdapter adapter;
     private SwipeRefreshController<NoPageListBean<SiXinBean>> controller;
+    Gson
 
     @Override
     public int getContentViewId() {

@@ -17,7 +17,7 @@ import com.xson.common.widget.SmartSwipeRefreshLayout;
 import butterknife.InjectView;
 
 /**
- * 我的试卷
+ * 考试管理
  */
 public class TestPaperListActivity extends BaseActivity {
 

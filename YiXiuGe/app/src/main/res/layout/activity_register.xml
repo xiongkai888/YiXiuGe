@@ -200,7 +200,7 @@
                 android:layout_marginLeft="@dimen/d_15dp"
                 android:layout_marginTop="@dimen/d_5dp"
                 android:visibility="gone"
-                app:defaultValue="《用户协议》"
+                app:defaultValue="@string/user_protocol"
                 app:formatText="@string/agree_protocol" />
 
         </LinearLayout>

@@ -9,10 +9,8 @@ import android.widget.TextView;
 
 import com.medui.yixiu.R;
 import com.medui.yixiu.bean.CourseClassifyBean;
-import com.medui.yixiu.ui.teacher.activity.ExaminationDetailsActivity;
 import com.medui.yixiu.utils.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
-import com.xson.common.utils.IntentUtil;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -41,7 +39,7 @@ public class ExaminationManagementAdapter extends SwipeRefreshAdapter<CourseClas
         viewHolder.examinationDetailsTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentUtil.startActivity(context, ExaminationDetailsActivity.class);
+//                IntentUtil.startActivity(context, ExaminationDetailsActivity.class);
             }
         });
     }

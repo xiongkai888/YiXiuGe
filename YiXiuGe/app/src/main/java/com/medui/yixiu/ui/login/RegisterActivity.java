@@ -180,7 +180,7 @@ public class RegisterActivity extends BaseActivity implements Toolbar.OnMenuItem
                 break;
             case R.id.agree_protocol_tv://用户协议
 //                loadRegister();
-                IntentUtil.startActivity(this,ProtocolActivity.class);
+                IntentUtil.startActivity(this,ProtocolActivity.class,getString(R.string.user_protocol));
                 break;
             case R.id.obtainCode_bt://获取验证码
                 phone = CommonUtils.getStringByEditText(phoneEt);//电话号码

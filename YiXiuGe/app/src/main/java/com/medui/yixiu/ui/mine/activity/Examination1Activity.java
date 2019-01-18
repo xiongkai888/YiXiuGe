@@ -161,8 +161,7 @@ public class Examination1Activity extends BaseActivity implements ExaminationCon
                 Map<String, String> map = new TreeMap<>(
                         new Comparator<String>() {
                             public int compare(String obj1, String obj2) {
-                                // 降序排序
-                                return obj2.compareTo(obj1);
+                                return obj1.compareTo(obj2);
                             }
                         });
                 map = gson.fromJson(options, map.getClass());

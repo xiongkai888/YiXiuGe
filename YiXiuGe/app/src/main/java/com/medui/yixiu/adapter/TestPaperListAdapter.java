@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import com.medui.yixiu.R;
 import com.medui.yixiu.bean.TestPaperBean;
+import com.medui.yixiu.ui.teacher.activity.ExaminationDetailsActivity;
 import com.medui.yixiu.utils.CommonUtils;
 import com.medui.yixiu.utils.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
+import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 
 import butterknife.ButterKnife;
@@ -64,10 +66,11 @@ public class TestPaperListAdapter extends SwipeRefreshAdapter<TestPaperBean> {
         }
 
 
-        public void setParameter(TestPaperBean bean) {
+        public void setParameter(final TestPaperBean bean) {
             titleTv.setText(bean.getTitle());
-            timeTv.setText(String.format(context.getString(R.string.start_and_time),formatTime.formatterTime(bean.getStarttime()),formatTime.formatterTime(bean.getEndtime())));
-            switch (bean.getStatus()){
+            timeTv.setText(String.format(context.getString(R.string.start_and_time), formatTime.formatterTime(bean.getStarttime()), formatTime.formatterTime(bean.getEndtime())));
+            final int status = bean.getStatus();
+            switch (status) {
                 case 1:
                     statusTv.setText(R.string.not_started);
                     break;
@@ -78,7 +81,16 @@ public class TestPaperListAdapter extends SwipeRefreshAdapter<TestPaperBean> {
                     statusTv.setText(R.string.finished);
                     break;
             }
-            typeIv.setImageResource(StringUtils.isSame(CommonUtils.isOne,bean.getType())?R.drawable.temp_teacher_sui:R.drawable.temp_teacher_z);
+            final boolean isSui = StringUtils.isSame(CommonUtils.isTwo, bean.getType());
+            typeIv.setImageResource(isSui ? R.drawable.temp_teacher_sui : R.drawable.temp_teacher_z);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isSui) {//是随堂考试才能看详情
+                        IntentUtil.startActivity(context, ExaminationDetailsActivity.class, bean.getId());
+                    }
+                }
+            });
         }
     }
 

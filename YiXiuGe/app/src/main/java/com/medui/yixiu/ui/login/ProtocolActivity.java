@@ -33,11 +33,13 @@ public class ProtocolActivity extends BaseActivity {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
+
+
         setSupportActionBar(mToolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setTitle(R.string.user_protocol);
+        actionbar.setTitle(getIntent().getStringExtra("value"));
         actionbar.setHomeAsUpIndicator(R.drawable.back);
 
         YiXiuGeApi api = new YiXiuGeApi("app/agreement");
